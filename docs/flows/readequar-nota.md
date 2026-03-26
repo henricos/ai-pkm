@@ -12,15 +12,11 @@
 LEITURA
   IA lê o arquivo completo
 
-DETECÇÃO DE TEMPLATE
-  Lê campo `tipo` do frontmatter
-  Infere subtipo a partir do conteúdo
-  Lista arquivos em models/ com prefixo igual ao `tipo`
-  Seleciona o template correspondente ao subtipo identificado
-  Lê o template selecionado
-  Se subtipo ambíguo → apresenta hipótese e pergunta ao usuário antes de continuar
-  Se nenhum template compatível encontrado:
-    Informa ao usuário que não é possível readequar sem template
+LOCALIZAÇÃO DO MODELO
+  Lê campo `modelo` do frontmatter
+  Constrói caminho models/[valor].md e lê o arquivo
+  Se campo ausente:
+    Informa ao usuário que não é possível readequar sem modelo definido no frontmatter
     Encerra
 
 ANÁLISE DE DIVERGÊNCIA

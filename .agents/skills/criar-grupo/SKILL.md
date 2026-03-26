@@ -42,13 +42,9 @@ O helper retorna `slug_normalizado` (normalização ASCII aplicada) e `colisao: 
 
 ---
 
-### Passo 4: Descrição e Âmbito
+### Passo 4: Descrição
 
-A IA:
-1. **Gera uma descrição** otimizada para busca.
-2. **Deduz o âmbito** (`pessoal`, `trabalho` ou `ambos`) a partir do contexto.
-
-Apresente ambos para aprovação conjunta.
+A IA **gera uma descrição** otimizada para busca e apresenta para aprovação.
 
 ---
 
@@ -64,15 +60,12 @@ Estrutura a criar:
 
 Conteúdo do _grupo.md:
    descricao: "[descrição aprovada]"
-   topico: "[topico]"
-   ambito: "[pessoal | trabalho | ambos]"
 
 Entrada a adicionar em index/grupos.json:
    {
      "caminho": "pkm/[topico]/_[slug]/",
      "descricao": "[descrição aprovada]",
-     "topico": "[topico]",
-     "ambito": "[pessoal | trabalho | ambos]"
+     "topico": "[topico]"
    }
 
 Confirma a criação do grupo?
@@ -88,7 +81,7 @@ Execute o helper para criar toda a estrutura atomicamente:
 
 ```bash
 uv --directory .agents/skills/criar-grupo/scripts run python criar_grupo.py \
-    criar --slug [slug] --topico [topico] --descricao "[descricao]" [--ambito pessoal|trabalho|ambos] --json
+    criar --slug [slug] --topico [topico] --descricao "[descricao]" --json
 ```
 
 O helper cria o diretório, o `.gitkeep`, o `_grupo.md` com frontmatter e insere a entrada no `grupos.json`.

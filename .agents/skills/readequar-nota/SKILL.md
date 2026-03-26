@@ -95,4 +95,4 @@ Escreva no arquivo após aprovação explícita (substituição completa do cont
 ## Arquivos de Referência
 
 - `docs/flows/readequar-nota.md` — especificação do fluxo
-- `index/models.json` — catálogo de templates disponíveis (campo `template` do frontmatter aponta para um deles)
+- `index/models.json` — catálogo de modelos disponíveis (campo `modelo` do frontmatter aponta para um deles)

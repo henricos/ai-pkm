@@ -6,7 +6,7 @@ Uso:
         verificar --slug meu-grupo --topico tecnologia --json
 
     uv --directory .agents/skills/criar-grupo/scripts run python criar_grupo.py \
-        criar --slug meu-grupo --topico tecnologia --descricao "Minha desc" [--ambito pessoal] --json
+        criar --slug meu-grupo --topico tecnologia --descricao "Minha desc" --json
 """
 from __future__ import annotations
 
@@ -24,7 +24,6 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 REPO_DIR = SCRIPT_DIR.parents[3]
 PKM_DIR = REPO_DIR / "pkm"
 GRUPOS_PATH = REPO_DIR / "index" / "grupos.json"
-AMBITVOS_VALIDOS = {"pessoal", "trabalho", "ambos"}
 
 
 class ErroHelper(RuntimeError):
@@ -83,10 +82,6 @@ def comando_criar(args: argparse.Namespace) -> int:
     slug = normalizar_slug(args.slug)
     topico = args.topico
     descricao = args.descricao
-    ambito = args.ambito
-
-    if ambito and ambito not in AMBITVOS_VALIDOS:
-        raise ErroHelper(f"Âmbito inválido: {ambito!r}. Use: {', '.join(sorted(AMBITVOS_VALIDOS))}.")
 
     pasta_topico = PKM_DIR / topico
     if not pasta_topico.exists():
@@ -101,9 +96,7 @@ def comando_criar(args: argparse.Namespace) -> int:
     (pasta_grupo / ".gitkeep").write_text("", encoding="utf-8")
 
     # Montar frontmatter
-    fm: dict[str, Any] = {"descricao": descricao, "topico": topico}
-    if ambito:
-        fm["ambito"] = ambito
+    fm: dict[str, Any] = {"descricao": descricao}
     yaml_str = yaml.dump(fm, allow_unicode=True, default_flow_style=False, sort_keys=False)
     grupo_md = pasta_grupo / "_grupo.md"
     grupo_md.write_text(f"---\n{yaml_str}---\n", encoding="utf-8")
@@ -112,8 +105,6 @@ def comando_criar(args: argparse.Namespace) -> int:
     grupos = carregar_grupos()
     caminho = f"pkm/{topico}/_{slug}/"
     entrada: dict[str, Any] = {"caminho": caminho, "descricao": descricao, "topico": topico}
-    if ambito:
-        entrada["ambito"] = ambito
     # Remove entrada existente se houver (idempotente)
     grupos = [g for g in grupos if g.get("caminho") != caminho]
     grupos.append(entrada)
@@ -158,7 +149,6 @@ def construir_parser() -> argparse.ArgumentParser:
     criar.add_argument("--slug", required=True, help="Slug do grupo.")
     criar.add_argument("--topico", required=True, help="ID do tópico (ex: tecnologia).")
     criar.add_argument("--descricao", required=True, help="Descrição do grupo.")
-    criar.add_argument("--ambito", default=None, help="Âmbito: pessoal | trabalho | ambos (opcional).")
     criar.set_defaults(func=comando_criar)
 
     return parser

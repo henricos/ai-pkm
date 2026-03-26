@@ -16,7 +16,7 @@ Use quando o problema está dentro de um tópico raiz ou de um subtópico espec�
 - Propõe a criação de um ou mais subtópicos.
 - Se o alvo for um subtópico que cresceu demais, propõe quebrá-lo em **subtópicos irmãos no tópico pai**.
 - Nunca cria terceiro nível hierárquico.
-- Apresenta em lote a proposta completa: subtópicos a criar, justificativas curtas, arquivos a mover e novo valor de `topico` no frontmatter.
+- Apresenta em lote a proposta completa: subtópicos a criar, justificativas curtas e arquivos a mover (o tópico é derivado do caminho, não há atualização de frontmatter).
 - Aguarda aprovação humana antes de criar pastas, mover arquivos e atualizar frontmatter.
 
 ### Modo B — Revisão da taxonomia de nível 1
@@ -27,7 +27,7 @@ Use quando o problema não é local e sim estrutural: o conjunto atual de tópic
 - Analisa a distribuição real do conteúdo e a recorrência dos temas existentes.
 - Pode propor **criar, renomear e fundir** tópicos de nível 1.
 - Usa evidência empírica do conteúdo como base principal da proposta; sem massa crítica, deve recomendar não mudar.
-- Apresenta em lote um plano completo de migração: tópicos afetados, caminhos a alterar, atualizações em `index/topicos.json`, frontmatter dos arquivos afetados e impacto sobre grupos.
+- Apresenta em lote um plano completo de migração: tópicos afetados, caminhos a alterar, atualizações em `index/topicos.json` e impacto sobre grupos (o tópico é derivado do caminho, não há atualização de frontmatter).
 - Aguarda aprovação humana antes de qualquer escrita.
 
 **Comportamento:**

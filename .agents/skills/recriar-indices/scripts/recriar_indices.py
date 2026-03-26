@@ -56,18 +56,17 @@ def escanear_grupos() -> list[dict[str, Any]]:
         except ErroHelper:
             continue
         descricao = fm.get("descricao")
-        topico = fm.get("topico")
-        if not descricao or not topico:
+        if not descricao:
             continue
         caminho = arquivo.parent.relative_to(REPO_DIR).as_posix() + "/"
+        # topico é derivado do caminho: pkm/<topico>/...
+        partes = caminho.split("/")
+        topico = partes[1] if len(partes) > 1 else ""
         entrada: dict[str, Any] = {
             "caminho": caminho,
             "descricao": str(descricao),
-            "topico": str(topico),
+            "topico": topico,
         }
-        ambito = fm.get("ambito")
-        if ambito:
-            entrada["ambito"] = str(ambito)
         grupos.append(entrada)
     return grupos
 

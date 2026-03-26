@@ -70,10 +70,6 @@ Redistribuição proposta:
 - [arquivo A] -> [novo caminho]
 - [arquivo B] -> [novo caminho]
 
-Atualizações de frontmatter:
-- [arquivo A] topico: [valor antigo] -> [valor novo]
-- [arquivo B] topico: [valor antigo] -> [valor novo]
-
 Confirma a reorganização?
 ```
 
@@ -135,7 +131,6 @@ Plano de migração:
 
 Atualizações necessárias:
 - index/topicos.json
-- frontmatter dos arquivos afetados
 - grupos.json, se houver grupos impactados
 
 Confirma a reorganização?

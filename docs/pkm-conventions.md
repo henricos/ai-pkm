@@ -16,7 +16,7 @@ A taxonomia admite no máximo dois níveis: tópico raiz e subtópico. Não exis
 
 O sistema distingue dois tipos de arquivo de conhecimento:
 
-**Nota** — qualquer material com elaboração mínima além de um rótulo. Identificada pela ausência do prefixo `url_`. Recebe campo `modelo` quando um modelo de estrutura foi aplicado.
+**Nota** — qualquer material com elaboração mínima além de um rótulo. Identificada pela ausência do prefixo `url_`. O campo `modelo` é obrigatório.
 
 **URL** — URL isolada com no máximo um rótulo curto. Identificada pelo prefixo `url_` no nome do arquivo. O tipo não é decidido pelo assunto, mas pela estrutura do material: se há elaboração, é nota.
 
@@ -34,27 +34,30 @@ Arquivos não-Markdown com valor de conhecimento precisam de um sidecar adjacent
 
 ## Frontmatter
 
-Todo arquivo Markdown de conhecimento usa YAML frontmatter. Campo obrigatório:
+Todo arquivo Markdown de conhecimento usa YAML frontmatter. Campos obrigatórios:
 
-- `estado` — `rascunho` ou `finalizado`; obrigatório em todos os itens
+- `estado` — `rascunho` ou `finalizado`
+- `modelo` — modelo de estrutura aplicado; valores válidos em `index/models.json`
+- `data_captura` — data em que o item foi registrado; formato `YYYY-MM-DD`
+
+Campo condicional:
+
+- `url` — obrigatório em arquivos de URL (prefixo `url_`), proibido em notas e sidecars
 
 Campos opcionais (incluir somente quando aplicável, nunca `null`):
 
-- `url` — obrigatório em arquivos de URL (prefixo `url_`), proibido em notas
-- `modelo` — modelo de estrutura aplicado (`nota-ferramenta`, `url-extrato`, `url-resumo`, etc.)
 - `autores` — quando identificável
-- `data_captura` — data em que o item foi registrado
 - `data_publicacao` — data de publicação da fonte original
 
 Campos derivados **não entram no frontmatter**: `topico` (derivado da pasta), `tipo` (deduzível pelo padrão do arquivo), `ambito`, `descricao`. Campos vazios e valores `null` são proibidos.
 
 ## Grupos
 
-Grupos são agrupadores persistentes de conhecimento — não representam tarefas, projetos com prazo ou ciclo de vida temporal. Cada grupo tem um `_grupo.md` com frontmatter próprio (`descricao`, `topico`, `ambito` opcional) que funciona como manifest do grupo.
+Grupos são agrupadores persistentes de conhecimento — não representam tarefas, projetos com prazo ou ciclo de vida temporal. Cada grupo tem um `_grupo.md` com frontmatter próprio (`descricao`) que funciona como manifest do grupo. O tópico é derivado do caminho da pasta.
 
 ## Modelos
 
-O sistema possui modelos de estrutura para tipos de nota (conceito, empresa, ferramenta, procedimento, entre outros). Os arquivos de modelo são artefatos operacionais lidos e aplicados diretamente pelo agente — sua localização no repositório é definida nas instruções operacionais (`AGENTS.md`).
+O sistema possui modelos de estrutura para notas (conceito, empresa, ferramenta, procedimento, livre), URLs (extrato, resumo) e sidecars. Os arquivos de modelo são artefatos operacionais lidos e aplicados diretamente pelo agente — sua localização no repositório é definida nas instruções operacionais (`AGENTS.md`). O catálogo completo está em `index/models.json`.
 
 ---
 
@@ -70,8 +73,7 @@ Gerado a partir do frontmatter dos arquivos `_grupo.md`. Array JSON de objetos:
 |---|---|---|
 | `caminho` | string | Caminho relativo da pasta do grupo |
 | `descricao` | string | `_grupo.md` frontmatter |
-| `topico` | string | `_grupo.md` frontmatter |
-| `ambito` | string | `_grupo.md` frontmatter (opcional) |
+| `topico` | string | Derivado do `caminho` |
 
 **Regra fundamental:** o frontmatter é a fonte da verdade. Em caso de divergência, o frontmatter prevalece. A skill `/recriar-indices` regenera o índice do zero a partir do frontmatter.
 

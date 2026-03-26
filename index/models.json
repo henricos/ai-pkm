@@ -26,5 +26,9 @@
   {
     "arquivo": "models/url-extrato.md",
     "assuntos_aplicaveis": "URLs processadas com extração fiel do texto original (web e PDF)"
+  },
+  {
+    "arquivo": "models/sidecar.md",
+    "assuntos_aplicaveis": "artefatos visuais e binários (diagramas, imagens, documentos)"
   }
 ]
