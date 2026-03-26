@@ -4,11 +4,11 @@
 
 **Quando usar:** Quando o usuário quiser avaliar se um resumo de URL está bem escrito, fiel ao conteúdo-fonte e estruturalmente correto — ou quando quiser melhorá-lo ativamente.
 
-**Pré-condição obrigatória:** o arquivo deve ter `tipo: url`, `formato: resumo`, `processado: true` e possuir cache `{slug}-transcript.txt` em `.agents/skills/processar-url/scripts/temp/`. Sem o cache, o fluxo aborta com instrução para executar `/processar-url` primeiro.
+**Pré-condição obrigatória:** o arquivo deve ter prefixo `url_`, `modelo: resumo`, `estado: finalizado` e possuir cache `{slug}-transcript.txt` em `.agents/skills/processar-url/scripts/temp/`. Sem o cache, o fluxo aborta com instrução para executar `/processar-url` primeiro.
 
 **O que faz:**
 
-1. Identifica o escopo — arquivo específico fornecido como argumento, ou todos os arquivos `formato: resumo` processados.
+1. Identifica o escopo — arquivo específico fornecido como argumento, ou todos os arquivos `modelo: resumo` finalizados.
 2. Valida cada arquivo contra os critérios de elegibilidade e verifica presença do cache.
 3. Avalia o resumo em três eixos, usando o transcript como fonte de verdade e o template `docs/schemas/url-resumo.md` como régua de estrutura:
    - **Fidelidade ao conteúdo-fonte:** cobertura dos pontos principais, ausências relevantes, distorções.

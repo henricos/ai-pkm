@@ -6,17 +6,17 @@ Fonte de verdade para regras de nomeação de arquivos de conhecimento no reposi
 
 ## Prefixo de tipo
 
-Arquivos com `tipo: url` recebem o prefixo `url_` no slug. Nenhum outro tipo usa prefixo.
+Arquivos de URL recebem o prefixo `url_` no slug. Nenhum outro tipo usa prefixo. O tipo é determinado pela estrutura do conteúdo (não pelo frontmatter) e sinalizado exclusivamente pelo prefixo do arquivo.
 
 | Tipo | Prefixo | Exemplo |
 |---|---|---|
-| `url` | `url_` | `url_ibm-technology-rag-vs-long-context.md` |
-| `nota` | nenhum | `metodo-zettelkasten-visao-geral.md` |
-| `artigo` | nenhum | `arquitetura-de-agentes.md` |
+| URL | `url_` | `url_ibm-technology-rag-vs-long-context.md` |
+| Nota | nenhum | `metodo-zettelkasten-visao-geral.md` |
+| Artigo | nenhum | `arquitetura-de-agentes.md` |
 
 O prefixo `url_` permite inspeção visual imediata (`ls`) e glob preciso em scripts (`url_*.md`), sem abrir nenhum arquivo.
 
-**Consistência obrigatória:** prefixo e campo `tipo` no frontmatter devem coincidir. `/validar-estrutura` verifica essa coerência de forma bidirecional.
+**Consistência obrigatória:** `/validar-estrutura` verifica que todo arquivo com prefixo `url_` possui campo `url` no frontmatter, e vice-versa.
 
 ---
 
@@ -101,13 +101,13 @@ url_ibm-technology-rag-vs-long-context.md
 
 ## Arquivos do sistema
 
-As regras acima valem para **todo o repositório** — não apenas para arquivos de conhecimento em `_[topico]/`. Arquivos em `sistema/convencoes/`, `sistema/esquemas/`, `sistema/fluxos/`, `.agents/skills/` e demais pastas de infraestrutura também seguem kebab-case.
+As regras acima valem para **todo o repositório** — não apenas para arquivos de conhecimento em `pkm/[topico]/`. Arquivos em `docs/`, `.agents/skills/` e demais pastas de infraestrutura também seguem kebab-case.
 
 Resumo da convenção de `_` vs `-`:
 
 | Contexto | Caractere | Exemplos |
 |---|---|---|
-| Prefixo estrutural de pasta | `_` | `_tecnologia/`, `__inbox/` |
+| Prefixo estrutural de grupo/subtópico | `_` | `_meu-framework/`, `_llms/`, `__inbox/` |
 | Prefixo de tipo em arquivo de URL | `_` | `url_ibm-technology-rag.md` |
 | Separador de palavras em qualquer slug | `-` | `nota-conceito.md`, `estrutura-de-pastas.md` |
 | Root-level standards | MAIÚSCULAS | `README.md`, `AGENTS.md`, `CLAUDE.md` |

@@ -1,6 +1,6 @@
 ---
 name: criticar-url
-description: "Avalia a qualidade editorial do resumo de arquivos `url_` com `formato: resumo` comparando o conteúdo do arquivo com o texto-fonte cacheado. Identifica problemas de fidelidade, profundidade e estrutura, e conduz sessão interativa de melhoria com aprovação. Depende do cache `{slug}-transcript.txt` — aborta se ausente. Use esta skill sempre que o usuário quiser calibrar, melhorar ou avaliar a qualidade de um resumo de URL — mesmo que não diga explicitamente \"criticar url\"."
+description: "Avalia a qualidade editorial do resumo de arquivos `url_` com `modelo: resumo` comparando o conteúdo do arquivo com o texto-fonte cacheado. Identifica problemas de fidelidade, profundidade e estrutura, e conduz sessão interativa de melhoria com aprovação. Depende do cache `{slug}-transcript.txt` — aborta se ausente. Use esta skill sempre que o usuário quiser calibrar, melhorar ou avaliar a qualidade de um resumo de URL — mesmo que não diga explicitamente \"criticar url\"."
 command: /criticar-url
 ---
 
@@ -8,21 +8,21 @@ command: /criticar-url
 
 ## Instruções de Execução do Agente
 
-Esta skill implementa o **Fluxo — Criticar URL** descrito em `docs/flows/criticar-url.md`. Avalia a qualidade editorial de arquivos `url_` com `formato: resumo` usando o texto-fonte cacheado como referência. Não faz pesquisa externa — trabalha exclusivamente com o arquivo e o cache existente.
+Esta skill implementa o **Fluxo — Criticar URL** descrito em `docs/flows/criticar-url.md`. Avalia a qualidade editorial de arquivos `url_` com `modelo: resumo` usando o texto-fonte cacheado como referência. Não faz pesquisa externa — trabalha exclusivamente com o arquivo e o cache existente.
 
-**Somente opera em arquivos com `tipo: url`, `formato: resumo`, `processado: true`.**
+**Somente opera em arquivos com `modelo: resumo` e `estado: finalizado`.**
 
 ---
 
 ## Passo 1: Detecção do Escopo
 
-- **Com argumento** (ex: `/criticar-url _tecnologia/url_ibm-technology-rag-vs-long-context.md`) → usa o(s) arquivo(s) informado(s) diretamente.
+- **Com argumento** (ex: `/criticar-url pkm/tecnologia/url_ibm-technology-rag-vs-long-context.md`) → usa o(s) arquivo(s) informado(s) diretamente.
 - **Sem argumento** → pergunte ao usuário:
 
 > "Quais arquivos deseja criticar?"
 >
 > 1. **Informar arquivo(s) específico(s)**
-> 2. **Todos os arquivos `formato: resumo` processados**
+> 2. **Todos os arquivos `modelo: resumo` processados**
 > 3. **Cancelar**
 
 ---
@@ -34,7 +34,7 @@ Execute o helper para validar e listar os arquivos elegíveis:
 ```bash
 # Para arquivo específico:
 uv --directory .agents/skills/criticar-url/scripts run python listar_urls.py \
-    listar --arquivo _topico/url_slug.md --json
+    listar --arquivo pkm/topico/url_slug.md --json
 
 # Para todos:
 uv --directory .agents/skills/criticar-url/scripts run python listar_urls.py listar --json
@@ -118,7 +118,7 @@ Após cada rodada de reescrita, pergunte:
 - Nunca inventa informação não presente no transcript
 - Não faz pesquisa externa de conteúdo — apenas curadoria de links de Recursos (verificação de existência)
 - Aborta com mensagem clara se cache ausente
-- Opera somente em `tipo: url`, `formato: resumo`, `processado: true`
+- Opera somente em arquivos com `modelo: resumo` e `estado: finalizado`
 - Preserva o frontmatter e o cabeçalho de proveniência intactos
 
 ## Arquivos de Referência

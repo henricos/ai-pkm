@@ -22,7 +22,8 @@ import yaml
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 REPO_DIR = SCRIPT_DIR.parents[3]
-GRUPOS_PATH = REPO_DIR / "sistema" / "indices" / "grupos.json"
+PKM_DIR = REPO_DIR / "pkm"
+GRUPOS_PATH = REPO_DIR / "index" / "grupos.json"
 AMBITVOS_VALIDOS = {"pessoal", "trabalho", "ambos"}
 
 
@@ -64,14 +65,14 @@ def comando_verificar(args: argparse.Namespace) -> int:
     slug = normalizar_slug(args.slug)
     topico = args.topico
 
-    pasta_grupo = REPO_DIR / f"_{topico}" / slug
+    pasta_grupo = PKM_DIR / topico / f"_{slug}"
     colisao = pasta_grupo.exists()
 
     resultado = {
         "ok": True,
         "slug_normalizado": slug,
         "topico": topico,
-        "caminho_proposto": f"_{topico}/{slug}/",
+        "caminho_proposto": f"pkm/{topico}/_{slug}/",
         "colisao": colisao,
     }
     print(json.dumps(resultado, ensure_ascii=False, indent=2))
@@ -87,11 +88,11 @@ def comando_criar(args: argparse.Namespace) -> int:
     if ambito and ambito not in AMBITVOS_VALIDOS:
         raise ErroHelper(f"Âmbito inválido: {ambito!r}. Use: {', '.join(sorted(AMBITVOS_VALIDOS))}.")
 
-    pasta_topico = REPO_DIR / f"_{topico}"
+    pasta_topico = PKM_DIR / topico
     if not pasta_topico.exists():
-        raise ErroHelper(f"Tópico não encontrado: _{topico}/. Consulte sistema/indices/topicos.json.")
+        raise ErroHelper(f"Tópico não encontrado: pkm/{topico}/. Consulte index/topicos.json.")
 
-    pasta_grupo = pasta_topico / slug
+    pasta_grupo = pasta_topico / f"_{slug}"
     if pasta_grupo.exists():
         raise ErroHelper(f"Já existe uma pasta com este slug: {pasta_grupo.relative_to(REPO_DIR)}")
 
@@ -109,7 +110,7 @@ def comando_criar(args: argparse.Namespace) -> int:
 
     # Atualizar grupos.json
     grupos = carregar_grupos()
-    caminho = f"_{topico}/{slug}/"
+    caminho = f"pkm/{topico}/_{slug}/"
     entrada: dict[str, Any] = {"caminho": caminho, "descricao": descricao, "topico": topico}
     if ambito:
         entrada["ambito"] = ambito
@@ -123,8 +124,8 @@ def comando_criar(args: argparse.Namespace) -> int:
         "ok": True,
         "caminho": caminho,
         "arquivos_criados": [
-            f"_{topico}/{slug}/.gitkeep",
-            f"_{topico}/{slug}/_grupo.md",
+            f"pkm/{topico}/_{slug}/.gitkeep",
+            f"pkm/{topico}/_{slug}/_grupo.md",
         ],
         "grupos_json_atualizado": True,
     }

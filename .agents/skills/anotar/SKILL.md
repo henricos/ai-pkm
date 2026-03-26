@@ -52,7 +52,7 @@ Cada item gera um arquivo separado.
   - "ferramenta", "biblioteca", "framework", "plugin", "editor", "cli", "app", "extensão" → `ferramenta`
   - "processo", "fluxo", "procedimento", "método", "técnica", "metodologia", "padrão", "prática", "algoritmo" → `processo`
 
-  **2. Se sem palavra-chave:** ler `sistema/indices/templates.json` e pesquisar o item rapidamente; mapear para o template cujo `assuntos_aplicaveis` melhor descreve o item. Para lotes, pesquisar em paralelo.
+  **2. Se sem palavra-chave:** ler `index/models.json` e pesquisar o item rapidamente; mapear para o modelo cujo `assuntos_aplicaveis` melhor descreve o item. Para lotes, pesquisar em paralelo.
 
   **3. Se ambíguo entre dois templates:** apresentar a dúvida ao usuário com contexto mínimo antes de exibir o card.
 

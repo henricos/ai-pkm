@@ -21,18 +21,18 @@ python3 .agents/skills/validar-estrutura/scripts/validar_estrutura.py
 ```
 
 Ele valida, no mínimo:
-- coerência entre `pkm/sistema/indices/topicos.json` e as pastas reais
+- coerência entre `index/topicos.json` e as pastas reais
 - limite de no máximo 2 níveis taxonômicos
 - frontmatter obrigatório em arquivos de conhecimento
 - integridade do frontmatter YAML dos arquivos `.agents/skills/*/SKILL.md`
 - coerência entre o campo `topico` e o caminho do arquivo
-- sidecar obrigatório para binários de conhecimento em `_[topico]/...`
+- sidecar obrigatório para binários de conhecimento em `pkm/[topico]/...`
 - coerência entre binário e sidecar `nome.extensao.md`
 - ausência de embeddings em arquivos Markdown de conhecimento
 - ausência de campos temporais indevidos em grupos
-- coerência entre `_grupo.md` e `pkm/sistema/indices/grupos.json`
+- coerência entre `_grupo.md` e `index/grupos.json`
 - `.gitkeep` em `pkm/__inbox/` e tópicos raiz vazios
-- **coerência bidirecional prefixo × tipo:** arquivo com prefixo `url_` deve ter `tipo: url`; arquivo com `tipo: url` deve ter prefixo `url_`
+- **coerência prefixo × frontmatter:** arquivo com prefixo `url_` deve ter campo `url` no frontmatter; arquivo com campo `url` no frontmatter deve ter prefixo `url_`
 
 ---
 
@@ -71,5 +71,5 @@ Informe em linguagem direta:
 - `docs/pkm-structure.md` — estrutura esperada
 - `docs/pkm-taxonomy.md` — invariantes da taxonomia
 - `docs/pkm-indexes.md` — papel derivado de `grupos.json`
-- `docs/schemas/frontmatter-conhecimento.md` — contrato de conhecimento
+- `docs/schemas/frontmatter-item.md` — contrato dos itens de conhecimento
 - `docs/schemas/frontmatter-grupo.md` — contrato de grupos

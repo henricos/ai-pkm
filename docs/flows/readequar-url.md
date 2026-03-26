@@ -6,8 +6,8 @@
 
 **O que faz:**
 
-1. Identifica o escopo — arquivo específico fornecido como argumento, ou todos os arquivos `formato: resumo` processados.
-2. Valida cada arquivo: deve ter `tipo: url`, `formato: resumo`, `processado: true`. Arquivos com `formato: extrato` são pulados.
+1. Identifica o escopo — arquivo específico fornecido como argumento, ou todos os arquivos `modelo: resumo` finalizados.
+2. Valida cada arquivo: deve ter prefixo `url_`, `modelo: resumo`, `estado: finalizado`. Arquivos com `modelo: extrato` são pulados.
 3. Lê o template `docs/schemas/url-resumo.md` uma vez para toda a sessão.
 4. Para cada arquivo válido, compara as seções do corpo com a estrutura esperada e apresenta diagnóstico de divergências antes de prosseguir.
 5. Executa apenas alterações estruturais:

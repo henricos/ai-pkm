@@ -1,6 +1,6 @@
 ---
 name: recriar-indices
-description: Regenera o índice JSON `pkm/sistema/indices/grupos.json` a partir dos arquivos `_grupo.md` encontrados nas pastas de tópicos. Apresenta diff resumido e aguarda aprovação antes de sobrescrever.
+description: Regenera o índice JSON `index/grupos.json` a partir dos arquivos `_grupo.md` encontrados nas pastas de tópicos. Apresenta diff resumido e aguarda aprovação antes de sobrescrever.
 command: /recriar-indices
 ---
 
@@ -75,5 +75,5 @@ Informe: *"Índice recriado com sucesso. Use `/commit-push` para registrar no hi
 - `.agents/skills/recriar-indices/scripts/recriar_indices.py` — helper (escanear / salvar)
 - `docs/flows/recriar-indices.md` — especificação do fluxo de recriação de índices
 - `docs/pkm-indexes.md` — convenção de índices JSON
-- `pkm/sistema/indices/grupos.json` — índice a ser recriado
+- `index/grupos.json` — índice a ser recriado
 - `docs/schemas/frontmatter-grupo.md` — esquema do `_grupo.md`

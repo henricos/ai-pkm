@@ -20,7 +20,7 @@
 **Regras de comportamento:**
 - o input é interpretado diretamente — sem diálogo iterativo
 - em caso de dúvida sobre número de itens, perguntar antes de processar
-- o template da nota é inferido pela seguinte ordem: (1) palavras-chave no input; (2) pesquisa rápida do item, mapeando para um dos templates listados em `sistema/indices/templates.json`; (3) se ambíguo entre dois templates, apresentar dúvida ao usuário antes do card; (4) se não encaixar em nenhum template, informar ao usuário e confirmar que o corpo ficará sem dica de template
+- o modelo da nota é inferido pela seguinte ordem: (1) palavras-chave no input; (2) pesquisa rápida do item, mapeando para um dos modelos listados em `index/models.json`; (3) se ambíguo entre dois modelos, apresentar dúvida ao usuário antes do card; (4) se não encaixar em nenhum modelo, informar ao usuário e confirmar que o corpo ficará sem dica de modelo
 - corpo de URL = URL pura, sem texto adicional
 - corpo de nota = frase corrida: "Nota sobre o [tipo] de [nome]. Rascunho a expandir."
 - o card de confirmação exibe apenas nome do arquivo e conteúdo

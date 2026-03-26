@@ -22,10 +22,10 @@
 
 Os templates em `docs/schemas/` seguem o padrão `[tipo]-[subtipo].md`, onde `[tipo]` corresponde ao valor do campo `tipo` no frontmatter do documento:
 
-- `nota-ferramenta.md` — documentos `tipo: nota` sobre ferramentas
-- `nota-conceito.md` — documentos `tipo: nota` sobre conceitos/métodos
-- `nota-empresa.md` — documentos `tipo: nota` sobre empresas e organizações
-- `nota-procedimento.md` — documentos `tipo: nota` sobre procedimentos, how-tos e guias práticos
+- `nota-ferramenta.md` — notas sobre ferramentas (produtos, serviços, bibliotecas, frameworks)
+- `nota-conceito.md` — notas sobre conceitos, métodos, técnicas e paradigmas
+- `nota-empresa.md` — notas sobre empresas, organizações e negócios
+- `nota-procedimento.md` — notas sobre procedimentos, how-tos e guias práticos
 
 Ao identificar o template, o fluxo deve listar os arquivos disponíveis em `docs/schemas/` que começam com o prefixo correspondente ao `tipo` do documento, e então selecionar o mais adequado ao subtipo identificado.
 
@@ -116,7 +116,7 @@ SESSÃO DE REVISÃO E COMPLEMENTO (só se o usuário aprovou)
        seções novas, seções expandidas, seções alteradas.
     6. Aguardar aprovação explícita antes de escrever no arquivo.
     7. Escrever no arquivo após aprovação (mesmo arquivo, substituição completa).
-    8. Perguntar se quer marcar como maturidade: maduro.
+    8. Perguntar se quer marcar como estado: finalizado.
 ```
 
 ---

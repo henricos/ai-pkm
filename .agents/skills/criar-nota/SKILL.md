@@ -22,7 +22,7 @@ Antes de iniciar a sessão, determine o modo de trabalho:
 - **Argumento é caminho de pasta** (ex: `/criar-nota _tecnologia/meu-framework`) → **Modo B — Grupo/pasta**
 - **Sem argumento** → **Modo Descoberta** (ver abaixo)
 
-Se o usuário mencionar um grupo sem especificar o tópico, consulte `pkm/sistema/indices/grupos.json` para localizar. Se houver múltiplos candidatos, liste com opções numeradas e pergunte.
+Se o usuário mencionar um grupo sem especificar o tópico, consulte `index/grupos.json` para localizar. Se houver múltiplos candidatos, liste com opções numeradas e pergunte.
 
 ---
 
@@ -32,14 +32,14 @@ Quando invocado sem argumento, em vez de perguntar qual arquivo, execute:
 
 ### Passo D1 — Buscar notas em rascunho
 
-Faça grep por `maturidade: rascunho` em `pkm/_*/` recursivamente (apenas arquivos `.md`).
+Faça grep por `estado: rascunho` em `pkm/*/` recursivamente (apenas arquivos `.md`, excluindo `url_*.md`).
 
 ### Passo D2 — Apresentar lista agrupada
 
 Agrupe os resultados por tópico e apresente lista numerada:
 
 ```
-Notas com maturidade: rascunho
+Notas com estado: rascunho
 
 desenvolvimento-pessoal
   1. metodo-zettelkasten-visao-geral.md
@@ -57,7 +57,7 @@ Após a escolha do usuário, prossiga normalmente como **Modo A — Arquivo úni
 
 **Se nenhuma nota `rascunho` for encontrada:**
 
-> *"Não há notas com `maturidade: rascunho` na base. Informe o caminho do arquivo ou pasta que deseja trabalhar."*
+> *"Não há notas com `estado: rascunho` na base. Informe o caminho do arquivo ou pasta que deseja trabalhar."*
 
 ---
 
@@ -71,17 +71,16 @@ Para rascunhos, notas embrionárias ou qualquer arquivo que o usuário queira co
 
 Leia o conteúdo do arquivo identificado.
 
-**1.1b Detecção de template (adoção silenciosa)**
+**1.1b Detecção de modelo (adoção silenciosa)**
 
-Após a leitura:
-1. Se `tipo` não for `nota`, não há template de corpo a buscar.
-2. Leia o campo `template` do frontmatter.
+Após a leitura (aplica-se apenas a notas — arquivos sem prefixo `url_`):
+1. Leia o campo `modelo` do frontmatter.
    - **Campo presente**: construa o caminho `docs/schemas/[valor].md` e leia o arquivo. Adote como guia silencioso de construção e siga direto para a proposta de execução.
-   - **Campo ausente**: leia `sistema/indices/templates.json`, compare o assunto do conteúdo com `assuntos_aplicaveis` de cada entrada e selecione o match mais adequado.
-     - Se houver **match claro**: leia o template e siga direto para a proposta de execução.
-     - Se estiver **ambíguo**: apresente sua hipótese e pergunte ao usuário qual template usar antes de continuar.
-     - Se **nenhum match** for aplicável: informe que não encontrou template aplicável e peça confirmação explícita para seguir como nota sem template.
-3. Ao selecionar um template, ele define a estrutura esperada — use-o para orientar sugestões de ação e para guiar a produção de saída. A gravação de `template: [nome-sem-extensao]` no frontmatter acontece junto da escrita aprovada.
+   - **Campo ausente**: leia `index/models.json`, compare o assunto do conteúdo com `assuntos_aplicaveis` de cada entrada e selecione o match mais adequado.
+     - Se houver **match claro**: leia o modelo e siga direto para a proposta de execução.
+     - Se estiver **ambíguo**: apresente sua hipótese e pergunte ao usuário qual modelo usar antes de continuar.
+     - Se **nenhum match** for aplicável: informe que não encontrou modelo aplicável e peça confirmação explícita para seguir como nota sem modelo.
+2. Ao selecionar um modelo, ele define a estrutura esperada — use-o para orientar sugestões de ação e para guiar a produção de saída. A gravação de `modelo: [nome-sem-extensao]` no frontmatter acontece junto da escrita aprovada.
 
 **1.2 Propor plano de trabalho**
 
@@ -125,11 +124,11 @@ Aguarde direção do usuário: continuar, aprofundar, mudar de direção ou ence
 
 **3.5 Renomeação (se aprovada)** — execute a renomeação do arquivo após confirmação explícita do novo nome.
 
-**3.6 Transição de maturidade (somente para `tipo: nota`)** — ao encerrar a sessão, verifique se o arquivo tem `tipo: nota` no frontmatter. Se tiver, pergunte:
+**3.6 Transição de estado** — ao encerrar a sessão, pergunte:
 
-> *"A nota está finalizada? Posso marcar como `maturidade: maduro`."*
+> *"A nota está finalizada? Posso marcar como `estado: finalizado`."*
 
-- Se sim: edite o frontmatter, trocando `maturidade: rascunho` por `maturidade: maduro`
+- Se sim: edite o frontmatter, trocando `estado: rascunho` por `estado: finalizado`
 - Se não: encerre sem alterar
 
 ---
@@ -173,17 +172,16 @@ Define o formato do resultado. Pode acontecer antes ou depois da dinâmica.
 
 > *"O resultado vai para um arquivo novo ou atualiza um arquivo existente?"*
 
-**Detecção de template (baseada no arquivo de saída):**
+**Detecção de modelo (baseada no arquivo de saída):**
 
-Após definir o arquivo de saída:
-1. Se `tipo` do arquivo de saída não for `nota`, não há template de corpo a buscar.
-2. Leia o campo `template` do frontmatter do arquivo de saída (se existente).
+Após definir o arquivo de saída (aplica-se apenas a notas — sem prefixo `url_`):
+1. Leia o campo `modelo` do frontmatter do arquivo de saída (se existente).
    - **Campo presente**: construa o caminho `docs/schemas/[valor].md` e leia o arquivo.
-   - **Campo ausente**: leia `sistema/indices/templates.json`, compare o assunto com `assuntos_aplicaveis` de cada entrada e selecione o match mais adequado.
-3. Se template selecionado: carregue, anuncie ao usuário:
-   > *"Encontrei o template `[nome].md` — vou usá-lo como guia de estrutura e estilo para a saída."*
-   A gravação de `template: [nome-sem-extensao]` no frontmatter acontece junto da escrita aprovada.
-4. Se nenhum match: informe que não encontrou template aplicável e peça confirmação explícita para seguir com uma nota sem template.
+   - **Campo ausente**: leia `index/models.json`, compare o assunto com `assuntos_aplicaveis` de cada entrada e selecione o match mais adequado.
+2. Se modelo selecionado: carregue, anuncie ao usuário:
+   > *"Encontrei o modelo `[nome].md` — vou usá-lo como guia de estrutura e estilo para a saída."*
+   A gravação de `modelo: [nome-sem-extensao]` no frontmatter acontece junto da escrita aprovada.
+3. Se nenhum match: informe que não encontrou modelo aplicável e peça confirmação explícita para seguir com uma nota sem modelo.
 
 ---
 
@@ -257,4 +255,4 @@ Após definir o arquivo de saída:
 
 - `docs/flows/criar-nota.md` — especificação do fluxo de criação de nota
 - `docs/pkm-structure.md` — destinos válidos
-- `pkm/sistema/indices/grupos.json` — grupos disponíveis
+- `index/grupos.json` — grupos disponíveis

@@ -1,18 +1,18 @@
 [
   {
-    "arquivo": "sistema/esquemas/nota-empresa.md",
+    "arquivo": "docs/schemas/nota-empresa.md",
     "assuntos_aplicaveis": "empresas, organizações e grupos corporativos"
   },
   {
-    "arquivo": "sistema/esquemas/nota-conceito.md",
+    "arquivo": "docs/schemas/nota-conceito.md",
     "assuntos_aplicaveis": "conceitos, métodos ou técnicas"
   },
   {
-    "arquivo": "sistema/esquemas/nota-ferramenta.md",
+    "arquivo": "docs/schemas/nota-ferramenta.md",
     "assuntos_aplicaveis": "ferramentas, produtos ou serviços"
   },
   {
-    "arquivo": "sistema/esquemas/nota-procedimento.md",
+    "arquivo": "docs/schemas/nota-procedimento.md",
     "assuntos_aplicaveis": "guias práticos, passo a passos, how-tos"
   }
 ]

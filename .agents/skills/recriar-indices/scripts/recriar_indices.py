@@ -18,7 +18,8 @@ import yaml
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 REPO_DIR = SCRIPT_DIR.parents[3]
-GRUPOS_PATH = REPO_DIR / "sistema" / "indices" / "grupos.json"
+PKM_DIR = REPO_DIR / "pkm"
+GRUPOS_PATH = REPO_DIR / "index" / "grupos.json"
 
 
 class ErroHelper(RuntimeError):
@@ -47,9 +48,9 @@ def parsear_frontmatter(path: Path) -> dict[str, Any]:
 # ---------------------------------------------------------------------------
 
 def escanear_grupos() -> list[dict[str, Any]]:
-    """Varre _*/  buscando _grupo.md e retorna array de entradas."""
+    """Varre pkm/*/ buscando _grupo.md e retorna array de entradas."""
     grupos: list[dict[str, Any]] = []
-    for arquivo in sorted(REPO_DIR.glob("_*/**/_grupo.md")):
+    for arquivo in sorted(PKM_DIR.glob("*/**/_grupo.md")):
         try:
             fm = parsear_frontmatter(arquivo)
         except ErroHelper:
@@ -147,7 +148,7 @@ def construir_parser() -> argparse.ArgumentParser:
 
     salvar = subparsers.add_parser(
         "salvar",
-        help="Varra o repositório e sobrescreve sistema/indices/grupos.json.",
+        help="Varra o repositório e sobrescreve index/grupos.json.",
     )
     salvar.set_defaults(func=comando_salvar)
 

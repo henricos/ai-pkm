@@ -1,6 +1,6 @@
 # Convenção: Taxonomia de Tópicos
 
-A taxonomia define os tópicos que organizam o conhecimento no repositório. A fonte da verdade é `sistema/indices/topicos.json`.
+A taxonomia define os tópicos que organizam o conhecimento no repositório. A fonte da verdade é `index/topicos.json`.
 
 ## Propósito
 
@@ -10,22 +10,22 @@ Tópicos agrupam conhecimento por área temática, servindo como eixo organizaci
 
 Cada tópico é um objeto com:
 
-- **`id`** (obrigatório) — identificador em kebab-case, usado como nome de pasta (com prefixo `_`) e valor no frontmatter.
+- **`id`** (obrigatório) — identificador em kebab-case, usado como nome de pasta (sem prefixo) e valor no frontmatter.
 - **`descricao`** (obrigatório) — texto descritivo do escopo do tópico, otimizado para orientar a classificação.
 - **`subtopicos`** (opcional) — array de objetos com `id` e `descricao`, representando subdivisões do tópico raiz.
 
 ## Mapeamento para pastas
 
-- Tópico raiz → `_[topico]/` na raiz do repositório
-- Subtópico → `_[topico]/_[subtopico]/`
-- Grupo dentro de tópico → `_[topico]/[grupo]/` (sem prefixo `_`)
+- Tópico raiz → `pkm/[topico]/`
+- Subtópico → `pkm/[topico]/[subtopico]/` (sem prefixo `_`)
+- Grupo dentro de tópico → `pkm/[topico]/_[grupo]/` (com prefixo `_`)
 
 ## Hierarquia: máximo 2 níveis
 
 A taxonomia suporta no máximo 2 níveis hierárquicos:
 
-1. **Tópico raiz** — entrada de nível zero no JSON. Pasta `_[topico]/` na raiz.
-2. **Subtópico** — entrada dentro do array `subtopicos` de um tópico raiz. Pasta `_[subtopico]/` dentro do tópico.
+1. **Tópico raiz** — entrada de nível zero no JSON. Pasta `pkm/[topico]/`.
+2. **Subtópico** — entrada dentro do array `subtopicos` de um tópico raiz. Pasta `pkm/[topico]/[subtopico]/` (sem prefixo `_`).
 
 Não há terceiro nível. Se um subtópico crescer a ponto de precisar de subdivisões, a resposta padrão é quebrá-lo em subtópicos irmãos dentro do tópico pai. Só avalie promovê-lo a tópico raiz durante uma revisão explícita da taxonomia de nível 1.
 

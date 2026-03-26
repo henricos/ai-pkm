@@ -7,9 +7,6 @@ Regras obrigatórias para qualquer IA (IDEs como Cursor ou Antigravity, CLIs com
 Antes de executar qualquer tarefa, leia estes arquivos:
 
 1. **`docs/overview.md`** — visão e propósito do sistema.
-2. **`docs/prd.md`** — requisitos de produto e decisões já tomadas.
-3. **`docs/architecture.md`** — stack, ADRs e decisões técnicas.
-4. **`docs/pkm-conventions.md`** — contratos estruturais do repositório pkm.
 
 Referência adicional disponível: `docs/flows/` — especificações autoritativas dos fluxos operacionais (um arquivo por fluxo). As skills em `.agents/skills/` são implementações dessas especificações.
 
@@ -25,11 +22,6 @@ A única exceção admissível são jargões tecnológicos globais enraizados qu
 ## Repositório pkm
 
 O conteúdo do PKM vive no repositório separado e privado `pkm`, montado como pasta `pkm/` na raiz deste projeto. Skills que operam sobre conteúdo usam `pkm/` como raiz.
-
-- Inbox de captura: `pkm/__inbox/`
-- Tópicos: `pkm/_[topico]/`
-- Índices: `pkm/sistema/indices/`
-- Esquemas de frontmatter: `docs/schemas/`
 
 O banco de dados da aplicação é um índice derivado e reconstruível a partir do repositório `pkm`. O `pkm` é a fonte primária de verdade do conteúdo.
 
@@ -69,10 +61,6 @@ A documentação deste projeto vive em `docs/`:
 
 ## Regras universais
 
-### `.gitkeep`
-
-Pastas que podem ficar vazias devem conter `.gitkeep` para preservar a estrutura no Git. Ao criar uma nova pasta vazia, o primeiro ato obrigatório é depositar um `.gitkeep` dentro dela.
-
 ### Nomenclatura de arquivos
 
 Todos os arquivos do repositório seguem kebab-case. Regras completas em `docs/pkm-conventions.md`.
@@ -83,15 +71,15 @@ Arquivos de conhecimento no repositório `pkm` exigem frontmatter conforme esque
 
 ### Busca de conteúdo
 
-Ao buscar grupos existentes, consulte `pkm/sistema/indices/grupos.json`. Para tópicos válidos, consulte `pkm/sistema/indices/topicos.json`. Esses índices evitam varredura recursiva de pastas.
+Ao buscar grupos existentes, consulte `index/grupos.json`. Para tópicos válidos, consulte `index/topicos.json`. Esses índices evitam varredura recursiva de pastas.
 
 ### Taxonomia
 
-Nunca invente tópicos. Consulte `pkm/sistema/indices/topicos.json` antes de classificar qualquer item.
+Nunca invente tópicos. Consulte `index/topicos.json` antes de classificar qualquer item.
 
 ### Índices
 
-**Nunca edite índices JSON em `pkm/sistema/indices/` diretamente.** Use a skill `/recriar-indices` ou skills que já os atualizam (ex: `/triar`, `/criar-grupo`).
+**Nunca edite índices JSON em `index/` diretamente.** Use a skill `/recriar-indices` ou skills que já os atualizam (ex: `/criar-grupo`).
 
 ### Validação estrutural
 
@@ -101,6 +89,3 @@ Para checagem não mutante de coerência, use a skill `/validar-estrutura`.
 
 Sem arquivos de log de IA; auditoria exclusivamente via mensagem de commit Git.
 
-### Pendência de scripts
-
-Os scripts Python em `.agents/skills/*/scripts/` foram portados com caminhos originais do repositório legado. Esses caminhos precisam ser adaptados para usar o prefixo `pkm/` em sessão futura de desenvolvimento.

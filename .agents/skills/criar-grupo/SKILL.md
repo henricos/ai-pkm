@@ -1,6 +1,6 @@
 ---
 name: criar-grupo
-description: Cria um novo grupo dentro de um tópico, gera o `_grupo.md` com frontmatter padronizado e registra a entrada no `pkm/sistema/indices/grupos.json`. Aguarda aprovação antes de qualquer criação de arquivo. Use esta skill sempre que o usuário quiser criar um agrupador de conteúdo, organizar um esforço com objetivo claro dentro de um tópico — mesmo que não diga explicitamente "criar grupo".
+description: Cria um novo grupo dentro de um tópico, gera o `_grupo.md` com frontmatter padronizado e registra a entrada no `index/grupos.json`. Aguarda aprovação antes de qualquer criação de arquivo. Use esta skill sempre que o usuário quiser criar um agrupador de conteúdo, organizar um esforço com objetivo claro dentro de um tópico — mesmo que não diga explicitamente "criar grupo".
 command: /criar-grupo
 ---
 
@@ -23,7 +23,7 @@ Esta skill implementa o **Fluxo 4 — Criar Grupo** descrito em `docs/flows/cria
 
 ### Passo 2: Tópico
 
-Determine o tópico consultando `pkm/sistema/indices/topicos.json`. Apresente o tópico inferido e aguarde confirmação. Se ambíguo, liste os tópicos e pergunte.
+Determine o tópico consultando `index/topicos.json`. Apresente o tópico inferido e aguarde confirmação. Se ambíguo, liste os tópicos e pergunte.
 
 ---
 
@@ -58,7 +58,7 @@ Apresente ambos para aprovação conjunta.
 Novo grupo: [slug]
 
 Estrutura a criar:
-   _[topico]/[slug]/
+   pkm/[topico]/_[slug]/
    ├── .gitkeep
    └── _grupo.md
 
@@ -67,9 +67,9 @@ Conteúdo do _grupo.md:
    topico: "[topico]"
    ambito: "[pessoal | trabalho | ambos]"
 
-Entrada a adicionar em pkm/sistema/indices/grupos.json:
+Entrada a adicionar em index/grupos.json:
    {
-     "caminho": "_[topico]/[slug]/",
+     "caminho": "pkm/[topico]/_[slug]/",
      "descricao": "[descrição aprovada]",
      "topico": "[topico]",
      "ambito": "[pessoal | trabalho | ambos]"
@@ -106,13 +106,13 @@ O helper cria o diretório, o `.gitkeep`, o `_grupo.md` com frontmatter e insere
 - **Slug em pt-BR, kebab-case, sem acentos.**
 - **Nunca pule a etapa de confirmação.**
 - **`.gitkeep` obrigatório** em cada novo diretório.
-- **Sincronia obrigatória entre pasta e `pkm/sistema/indices/grupos.json`.**
+- **Sincronia obrigatória entre pasta e `index/grupos.json`.**
 - **Sem logs** — fase 1.
 
 ## Arquivos de Referência
 
 - `.agents/skills/criar-grupo/scripts/criar_grupo.py` — helper (verificar / criar)
 - `docs/flows/criar-grupo.md` — especificação do fluxo de criação de grupo
-- `pkm/sistema/indices/grupos.json` — índice de grupos (a ser atualizado)
+- `index/grupos.json` — índice de grupos (a ser atualizado)
 - `docs/schemas/frontmatter-grupo.md` — esquema do `_grupo.md`
 - `docs/pkm-structure.md` — estrutura de diretórios

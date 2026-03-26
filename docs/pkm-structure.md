@@ -4,32 +4,32 @@ Mapa arquitetônico do repositório. Agentes de IA e humanos devem seguir esta c
 
 ## Convenção de prefixos
 
-- **`__`** (duplo sublinhado) — bandeja de entrada. Apenas `__inbox/`.
-- **`_`** (sublinhado simples) — nó da taxonomia. Tópicos e subtópicos são pastas com prefixo `_` na raiz do repositório.
-- **Sem prefixo** — infraestrutura (`sistema/`) e grupos (pastas sem `_` dentro de tópicos).
+- **`__`** (duplo sublinhado) — bandeja de entrada. Apenas `pkm/__inbox/`.
+- **Sem prefixo** — tópicos da taxonomia (ex: `pkm/tecnologia/`, `pkm/saude/`).
+- **`_`** (sublinhado simples) — grupos (ex: `pkm/tecnologia/_meu-framework/`) e subtópicos (ex: `pkm/tecnologia/_llms/`).
 
 ```
 ai-pkm/
-├── __inbox/                          # bandeja de entrada dos fluxos de entrada
-├── _carreira/                        # tópico raiz
-├── _cultura/                         # tópico raiz
-├── _desenvolvimento-pessoal/         # tópico raiz
-│   ├── nate-jones-second-brain.md    # item baseado em URL (tem campo url)
-│   └── tiago-forte-metodo-para.md    # item baseado em URL (tem campo url)
-├── _saude/                           # tópico raiz
-├── _tecnologia/                      # tópico raiz
-│   ├── _llms/                        # subtópico (nó da taxonomia, tem _)
-│   ├── meu-framework/                # grupo (sem _, tem _grupo.md)
-│   │   ├── _grupo.md
-│   │   └── ...
-│   ├── artigo-solto.md               # arquivo solto
-│   ├── arquitetura-agentes.svg       # binário de conhecimento
-│   └── arquitetura-agentes.svg.md    # sidecar com frontmatter
-├── sistema/                          # infraestrutura (sem prefixo)
-│   ├── convencoes/
-│   ├── esquemas/
-│   ├── indices/
-│   └── logs/
+├── index/                            # índices JSON (fonte de verdade derivada)
+│   ├── grupos.json
+│   ├── models.json
+│   └── topicos.json
+├── pkm/                              # repositório de conteúdo (montado separadamente)
+│   ├── __inbox/                      # bandeja de entrada dos fluxos de entrada
+│   ├── carreira/                     # tópico raiz (sem prefixo)
+│   ├── cultura/                      # tópico raiz (sem prefixo)
+│   ├── desenvolvimento-pessoal/      # tópico raiz (sem prefixo)
+│   │   ├── nate-jones-second-brain.md
+│   │   └── tiago-forte-metodo-para.md
+│   ├── saude/                        # tópico raiz (sem prefixo)
+│   └── tecnologia/                   # tópico raiz (sem prefixo)
+│       ├── _llms/                    # subtópico (nó da taxonomia, tem _)
+│       ├── _meu-framework/           # grupo (tem _, tem _grupo.md)
+│       │   ├── _grupo.md
+│       │   └── ...
+│       ├── artigo-solto.md           # arquivo solto
+│       ├── arquitetura-agentes.svg   # binário de conhecimento
+│       └── arquitetura-agentes.svg.md # sidecar com frontmatter
 ├── .agents/
 │   └── skills/
 ├── .claude/
@@ -50,26 +50,25 @@ Ponto único de entrada. Arquivos podem chegar aqui por conversa com a IA (`/ano
 - Zero subpastas — nenhuma decisão de organização na hora de registrar ou copiar algo.
 - Aceita Markdown e binários puros sem sidecar. Frontmatter e sidecars são criados apenas na triagem.
 
-### `_[topico]/`
+### `pkm/[topico]/`
 
-Cada tópico da taxonomia é uma pasta `_[topico]/` na raiz do repositório. Dentro de um tópico, o conteúdo pode ser:
+Cada tópico da taxonomia é uma pasta `[topico]/` dentro de `pkm/` (sem prefixo). Dentro de um tópico, o conteúdo pode ser:
 
 - **Arquivos soltos** — conhecimento (próprio ou baseado em URL) diretamente na pasta do tópico.
-- **Subtópicos** — pastas `_[subtopico]/` (com prefixo `_`) para subdivisões do tópico.
-- **Grupos** — pastas sem prefixo `_` que agrupam conteúdo por objetivo. Cada grupo contém um `_grupo.md` com frontmatter descritivo.
+- **Subtópicos** — pastas `_[subtopico]/` (com prefixo `_`) para subdivisões taxonômicas do tópico.
+- **Grupos** — pastas `_[grupo]/` (com prefixo `_`) que agrupam conteúdo por objetivo. Cada grupo contém um `_grupo.md` com frontmatter descritivo. Distinção de subtópicos: grupos têm `_grupo.md`, subtópicos não.
 
 A distinção entre conteúdo próprio e itens baseados em URL é feita pelo campo `url` no frontmatter e pelo prefixo `url_` no nome do arquivo: se presente, o arquivo representa uma URL externa; se ausente, é conteúdo próprio. O campo `url` nunca aponta para binários locais pareados com sidecar. As regras completas de nomenclatura estão em [`nomenclatura-de-arquivos.md`](nomenclatura-de-arquivos.md).
 
 Grupos não são tarefas nem projetos com prazo — são agrupadores persistentes de conhecimento. Não carregam status, vencimento ou noção de "ativo/inativo"; permanecem enquanto fizer sentido como unidade de organização.
 
-### `sistema/`
+### `index/`
 
-Infraestrutura do repositório: manuais, esquemas e dados derivados.
+Índices JSON derivados do conteúdo do `pkm/`, armazenados na raiz do `ai-pkm`:
 
-- **`convencoes/`** — regras de comportamento e processos (ex: estrutura de pastas, taxonomia, logs).
-- **`esquemas/`** — contratos técnicos (ex: YAML Frontmatter de [frontmatter-conhecimento.md](../esquemas/frontmatter-conhecimento.md) e [frontmatter-grupo.md](../esquemas/frontmatter-grupo.md)).
-- **`indices/`** — índices JSON do sistema (`grupos.json` derivado do frontmatter; `topicos.json` curado via `/reorganizar-topicos`). Consulte a convenção [Índices](../convencoes/indices.md) para detalhes.
-- **`logs/`** — logs de auditoria para ações automatizadas (Fase 2). Consulte a [Política de Logs](../convencoes/politica-de-logs.md) para o status atual.
+- **`grupos.json`** — catálogo de grupos derivado do frontmatter dos arquivos `_grupo.md`.
+- **`topicos.json`** — taxonomia de tópicos válidos, curada via `/reorganizar-topicos`.
+- **`models.json`** — catálogo de modelos de nota disponíveis em `docs/schemas/`.
 
 > [!NOTE]
 > **Backup:** o repositório Git é o único meio homologado de persistência e backup. Arquivos de mídia pesados não fazem parte do escopo duradouro, prevenindo o inchaço da pasta `.git`.
@@ -99,5 +98,5 @@ A taxonomia admite no máximo 2 níveis. Quando um tópico raiz fica amplo demai
 ### `.gitkeep`
 
 Pastas que podem ficar vazias devem conter `.gitkeep` para preservar a estrutura no Git. Pastas que exigem `.gitkeep`:
-- Tópicos na raiz (`_carreira/`, `_cultura/`, etc.) quando vazios
-- `__inbox/`
+- Tópicos em `pkm/` (`pkm/carreira/`, `pkm/cultura/`, etc.) quando vazios
+- `pkm/__inbox/`

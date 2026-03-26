@@ -7,8 +7,8 @@ Este documento descreve os contratos estruturais do repositório `pkm` — o ace
 O repositório `pkm` usa prefixos com significado arquitetural:
 
 - `__inbox/` — ponto único de entrada; aceita Markdown provisório e binários; nenhuma decisão estrutural definitiva acontece aqui
-- `_[topico]/` — nós da taxonomia (ex: `_tecnologia/`, `_saude/`)
-- pastas sem prefixo dentro de tópicos — grupos, identificados pela presença de `_grupo.md`
+- `[topico]/` — nós da taxonomia (ex: `tecnologia/`, `saude/`); sem prefixo
+- `_[grupo]/` dentro de tópicos — grupos, identificados pela presença de `_grupo.md`; prefixo `_`
 
 A taxonomia admite no máximo dois níveis: tópico raiz e subtópico. Não existe terceiro nível. Se um subtópico crescer demais, a resposta é quebrá-lo em subtópicos irmãos dentro do tópico pai.
 
@@ -16,16 +16,16 @@ A taxonomia admite no máximo dois níveis: tópico raiz e subtópico. Não exis
 
 O sistema distingue dois tipos de arquivo de conhecimento:
 
-**`tipo: nota`** — qualquer material com elaboração mínima além de um rótulo. Recebe campo `modelo` quando um modelo de estrutura foi aplicado.
+**Nota** — qualquer material com elaboração mínima além de um rótulo. Identificada pela ausência do prefixo `url_`. Recebe campo `modelo` quando um modelo de estrutura foi aplicado.
 
-**`tipo: url`** — URL isolada com no máximo um rótulo curto. O tipo não é decidido pelo assunto, mas pela estrutura do material: se há elaboração, é nota.
+**URL** — URL isolada com no máximo um rótulo curto. Identificada pelo prefixo `url_` no nome do arquivo. O tipo não é decidido pelo assunto, mas pela estrutura do material: se há elaboração, é nota.
 
 ## Convenções de nomenclatura
 
-Todo o repositório usa kebab-case. O caractere `_` aparece apenas como prefixo estrutural (`__inbox/`, `_[topico]/`, `url_`).
+Todo o repositório usa kebab-case. O caractere `_` aparece apenas como prefixo estrutural (`__inbox/`, `_[grupo]/`, `url_`).
 
-- Arquivos `tipo: url` usam prefixo `url_` e seguem o padrão `url_autor-titulo.md`
-- Arquivos `tipo: nota` não usam prefixo e são nomeados em português do Brasil
+- Arquivos de URL usam prefixo `url_` e seguem o padrão `url_autor-titulo.md`
+- Notas não usam prefixo e são nomeadas em português do Brasil
 - Sidecars preservam o nome completo do binário principal (ex: `fluxo.excalidraw.md`)
 
 ## Binários e sidecars
@@ -34,15 +34,19 @@ Arquivos não-Markdown com valor de conhecimento precisam de um sidecar adjacent
 
 ## Frontmatter
 
-Todo arquivo Markdown de conhecimento usa YAML frontmatter. Campos obrigatórios:
+Todo arquivo Markdown de conhecimento usa YAML frontmatter. Campo obrigatório:
 
-- `url` — quando aplicável (tipo: url)
-- `modelo` — campo unificado que substitui os antigos `formato` e `template`; indica o modelo de estrutura aplicado
-- `autores` — quando aplicável
-- `data_captura`
-- `data_publicacao` — quando aplicável
+- `estado` — `rascunho` ou `finalizado`; obrigatório em todos os itens
 
-Campos derivados **não entram no frontmatter**: `topico` (derivado da pasta), `tipo` (deduzível pelo padrão do arquivo), `processado`, `maturidade`, `ambito`, `descricao`. Campos vazios e valores `null` são proibidos.
+Campos opcionais (incluir somente quando aplicável, nunca `null`):
+
+- `url` — obrigatório em arquivos de URL (prefixo `url_`), proibido em notas
+- `modelo` — campo unificado; indica o modelo de estrutura aplicado (`nota-ferramenta`, `extrato`, `resumo`, etc.)
+- `autores` — quando identificável
+- `data_captura` — data em que o item foi registrado
+- `data_publicacao` — data de publicação da fonte original
+
+Campos derivados **não entram no frontmatter**: `topico` (derivado da pasta), `tipo` (deduzível pelo padrão do arquivo), `ambito`, `descricao`. Campos vazios e valores `null` são proibidos.
 
 ## Grupos
 

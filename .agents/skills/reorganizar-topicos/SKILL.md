@@ -17,8 +17,8 @@ Esta skill implementa o **Fluxo 7 — Reorganizar Tópicos** descrito em `docs/f
 - A taxonomia suporta no máximo **2 níveis**.
 - Nunca crie terceiro nível hierárquico.
 - Se um subtópico ficou amplo demais, a quebra correta é em **subtópicos irmãos no tópico pai**.
-- `pkm/sistema/indices/topicos.json` é a fonte da verdade para tópicos válidos.
-- `pkm/sistema/indices/grupos.json` é derivado; quando grupos forem afetados, ele deve permanecer coerente com o frontmatter.
+- `index/topicos.json` é a fonte da verdade para tópicos válidos.
+- `index/grupos.json` é derivado; quando grupos forem afetados, ele deve permanecer coerente com o frontmatter.
 - Se a evidência for insuficiente, a resposta correta é **não reorganizar**.
 
 ---
@@ -43,8 +43,8 @@ Use este modo quando o problema estiver dentro de um tópico raiz ou subtópico 
 ### Entrada
 
 1. Identifique o alvo:
-   - tópico raiz (`_[topico]/`)
-   - subtópico (`_[topico]/_[subtopico]/`)
+   - tópico raiz (`pkm/[topico]/`)
+   - subtópico (`pkm/[topico]/_[subtopico]/`)
 2. Se o alvo não tiver sido informado, pergunte qual pasta deve ser analisada.
 
 ### Análise
@@ -101,7 +101,7 @@ Use este modo quando o problema for estrutural no conjunto dos tópicos raiz.
 
 ### Análise
 
-1. Consulte `pkm/sistema/indices/topicos.json`.
+1. Consulte `index/topicos.json`.
 2. Analise a distribuição real do conteúdo existente.
 3. Busque recorrência de temas e sinais de desalinhamento:
    - arquivos sem encaixe bom
@@ -134,7 +134,7 @@ Plano de migração:
 - [arquivo/grupo afetado]
 
 Atualizações necessárias:
-- pkm/sistema/indices/topicos.json
+- index/topicos.json
 - frontmatter dos arquivos afetados
 - grupos.json, se houver grupos impactados
 
@@ -180,6 +180,6 @@ Após executar qualquer reorganização:
 - `docs/flows/reorganizar-topicos.md` — especificação do fluxo de reorganização de tópicos
 - `docs/pkm-taxonomy.md` — regras da taxonomia
 - `docs/pkm-structure.md` — papel de tópicos, subtópicos e grupos
-- `pkm/sistema/indices/topicos.json` — taxonomia vigente
-- `pkm/sistema/indices/grupos.json` — índice derivado de grupos
-- `docs/schemas/frontmatter-conhecimento.md` — contrato do campo `topico`
+- `index/topicos.json` — taxonomia vigente
+- `index/grupos.json` — índice derivado de grupos
+- `docs/schemas/frontmatter-item.md` — contrato dos itens de conhecimento

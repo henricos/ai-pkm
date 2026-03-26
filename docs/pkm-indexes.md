@@ -1,10 +1,10 @@
 # Convenção: Índices JSON
 
-Os índices são arquivos JSON centralizados em `sistema/indices/`. Eles permitem que skills e agentes façam consultas rápidas sem varrer pastas ou arquivos.
+Os índices são arquivos JSON centralizados em `index/`. Eles permitem que skills e agentes façam consultas rápidas sem varrer pastas ou arquivos.
 
 ## Localização
 
-Todos os índices vivem em `sistema/indices/`.
+Todos os índices vivem em `index/`.
 
 ## Índice derivado: `grupos.json`
 
@@ -25,16 +25,16 @@ Mantido exclusivamente via `/reorganizar-topicos`. Não é derivado de frontmatt
 
 | Campo | Tipo | Descrição |
 |---|---|---|
-| `id` | string | Identificador em kebab-case; usado como nome de pasta (com prefixo `_`) e valor no frontmatter |
+| `id` | string | Identificador em kebab-case; usado como nome de pasta e valor no frontmatter |
 | `descricao` | string | Escopo do tópico, otimizado para orientar a classificação |
 | `subtopicos` | array | Objetos com `id` e `descricao` (opcional) |
 
-## URLs com ação pendente
+## URLs com processamento pendente
 
-Não há índice dedicado para URLs. A localização de URLs com ação pendente é feita via grep programático:
+Não há índice dedicado para URLs. A localização de URLs ainda não processadas é feita via grep programático:
 
 ```bash
-grep -rl "acao_pendente:" _*/ --include="*.md" | xargs grep -L "acao_pendente: nenhuma"
+grep -rl "estado: rascunho" pkm/*/ --include="url_*.md"
 ```
 
 ## Quando atualizar
@@ -46,4 +46,4 @@ Cada skill que cria, modifica ou remove entradas deve atualizar o índice corres
 - `/reorganizar-topicos` → `topicos.json` e `grupos.json` (quando a reorganização mover, renomear ou reclassificar tópicos/grupos)
 - `/recriar-indices` → `grupos.json` (regeneração completa)
 
-Para checagem não mutante de coerência entre `_grupo.md` e `grupos.json`, use a skill `/validar-estrutura`.
+Para checagem não mutante de coerência entre `_grupo.md` e `index/grupos.json`, use a skill `/validar-estrutura`.

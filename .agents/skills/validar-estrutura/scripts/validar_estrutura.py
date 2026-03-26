@@ -12,8 +12,9 @@ import yaml
 
 
 ROOT = Path(__file__).resolve().parents[4]
-TOPICOS_PATH = ROOT / "sistema" / "indices" / "topicos.json"
-GRUPOS_PATH = ROOT / "sistema" / "indices" / "grupos.json"
+PKM_DIR = ROOT / "pkm"
+TOPICOS_PATH = ROOT / "index" / "topicos.json"
+GRUPOS_PATH = ROOT / "index" / "grupos.json"
 TEMPORAL_GROUP_FIELDS = {"deadline", "status", "data_inicio"}
 EMBED_PATTERNS = (
     re.compile(r"!\[\[[^\]]+\]\]"),
@@ -76,13 +77,30 @@ def parse_skill_frontmatter(path: Path) -> tuple[dict[str, Any] | None, str]:
 
 
 def expected_topic_from_path(path: Path) -> str | None:
-    parts = path.parts
-    if not parts or not parts[0].startswith("_"):
+    """Infere o valor esperado do campo `topico` a partir do caminho (relativo a ROOT).
+
+    Estrutura nova: pkm/TOPICO/_GRUPO/arquivo.md ou pkm/TOPICO/_SUBTOPICO/arquivo.md
+    - Grupos têm _grupo.md na pasta → arquivo pertence ao tópico raiz.
+    - Subtópicos não têm _grupo.md → arquivo pertence a topico/subtopico.
+    """
+    parts = path.parts  # relative to ROOT
+    if len(parts) < 2 or parts[0] != "pkm":
         return None
 
-    root_topic = parts[0][1:]
-    if len(parts) >= 2 and parts[1].startswith("_"):
-        return f"{root_topic}/{parts[1][1:]}"
+    root_topic = parts[1]
+    if root_topic.startswith(("_", ".")):
+        return None  # __inbox, hidden dirs
+
+    # Check if there's a _* dir at level 2 (could be subtopic or group)
+    if len(parts) >= 4 and parts[2].startswith("_"):
+        second_dir = PKM_DIR / parts[1] / parts[2]
+        # Groups have _grupo.md → file belongs to root topic
+        if (second_dir / "_grupo.md").exists():
+            return root_topic
+        else:
+            # Subtopic → return topico/subtopico (strip _ prefix)
+            return f"{root_topic}/{parts[2][1:]}"
+
     return root_topic
 
 
@@ -138,27 +156,27 @@ def main() -> int:
         for subtopic_id in root_topics[topic_id]:
             valid_topic_values.add(f"{topic_id}/{subtopic_id}")
 
-    expected_root_dirs = {f"_{topic_id}" for topic_id in root_topics}
+    expected_root_dirs = {topic_id for topic_id in root_topics}
     actual_root_dirs = {
         path.name
-        for path in ROOT.iterdir()
-        if path.is_dir() and path.name.startswith("_") and path.name != "__inbox"
+        for path in PKM_DIR.iterdir()
+        if path.is_dir() and not path.name.startswith(("_", "."))
     }
 
     for missing in sorted(expected_root_dirs - actual_root_dirs):
-        issues.append(Issue("erro", missing, "Tópico da taxonomia sem pasta correspondente na raiz."))
+        issues.append(Issue("erro", missing, "Tópico da taxonomia sem pasta correspondente em pkm/."))
 
     for extra in sorted(actual_root_dirs - expected_root_dirs):
         issues.append(Issue("erro", extra, "Pasta de tópico não consta em topicos.json."))
 
-    inbox = ROOT / "__inbox"
+    inbox = PKM_DIR / "__inbox"
     if inbox.exists():
         inbox_visible = [item for item in inbox.iterdir() if item.name != ".gitkeep"]
         if not inbox_visible and not (inbox / ".gitkeep").exists():
-            issues.append(Issue("erro", "__inbox", "Inbox vazia sem .gitkeep."))
+            issues.append(Issue("erro", "pkm/__inbox", "Inbox vazia sem .gitkeep."))
 
     for topic_dir_name in expected_root_dirs & actual_root_dirs:
-        topic_dir = ROOT / topic_dir_name
+        topic_dir = PKM_DIR / topic_dir_name
         visible = [item for item in topic_dir.iterdir() if item.name != ".gitkeep"]
         if not visible and not (topic_dir / ".gitkeep").exists():
             issues.append(Issue("erro", topic_dir_name, "Tópico raiz vazio sem .gitkeep."))
@@ -166,33 +184,35 @@ def main() -> int:
     expected_groups: list[dict[str, str]] = []
     topic_binary_files: set[Path] = set()
 
-    for path in sorted(ROOT.glob("_*/**/*")):
+    for path in sorted(PKM_DIR.glob("*/**/*")):
+        rel = path.relative_to(PKM_DIR)
+        if rel.parts[0] == "__inbox":
+            continue
         if not path.is_file() or path.name == ".gitkeep":
             continue
         if path.suffix == ".md":
             continue
         topic_binary_files.add(path)
 
-    for md_path in sorted(ROOT.glob("_*/**/*.md")):
+    for md_path in sorted(PKM_DIR.glob("*/**/*.md")):
         relative = md_path.relative_to(ROOT)
         parts = relative.parts
+        # parts: ("pkm", topic_or_inbox, ...)
 
-        if parts[0] == "__inbox":
+        if parts[1] == "__inbox":
             continue
 
         check_markdown_for_embeds(md_path, issues)
 
-        if len(parts) >= 3 and parts[1].startswith("_") and md_path.name == "_grupo.md":
-            issues.append(Issue("erro", relative.as_posix(), "Grupo não pode existir dentro de subtópico."))
-
         if md_path.name == "_grupo.md":
-            if len(parts) != 3:
-                issues.append(Issue("erro", relative.as_posix(), "_grupo.md deve viver em _[topico]/[grupo]/_grupo.md."))
+            # Valid position: pkm/TOPICO/_GRUPO/_grupo.md (exactly 4 parts)
+            if len(parts) != 4:
+                issues.append(Issue("erro", relative.as_posix(), "_grupo.md deve viver em pkm/[topico]/_[grupo]/_grupo.md."))
                 continue
 
-            root_topic_dir, group_dir_name, _ = parts
-            if group_dir_name.startswith("_"):
-                issues.append(Issue("erro", relative.as_posix(), "Grupo não pode usar prefixo _."))
+            _, root_topic_dir, group_dir_name, _ = parts
+            if not group_dir_name.startswith("_"):
+                issues.append(Issue("erro", relative.as_posix(), "Pasta de grupo deve usar prefixo _."))
 
             frontmatter, error = parse_frontmatter(md_path)
             if frontmatter is None:
@@ -207,7 +227,7 @@ def main() -> int:
             for field in extra_temporal:
                 issues.append(Issue("erro", relative.as_posix(), f"Grupo não pode declarar campo temporal `{field}`."))
 
-            expected_topic = root_topic_dir[1:]
+            expected_topic = root_topic_dir  # topic has no _ prefix
             actual_topic = frontmatter.get("topico")
             if actual_topic and actual_topic != expected_topic:
                 issues.append(
@@ -239,71 +259,30 @@ def main() -> int:
             issues.append(Issue("erro", relative.as_posix(), error))
             continue
 
-        for field in ("descricao", "topico"):
-            if field not in frontmatter:
-                issues.append(Issue("erro", relative.as_posix(), f"Arquivo de conhecimento sem campo obrigatório `{field}`."))
-
-        topic_value = frontmatter.get("topico")
-        if topic_value and topic_value not in valid_topic_values:
-            issues.append(Issue("erro", relative.as_posix(), f"Valor de `topico` inválido: `{topic_value}`."))
-
-        expected_topic = expected_topic_from_path(relative)
-        if topic_value and expected_topic and topic_value != expected_topic:
+        # Verificação de estado: obrigatório em todo arquivo de conhecimento
+        estado_value = frontmatter.get("estado")
+        VALID_ESTADO = {"rascunho", "finalizado"}
+        if estado_value is None:
+            issues.append(Issue("erro", relative.as_posix(), "Arquivo de conhecimento sem campo obrigatório `estado`."))
+        elif estado_value not in VALID_ESTADO:
             issues.append(
                 Issue(
                     "erro",
                     relative.as_posix(),
-                    f"Valor de `topico` diverge do caminho: esperado `{expected_topic}`, encontrado `{topic_value}`.",
+                    f"Valor inválido para `estado`: `{estado_value}`. Valores permitidos: rascunho | finalizado.",
                 )
             )
 
-        # Verificação bidirecional: prefixo url_ × tipo: url
+        # Verificação de url: obrigatório em arquivos url_, proibido nos demais
         has_url_prefix = md_path.name.startswith("url_")
-        tipo_value = frontmatter.get("tipo")
-        if has_url_prefix and tipo_value != "url":
+        url_value = frontmatter.get("url")
+        if has_url_prefix and not url_value:
             issues.append(
-                Issue(
-                    "erro",
-                    relative.as_posix(),
-                    f"Arquivo com prefixo `url_` deve ter `tipo: url` no frontmatter (encontrado: `tipo: {tipo_value}`).",
-                )
+                Issue("erro", relative.as_posix(), "Arquivo com prefixo `url_` deve ter campo `url` no frontmatter.")
             )
-        if tipo_value == "url" and not has_url_prefix:
+        if not has_url_prefix and url_value:
             issues.append(
-                Issue(
-                    "erro",
-                    relative.as_posix(),
-                    "Arquivo com `tipo: url` no frontmatter deve ter prefixo `url_` no nome do arquivo.",
-                )
-            )
-
-        # Verificação de maturidade: obrigatório em tipo: nota, proibido em tipo: url
-        maturidade_value = frontmatter.get("maturidade")
-        VALID_MATURIDADE = {"rascunho", "maduro"}
-        if tipo_value == "nota":
-            if maturidade_value is None:
-                issues.append(
-                    Issue(
-                        "erro",
-                        relative.as_posix(),
-                        "Arquivo `tipo: nota` sem campo obrigatório `maturidade`.",
-                    )
-                )
-            elif maturidade_value not in VALID_MATURIDADE:
-                issues.append(
-                    Issue(
-                        "erro",
-                        relative.as_posix(),
-                        f"Valor inválido para `maturidade`: `{maturidade_value}`. Valores permitidos: rascunho | maduro.",
-                    )
-                )
-        if tipo_value == "url" and maturidade_value is not None:
-            issues.append(
-                Issue(
-                    "erro",
-                    relative.as_posix(),
-                    "Arquivo `tipo: url` não deve conter o campo `maturidade`.",
-                )
+                Issue("erro", relative.as_posix(), "Arquivo sem prefixo `url_` não deve ter campo `url` no frontmatter.")
             )
 
     for binary_path in sorted(topic_binary_files):
@@ -319,13 +298,16 @@ def main() -> int:
             )
 
     for topic_dir_name, subtopics in root_topics.items():
-        topic_dir = ROOT / f"_{topic_dir_name}"
+        topic_dir = PKM_DIR / topic_dir_name
         if not topic_dir.exists():
             continue
 
         for child in sorted(topic_dir.iterdir()):
             if not child.is_dir() or not child.name.startswith("_"):
                 continue
+            # Distinguish groups from subtopics: groups have _grupo.md
+            if (child / "_grupo.md").exists():
+                continue  # it's a group, not a subtopic
             subtopic_name = child.name[1:]
             if subtopic_name not in subtopics:
                 issues.append(
@@ -352,7 +334,7 @@ def main() -> int:
         issues.append(
             Issue(
                 "erro",
-                "sistema/indices/grupos.json",
+                "index/grupos.json",
                 "Índice divergente do frontmatter dos arquivos _grupo.md.",
             )
         )

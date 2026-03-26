@@ -30,7 +30,7 @@ VENV_DIR = SCRIPT_DIR / ".venv"
 VENV_PYTHON = VENV_DIR / "bin" / "python"
 PYPROJECT_PATH = SCRIPT_DIR / "pyproject.toml"
 UV_LOCK_PATH = SCRIPT_DIR / "uv.lock"
-PENDENTE_GLOB = "_*/**/*.md"
+PENDENTE_GLOB = "pkm/*/**/*.md"
 USER_AGENT = (
     "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
     "(KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
@@ -119,10 +119,7 @@ class HtmlTextoParser(HTMLParser):
 class ItemPendente:
     arquivo: Path
     url: str
-    formato: str
-    tipo_frontmatter: str | None
-    processado: bool
-    descricao: str | None
+    modelo: str
 
 
 @dataclass
@@ -141,7 +138,7 @@ class ResultadoProcessamento:
     arquivo: str
     url: str
     tipo_detectado: str
-    formato: str
+    modelo: str
     origem_texto: str | None
     estrategia: list[str]
     metadados: dict[str, Any]
@@ -220,36 +217,32 @@ def carregar_item(arquivo: Path) -> ItemPendente:
     conteudo = arquivo.read_text(encoding="utf-8")
     frontmatter, _ = separar_frontmatter(conteudo)
     url = frontmatter.get("url")
-    formato = frontmatter.get("formato")
+    modelo = frontmatter.get("modelo")
 
-    if not url or not formato:
-        raise ErroProcessamento(f"{arquivo} nao possui url e formato validos.")
+    if not url or not modelo:
+        raise ErroProcessamento(f"{arquivo} nao possui url e modelo validos.")
 
-    processado = frontmatter.get("processado", False)
-    if processado is True:
-        raise ErroProcessamento(f"{arquivo} ja esta processado.")
+    estado = frontmatter.get("estado", "rascunho")
+    if estado == "finalizado":
+        raise ErroProcessamento(f"{arquivo} ja esta finalizado.")
 
     return ItemPendente(
         arquivo=arquivo,
         url=str(url),
-        formato=str(formato),
-        tipo_frontmatter=frontmatter.get("tipo"),
-        processado=bool(processado),
-        descricao=frontmatter.get("descricao"),
+        modelo=str(modelo),
     )
 
 
 def listar_arquivos_pendentes() -> list[ItemPendente]:
     itens: list[ItemPendente] = []
     for arquivo in REPO_DIR.glob(PENDENTE_GLOB):
-        if arquivo.name == "_grupo.md":
+        if arquivo.name == "_grupo.md" or not arquivo.name.startswith("url_"):
             continue
         try:
             item = carregar_item(arquivo)
         except ErroProcessamento:
             continue
-        if not item.processado:
-            itens.append(item)
+        itens.append(item)
     return sorted(itens, key=lambda item: item.arquivo.as_posix())
 
 
@@ -295,10 +288,10 @@ def detectar_tipo_url(url: str, content_type: str | None = None) -> str:
     return "web"
 
 
-def acao_compativel(tipo_detectado: str, formato: str) -> bool:
-    if formato == "resumo":
+def acao_compativel(tipo_detectado: str, modelo: str) -> bool:
+    if modelo == "resumo":
         return tipo_detectado in {"web", "pdf", "youtube", "instagram", "tiktok"}
-    if formato == "extrato":
+    if modelo == "extrato":
         return tipo_detectado in {"web", "pdf"}
     return False
 
@@ -1004,12 +997,9 @@ def inspecionar_item(item: ItemPendente) -> dict[str, Any]:
         "arquivo": item.arquivo.as_posix(),
         "url": item.url,
         "tipo_detectado": tipo_detectado,
-        "tipo_frontmatter": item.tipo_frontmatter,
-        "formato": item.formato,
-        "processado": item.processado,
-        "descricao": item.descricao,
+        "modelo": item.modelo,
         "content_type": content_type,
-        "acao_compativel": acao_compativel(tipo_detectado, item.formato),
+        "acao_compativel": acao_compativel(tipo_detectado, item.modelo),
         "estrategia": estrategia_por_tipo(tipo_detectado),
     }
 
@@ -1044,7 +1034,7 @@ def coletar_item(item: ItemPendente, forcar: bool = False) -> ResultadoProcessam
         raise ErroProcessamento("Formato nao suportado por este fluxo.")
     if not inspecao["acao_compativel"]:
         raise ErroProcessamento(
-            f"O formato `{item.formato}` nao e compativel com URLs do tipo `{tipo_detectado}`."
+            f"O modelo `{item.modelo}` nao e compativel com URLs do tipo `{tipo_detectado}`."
         )
 
     TEMP_DIR.mkdir(parents=True, exist_ok=True)
@@ -1085,7 +1075,7 @@ def coletar_item(item: ItemPendente, forcar: bool = False) -> ResultadoProcessam
         arquivo=item.arquivo.as_posix(),
         url=item.url,
         tipo_detectado=tipo_detectado,
-        formato=item.formato,
+        modelo=item.modelo,
         origem_texto=coleta.origem_texto,
         estrategia=estrategia_por_tipo(tipo_detectado),
         metadados=coleta.metadados,
@@ -1125,9 +1115,7 @@ def comando_listar_pendentes(args: argparse.Namespace) -> int:
         {
             "arquivo": item.arquivo.as_posix(),
             "url": item.url,
-            "formato": item.formato,
-            "tipo_frontmatter": item.tipo_frontmatter,
-            "processado": item.processado,
+            "modelo": item.modelo,
             "tem_cache": bool(_listar_arquivos_cache(item.arquivo.stem)),
             "arquivos_cache": _listar_arquivos_cache(item.arquivo.stem),
         }
@@ -1182,7 +1170,7 @@ def construir_parser() -> argparse.ArgumentParser:
     validar.add_argument("--json", action="store_true", help="Emite resultado em JSON.")
     validar.set_defaults(func=comando_validar_ambiente)
 
-    listar = subparsers.add_parser("listar-pendentes", help="Lista arquivos com url e processado: false.")
+    listar = subparsers.add_parser("listar-pendentes", help="Lista arquivos url_ com estado: rascunho.")
     listar.add_argument("--json", action="store_true", help="Emite resultado em JSON.")
     listar.set_defaults(func=comando_listar_pendentes)
 

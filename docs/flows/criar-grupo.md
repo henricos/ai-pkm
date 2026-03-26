@@ -6,8 +6,8 @@
 
 **O que faz:**
 1. O usuário explica livremente o grupo.
-2. A IA determina o tópico (via `pkm/sistema/indices/topicos.json`), gera uma descrição otimizada para busca e deduz o âmbito (`pessoal`, `trabalho` ou `ambos`). Todos são apresentados para aprovação.
-3. Cria a pasta em `_[topico]/[slug]/`, gera o arquivo `_grupo.md` com frontmatter padronizado e registra a entrada em `pkm/sistema/indices/grupos.json`.
+2. A IA determina o tópico (via `index/topicos.json`), gera uma descrição otimizada para busca e deduz o âmbito (`pessoal`, `trabalho` ou `ambos`). Todos são apresentados para aprovação.
+3. Cria a pasta em `pkm/[topico]/_[slug]/`, gera o arquivo `_grupo.md` com frontmatter padronizado e registra a entrada em `index/grupos.json`.
 
 Aguarda aprovação antes de qualquer criação de arquivo.
 

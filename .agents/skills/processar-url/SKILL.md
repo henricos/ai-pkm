@@ -1,6 +1,6 @@
 ---
 name: processar-url
-description: "Processa arquivos com `url` e `processado: false`, fazendo extração ou resumo do conteúdo conforme o `formato` definido na triagem. Marca `processado: true` ao concluir e pode melhorar o nome do arquivo quando fizer sentido."
+description: "Processa arquivos `url_` com `estado: rascunho`, fazendo extração ou resumo do conteúdo conforme o `modelo` definido na triagem. Marca `estado: finalizado` ao concluir e pode melhorar o nome do arquivo quando fizer sentido."
 command: /processar-url
 ---
 
@@ -44,11 +44,11 @@ Pré-requisitos fatais (exigem ação manual do usuário):
    ```bash
    uv --directory .agents/skills/processar-url/scripts run python processar_url.py listar-pendentes --json
    ```
-   O helper usa glob `url_*.md` em `pkm/_*/` e filtra por `processado: false`.
-2. Para cada arquivo encontrado, confirme que `processado` é `false`.
+   O helper usa glob `url_*.md` em `pkm/*/` e filtra por `estado: rascunho`.
+2. Para cada arquivo encontrado, confirme que `estado` é `rascunho`.
 3. Se não houver URLs pendentes, informe o usuário e encerre:
 
-> *"Nenhuma URL com ação pendente encontrada. Nada a processar."*
+> *"Nenhuma URL com `estado: rascunho` encontrada. Nada a processar."*
 
 ---
 
@@ -57,10 +57,10 @@ Pré-requisitos fatais (exigem ação manual do usuário):
 Apresente os arquivos encontrados em tabela:
 
 ```text
-| # | Arquivo | Formato | URL |
+| # | Arquivo | Modelo | URL |
 |---|---|---|---|
-| 1 | _tecnologia/guia-fine-tuning.md | extrato | https://... |
-| 2 | _saude/artigo-jejum.md | resumo | https://... |
+| 1 | tecnologia/url_guia-fine-tuning.md | extrato | https://... |
+| 2 | saude/url_artigo-jejum.md | resumo | https://... |
 ```
 
 Apresente uma única pergunta integrando escopo e decisão de cache:
@@ -100,7 +100,7 @@ Para cada arquivo selecionado:
    - `instagram` / `tiktok` -> `yt-dlp` metadata (caption como complemento) + `yt-dlp` subtitles -> `yt-dlp` + `faster-whisper`
    - `pdf` -> `Docling` -> `PyMuPDF` (fallback)
 3. Se o tipo vier como `nao_suportado`, não baixe o recurso. Informe ao usuário que o formato está fora do escopo do fluxo.
-4. Se `formato` for incompatível com o tipo detectado (ex: `extrato` em vídeo), interrompa o item e proponha conversão para `resumo` antes de prosseguir. **`extrato` é válido apenas para `web` e `pdf` — nunca para YouTube, Instagram ou TikTok.**
+4. Se `modelo` for incompatível com o tipo detectado (ex: `extrato` em vídeo), interrompa o item e proponha conversão para `resumo` antes de prosseguir. **`extrato` é válido apenas para `web` e `pdf` — nunca para YouTube, Instagram ou TikTok.**
 
 #### 3.2 Coleta do texto-base
 
@@ -195,8 +195,7 @@ Se o arquivo já tiver conteúdo abaixo do frontmatter, pergunte ao usuário se 
 1. Mostre uma prévia curta antes de salvar.
 2. Após aprovação:
    - insira o conteúdo abaixo do frontmatter
-   - atualize `processado` para `true`
-   - gere `descricao` se estiver ausente
+   - atualize `estado` para `finalizado`
    - se `metadados.autores` estiver presente e o frontmatter não contiver o campo `autores`, adicione-o ao frontmatter como **lista YAML** — ex: `autores: ["Nome (handle)"]` — antes de salvar
 
 #### 3.7 Melhorar o nome do arquivo
@@ -207,7 +206,7 @@ Se a extração ou o resumo revelarem um nome melhor do que o definido na triage
 
 ### Passo 4: Tratamento de erros
 
-Se a URL não for acessível ou o conteúdo principal não puder ser obtido, informe o usuário e ofereça: pular, manter `processado: false`, ou cancelar.
+Se a URL não for acessível ou o conteúdo principal não puder ser obtido, informe o usuário e ofereça: pular, manter `estado: rascunho`, ou cancelar.
 
 ---
 
@@ -221,7 +220,7 @@ Sugira: *"Use `/commit-push` para registrar as alterações no histórico Git."*
 
 ## Regras de Comportamento
 
-- **Nunca altere campos do frontmatter além de `processado`, `descricao` e `autores`** — `autores` só é gravado quando detectado nos metadados e ausente do frontmatter. Exceto se o usuário aprovar uma melhoria de nome que exija renomeação do arquivo.
+- **Nunca altere campos do frontmatter além de `estado` e `autores`** — `autores` só é gravado quando detectado nos metadados e ausente do frontmatter. Exceto se o usuário aprovar uma melhoria de nome que exija renomeação do arquivo.
 - **Preserve o frontmatter existente.**
 - **Aprovação obrigatória antes de salvar.**
 - **Idioma:** `pt-BR`.
@@ -234,8 +233,8 @@ Sugira: *"Use `/commit-push` para registrar as alterações no histórico Git."*
 ## Arquivos de Referência
 
 - `docs/flows/processar-url.md` — especificação do fluxo
-- `docs/schemas/url-resumo.md` — **template do corpo para `formato: resumo`**
+- `docs/schemas/url-resumo.md` — **template do corpo para `modelo: resumo`**
 - `docs/pkm-naming.md` — **convenção de nomenclatura** (prefixo `url_`, padrão autor-título)
-- `docs/schemas/frontmatter-conhecimento.md` — esquema de frontmatter
+- `docs/schemas/frontmatter-item.md` — esquema de frontmatter de itens de conhecimento
 - `docs/pkm-structure.md` — estrutura do repositório
 - `scripts/processar_url.py` — helper Python do fluxo

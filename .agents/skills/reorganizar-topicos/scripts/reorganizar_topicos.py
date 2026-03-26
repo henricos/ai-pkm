@@ -29,8 +29,9 @@ import yaml
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 REPO_DIR = SCRIPT_DIR.parents[3]
-GRUPOS_PATH = REPO_DIR / "sistema" / "indices" / "grupos.json"
-TOPICOS_PATH = REPO_DIR / "sistema" / "indices" / "topicos.json"
+PKM_DIR = REPO_DIR / "pkm"
+GRUPOS_PATH = REPO_DIR / "index" / "grupos.json"
+TOPICOS_PATH = REPO_DIR / "index" / "topicos.json"
 
 
 class ErroHelper(RuntimeError):

@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Helper da skill /criticar-url — lista arquivos url_ com formato: resumo elegíveis para crítica.
+"""Helper da skill /criticar-url — lista arquivos url_ com modelo: resumo elegíveis para crítica.
 
 Uso:
     uv --directory .agents/skills/criticar-url/scripts run python listar_urls.py listar --json
-    uv --directory .agents/skills/criticar-url/scripts run python listar_urls.py listar --arquivo _topico/url_slug.md --json
+    uv --directory .agents/skills/criticar-url/scripts run python listar_urls.py listar --arquivo pkm/topico/url_slug.md --json
 """
 from __future__ import annotations
 
@@ -47,11 +47,9 @@ def parsear_frontmatter(path: Path) -> dict[str, Any]:
 def validar_arquivo(path: Path) -> dict[str, Any] | None:
     """Retorna entrada se o arquivo é elegível, None caso contrário."""
     fm = parsear_frontmatter(path)
-    if fm.get("tipo") != "url":
+    if fm.get("modelo") != "resumo":
         return None
-    if fm.get("formato") != "resumo":
-        return None
-    if fm.get("processado") is not True:
+    if fm.get("estado") != "finalizado":
         return None
 
     slug = path.stem
@@ -64,9 +62,11 @@ def validar_arquivo(path: Path) -> dict[str, Any] | None:
 
 
 def listar_todos() -> list[dict[str, Any]]:
+    pkm_dir = REPO_DIR / "pkm"
     itens: list[dict[str, Any]] = []
-    for arquivo in sorted(REPO_DIR.glob("_*/**/url_*.md")):
-        if arquivo.name == "_grupo.md":
+    for arquivo in sorted(pkm_dir.glob("*/**/url_*.md")):
+        rel = arquivo.relative_to(pkm_dir)
+        if rel.parts[0] == "__inbox":
             continue
         entrada = validar_arquivo(arquivo)
         if entrada:
@@ -86,7 +86,7 @@ def comando_listar(args: argparse.Namespace) -> int:
         entrada = validar_arquivo(path)
         if entrada is None:
             raise ErroHelper(
-                f"{args.arquivo} não atende aos critérios: tipo: url, formato: resumo, processado: true."
+                f"{args.arquivo} não atende aos critérios: modelo: resumo, estado: finalizado."
             )
         resultado = {"ok": True, "itens": [entrada]}
     else:
@@ -109,7 +109,7 @@ def construir_parser() -> argparse.ArgumentParser:
 
     listar = subparsers.add_parser(
         "listar",
-        help="Lista arquivos url_ com formato: resumo e processado: true, indicando presença de cache.",
+        help="Lista arquivos url_ com modelo: resumo e estado: finalizado, indicando presença de cache.",
     )
     listar.add_argument(
         "--arquivo",

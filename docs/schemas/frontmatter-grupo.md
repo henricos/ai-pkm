@@ -13,7 +13,7 @@ ambito: pessoal                       # pessoal | trabalho | ambos (opcional)
 ## Atributos do Grupo
 
 - `descricao`: Descrição livre e otimizada para busca do propósito do grupo. Usada pelo agente de triagem para inferir correspondência com itens da inbox.
-- `topico`: Tópico da taxonomia ao qual o grupo pertence. Obrigatório. Deve coincidir com um `id` em `sistema/indices/topicos.json`.
+- `topico`: Tópico da taxonomia ao qual o grupo pertence. Obrigatório. Deve coincidir com um `id` em `index/topicos.json`.
 - `ambito`: Domínio de vida ao qual o grupo pertence. Opcional. `pessoal`, `trabalho` ou `ambos`. **Omitir** quando não relevante.
 
 ## Exemplo completo

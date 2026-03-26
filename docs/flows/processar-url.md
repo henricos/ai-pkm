@@ -2,7 +2,7 @@
 
 **Skill:** `/processar-url`
 
-**Quando usar:** Quando houver arquivos com `url` e `processado: false` em pastas `_[topico]/...`.
+**Quando usar:** Quando houver arquivos `url_` com `estado: rascunho` em pastas `pkm/[topico]/...`.
 
 **Escopo suportado:**
 - páginas web comuns (`web`)
@@ -28,12 +28,12 @@ Pré-requisitos auto-corrigíveis (o fluxo resolve automaticamente antes de pros
 Se algum pré-requisito fatal faltar, o fluxo aborta antes de processar URLs e apresenta instruções claras de instalação.
 
 **O que faz:**
-- busca arquivos com prefixo `url_` e `processado: false` em `pkm/_*/` (glob: `url_*.md`)
+- busca arquivos com prefixo `url_` e `estado: rascunho` em `pkm/*/` (glob: `url_*.md`)
 - detecta o tipo real de cada URL antes de processar
-- valida se `formato` é compatível com o tipo detectado
+- valida se `modelo` é compatível com o tipo detectado
 - executa a cadeia de coleta adequada ao tipo
-- para `formato: extrato`, gera conteúdo limpo em Markdown
-- para `formato: resumo`, coleta texto-base e metadados para a IA gerar um resumo autoral em `pt-BR`
+- para `modelo: extrato`, gera conteúdo limpo em Markdown
+- para `modelo: resumo`, coleta texto-base e metadados para a IA gerar um resumo autoral em `pt-BR`
 
 **Cadeias de fallback:**
 - `web` -> `requests` + `trafilatura` -> `readability-lxml` -> `Playwright` + reextração
@@ -42,9 +42,9 @@ Se algum pré-requisito fatal faltar, o fluxo aborta antes de processar URLs e a
 - `pdf` -> download controlado + `PyMuPDF`
 
 **Regras de ação:**
-- `formato: extrato` só é permitido para `web` e `pdf` — nunca para vídeos (YouTube, Instagram, TikTok)
-- `formato: resumo` é permitido para `web`, `pdf`, `youtube`, `instagram` e `tiktok`
-- se uma URL de vídeo vier com `formato: extrato`, o fluxo deve interromper e propor conversão para `resumo`
+- `modelo: extrato` só é permitido para `web` e `pdf` — nunca para vídeos (YouTube, Instagram, TikTok)
+- `modelo: resumo` é permitido para `web`, `pdf`, `youtube`, `instagram` e `tiktok`
+- se uma URL de vídeo vier com `modelo: extrato`, o fluxo deve interromper e propor conversão para `resumo`
 
 **Prioridade de áudio para vídeos:**
 - Para vídeos (YouTube, Instagram, TikTok), o `texto_base` é sempre a transcrição do áudio (subtitle ou ASR via Whisper)
@@ -57,7 +57,7 @@ Se algum pré-requisito fatal faltar, o fluxo aborta antes de processar URLs e a
 
 **Cabeçalho do arquivo** (aplicável a todos os tipos e formatos):
 
-Todo arquivo processado pelo fluxo — independente de `formato: extrato` ou `formato: resumo` — deve iniciar com um cabeçalho padronizado composto por título H1 e bloco de proveniência em blockquote:
+Todo arquivo processado pelo fluxo — independente de `modelo: extrato` ou `modelo: resumo` — deve iniciar com um cabeçalho padronizado composto por título H1 e bloco de proveniência em blockquote:
 
 ```markdown
 # Título da Postagem
@@ -94,9 +94,9 @@ Lista fixa de plataformas (inferência por padrão de URL):
 | URL termina em `.pdf` ou tipo detectado como PDF | `PDF` |
 | qualquer outro | `Web` |
 
-**Estrutura do resumo** (aplicável a todos os tipos com `formato: resumo`):
+**Estrutura do resumo** (aplicável a todos os tipos com `modelo: resumo`):
 
-Ver `docs/schemas/url-resumo.md` — fonte de verdade para estrutura de seções e regras de escrita do corpo de arquivos `formato: resumo`.
+Ver `docs/schemas/url-resumo.md` — fonte de verdade para estrutura de seções e regras de escrita do corpo de arquivos `modelo: resumo`.
 
 **Temporários:**
 - artefatos intermediários são gravados em `.agents/skills/processar-url/scripts/temp/` com nomenclatura canônica `{slug}-{sufixo}.{extensao}`
@@ -117,8 +117,7 @@ Ver `docs/schemas/url-resumo.md` — fonte de verdade para estrutura de seções
 - a pasta `temp/` deve conter `.gitkeep` e permanecer ignorada pelo Git (nenhum artefato de cache é persistido no repositório)
 
 **Após o processamento:**
-- atualiza `processado` para `true`
-- gera `descricao` se estiver ausente
+- atualiza `estado` para `finalizado`
 - informa a origem do texto usado (`html`, `pdf`, `nativo`, `subtitle`, `caption`, `asr`)
 - inclui `texto_complementar` (descrição/caption) quando disponível, separado do `texto_base`
 - inclui `idioma_detectado` quando a origem for `asr` (autodetecção do Whisper)

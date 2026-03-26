@@ -1,6 +1,6 @@
 ---
 name: readequar-url
-description: "Adapta o corpo de arquivos `url_` com `formato: resumo` já processados a um template novo ou atualizado. O trabalho é puramente estrutural: reposicionar seções, realocar conteúdo entre seções e marcar lacunas como TBD. Não re-coleta a fonte, não usa helper, não avalia qualidade. Use esta skill quando o template `url-resumo.md` mudar depois que arquivos foram processados, ou quando um resumo existente precisa ser estruturado conforme o template atual."
+description: "Adapta o corpo de arquivos `url_` com `modelo: resumo` já processados a um template novo ou atualizado. O trabalho é puramente estrutural: reposicionar seções, realocar conteúdo entre seções e marcar lacunas como TBD. Não re-coleta a fonte, não usa helper, não avalia qualidade. Use esta skill quando o template `url-resumo.md` mudar depois que arquivos foram processados, ou quando um resumo existente precisa ser estruturado conforme o template atual."
 command: /readequar-url
 ---
 
@@ -8,21 +8,21 @@ command: /readequar-url
 
 ## Instruções de Execução do Agente
 
-Esta skill implementa o **Fluxo — Readequar URL** descrito em `docs/flows/readequar-url.md`. Readequa o corpo de arquivos `url_` com `formato: resumo` ao template em `docs/schemas/url-resumo.md`. O trabalho é puramente estrutural — sem re-coleta de fonte, sem pesquisa externa.
+Esta skill implementa o **Fluxo — Readequar URL** descrito em `docs/flows/readequar-url.md`. Readequa o corpo de arquivos `url_` com `modelo: resumo` ao template em `docs/schemas/url-resumo.md`. O trabalho é puramente estrutural — sem re-coleta de fonte, sem pesquisa externa.
 
-**Somente opera em arquivos com `tipo: url`, `formato: resumo`, `processado: true`.**
+**Somente opera em arquivos `url_` com `modelo: resumo` e `estado: finalizado`.**
 
 ---
 
 ## Passo 1: Detecção do Escopo
 
-- **Com argumento** (ex: `/readequar-url _tecnologia/url_ibm-technology-rag-vs-long-context.md`) → usa o(s) arquivo(s) informado(s) diretamente.
+- **Com argumento** (ex: `/readequar-url pkm/tecnologia/url_ibm-technology-rag-vs-long-context.md`) → usa o(s) arquivo(s) informado(s) diretamente.
 - **Sem argumento** → pergunte ao usuário:
 
 > "Quais arquivos deseja readequar?"
 >
 > 1. **Informar arquivo(s) específico(s)**
-> 2. **Todos os arquivos `formato: resumo` processados**
+> 2. **Todos os arquivos `modelo: resumo` finalizados**
 > 3. **Cancelar**
 
 Se "Todos", obtenha a lista via helper:
@@ -35,7 +35,7 @@ Se arquivo específico:
 
 ```bash
 uv --directory .agents/skills/readequar-url/scripts run python listar_urls.py \
-    listar --arquivo _topico/url_slug.md --json
+    listar --arquivo pkm/topico/url_slug.md --json
 ```
 
 ---
@@ -44,9 +44,9 @@ uv --directory .agents/skills/readequar-url/scripts run python listar_urls.py \
 
 Para cada arquivo selecionado, verifique:
 
-- `tipo: url` — se não, pule com aviso: *"Arquivo não é do tipo url — ignorado."*
-- `formato: resumo` — se for `extrato`, pule: *"Arquivo tem `formato: extrato` — readequação não aplicável."*
-- `processado: true` — se `false`, pule: *"Arquivo ainda não foi processado — execute `/processar-url` primeiro."*
+- Prefixo `url_` no nome do arquivo — se não, pule com aviso: *"Arquivo não é do tipo url — ignorado."*
+- `modelo: resumo` — se for `extrato`, pule: *"Arquivo tem `modelo: extrato` — readequação não aplicável."*
+- `estado: finalizado` — se `rascunho`, pule: *"Arquivo ainda não foi processado — execute `/processar-url` primeiro."*
 
 ---
 
@@ -113,11 +113,11 @@ Escreva no arquivo após aprovação (substituição completa do conteúdo, pres
 - Não avalia qualidade de conteúdo — apenas estrutura
 - Lacunas marcadas como TBD são sinais para uma futura sessão de `/criticar-url`
 - Preserva o frontmatter intacto; nunca altera campos de metadados
-- Opera somente em `tipo: url`, `formato: resumo`, `processado: true`
+- Opera somente em arquivos `url_` com `modelo: resumo` e `estado: finalizado`
 
 ## Arquivos de Referência
 
 - `.agents/skills/readequar-url/scripts/listar_urls.py` — helper (listar)
 - `docs/schemas/url-resumo.md` — **template do corpo** (fonte de verdade)
 - `docs/flows/processar-url.md` — contexto do ciclo de vida do arquivo
-- `docs/schemas/frontmatter-conhecimento.md` — esquema de frontmatter
+- `docs/schemas/frontmatter-item.md` — esquema de frontmatter de itens de conhecimento

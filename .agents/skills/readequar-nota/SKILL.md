@@ -25,14 +25,14 @@ Leia o arquivo completo, incluindo o frontmatter.
 
 ---
 
-## Passo 3: Localização do Template
+## Passo 3: Localização do Modelo
 
-Leia o campo `template` do frontmatter da nota.
+Leia o campo `modelo` do frontmatter da nota.
 
 - **Campo presente**: construa o caminho `docs/schemas/[valor].md` e leia o arquivo.
 - **Campo ausente**: encerre com a mensagem:
 
-  > *"Não é possível readequar sem template associado. Execute `/criar-nota` primeiro para que o template seja definido no frontmatter."*
+  > *"Não é possível readequar sem modelo associado. Execute `/criar-nota` primeiro para que o modelo seja definido no frontmatter."*
 
 ---
 
@@ -95,4 +95,4 @@ Escreva no arquivo após aprovação explícita (substituição completa do cont
 ## Arquivos de Referência
 
 - `docs/flows/readequar-nota.md` — especificação do fluxo
-- `sistema/indices/templates.json` — catálogo de templates disponíveis (campo `template` do frontmatter aponta para um deles)
+- `index/models.json` — catálogo de templates disponíveis (campo `template` do frontmatter aponta para um deles)

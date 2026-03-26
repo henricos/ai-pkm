@@ -27,12 +27,12 @@ Leia o arquivo completo, incluindo o frontmatter.
 
 ---
 
-## Passo 3: Localização do Template
+## Passo 3: Localização do Modelo
 
-Leia o campo `template` do frontmatter da nota.
+Leia o campo `modelo` do frontmatter da nota.
 
 - **Campo presente**: construa o caminho `docs/schemas/[valor].md` e leia o arquivo. Prossiga para Passo 5a.
-- **Campo ausente**: informe ao usuário que a nota não tem template associado e prossiga com análise livre (Passo 5b).
+- **Campo ausente**: informe ao usuário que a nota não tem modelo associado e prossiga com análise livre (Passo 5b).
 
 ---
 
@@ -119,7 +119,7 @@ Aguarde direção do usuário: continuar, aprofundar, mudar de direção ou ence
 5. **Apresentar o documento revisado completo**, destacando explicitamente: seções novas, seções expandidas, seções alteradas.
 6. **Aguardar aprovação explícita** antes de escrever no arquivo.
 7. **Escrever no arquivo** após aprovação (mesmo arquivo, substituição completa do conteúdo).
-8. **Transição de maturidade**: perguntar se quer marcar como `maturidade: maduro`.
+8. **Transição de estado**: perguntar se quer marcar como `estado: finalizado`.
 
 **Regras da sessão de revisão:**
 - Nunca inventar informações — se não encontrar via pesquisa, sinalizar a lacuna ao usuário e aguardar direção.
@@ -131,4 +131,4 @@ Aguarde direção do usuário: continuar, aprofundar, mudar de direção ou ence
 ## Arquivos de Referência
 
 - `docs/flows/criticar-nota.md` — especificação do fluxo
-- `sistema/indices/templates.json` — catálogo de templates disponíveis (campo `template` do frontmatter aponta para um deles)
+- `index/models.json` — catálogo de modelos disponíveis (campo `modelo` do frontmatter aponta para um deles)
