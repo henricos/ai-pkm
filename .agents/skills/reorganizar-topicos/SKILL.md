@@ -178,8 +178,8 @@ Após executar qualquer reorganização:
 
 - `.agents/skills/reorganizar-topicos/scripts/reorganizar_topicos.py` — helper (executar)
 - `docs/flows/reorganizar-topicos.md` — especificação do fluxo de reorganização de tópicos
-- `docs/pkm-taxonomy.md` — regras da taxonomia
+- `docs/pkm-structure.md` — regras da taxonomia (seção Taxonomia)
 - `docs/pkm-structure.md` — papel de tópicos, subtópicos e grupos
 - `index/topicos.json` — taxonomia vigente
 - `index/grupos.json` — índice derivado de grupos
-- `docs/schemas/frontmatter-item.md` — contrato dos itens de conhecimento
+- `schemas/frontmatter-item.md` — contrato dos itens de conhecimento

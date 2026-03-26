@@ -22,7 +22,7 @@
 - Um item é **nota** se tiver qualquer conteúdo além de URL + rótulo curto: frases de contexto, parágrafos, citações, listas descritivas, notas pessoais, qualquer texto que vá além de um rótulo de link.
 - O campo `url` do frontmatter **nunca** é preenchido com links que aparecem dentro do corpo de texto de uma nota — apenas com a URL que é o único conteúdo do arquivo.
 
-**Tratamento de URLs:** Arquivos com prefixo `url_` recebem frontmatter com `url`, `modelo` e `estado: rascunho` conforme `docs/schemas/frontmatter-item.md`. O `modelo` é preenchido automaticamente por regra — `resumo` para vídeos (YouTube, Instagram, TikTok) e `extrato` para web/PDF — e exibido como coluna editável na tabela de aprovação. O usuário pode alterá-lo antes de confirmar; não é feita pergunta interativa por item.
+**Tratamento de URLs:** Arquivos com prefixo `url_` recebem frontmatter com `url`, `modelo` e `estado: rascunho` conforme `schemas/frontmatter-item.md`. O `modelo` é preenchido automaticamente por regra — `url-resumo` para vídeos (YouTube, Instagram, TikTok) e `url-extrato` para web/PDF — e exibido como coluna editável na tabela de aprovação. O usuário pode alterá-lo antes de confirmar; não é feita pergunta interativa por item.
 
 **Busca de metadados de URL:** Para preencher `autores`, `data_publicacao` e melhorar o nome do arquivo, siga esta hierarquia por item:
 1. Tente `WebFetch` na URL — funciona para a maioria das páginas web e PDFs.
@@ -36,11 +36,11 @@
 2. **Ambiguidade** — o item poderia encaixar em dois ou mais modelos. Questione o usuário listando as opções antes de prosseguir.
 3. **Sem encaixe aparente** — nenhum modelo disponível parece se aplicar ao conteúdo. Questione o usuário confirmando que nenhum modelo é adequado; somente após confirmação o campo `modelo` é omitido no frontmatter.
 
-Aplica-se a notas Markdown e a sidecars de binários. Para arquivos `url_`, o campo `modelo` é preenchido com `extrato` ou `resumo` conforme a regra acima, nunca com um modelo de nota.
+Aplica-se a notas Markdown e a sidecars de binários. Para arquivos `url_`, o campo `modelo` é preenchido com `url-extrato` ou `url-resumo` conforme a regra acima, nunca com um modelo de nota.
 
 **Nome final para URLs:** A triagem usa como primeiro candidato o **nome do arquivo inbox existente** (quando gerado pelo `/anotar` com contexto do usuário). Só recorre a dedução por URL ou pergunta ao usuário se o nome for genérico demais (ex: `url-capturada.md`). O nome final de todo arquivo de URL deve seguir obrigatoriamente a convenção em `docs/pkm-naming.md` — em especial o prefixo `url_` e o padrão autor-título. O fluxo `/processar-url` pode melhorar o nome depois, se a extração ou o resumo revelarem opção melhor.
 
-**Tratamento de binários:** Itens não-Markdown presentes na inbox podem permanecer temporariamente sem sidecar. Se aprovados na triagem, são movidos para o destino final e recebem um sidecar adjacente no formato `nome.extensao.md`, com frontmatter conforme `docs/schemas/frontmatter-item.md`.
+**Tratamento de binários:** Itens não-Markdown presentes na inbox podem permanecer temporariamente sem sidecar. Se aprovados na triagem, são movidos para o destino final e recebem um sidecar adjacente no formato `nome.extensao.md`, com frontmatter conforme `schemas/frontmatter-item.md`.
 
 **Tópico inadequado:** Quando nenhum tópico existente acomodar bem um item, a triagem deve sinalizar na tabela com destino "sem tópico adequado", sugerir qual novo tópico seria bom criar (nome + descrição), e manter o item na inbox. Indicar ao usuário que pode usar `/reorganizar-topicos` para criar o tópico sugerido.
 

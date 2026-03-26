@@ -1,18 +1,30 @@
 [
   {
-    "arquivo": "docs/schemas/nota-empresa.md",
+    "arquivo": "models/nota-empresa.md",
     "assuntos_aplicaveis": "empresas, organizações e grupos corporativos"
   },
   {
-    "arquivo": "docs/schemas/nota-conceito.md",
+    "arquivo": "models/nota-conceito.md",
     "assuntos_aplicaveis": "conceitos, métodos ou técnicas"
   },
   {
-    "arquivo": "docs/schemas/nota-ferramenta.md",
+    "arquivo": "models/nota-ferramenta.md",
     "assuntos_aplicaveis": "ferramentas, produtos ou serviços"
   },
   {
-    "arquivo": "docs/schemas/nota-procedimento.md",
+    "arquivo": "models/nota-procedimento.md",
     "assuntos_aplicaveis": "guias práticos, passo a passos, how-tos"
+  },
+  {
+    "arquivo": "models/nota-livre.md",
+    "assuntos_aplicaveis": "notas que não se encaixam em nenhum modelo estruturado"
+  },
+  {
+    "arquivo": "models/url-resumo.md",
+    "assuntos_aplicaveis": "URLs processadas com resumo elaborado pela IA"
+  },
+  {
+    "arquivo": "models/url-extrato.md",
+    "assuntos_aplicaveis": "URLs processadas com extração fiel do texto original (web e PDF)"
   }
 ]

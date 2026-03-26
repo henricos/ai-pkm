@@ -61,11 +61,11 @@ O arquivo `docs/schemas/frontmatter-conhecimento.md` ainda reflete o schema anti
 
 ## Tarefas pendentes
 
-- [ ] **1. Código + Documentação** — Atualizar referências de caminho em `.agents/skills/` e `docs/` para refletir a nova estrutura de pastas e a nova localização dos índices
+- [x] **1. Código + Documentação** — Atualizar referências de caminho em `.agents/skills/` e `docs/` para refletir a nova estrutura de pastas e a nova localização dos índices
 
-  Os scripts Python em `.agents/skills/*/scripts/` foram portados sem adaptação e ainda contêm caminhos antigos como `sistema/indices/`, `_*/`, `__inbox/`. Os SKILL.md e specs em `docs/flows/` tiveram substituições parciais mas podem ter referências residuais. Os arquivos de documentação de convenção (`docs/pkm-conventions.md`, `docs/pkm-structure.md`, `docs/pkm-naming.md`, `docs/pkm-taxonomy.md`) descrevem a convenção antiga de prefixos e precisam refletir a nova. Fazer grep sistemático por `sistema/indices`, `sistema/esquemas`, `sistema/convencoes`, `_*/` e `pkm/sistema` em todos os arquivos `.md` e `.py` do projeto para mapear e corrigir todas as ocorrências. Atualizar o `AGENTS.md`: seção "Busca de conteúdo" para apontar para `index/grupos.json` e `index/topicos.json`; seção "Regras universais" para refletir os novos prefixos de pastas.
+  Os scripts Python em `.agents/skills/*/scripts/` foram portados sem adaptação e ainda contêm caminhos antigos como `sistema/indices/`, `_*/`, `__inbox/`. Os SKILL.md e specs em `docs/flows/` tiveram substituições parciais mas podem ter referências residuais. Os arquivos de documentação de convenção (`docs/pkm-conventions.md`, `docs/pkm-structure.md`, `docs/pkm-naming.md`) descrevem a convenção antiga de prefixos e precisam refletir a nova. Fazer grep sistemático por `sistema/indices`, `sistema/esquemas`, `sistema/convencoes`, `_*/` e `pkm/sistema` em todos os arquivos `.md` e `.py` do projeto para mapear e corrigir todas as ocorrências. Atualizar o `AGENTS.md`: seção "Busca de conteúdo" para apontar para `index/grupos.json` e `index/topicos.json`; seção "Regras universais" para refletir os novos prefixos de pastas.
 
-- [ ] **2. Código + Documentação** — Adaptar skills, scripts e schemas ao novo frontmatter
+- [x] **2. Código + Documentação** — Adaptar skills, scripts e schemas ao novo frontmatter
 
   O schema de frontmatter mudou (ver seção "Refatoração do frontmatter" acima). Os impactos são: (a) `docs/schemas/frontmatter-conhecimento.md` ainda tem o schema antigo — reescrever refletindo os campos novos; (b) skills que liam ou escreviam campos removidos precisam de adaptação de lógica — as mais afetadas são `/triar` (escrevia `tipo`, `formato`, `processado`, `maturidade`, `template`), `/processar-url` (lia `formato`, escrevia `processado: true`), `/criticar-url` e `/readequar-url` (liam `formato` e `processado`), `/criar-nota` e `/criticar-nota` (liam/escreviam `maturidade` e `template`), `/validar-estrutura` (validava campos do schema antigo); (c) scripts Python que manipulam frontmatter precisam usar os novos campos; (d) o arquivo `index/templates.json` usa o nome legado "templates" — avaliar se deve ser renomeado para `index/models.json` e atualizar as referências.
 
@@ -73,7 +73,7 @@ O arquivo `docs/schemas/frontmatter-conhecimento.md` ainda reflete o schema anti
 
   O repositório `pkm` (privado, em `github.com/henricos/pkm`) deve ser clonado ou montado como pasta `pkm/` na raiz do `ai-pkm`. Essa pasta já está no `.gitignore`. Sem ela, nenhuma skill operacional funciona — todas dependem de `pkm/__inbox/` e `pkm/topico/`.
 
-- [ ] **4. Documentação** — Definir localização definitiva dos modelos de nota e mover de `docs/schemas/`
+- [x] **4. Documentação** — Definir localização definitiva dos modelos de nota e mover de `docs/schemas/`
 
   Os arquivos `nota-conceito.md`, `nota-empresa.md`, `nota-ferramenta.md`, `nota-procedimento.md` e `url-resumo.md` estão temporariamente em `docs/schemas/` junto com os contratos de frontmatter (`frontmatter-conhecimento.md`, `frontmatter-grupo.md`). Modelos são artefatos operacionais — o agente os lê e aplica ao criar e readequar notas. Por isso não pertencem em `docs/`. Candidato natural: `.agents/models/`, seguindo o padrão de `.agents/skills/`. Decidir o local definitivo, mover os arquivos, atualizar as referências nas skills e em `AGENTS.md`.
 
@@ -85,7 +85,7 @@ O arquivo `docs/schemas/frontmatter-conhecimento.md` ainda reflete o schema anti
 
   As seguintes seções estão marcadas como `> TODO` e precisam ser preenchidas em sessão dedicada: (a) **Estrutura de diretórios** — ainda não há código no repo, então esta seção será a primeira definição da árvore de pastas do projeto Node.js/Next.js; (b) **Modelo de dados principal** — entidades centrais: itens do PKM, grupos, tópicos, sessões do agente, operações; (c) **Fluxo de dados do caso mais crítico** — execução de skill com proposta de mudança, aprovação do usuário e commit no pkm; (d) **Convenções de código** — TypeScript, Zod, Drizzle, padrões de Route Handler. Stack de referência já está na tabela da seção "Stack" do mesmo arquivo.
 
-- [ ] **7. Documentação** — Remover nota desatualizada em `docs/prd.md`
+- [x] **7. Documentação** — Remover nota desatualizada em `docs/prd.md`
 
   Na seção "Fluxos operacionais suportados na v1", a última linha diz `Specs detalhadas de cada fluxo ficam em \`docs/flows/\` (a criar em sessão dedicada).` A pasta `docs/flows/` já existe com os 13 specs. Remover o trecho `(a criar em sessão dedicada)` ou reescrever a linha para refletir que as specs já existem.
 

@@ -8,7 +8,7 @@
 
 **O que faz:**
 - Identifica o tipo do documento a partir do frontmatter e infere o subtipo (ferramenta, conceito, etc.)
-- Localiza o template correspondente em `docs/schemas/` pela convenção de nomenclatura
+- Localiza o template correspondente em `models/` pela convenção de nomenclatura
 - Usa o template como régua de qualidade — não como mandato estrutural
 - Assume o papel de alguém tentando aprender com o conteúdo — avalia se é didático, direto e claro
 - Gera uma crítica de qualidade por seção
@@ -20,14 +20,14 @@
 
 **Convenção de nomenclatura dos templates:**
 
-Os templates em `docs/schemas/` seguem o padrão `[tipo]-[subtipo].md`, onde `[tipo]` corresponde ao valor do campo `tipo` no frontmatter do documento:
+Os templates em `models/` seguem o padrão `[tipo]-[subtipo].md`, onde `[tipo]` corresponde ao valor do campo `tipo` no frontmatter do documento:
 
 - `nota-ferramenta.md` — notas sobre ferramentas (produtos, serviços, bibliotecas, frameworks)
 - `nota-conceito.md` — notas sobre conceitos, métodos, técnicas e paradigmas
 - `nota-empresa.md` — notas sobre empresas, organizações e negócios
 - `nota-procedimento.md` — notas sobre procedimentos, how-tos e guias práticos
 
-Ao identificar o template, o fluxo deve listar os arquivos disponíveis em `docs/schemas/` que começam com o prefixo correspondente ao `tipo` do documento, e então selecionar o mais adequado ao subtipo identificado.
+Ao identificar o template, o fluxo deve listar os arquivos disponíveis em `models/` que começam com o prefixo correspondente ao `tipo` do documento, e então selecionar o mais adequado ao subtipo identificado.
 
 ---
 
@@ -55,7 +55,7 @@ IDENTIFICAÇÃO DO SUBTIPO
                        estrutural; prossegue com análise livre (ver abaixo)
 
 LOCALIZAÇÃO DO TEMPLATE
-  Lista arquivos em docs/schemas/ com prefixo igual ao `tipo` do documento
+  Lista arquivos em models/ com prefixo igual ao `tipo` do documento
   Seleciona o template correspondente ao subtipo identificado
   Se nenhum template compatível → prossegue com análise livre
 

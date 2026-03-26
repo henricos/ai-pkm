@@ -34,7 +34,7 @@ FASE 1 — FOCO
   DETECÇÃO DE MODELO:
     Lê campo `modelo` do frontmatter
     Se `modelo` estiver presente:
-      carrega o arquivo correspondente em `docs/schemas/`
+      carrega o arquivo correspondente em `models/`
       adota como guia silencioso de construção
       segue direto para proposta de execução
     Se `modelo` estiver ausente:
@@ -104,7 +104,7 @@ FASE 2 — SAÍDA (posição flexível)
   DETECÇÃO DE MODELO (baseada no arquivo de saída):
     Após definir o arquivo de saída, lê o campo `modelo` do frontmatter (se existente)
     Se `modelo` estiver presente:
-      carrega o arquivo correspondente em `docs/schemas/`
+      carrega o arquivo correspondente em `models/`
       anuncia ao usuário
       "Encontrei o modelo X — vou usá-lo como guia de estrutura e estilo."
       A gravação de `modelo: [nome-sem-extensao]` no frontmatter acontece junto da escrita aprovada

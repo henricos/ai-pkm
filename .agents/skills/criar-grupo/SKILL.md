@@ -114,5 +114,5 @@ O helper cria o diretório, o `.gitkeep`, o `_grupo.md` com frontmatter e insere
 - `.agents/skills/criar-grupo/scripts/criar_grupo.py` — helper (verificar / criar)
 - `docs/flows/criar-grupo.md` — especificação do fluxo de criação de grupo
 - `index/grupos.json` — índice de grupos (a ser atualizado)
-- `docs/schemas/frontmatter-grupo.md` — esquema do `_grupo.md`
+- `schemas/frontmatter-grupo.md` — esquema do `_grupo.md`
 - `docs/pkm-structure.md` — estrutura de diretórios

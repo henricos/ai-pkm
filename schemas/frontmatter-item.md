@@ -12,7 +12,7 @@ O frontmatter contém apenas campos intrínsecos e estáveis — o que não pode
 ---
 estado: rascunho              # rascunho | finalizado (obrigatório)
 url: "https://..."            # obrigatório em arquivos url_; ausente em notas e sidecars
-modelo: extrato               # opcional; para urls: extrato | resumo; para notas: nome do modelo
+modelo: url-extrato           # opcional; para urls: url-extrato | url-resumo; para notas: nome do modelo
 autores: ["Nome"]             # opcional
 data_captura: 2026-03-07      # opcional
 data_publicacao: 2025-12      # opcional
@@ -34,8 +34,8 @@ data_publicacao: 2025-12      # opcional
 Unifica os antigos `formato` (URLs) e `template` (notas) num único campo:
 
 - Para arquivos `url_`:
-  - `extrato` — conteúdo original transcrito integralmente. **Restrito a `web` e `pdf`.** Nunca usar para vídeos.
-  - `resumo` — resumo elaborado pela IA (permitido para qualquer tipo de URL)
+  - `url-extrato` — conteúdo original transcrito integralmente. **Restrito a `web` e `pdf`.** Nunca usar para vídeos.
+  - `url-resumo` — resumo elaborado pela IA (permitido para qualquer tipo de URL)
 - Para notas: nome do arquivo de modelo sem extensão (ex: `nota-empresa`, `nota-conceito`). Catálogo em `index/models.json`. **Omitir** quando nenhum modelo for aplicável.
 - Para sidecars: campo ausente.
 
@@ -65,7 +65,7 @@ Todos os campos temporais usam o prefixo `data_` (ex: `data_captura`, `data_publ
 ---
 estado: rascunho
 url: "https://exemplo.com/produtividade-devs"
-modelo: extrato
+modelo: url-extrato
 autores: ["Jane Doe"]
 data_captura: 2026-03-07
 data_publicacao: 2025-11
@@ -78,7 +78,7 @@ data_publicacao: 2025-11
 ---
 estado: finalizado
 url: "https://exemplo.com/produtividade-devs"
-modelo: extrato
+modelo: url-extrato
 autores: ["Jane Doe"]
 data_captura: 2026-03-07
 data_publicacao: 2025-11

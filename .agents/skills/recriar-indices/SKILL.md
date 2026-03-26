@@ -74,6 +74,6 @@ Informe: *"Índice recriado com sucesso. Use `/commit-push` para registrar no hi
 
 - `.agents/skills/recriar-indices/scripts/recriar_indices.py` — helper (escanear / salvar)
 - `docs/flows/recriar-indices.md` — especificação do fluxo de recriação de índices
-- `docs/pkm-indexes.md` — convenção de índices JSON
+- `docs/pkm-conventions.md` — convenção de índices JSON (seção Índices JSON)
 - `index/grupos.json` — índice a ser recriado
-- `docs/schemas/frontmatter-grupo.md` — esquema do `_grupo.md`
+- `schemas/frontmatter-grupo.md` — esquema do `_grupo.md`

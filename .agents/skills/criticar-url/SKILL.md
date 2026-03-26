@@ -1,6 +1,6 @@
 ---
 name: criticar-url
-description: "Avalia a qualidade editorial do resumo de arquivos `url_` com `modelo: resumo` comparando o conteúdo do arquivo com o texto-fonte cacheado. Identifica problemas de fidelidade, profundidade e estrutura, e conduz sessão interativa de melhoria com aprovação. Depende do cache `{slug}-transcript.txt` — aborta se ausente. Use esta skill sempre que o usuário quiser calibrar, melhorar ou avaliar a qualidade de um resumo de URL — mesmo que não diga explicitamente \"criticar url\"."
+description: "Avalia a qualidade editorial do resumo de arquivos `url_` com `modelo: url-resumo` comparando o conteúdo do arquivo com o texto-fonte cacheado. Identifica problemas de fidelidade, profundidade e estrutura, e conduz sessão interativa de melhoria com aprovação. Depende do cache `{slug}-transcript.txt` — aborta se ausente. Use esta skill sempre que o usuário quiser calibrar, melhorar ou avaliar a qualidade de um resumo de URL — mesmo que não diga explicitamente \"criticar url\"."
 command: /criticar-url
 ---
 
@@ -8,9 +8,9 @@ command: /criticar-url
 
 ## Instruções de Execução do Agente
 
-Esta skill implementa o **Fluxo — Criticar URL** descrito em `docs/flows/criticar-url.md`. Avalia a qualidade editorial de arquivos `url_` com `modelo: resumo` usando o texto-fonte cacheado como referência. Não faz pesquisa externa — trabalha exclusivamente com o arquivo e o cache existente.
+Esta skill implementa o **Fluxo — Criticar URL** descrito em `docs/flows/criticar-url.md`. Avalia a qualidade editorial de arquivos `url_` com `modelo: url-resumo` usando o texto-fonte cacheado como referência. Não faz pesquisa externa — trabalha exclusivamente com o arquivo e o cache existente.
 
-**Somente opera em arquivos com `modelo: resumo` e `estado: finalizado`.**
+**Somente opera em arquivos com `modelo: url-resumo` e `estado: finalizado`.**
 
 ---
 
@@ -22,7 +22,7 @@ Esta skill implementa o **Fluxo — Criticar URL** descrito em `docs/flows/criti
 > "Quais arquivos deseja criticar?"
 >
 > 1. **Informar arquivo(s) específico(s)**
-> 2. **Todos os arquivos `modelo: resumo` processados**
+> 2. **Todos os arquivos `modelo: url-resumo` processados**
 > 3. **Cancelar**
 
 ---
@@ -51,7 +51,7 @@ O helper retorna cada entrada com `arquivo`, `slug` e `tem_cache`. Arquivos com 
 Para cada arquivo com cache válido:
 
 1. Leia o arquivo url_ completo
-2. Leia o template `docs/schemas/url-resumo.md`
+2. Leia o template `models/url-resumo.md`
 3. Leia o conteúdo de `{slug}-transcript.txt`
 
 ---
@@ -118,12 +118,12 @@ Após cada rodada de reescrita, pergunte:
 - Nunca inventa informação não presente no transcript
 - Não faz pesquisa externa de conteúdo — apenas curadoria de links de Recursos (verificação de existência)
 - Aborta com mensagem clara se cache ausente
-- Opera somente em arquivos com `modelo: resumo` e `estado: finalizado`
+- Opera somente em arquivos com `modelo: url-resumo` e `estado: finalizado`
 - Preserva o frontmatter e o cabeçalho de proveniência intactos
 
 ## Arquivos de Referência
 
 - `.agents/skills/criticar-url/scripts/listar_urls.py` — helper (listar)
-- `docs/schemas/url-resumo.md` — **template e régua de qualidade**
+- `models/url-resumo.md` — **template e régua de qualidade**
 - `docs/flows/processar-url.md` — contexto do ciclo de vida e spec de cache
 - `.agents/skills/processar-url/scripts/temp/` — localização dos caches de transcript

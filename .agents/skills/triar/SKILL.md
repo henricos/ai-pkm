@@ -138,8 +138,8 @@ Inclua `autores` e/ou `data_publicacao` no frontmatter somente se identificados 
 
 O `modelo` é preenchido automaticamente por regra, sem perguntar ao usuário por item:
 
-- `resumo` — para vídeos: YouTube, Instagram, TikTok
-- `extrato` — para web e PDF
+- `url-resumo` — para vídeos: YouTube, Instagram, TikTok
+- `url-extrato` — para web e PDF
 
 O valor preenchido aparece como coluna editável na tabela de aprovação (Passo 7). O usuário pode alterá-lo antes de confirmar.
 
@@ -162,7 +162,7 @@ Quando o item for um binário, execute estas etapas antes de montar a proposta:
 
 #### 6.1 Sidecar proposto
 
-Monte um sidecar no formato `nome.extensao.md` com frontmatter conforme `docs/schemas/frontmatter-item.md`.
+Monte um sidecar no formato `nome.extensao.md` com frontmatter conforme `schemas/frontmatter-item.md`.
 
 Regras:
 - `estado: rascunho` é obrigatório.
@@ -179,11 +179,11 @@ Após analisar todos os itens, apresente uma tabela resumo com TODOS de uma vez:
 | # | Arquivo original | Tipo | Destino proposto | Nome final | Modelo |
 |---|---|---|---|---|---|
 | 1 | nota-xyz.md | nota | saude/ | reflexoes-sobre-jejum.md | — |
-| 2 | link-abc.md | url | tecnologia/ | url_autor-titulo.md | extrato |
+| 2 | link-abc.md | url | tecnologia/ | url_autor-titulo.md | url-extrato |
 | 3 | diagrama-bruto.svg | binário | tecnologia/ | arquitetura-de-agentes.svg | — |
 ```
 
-A coluna `Modelo` é preenchida automaticamente: para notas, quando há encaixe claro no catálogo (`index/models.json`); para URLs, por regra (`resumo` para vídeos, `extrato` para web/PDF). Quando não se aplica ou não há encaixe, fica `—` (campo omitido no frontmatter). O usuário pode alterar qualquer valor antes de confirmar.
+A coluna `Modelo` é preenchida automaticamente: para notas, quando há encaixe claro no catálogo (`index/models.json`); para URLs, por regra (`url-resumo` para vídeos, `url-extrato` para web/PDF). Quando não se aplica ou não há encaixe, fica `—` (campo omitido no frontmatter). O usuário pode alterar qualquer valor antes de confirmar.
 
 **Para cada item que terminará com frontmatter ou sidecar**, mostre também a proposta logo abaixo da tabela:
 
@@ -192,7 +192,7 @@ A coluna `Modelo` é preenchida automaticamente: para notas, quando há encaixe 
 ---
 estado: rascunho
 url: "https://exemplo.com/fine-tuning"
-modelo: extrato
+modelo: url-extrato
 autores: ["Autor Nome"]        # omitir se não identificado
 data_captura: YYYY-MM-DD       # data de hoje
 data_publicacao: 2025-03       # omitir se não identificado
@@ -256,7 +256,7 @@ Para URLs, inclua `url` e `modelo` no frontmatter:
   "tipo": "markdown",
   "origem": "pkm/__inbox/link-abc.md",
   "destino": "pkm/tecnologia/url_autor-titulo.md",
-  "frontmatter": "estado: rascunho\nurl: \"https://exemplo.com\"\nmodelo: extrato\ndata_captura: 2026-03-22"
+  "frontmatter": "estado: rascunho\nurl: \"https://exemplo.com\"\nmodelo: url-extrato\ndata_captura: 2026-03-22"
 }
 ```
 
@@ -306,7 +306,7 @@ Sugira ao usuário:
 - **Hierarquia de classificação:** tópico primeiro, depois grupo dentro do tópico.
 - **Nunca invente tópicos.** Consulte `index/topicos.json`.
 - **Pastas de destino sempre existem.** Os tópicos em `topicos.json` já têm pastas no repositório. Não crie pastas nem `.gitkeep` na triagem.
-- **Frontmatter** segue rigorosamente `docs/schemas/frontmatter-item.md`. Campos opcionais desconhecidos são omitidos.
+- **Frontmatter** segue rigorosamente `schemas/frontmatter-item.md`. Campos opcionais desconhecidos são omitidos.
 - **`url` é obrigatório em arquivos com prefixo `url_` e nunca aparece em notas ou sidecars.**
 - **`modelo` e `estado: rascunho` são os campos-chave de URLs; notas recebem `estado: rascunho` e opcionalmente `modelo`.**
 - **Sem logs** — auditoria exclusivamente via histórico Git com `/commit-push`.
@@ -319,4 +319,4 @@ Sugira ao usuário:
 - `index/topicos.json` — tópicos para classificação
 - `index/models.json` — catálogo de modelos disponíveis para notas
 - `docs/pkm-structure.md` — estrutura de destinos
-- `docs/schemas/frontmatter-item.md` — esquema de frontmatter de itens de conhecimento
+- `schemas/frontmatter-item.md` — esquema de frontmatter de itens de conhecimento

@@ -68,8 +68,7 @@ Informe em linguagem direta:
 ## Arquivos de referência
 
 - `docs/flows/validar-estrutura.md` — especificação do fluxo de validação estrutural
-- `docs/pkm-structure.md` — estrutura esperada
-- `docs/pkm-taxonomy.md` — invariantes da taxonomia
-- `docs/pkm-indexes.md` — papel derivado de `grupos.json`
-- `docs/schemas/frontmatter-item.md` — contrato dos itens de conhecimento
-- `docs/schemas/frontmatter-grupo.md` — contrato de grupos
+- `docs/pkm-structure.md` — estrutura esperada e invariantes da taxonomia (seção Taxonomia)
+- `docs/pkm-conventions.md` — convenções de conteúdo e índices JSON (seção Índices JSON)
+- `schemas/frontmatter-item.md` — contrato dos itens de conhecimento
+- `schemas/frontmatter-grupo.md` — contrato de grupos

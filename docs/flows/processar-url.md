@@ -32,8 +32,8 @@ Se algum pré-requisito fatal faltar, o fluxo aborta antes de processar URLs e a
 - detecta o tipo real de cada URL antes de processar
 - valida se `modelo` é compatível com o tipo detectado
 - executa a cadeia de coleta adequada ao tipo
-- para `modelo: extrato`, gera conteúdo limpo em Markdown
-- para `modelo: resumo`, coleta texto-base e metadados para a IA gerar um resumo autoral em `pt-BR`
+- para `modelo: url-extrato`, gera conteúdo limpo em Markdown
+- para `modelo: url-resumo`, coleta texto-base e metadados para a IA gerar um resumo autoral em `pt-BR`
 
 **Cadeias de fallback:**
 - `web` -> `requests` + `trafilatura` -> `readability-lxml` -> `Playwright` + reextração
@@ -42,9 +42,9 @@ Se algum pré-requisito fatal faltar, o fluxo aborta antes de processar URLs e a
 - `pdf` -> download controlado + `PyMuPDF`
 
 **Regras de ação:**
-- `modelo: extrato` só é permitido para `web` e `pdf` — nunca para vídeos (YouTube, Instagram, TikTok)
-- `modelo: resumo` é permitido para `web`, `pdf`, `youtube`, `instagram` e `tiktok`
-- se uma URL de vídeo vier com `modelo: extrato`, o fluxo deve interromper e propor conversão para `resumo`
+- `modelo: url-extrato` só é permitido para `web` e `pdf` — nunca para vídeos (YouTube, Instagram, TikTok)
+- `modelo: url-resumo` é permitido para `web`, `pdf`, `youtube`, `instagram` e `tiktok`
+- se uma URL de vídeo vier com `modelo: url-extrato`, o fluxo deve interromper e propor conversão para `url-resumo`
 
 **Prioridade de áudio para vídeos:**
 - Para vídeos (YouTube, Instagram, TikTok), o `texto_base` é sempre a transcrição do áudio (subtitle ou ASR via Whisper)
@@ -57,7 +57,7 @@ Se algum pré-requisito fatal faltar, o fluxo aborta antes de processar URLs e a
 
 **Cabeçalho do arquivo** (aplicável a todos os tipos e formatos):
 
-Todo arquivo processado pelo fluxo — independente de `modelo: extrato` ou `modelo: resumo` — deve iniciar com um cabeçalho padronizado composto por título H1 e bloco de proveniência em blockquote:
+Todo arquivo processado pelo fluxo — independente de `modelo: url-extrato` ou `modelo: url-resumo` — deve iniciar com um cabeçalho padronizado composto por título H1 e bloco de proveniência em blockquote:
 
 ```markdown
 # Título da Postagem
@@ -94,9 +94,9 @@ Lista fixa de plataformas (inferência por padrão de URL):
 | URL termina em `.pdf` ou tipo detectado como PDF | `PDF` |
 | qualquer outro | `Web` |
 
-**Estrutura do resumo** (aplicável a todos os tipos com `modelo: resumo`):
+**Estrutura do resumo** (aplicável a todos os tipos com `modelo: url-resumo`):
 
-Ver `docs/schemas/url-resumo.md` — fonte de verdade para estrutura de seções e regras de escrita do corpo de arquivos `modelo: resumo`.
+Ver `models/url-resumo.md` — fonte de verdade para estrutura de seções e regras de escrita do corpo de arquivos `modelo: url-resumo`.
 
 **Temporários:**
 - artefatos intermediários são gravados em `.agents/skills/processar-url/scripts/temp/` com nomenclatura canônica `{slug}-{sufixo}.{extensao}`

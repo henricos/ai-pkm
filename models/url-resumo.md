@@ -1,10 +1,10 @@
 # Template — Resumo de URL
 
-Este template define a estrutura e as regras de escrita para o corpo de arquivos `url_` com `modelo: resumo` após o processamento pela skill `/processar-url`.
+Este template define a estrutura e as regras de escrita para o corpo de arquivos `url_` com `modelo: url-resumo` após o processamento pela skill `/processar-url`.
 
-**Escopo:** somente arquivos com prefixo `url_`, `modelo: resumo`, `estado: finalizado`.
+**Escopo:** somente arquivos com prefixo `url_`, `modelo: url-resumo`, `estado: finalizado`.
 
-O cabeçalho de proveniência (H1 + blockquote com Autores/Plataforma/Publicado em/Original) é definido em `docs/flows/processar-url.md` e antecede sempre o corpo descrito aqui — é compartilhado com `modelo: extrato` e não faz parte deste template.
+O cabeçalho de proveniência (H1 + blockquote com Autores/Plataforma/Publicado em/Original) é definido em `docs/flows/processar-url.md` e antecede sempre o corpo descrito aqui — é compartilhado com `modelo: url-extrato` e não faz parte deste template.
 
 ---
 
@@ -86,7 +86,7 @@ A curadoria de links é obrigatória — não basta listar o que foi mencionado.
 
 ### Proibido
 
-- Reprodução literal de trechos longos do original (isso seria `modelo: extrato`, não `resumo`)
+- Reprodução literal de trechos longos do original (isso seria `modelo: url-extrato`, não `url-resumo`)
 - Introduções genéricas ("Neste vídeo...", "O autor explica que...")
 - Seções vazias — omitir `## O que fica` e `## Recursos` quando não há conteúdo genuíno
 - Listas em `## Narrativa` para conteúdo argumentativo — usar prosa

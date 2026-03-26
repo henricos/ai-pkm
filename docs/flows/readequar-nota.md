@@ -15,7 +15,7 @@ LEITURA
 DETECÇÃO DE TEMPLATE
   Lê campo `tipo` do frontmatter
   Infere subtipo a partir do conteúdo
-  Lista arquivos em docs/schemas/ com prefixo igual ao `tipo`
+  Lista arquivos em models/ com prefixo igual ao `tipo`
   Seleciona o template correspondente ao subtipo identificado
   Lê o template selecionado
   Se subtipo ambíguo → apresenta hipótese e pergunta ao usuário antes de continuar

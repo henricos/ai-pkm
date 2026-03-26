@@ -75,7 +75,7 @@ Leia o conteúdo do arquivo identificado.
 
 Após a leitura (aplica-se apenas a notas — arquivos sem prefixo `url_`):
 1. Leia o campo `modelo` do frontmatter.
-   - **Campo presente**: construa o caminho `docs/schemas/[valor].md` e leia o arquivo. Adote como guia silencioso de construção e siga direto para a proposta de execução.
+   - **Campo presente**: construa o caminho `models/[valor].md` e leia o arquivo. Adote como guia silencioso de construção e siga direto para a proposta de execução.
    - **Campo ausente**: leia `index/models.json`, compare o assunto do conteúdo com `assuntos_aplicaveis` de cada entrada e selecione o match mais adequado.
      - Se houver **match claro**: leia o modelo e siga direto para a proposta de execução.
      - Se estiver **ambíguo**: apresente sua hipótese e pergunte ao usuário qual modelo usar antes de continuar.
@@ -176,7 +176,7 @@ Define o formato do resultado. Pode acontecer antes ou depois da dinâmica.
 
 Após definir o arquivo de saída (aplica-se apenas a notas — sem prefixo `url_`):
 1. Leia o campo `modelo` do frontmatter do arquivo de saída (se existente).
-   - **Campo presente**: construa o caminho `docs/schemas/[valor].md` e leia o arquivo.
+   - **Campo presente**: construa o caminho `models/[valor].md` e leia o arquivo.
    - **Campo ausente**: leia `index/models.json`, compare o assunto com `assuntos_aplicaveis` de cada entrada e selecione o match mais adequado.
 2. Se modelo selecionado: carregue, anuncie ao usuário:
    > *"Encontrei o modelo `[nome].md` — vou usá-lo como guia de estrutura e estilo para a saída."*

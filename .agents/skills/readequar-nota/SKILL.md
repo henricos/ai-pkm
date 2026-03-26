@@ -29,7 +29,7 @@ Leia o arquivo completo, incluindo o frontmatter.
 
 Leia o campo `modelo` do frontmatter da nota.
 
-- **Campo presente**: construa o caminho `docs/schemas/[valor].md` e leia o arquivo.
+- **Campo presente**: construa o caminho `models/[valor].md` e leia o arquivo.
 - **Campo ausente**: encerre com a mensagem:
 
   > *"Não é possível readequar sem modelo associado. Execute `/criar-nota` primeiro para que o modelo seja definido no frontmatter."*

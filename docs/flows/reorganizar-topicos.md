@@ -33,9 +33,9 @@ Use quando o problema não é local e sim estrutural: o conjunto atual de tópic
 **Comportamento:**
 - Sempre interativo — apresenta proposta e aguarda aprovação antes de qualquer movimentação.
 - Mantém o limite de no máximo 2 níveis hierárquicos.
-- Atualiza `index/topicos.json` conforme convenção em `docs/pkm-taxonomy.md`.
+- Atualiza `index/topicos.json` conforme convenção em `docs/pkm-structure.md` (seção Taxonomia).
 - Quando houver arquivos ou grupos afetados, atualiza caminhos, ajusta frontmatter e mantém `index/grupos.json` coerente.
 - Se a evidência for insuficiente, a resposta correta é recomendar não reorganizar.
 - Ao concluir, sugere fortemente ao usuário executar `/recriar-indices` para confirmar que os índices estão sincronizados.
 
-**Convenção de referência:** `docs/pkm-taxonomy.md`
+**Convenção de referência:** `docs/pkm-structure.md` (seção Taxonomia)

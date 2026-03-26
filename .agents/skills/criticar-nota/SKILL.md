@@ -31,7 +31,7 @@ Leia o arquivo completo, incluindo o frontmatter.
 
 Leia o campo `modelo` do frontmatter da nota.
 
-- **Campo presente**: construa o caminho `docs/schemas/[valor].md` e leia o arquivo. Prossiga para Passo 5a.
+- **Campo presente**: construa o caminho `models/[valor].md` e leia o arquivo. Prossiga para Passo 5a.
 - **Campo ausente**: informe ao usuário que a nota não tem modelo associado e prossiga com análise livre (Passo 5b).
 
 ---

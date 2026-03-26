@@ -54,7 +54,9 @@ A documentação deste projeto vive em `docs/`:
 - **`docs/overview.md`** — visão e propósito.
 - **`docs/prd.md`** — requisitos de produto.
 - **`docs/architecture.md`** — stack, ADRs e decisões técnicas.
-- **`docs/pkm-conventions.md`** — contratos estruturais do pkm.
+- **`docs/pkm-structure.md`** — estrutura de diretórios do repositório e taxonomia de tópicos.
+- **`docs/pkm-conventions.md`** — contratos estruturais do pkm: tipos de item, frontmatter, nomenclatura, índices JSON.
+- **`docs/pkm-naming.md`** — fonte de verdade para nomenclatura de arquivos (slugs, prefixos, autores).
 - **`docs/flows/`** — especificação autoritativa de cada fluxo operacional (um arquivo por fluxo).
 
 **Regra de atualização:** ao alterar o comportamento de qualquer fluxo, atualize primeiro a spec em `docs/flows/` e depois propague a mudança para a skill correspondente em `.agents/skills/`.
@@ -67,7 +69,11 @@ Todos os arquivos do repositório seguem kebab-case. Regras completas em `docs/p
 
 ### Frontmatter
 
-Arquivos de conhecimento no repositório `pkm` exigem frontmatter conforme esquemas em `docs/schemas/`. Detalhes em `docs/pkm-conventions.md`.
+Arquivos de conhecimento no repositório `pkm` exigem frontmatter conforme contratos em `schemas/` (raiz do projeto). Detalhes em `docs/pkm-conventions.md`.
+
+### Modelos de nota
+
+Modelos operacionais de nota e URL vivem em `models/` (raiz do projeto), análogos aos índices JSON em `index/`. Ao criar ou readequar notas, consulte o modelo em `models/<nome>.md` — o campo `modelo` no frontmatter aponta para o nome do arquivo sem extensão (ex: `nota-ferramenta`, `url-resumo`). Para descobrir os modelos disponíveis, consulte `index/models.json`.
 
 ### Busca de conteúdo
 

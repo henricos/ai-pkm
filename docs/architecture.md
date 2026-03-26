@@ -22,7 +22,8 @@
 
 ## Estrutura de diretórios
 
-> TODO — a ser definido em sessão dedicada.
+> TODO — estrutura do código da aplicação Next.js (a ser preenchido quando o scaffolding do app existir).
+> A estrutura do repositório atual (`ai-pkm` + `pkm`) está documentada em `docs/pkm-structure.md`.
 
 ---
 

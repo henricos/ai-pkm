@@ -59,8 +59,8 @@ Apresente os arquivos encontrados em tabela:
 ```text
 | # | Arquivo | Modelo | URL |
 |---|---|---|---|
-| 1 | tecnologia/url_guia-fine-tuning.md | extrato | https://... |
-| 2 | saude/url_artigo-jejum.md | resumo | https://... |
+| 1 | tecnologia/url_guia-fine-tuning.md | url-extrato | https://... |
+| 2 | saude/url_artigo-jejum.md | url-resumo | https://... |
 ```
 
 Apresente uma única pergunta integrando escopo e decisão de cache:
@@ -100,7 +100,7 @@ Para cada arquivo selecionado:
    - `instagram` / `tiktok` -> `yt-dlp` metadata (caption como complemento) + `yt-dlp` subtitles -> `yt-dlp` + `faster-whisper`
    - `pdf` -> `Docling` -> `PyMuPDF` (fallback)
 3. Se o tipo vier como `nao_suportado`, não baixe o recurso. Informe ao usuário que o formato está fora do escopo do fluxo.
-4. Se `modelo` for incompatível com o tipo detectado (ex: `extrato` em vídeo), interrompa o item e proponha conversão para `resumo` antes de prosseguir. **`extrato` é válido apenas para `web` e `pdf` — nunca para YouTube, Instagram ou TikTok.**
+4. Se `modelo` for incompatível com o tipo detectado (ex: `url-extrato` em vídeo), interrompa o item e proponha conversão para `url-resumo` antes de prosseguir. **`url-extrato` é válido apenas para `web` e `pdf` — nunca para YouTube, Instagram ou TikTok.**
 
 #### 3.2 Coleta do texto-base
 
@@ -132,7 +132,7 @@ Para cada arquivo selecionado:
 - **YouTube:** transcrições prontas são frequentemente disponíveis (`youtube-transcript-api` ou `yt-dlp subtitles`) e já representam o áudio. O download de áudio + ASR via Whisper ocorre apenas como último recurso.
 - **Instagram/TikTok:** transcrições raramente existem. Download de áudio + ASR é o caminho padrão. `yt-dlp subtitles` é tentado primeiro, mas espera-se que falhe na maioria dos casos.
 
-#### 3.3 Formato `extrato`
+#### 3.3 Formato `url-extrato`
 
 1. Só prossiga se `tipo_detectado` for `web` ou `pdf`.
 2. Gere o cabeçalho padronizado (ver spec em `docs/flows/processar-url.md`, seção "Cabeçalho do arquivo"):
@@ -145,7 +145,7 @@ Para cada arquivo selecionado:
 4. Use `texto_base` como conteúdo a inserir após o cabeçalho.
 5. Preserve Markdown limpo, sem menus, rodapés, navegação ou anúncios.
 
-#### 3.4 Formato `resumo`
+#### 3.4 Formato `url-resumo`
 
 Use `texto_base` e `metadados` para elaborar um resumo em `pt-BR`.
 
@@ -158,7 +158,7 @@ Gere o cabeçalho padronizado conforme spec em `docs/flows/processar-url.md`, se
 - `Plataforma` inferida da URL conforme lista fixa na spec; fallback `Web`
 - `Original` no formato `[url](url)`
 
-**Estrutura do corpo:** ver `docs/schemas/url-resumo.md` — fonte de verdade para seções (`## Síntese`, `## Narrativa`, `## O que fica`, `## Recursos`) e regras de escrita.
+**Estrutura do corpo:** ver `models/url-resumo.md` — fonte de verdade para seções (`## Síntese`, `## Narrativa`, `## O que fica`, `## Recursos`) e regras de escrita.
 
 ##### 3.4.1 Notas específicas — web/PDF
 
@@ -233,8 +233,8 @@ Sugira: *"Use `/commit-push` para registrar as alterações no histórico Git."*
 ## Arquivos de Referência
 
 - `docs/flows/processar-url.md` — especificação do fluxo
-- `docs/schemas/url-resumo.md` — **template do corpo para `modelo: resumo`**
+- `models/url-resumo.md` — **template do corpo para `modelo: url-resumo`**
 - `docs/pkm-naming.md` — **convenção de nomenclatura** (prefixo `url_`, padrão autor-título)
-- `docs/schemas/frontmatter-item.md` — esquema de frontmatter de itens de conhecimento
+- `schemas/frontmatter-item.md` — esquema de frontmatter de itens de conhecimento
 - `docs/pkm-structure.md` — estrutura do repositório
 - `scripts/processar_url.py` — helper Python do fluxo

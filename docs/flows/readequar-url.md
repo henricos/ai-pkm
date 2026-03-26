@@ -2,13 +2,13 @@
 
 **Skill:** `/readequar-url`
 
-**Quando usar:** Quando o template `docs/schemas/url-resumo.md` mudar depois que arquivos foram processados, ou quando um resumo existente precisar ser estruturado conforme o template atual sem re-coletar a fonte.
+**Quando usar:** Quando o template `models/url-resumo.md` mudar depois que arquivos foram processados, ou quando um resumo existente precisar ser estruturado conforme o template atual sem re-coletar a fonte.
 
 **O que faz:**
 
-1. Identifica o escopo — arquivo específico fornecido como argumento, ou todos os arquivos `modelo: resumo` finalizados.
-2. Valida cada arquivo: deve ter prefixo `url_`, `modelo: resumo`, `estado: finalizado`. Arquivos com `modelo: extrato` são pulados.
-3. Lê o template `docs/schemas/url-resumo.md` uma vez para toda a sessão.
+1. Identifica o escopo — arquivo específico fornecido como argumento, ou todos os arquivos `modelo: url-resumo` finalizados.
+2. Valida cada arquivo: deve ter prefixo `url_`, `modelo: url-resumo`, `estado: finalizado`. Arquivos com `modelo: url-extrato` são pulados.
+3. Lê o template `models/url-resumo.md` uma vez para toda a sessão.
 4. Para cada arquivo válido, compara as seções do corpo com a estrutura esperada e apresenta diagnóstico de divergências antes de prosseguir.
 5. Executa apenas alterações estruturais:
    - Reposiciona seções fora de ordem para a sequência correta do template.

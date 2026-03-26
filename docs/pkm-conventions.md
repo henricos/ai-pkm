@@ -41,7 +41,7 @@ Todo arquivo Markdown de conhecimento usa YAML frontmatter. Campo obrigatório:
 Campos opcionais (incluir somente quando aplicável, nunca `null`):
 
 - `url` — obrigatório em arquivos de URL (prefixo `url_`), proibido em notas
-- `modelo` — campo unificado; indica o modelo de estrutura aplicado (`nota-ferramenta`, `extrato`, `resumo`, etc.)
+- `modelo` — modelo de estrutura aplicado (`nota-ferramenta`, `url-extrato`, `url-resumo`, etc.)
 - `autores` — quando identificável
 - `data_captura` — data em que o item foi registrado
 - `data_publicacao` — data de publicação da fonte original
@@ -55,3 +55,45 @@ Grupos são agrupadores persistentes de conhecimento — não representam tarefa
 ## Modelos
 
 O sistema possui modelos de estrutura para tipos de nota (conceito, empresa, ferramenta, procedimento, entre outros). Os arquivos de modelo são artefatos operacionais lidos e aplicados diretamente pelo agente — sua localização no repositório é definida nas instruções operacionais (`AGENTS.md`).
+
+---
+
+## Índices JSON
+
+Os índices são arquivos JSON centralizados em `index/`. Permitem que skills e agentes façam consultas rápidas sem varrer pastas.
+
+### Índice derivado: `grupos.json`
+
+Gerado a partir do frontmatter dos arquivos `_grupo.md`. Array JSON de objetos:
+
+| Campo | Tipo | Origem |
+|---|---|---|
+| `caminho` | string | Caminho relativo da pasta do grupo |
+| `descricao` | string | `_grupo.md` frontmatter |
+| `topico` | string | `_grupo.md` frontmatter |
+| `ambito` | string | `_grupo.md` frontmatter (opcional) |
+
+**Regra fundamental:** o frontmatter é a fonte da verdade. Em caso de divergência, o frontmatter prevalece. A skill `/recriar-indices` regenera o índice do zero a partir do frontmatter.
+
+### Índice curado: `topicos.json`
+
+Mantido exclusivamente via `/reorganizar-topicos`. Não é derivado de frontmatter — é a própria fonte da verdade para tópicos válidos. Estrutura descrita em `docs/pkm-structure.md` (seção Taxonomia).
+
+### URLs com processamento pendente
+
+Não há índice dedicado para URLs. A localização de URLs não processadas é feita via grep:
+
+```bash
+grep -rl "estado: rascunho" pkm/*/ --include="url_*.md"
+```
+
+### Quando atualizar
+
+Cada skill que cria, modifica ou remove entradas deve atualizar o índice correspondente na mesma operação:
+
+- `/triar` → `grupos.json` (se criar grupo novo durante triagem)
+- `/criar-grupo` → `grupos.json` (ao criar grupo)
+- `/reorganizar-topicos` → `topicos.json` e `grupos.json`
+- `/recriar-indices` → `grupos.json` (regeneração completa)
+
+Para checagem não mutante de coerência entre `_grupo.md` e `index/grupos.json`, use a skill `/validar-estrutura`.

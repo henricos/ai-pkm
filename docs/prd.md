@@ -28,7 +28,7 @@ O sistema deve suportar a execução de todos os fluxos abaixo via interface web
 - `/validar-estrutura` — verifica invariantes da base
 - `/commit-push` — encerramento Git com mensagem em Conventional Commits
 
-Specs detalhadas de cada fluxo ficam em `docs/flows/` (a criar em sessão dedicada).
+Specs detalhadas de cada fluxo ficam em `docs/flows/`.
 
 ---
 

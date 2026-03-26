@@ -1,6 +1,6 @@
 ---
 name: readequar-url
-description: "Adapta o corpo de arquivos `url_` com `modelo: resumo` já processados a um template novo ou atualizado. O trabalho é puramente estrutural: reposicionar seções, realocar conteúdo entre seções e marcar lacunas como TBD. Não re-coleta a fonte, não usa helper, não avalia qualidade. Use esta skill quando o template `url-resumo.md` mudar depois que arquivos foram processados, ou quando um resumo existente precisa ser estruturado conforme o template atual."
+description: "Adapta o corpo de arquivos `url_` com `modelo: url-resumo` já processados a um template novo ou atualizado. O trabalho é puramente estrutural: reposicionar seções, realocar conteúdo entre seções e marcar lacunas como TBD. Não re-coleta a fonte, não usa helper, não avalia qualidade. Use esta skill quando o template `url-resumo.md` mudar depois que arquivos foram processados, ou quando um resumo existente precisa ser estruturado conforme o template atual."
 command: /readequar-url
 ---
 
@@ -8,9 +8,9 @@ command: /readequar-url
 
 ## Instruções de Execução do Agente
 
-Esta skill implementa o **Fluxo — Readequar URL** descrito em `docs/flows/readequar-url.md`. Readequa o corpo de arquivos `url_` com `modelo: resumo` ao template em `docs/schemas/url-resumo.md`. O trabalho é puramente estrutural — sem re-coleta de fonte, sem pesquisa externa.
+Esta skill implementa o **Fluxo — Readequar URL** descrito em `docs/flows/readequar-url.md`. Readequa o corpo de arquivos `url_` com `modelo: url-resumo` ao template em `models/url-resumo.md`. O trabalho é puramente estrutural — sem re-coleta de fonte, sem pesquisa externa.
 
-**Somente opera em arquivos `url_` com `modelo: resumo` e `estado: finalizado`.**
+**Somente opera em arquivos `url_` com `modelo: url-resumo` e `estado: finalizado`.**
 
 ---
 
@@ -22,7 +22,7 @@ Esta skill implementa o **Fluxo — Readequar URL** descrito em `docs/flows/read
 > "Quais arquivos deseja readequar?"
 >
 > 1. **Informar arquivo(s) específico(s)**
-> 2. **Todos os arquivos `modelo: resumo` finalizados**
+> 2. **Todos os arquivos `modelo: url-resumo` finalizados**
 > 3. **Cancelar**
 
 Se "Todos", obtenha a lista via helper:
@@ -45,14 +45,14 @@ uv --directory .agents/skills/readequar-url/scripts run python listar_urls.py \
 Para cada arquivo selecionado, verifique:
 
 - Prefixo `url_` no nome do arquivo — se não, pule com aviso: *"Arquivo não é do tipo url — ignorado."*
-- `modelo: resumo` — se for `extrato`, pule: *"Arquivo tem `modelo: extrato` — readequação não aplicável."*
+- `modelo: url-resumo` — se for `extrato`, pule: *"Arquivo tem `modelo: url-extrato` — readequação não aplicável."*
 - `estado: finalizado` — se `rascunho`, pule: *"Arquivo ainda não foi processado — execute `/processar-url` primeiro."*
 
 ---
 
 ## Passo 3: Leitura do Template
 
-Leia `docs/schemas/url-resumo.md` uma vez antes de processar qualquer arquivo.
+Leia `models/url-resumo.md` uma vez antes de processar qualquer arquivo.
 
 ---
 
@@ -113,11 +113,11 @@ Escreva no arquivo após aprovação (substituição completa do conteúdo, pres
 - Não avalia qualidade de conteúdo — apenas estrutura
 - Lacunas marcadas como TBD são sinais para uma futura sessão de `/criticar-url`
 - Preserva o frontmatter intacto; nunca altera campos de metadados
-- Opera somente em arquivos `url_` com `modelo: resumo` e `estado: finalizado`
+- Opera somente em arquivos `url_` com `modelo: url-resumo` e `estado: finalizado`
 
 ## Arquivos de Referência
 
 - `.agents/skills/readequar-url/scripts/listar_urls.py` — helper (listar)
-- `docs/schemas/url-resumo.md` — **template do corpo** (fonte de verdade)
+- `models/url-resumo.md` — **template do corpo** (fonte de verdade)
 - `docs/flows/processar-url.md` — contexto do ciclo de vida do arquivo
-- `docs/schemas/frontmatter-item.md` — esquema de frontmatter de itens de conhecimento
+- `schemas/frontmatter-item.md` — esquema de frontmatter de itens de conhecimento
