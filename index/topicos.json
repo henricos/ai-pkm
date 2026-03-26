@@ -1,0 +1,22 @@
+[
+  {
+    "id": "saude",
+    "descricao": "Nutrição, alimentação, condições médicas, exames, saúde mental, sono, bem-estar, esportes, corrida, neurodivergência e autismo."
+  },
+  {
+    "id": "carreira",
+    "descricao": "Gestão de carreira, networking, portfólio, metas profissionais, currículo, liderança e posicionamento no mercado."
+  },
+  {
+    "id": "desenvolvimento-pessoal",
+    "descricao": "Construção de hábitos, filosofias de vida, espiritualidade, produtividade, organização pessoal, PKM e aprendizados não-técnicos."
+  },
+  {
+    "id": "tecnologia",
+    "descricao": "Engenharia de software, programação, arquitetura de sistemas, inteligência artificial, LLMs, agentes, engenharia de prompt, hardware, infraestrutura, ferramentas e DevOps."
+  },
+  {
+    "id": "cultura",
+    "descricao": "Filmes, séries, documentários, livros, música, podcasts, jogos, críticas e listas de consumo."
+  }
+]
