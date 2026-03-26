@@ -12,6 +12,28 @@ O sistema opera em dois modos em paralelo: pela interface web, que é o ambiente
 
 A documentação técnica do projeto vive em `docs/`: visão e propósito, requisitos de produto, decisões de arquitetura, convenções do PKM e especificações detalhadas de cada fluxo operacional.
 
+## Configuração do ambiente
+
+O repositório `pkm` (privado) não faz parte deste repo e precisa ser montado manualmente como pasta `pkm/` na raiz do projeto. Sem ela, nenhuma skill operacional funciona.
+
+**Desenvolvimento local**
+
+Assumindo que `pkm` e `ai-pkm` estão em pastas irmãs:
+
+```bash
+ln -s ../pkm pkm
+```
+
+**Produção**
+
+Monte o diretório equivalente ao `pkm` via Docker volume:
+
+```
+docker run ... -v /caminho/para/pkm:/app/pkm ...
+```
+
+Em ambos os casos, a plataforma lê e escreve em `pkm/` sem precisar saber como a pasta chegou lá.
+
 ## Por que construir isso
 
 Em 2026, a receita mais popular para quem quer um "Second Brain com IA" é clara: Obsidian ou Notion, conectados ao Claude Code ou outro agente via MCP. Há cursos, tutoriais e comunidades inteiras em torno desses combos. Funcionam, e têm seu lugar.

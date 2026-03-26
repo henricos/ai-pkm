@@ -69,9 +69,11 @@ O arquivo `docs/schemas/frontmatter-conhecimento.md` ainda reflete o schema anti
 
   O schema de frontmatter mudou (ver seção "Refatoração do frontmatter" acima). Os impactos são: (a) `docs/schemas/frontmatter-conhecimento.md` ainda tem o schema antigo — reescrever refletindo os campos novos; (b) skills que liam ou escreviam campos removidos precisam de adaptação de lógica — as mais afetadas são `/triar` (escrevia `tipo`, `formato`, `processado`, `maturidade`, `template`), `/processar-url` (lia `formato`, escrevia `processado: true`), `/criticar-url` e `/readequar-url` (liam `formato` e `processado`), `/criar-nota` e `/criticar-nota` (liam/escreviam `maturidade` e `template`), `/validar-estrutura` (validava campos do schema antigo); (c) scripts Python que manipulam frontmatter precisam usar os novos campos; (d) o arquivo `index/templates.json` usa o nome legado "templates" — avaliar se deve ser renomeado para `index/models.json` e atualizar as referências.
 
-- [ ] **3. Código** — Montar o repositório `pkm` em `pkm/` na raiz deste projeto
+- [x] **3. Documentação** — Montar o repositório `pkm` em `pkm/` na raiz deste projeto
 
-  O repositório `pkm` (privado, em `github.com/henricos/pkm`) deve ser clonado ou montado como pasta `pkm/` na raiz do `ai-pkm`. Essa pasta já está no `.gitignore`. Sem ela, nenhuma skill operacional funciona — todas dependem de `pkm/__inbox/` e `pkm/topico/`.
+  O repositório `pkm` (privado, em `github.com/henricos/pkm`) deve ser montado como pasta `pkm/` na raiz do `ai-pkm`. Essa pasta já está no `.gitignore`. Sem ela, nenhuma skill operacional funciona — todas dependem de `pkm/__inbox/` e `pkm/topico/`.
+
+  A técnica adotada é **symlink para repo vizinho** em desenvolvimento (`ln -s ../pkm pkm`), consistente com o modelo de produção via Docker volume mount. Documentado na seção "Configuração do ambiente" do `README.md`.
 
 - [x] **4. Documentação** — Definir localização definitiva dos modelos de nota e mover de `docs/schemas/`
 
