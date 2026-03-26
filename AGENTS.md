@@ -61,6 +61,18 @@ A documentação deste projeto vive em `docs/`:
 
 **Regra de atualização:** ao alterar o comportamento de qualquer fluxo, atualize primeiro a spec em `docs/flows/` e depois propague a mudança para a skill correspondente em `.agents/skills/`.
 
+## Desenvolvimento guiado por especificação (SDD)
+
+Este projeto adota Spec-Driven Development como prática de desenvolvimento: qualquer feature da plataforma começa com uma especificação escrita antes do código. A ferramenta adotada é o OpenSpec, cuja configuração é trabalho futuro.
+
+**Regras para o agente:**
+- Antes de implementar qualquer feature, verifique se existe uma spec correspondente. Se não existir, sinalize ao operador antes de prosseguir.
+- Se uma mudança alterar o comportamento descrito numa spec existente, atualize a spec como parte da mesma entrega.
+
+**Separação de specs por camada:**
+- `docs/flows/` — especificações das skills operacionais (comportamento do agente PKM). Regra de atualização já descrita na seção "Documentação técnica".
+- Specs da plataforma web (features da aplicação) serão mantidas em pasta própria a definir quando o OpenSpec for configurado.
+
 ## Regras universais
 
 ### Nomenclatura de arquivos

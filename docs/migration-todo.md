@@ -77,7 +77,7 @@ O arquivo `docs/schemas/frontmatter-conhecimento.md` ainda reflete o schema anti
 
   Os arquivos `nota-conceito.md`, `nota-empresa.md`, `nota-ferramenta.md`, `nota-procedimento.md` e `url-resumo.md` estão temporariamente em `docs/schemas/` junto com os contratos de frontmatter (`frontmatter-conhecimento.md`, `frontmatter-grupo.md`). Modelos são artefatos operacionais — o agente os lê e aplica ao criar e readequar notas. Por isso não pertencem em `docs/`. Candidato natural: `.agents/models/`, seguindo o padrão de `.agents/skills/`. Decidir o local definitivo, mover os arquivos, atualizar as referências nas skills e em `AGENTS.md`.
 
-- [ ] **5. Documentação** — Documentar no `AGENTS.md` a convenção de trabalho com SDD, `docs/specs/` e OpenSpec
+- [x] **5. Documentação** — Documentar no `AGENTS.md` a convenção de trabalho com SDD, `docs/specs/` e OpenSpec
 
   O projeto adota Spec-Driven Development (SDD): antes de implementar qualquer feature, uma spec é escrita em `docs/specs/` descrevendo o comportamento esperado. O agente deve ler a spec antes de implementar e atualizar a spec se o comportamento mudar. OpenSpec é o formato/ferramenta de especificação usado. Essa convenção ainda não foi documentada no `AGENTS.md`. Adicionar uma seção explicando o fluxo: spec em `docs/specs/` → implementação → atualização da spec. Consultar `backup-ai-pkm/_tecnologia/openspec.md` e `backup-ai-pkm/_tecnologia/spec-driven-development-ia.md` para contexto.
 
@@ -89,7 +89,7 @@ O arquivo `docs/schemas/frontmatter-conhecimento.md` ainda reflete o schema anti
 
   Na seção "Fluxos operacionais suportados na v1", a última linha diz `Specs detalhadas de cada fluxo ficam em \`docs/flows/\` (a criar em sessão dedicada).` A pasta `docs/flows/` já existe com os 13 specs. Remover o trecho `(a criar em sessão dedicada)` ou reescrever a linha para refletir que as specs já existem.
 
-- [ ] **8. Documentação** — Expandir `README.md`
+- [x] **8. Documentação** — Expandir `README.md`
 
   O README atual é mínimo. Adicionar: (a) parágrafo sobre o modelo humano/IA — "O humano deposita itens e toma decisões; a IA é a única escritora de arquivos no acervo"; (b) seção "Fluxos de trabalho" com menção breve às skills e link para `docs/flows/`; (c) seção "Integração com IA" mencionando que o repo é agnóstico de ferramenta via `AGENTS.md`, com suporte nativo a Claude Code, Cursor, Antigravity e Codex CLI. Consultar `backup-ai-pkm/README.md` para referência do texto original.
 
