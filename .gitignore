@@ -49,10 +49,18 @@ Thumbs.db
 .idea/
 *.swp
 *.swo
+*~
+
+# Ferramentas de IA — configurações locais
+.claude/settings.local.json
+.cursor/settings.local.json
+
+# OS
+Desktop.ini
 
 # TypeScript
 *.tsbuildinfo
 
 # Repositórios locais montados
-pkm/
-backup-ai-pkm/
+pkm
+backup-ai-pkm
