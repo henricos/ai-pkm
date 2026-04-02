@@ -33,11 +33,11 @@ Execute o helper para validar e listar os arquivos elegíveis:
 
 ```bash
 # Para arquivo específico:
-uv --directory .agents/skills/criticar-url/scripts run python listar_urls.py \
+python3 .agents/skills/criticar-url/scripts/listar_urls.py \
     listar --arquivo pkm/topico/url_slug.md --json
 
 # Para todos:
-uv --directory .agents/skills/criticar-url/scripts run python listar_urls.py listar --json
+python3 .agents/skills/criticar-url/scripts/listar_urls.py listar --json
 ```
 
 O helper retorna cada entrada com `arquivo`, `slug` e `tem_cache`. Arquivos com `tem_cache: false` devem ser pulados com aviso:

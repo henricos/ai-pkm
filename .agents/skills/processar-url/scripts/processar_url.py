@@ -1,4 +1,35 @@
 #!/usr/bin/env python3
+# /// script
+# requires-python = ">=3.12"
+# dependencies = [
+#   "docling>=2.0.0",
+#   "faster-whisper>=1.1.0",
+#   "PyMuPDF>=1.25.0",
+#   "playwright>=1.51.0",
+#   "readability-lxml>=0.8.1",
+#   "requests>=2.32.0",
+#   "trafilatura>=2.0.0",
+#   "youtube-transcript-api>=1.2.0",
+#   "yt-dlp>=2025.1.26",
+# ]
+# ///
+"""Helper da skill /processar-url — extrai e resume conteúdo de URLs (web, PDF, YouTube, redes sociais).
+
+Helper auto-suficiente — dependências declaradas inline via PEP 723, executado com `uv run`.
+O uv cacheia em ~/.cache/uv; segunda execução é instantânea sem rede.
+
+Regras para manutenção:
+- Todas as dependências ficam no bloco `# /// script`. Nunca mover para arquivos externos.
+- Importar cada biblioteca dentro do bloco que a usa (estratégias em cascata).
+  Imports no topo quebram estratégias que não precisam daquela dependência.
+- Toda tentativa de estratégia emite log em stderr.
+- uv é requisito. O script deve detectar ausência e orientar instalação antes de falhar.
+
+Uso:
+    uv run .agents/skills/processar-url/scripts/processar_url.py validar-ambiente --json
+    uv run .agents/skills/processar-url/scripts/processar_url.py listar-pendentes --json
+    uv run .agents/skills/processar-url/scripts/processar_url.py processar --arquivo pkm/... --json
+"""
 from __future__ import annotations
 
 import argparse
@@ -28,8 +59,6 @@ ROOT_DIR = REPO_DIR
 TEMP_DIR = SCRIPT_DIR / "temp"
 VENV_DIR = SCRIPT_DIR / ".venv"
 VENV_PYTHON = VENV_DIR / "bin" / "python"
-PYPROJECT_PATH = SCRIPT_DIR / "pyproject.toml"
-UV_LOCK_PATH = SCRIPT_DIR / "uv.lock"
 PENDENTE_GLOB = "pkm/*/**/*.md"
 USER_AGENT = (
     "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
@@ -343,7 +372,7 @@ def _playwright_browser_ok_no_venv(python_venv: Path) -> bool:
 
 def instrucoes_ambiente() -> list[str]:
     return [
-        "Instale o uv: curl -LsSf https://astral.sh/uv/install.sh | sh",
+        "Instale o uv (gerenciador de deps, necessário para este script): curl -LsSf https://astral.sh/uv/install.sh | sh",
         "Instale o ffmpeg no Ubuntu: sudo apt update && sudo apt install -y ffmpeg",
     ]
 
@@ -376,11 +405,6 @@ def validar_ambiente() -> dict[str, Any]:
             "instrucoes": instrucoes_ambiente(),
         }
 
-    if not PYPROJECT_PATH.exists():
-        erros_fatais.append("pyproject.toml da skill nao encontrado em .agents/skills/processar-url/scripts.")
-    if not UV_LOCK_PATH.exists():
-        avisos.append("uv.lock da skill nao encontrado; a sincronizacao perde reprodutibilidade.")
-
     if shutil.which("ffmpeg") is None:
         erros_fatais.append("ffmpeg nao encontrado no PATH.")
 
@@ -390,7 +414,7 @@ def validar_ambiente() -> dict[str, Any]:
     python_venv = python_no_venv()
     if python_venv is None:
         avisos.append(
-            ".venv/ da skill ausente; sera criada automaticamente pelo proximo `uv run`."
+            ".venv/ da skill ausente; sera criada automaticamente pelo proximo `uv run .agents/skills/processar-url/scripts/processar_url.py`."
         )
     else:
         faltantes = [
@@ -408,13 +432,13 @@ def validar_ambiente() -> dict[str, Any]:
         ):
             auto_corrigiveis.append(
                 "Chromium do Playwright nao esta instalado; executar "
-                "`uv --directory .agents/skills/processar-url/scripts run playwright install chromium`."
+                "`uv run --with playwright playwright install chromium`."
             )
 
     if python_venv is not None and not _python_esta_na_venv(python_venv):
         avisos.append(
             "O script atual nao esta rodando dentro da .venv da skill; prefira "
-            "`uv --directory .agents/skills/processar-url/scripts run python processar_url.py ...`."
+            "`uv run .agents/skills/processar-url/scripts/processar_url.py ...`."
         )
 
     return {
@@ -436,8 +460,7 @@ def importar_modulo(nome: str, pacote: str):
         raise ErroProcessamento(
             "Dependencia ausente no interpretador atual: "
             f"{pacote}. Rode o script com "
-            "`uv --directory .agents/skills/processar-url/scripts run python processar_url.py ...` "
-            "apos sincronizar o ambiente da skill."
+            "`uv run .agents/skills/processar-url/scripts/processar_url.py ...`."
         )
     return importlib.import_module(nome)
 

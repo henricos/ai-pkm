@@ -17,7 +17,7 @@ Esta skill implementa o **Fluxo 6 — Recriar Índices** descrito em `docs/flows
 Execute o helper para escanear o repositório e obter o diff:
 
 ```bash
-uv --directory .agents/skills/recriar-indices/scripts run python recriar_indices.py escanear --json
+python3 .agents/skills/recriar-indices/scripts/recriar_indices.py escanear --json
 ```
 
 O resultado inclui os campos `atual`, `novo` e `diff` (com `adicionados`, `removidos`, `modificados`).
@@ -56,7 +56,7 @@ Se `diff` não tiver entradas: *"Sem alterações em grupos.json."*
 Execute o helper com o subcomando `salvar`:
 
 ```bash
-uv --directory .agents/skills/recriar-indices/scripts run python recriar_indices.py salvar --json
+python3 .agents/skills/recriar-indices/scripts/recriar_indices.py salvar --json
 ```
 
 Informe: *"Índice recriado com sucesso. Use `/commit-push` para registrar no histórico Git."*

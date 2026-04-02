@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """Helper da skill /triar — move itens da __inbox/ para o destino com frontmatter.
 
+Helper auto-suficiente — usa apenas stdlib, sem dependências externas.
+
 Uso:
-    python3 mover_inbox.py '<json>'
+    python3 .agents/skills/triar/scripts/mover_inbox.py '<json>'
 
 Onde <json> é uma lista de objetos com os campos descritos na SKILL.md.
 """

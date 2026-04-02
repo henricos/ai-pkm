@@ -28,13 +28,13 @@ Esta skill implementa o **Fluxo — Readequar URL** descrito em `docs/flows/read
 Se "Todos", obtenha a lista via helper:
 
 ```bash
-uv --directory .agents/skills/readequar-url/scripts run python listar_urls.py listar --json
+python3 .agents/skills/readequar-url/scripts/listar_urls.py listar --json
 ```
 
 Se arquivo específico:
 
 ```bash
-uv --directory .agents/skills/readequar-url/scripts run python listar_urls.py \
+python3 .agents/skills/readequar-url/scripts/listar_urls.py \
     listar --arquivo pkm/topico/url_slug.md --json
 ```
 

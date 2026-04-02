@@ -80,7 +80,7 @@ Confirma a reorganização?
 Somente após confirmação, monte o payload de operações e execute via helper:
 
 ```bash
-uv --directory .agents/skills/reorganizar-topicos/scripts run python reorganizar_topicos.py \
+python3 .agents/skills/reorganizar-topicos/scripts/reorganizar_topicos.py \
     executar --payload '<json>' --json
 ```
 
@@ -143,7 +143,7 @@ Confirma a reorganização?
 Somente após confirmação, monte o payload de operações e execute via helper:
 
 ```bash
-uv --directory .agents/skills/reorganizar-topicos/scripts run python reorganizar_topicos.py \
+python3 .agents/skills/reorganizar-topicos/scripts/reorganizar_topicos.py \
     executar --payload '<json>' --json
 ```
 

@@ -1,19 +1,51 @@
 #!/usr/bin/env python3
 """Helper da skill /recriar-indices — varre _grupo.md e reconstrói grupos.json.
 
+Helper auto-suficiente — sem arquivos externos de dependências.
+
+Regras para manutenção:
+- Dependências de terceiros instaladas em `scripts/.venv` (criado automaticamente).
+  Nunca usar pip global. O site-packages do venv é injetado em sys.path antes do import.
+- Importar dependências de terceiros sob demanda, nunca incondicionalmente no topo.
+- Toda instalação emite log em stderr antes de executar (ex: "[helper] instalando pyyaml...").
+- Stdlib primeiro: só recorrer a terceiros quando a implementação própria tiver custo alto.
+
 Uso:
-    uv --directory .agents/skills/recriar-indices/scripts run python recriar_indices.py escanear --json
-    uv --directory .agents/skills/recriar-indices/scripts run python recriar_indices.py salvar --json
+    python3 .agents/skills/recriar-indices/scripts/recriar_indices.py escanear --json
+    python3 .agents/skills/recriar-indices/scripts/recriar_indices.py salvar --json
 """
 from __future__ import annotations
 
 import argparse
 import json
+import subprocess
 import sys
 from pathlib import Path
 from typing import Any
 
-import yaml
+# ── bootstrap ──────────────────────────────────────────────────────────────
+_VENV = Path(__file__).resolve().parent / ".venv"
+
+
+def _garantir_yaml() -> None:
+    try:
+        import yaml  # noqa: F401
+        return
+    except ImportError:
+        pass
+    if not _VENV.exists():
+        print("[helper] criando .venv...", file=sys.stderr)
+        subprocess.run([sys.executable, "-m", "venv", str(_VENV)], check=True)
+    print("[helper] instalando pyyaml...", file=sys.stderr)
+    subprocess.run([str(_VENV / "bin" / "pip"), "install", "pyyaml", "--quiet"], check=True)
+    site_pkgs = next((_VENV / "lib").glob("python*/site-packages"))
+    sys.path.insert(0, str(site_pkgs))
+
+
+_garantir_yaml()
+# ── fim bootstrap ───────────────────────────────────────────────────────────
+
+import yaml  # noqa: E402
 
 
 SCRIPT_DIR = Path(__file__).resolve().parent

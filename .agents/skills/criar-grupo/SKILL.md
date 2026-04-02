@@ -34,7 +34,7 @@ Gere um slug em português do Brasil, kebab-case, sem acentos (ex: `framework-ag
 Verifique colisão via helper:
 
 ```bash
-uv --directory .agents/skills/criar-grupo/scripts run python criar_grupo.py \
+python3 .agents/skills/criar-grupo/scripts/criar_grupo.py \
     verificar --slug [slug] --topico [topico] --json
 ```
 
@@ -80,7 +80,7 @@ Confirma a criação do grupo?
 Execute o helper para criar toda a estrutura atomicamente:
 
 ```bash
-uv --directory .agents/skills/criar-grupo/scripts run python criar_grupo.py \
+python3 .agents/skills/criar-grupo/scripts/criar_grupo.py \
     criar --slug [slug] --topico [topico] --descricao "[descricao]" --json
 ```
 

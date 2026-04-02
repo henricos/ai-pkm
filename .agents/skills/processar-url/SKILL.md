@@ -20,20 +20,19 @@ Esta skill implementa o fluxo **Processar URL** descrito em `docs/flows/processa
    ```
 2. Execute a validação completa:
    ```bash
-   uv --directory .agents/skills/processar-url/scripts run python processar_url.py validar-ambiente --json
+   uv run .agents/skills/processar-url/scripts/processar_url.py validar-ambiente --json
    ```
 3. Interprete o resultado:
    - **`erros_fatais`** → aborte antes de qualquer fetch e mostre as instruções ao usuário.
    - **`auto_corrigiveis`** → corrija automaticamente antes de prosseguir:
-     - *Chromium ausente* → execute: `uv --directory .agents/skills/processar-url/scripts run playwright install chromium`
+     - *Chromium ausente* → execute: `uv run --with playwright playwright install chromium`
      - *`temp/` ausente* → crie a pasta: `mkdir -p .agents/skills/processar-url/scripts/temp`
    - **`avisos`** → apenas informe ao usuário, sem bloquear.
 
-Nota: `.venv/` e dependências Python não precisam de ação manual. O `uv run` cria e sincroniza o ambiente automaticamente na primeira invocação do helper.
+Nota: `.venv/` e dependências Python não precisam de ação manual. O `uv run` resolve as deps declaradas no bloco PEP 723 do script e cacheia em `~/.cache/uv`.
 
 Pré-requisitos fatais (exigem ação manual do usuário):
 - `uv` no PATH
-- `pyproject.toml` em `.agents/skills/processar-url/scripts/`
 - `ffmpeg` no PATH
 
 ---
@@ -42,7 +41,7 @@ Pré-requisitos fatais (exigem ação manual do usuário):
 
 1. Liste os arquivos pendentes pelo helper:
    ```bash
-   uv --directory .agents/skills/processar-url/scripts run python processar_url.py listar-pendentes --json
+   uv run .agents/skills/processar-url/scripts/processar_url.py listar-pendentes --json
    ```
    O helper usa glob `url_*.md` em `pkm/*/` e filtra por `estado: rascunho`.
 2. Para cada arquivo encontrado, confirme que `estado` é `rascunho`.
@@ -92,7 +91,7 @@ Para cada arquivo selecionado:
 
 1. Detecte o tipo real da URL antes de processar:
    ```bash
-   uv --directory .agents/skills/processar-url/scripts run python processar_url.py inspecionar --arquivo CAMINHO --json
+   uv run .agents/skills/processar-url/scripts/processar_url.py inspecionar --arquivo CAMINHO --json
    ```
 2. Confirme a estratégia com base no tipo detectado:
    - `web` -> `requests` + `trafilatura` -> `readability-lxml` -> `Playwright`
@@ -106,11 +105,11 @@ Para cada arquivo selecionado:
 
 1. Execute a coleta pelo helper:
    ```bash
-   uv --directory .agents/skills/processar-url/scripts run python processar_url.py coletar --arquivo CAMINHO --json
+   uv run .agents/skills/processar-url/scripts/processar_url.py coletar --arquivo CAMINHO --json
    ```
    Se o usuário escolheu "Forçar reprocessamento", adicione a flag:
    ```bash
-   uv --directory .agents/skills/processar-url/scripts run python processar_url.py coletar --arquivo CAMINHO --forcar-reprocessamento --json
+   uv run .agents/skills/processar-url/scripts/processar_url.py coletar --arquivo CAMINHO --forcar-reprocessamento --json
    ```
 2. O helper retorna:
    - `tipo_detectado`
