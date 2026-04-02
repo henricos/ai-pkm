@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Helper da skill /criticar-url — lista arquivos url_ com modelo: resumo elegíveis para crítica.
+"""Helper da skill /criticar-url — lista arquivos url_ com modelo: url-resumo elegíveis para crítica.
 
 Uso:
     uv --directory .agents/skills/criticar-url/scripts run python listar_urls.py listar --json
@@ -47,7 +47,7 @@ def parsear_frontmatter(path: Path) -> dict[str, Any]:
 def validar_arquivo(path: Path) -> dict[str, Any] | None:
     """Retorna entrada se o arquivo é elegível, None caso contrário."""
     fm = parsear_frontmatter(path)
-    if fm.get("modelo") != "resumo":
+    if fm.get("modelo") != "url-resumo":
         return None
     if fm.get("estado") != "finalizado":
         return None
@@ -86,7 +86,7 @@ def comando_listar(args: argparse.Namespace) -> int:
         entrada = validar_arquivo(path)
         if entrada is None:
             raise ErroHelper(
-                f"{args.arquivo} não atende aos critérios: modelo: resumo, estado: finalizado."
+                f"{args.arquivo} não atende aos critérios: modelo: url-resumo, estado: finalizado."
             )
         resultado = {"ok": True, "itens": [entrada]}
     else:
@@ -109,7 +109,7 @@ def construir_parser() -> argparse.ArgumentParser:
 
     listar = subparsers.add_parser(
         "listar",
-        help="Lista arquivos url_ com modelo: resumo e estado: finalizado, indicando presença de cache.",
+        help="Lista arquivos url_ com modelo: url-resumo e estado: finalizado, indicando presença de cache.",
     )
     listar.add_argument(
         "--arquivo",

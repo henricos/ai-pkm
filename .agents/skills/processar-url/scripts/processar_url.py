@@ -289,9 +289,9 @@ def detectar_tipo_url(url: str, content_type: str | None = None) -> str:
 
 
 def acao_compativel(tipo_detectado: str, modelo: str) -> bool:
-    if modelo == "resumo":
+    if modelo == "url-resumo":
         return tipo_detectado in {"web", "pdf", "youtube", "instagram", "tiktok"}
-    if modelo == "extrato":
+    if modelo == "url-extrato":
         return tipo_detectado in {"web", "pdf"}
     return False
 

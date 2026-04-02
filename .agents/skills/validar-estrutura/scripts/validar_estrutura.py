@@ -186,6 +186,8 @@ def main() -> int:
 
     for path in sorted(PKM_DIR.glob("*/**/*")):
         rel = path.relative_to(PKM_DIR)
+        if ".git" in rel.parts:
+            continue
         if rel.parts[0] == "__inbox":
             continue
         if not path.is_file() or path.name == ".gitkeep":
@@ -219,7 +221,7 @@ def main() -> int:
                 issues.append(Issue("erro", relative.as_posix(), error))
                 continue
 
-            missing_fields = [field for field in ("descricao", "topico") if field not in frontmatter]
+            missing_fields = [field for field in ("descricao",) if field not in frontmatter]
             for field in missing_fields:
                 issues.append(Issue("erro", relative.as_posix(), f"_grupo.md sem campo obrigatório `{field}`."))
 
