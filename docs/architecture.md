@@ -29,7 +29,7 @@
 
 ## Modelo de dados principal
 
-> TODO — a ser definido em sessão dedicada.
+> TODO — preencher quando o scaffold do Next.js existir e os primeiros schemas Zod + Drizzle forem criados. As entidades centrais já são conhecidas conceitualmente: item, grupo, tópico, sessão de agente, operação. O modelo de dados emerge dos schemas, não o contrário.
 
 ---
 
@@ -94,10 +94,10 @@ Quando o volume do acervo tornar a busca por texto insuficiente, ou quando o usu
 
 ## Fluxo de dados do caso mais crítico
 
-> TODO — a ser definido em sessão dedicada. Caso candidato: execução de skill com proposta de mudança, aprovação do usuário e commit no pkm.
+> TODO — preencher quando o scaffold existir e os Route Handlers do agente forem implementados. O caso candidato já está claro: execução de skill com proposta de mudança, aprovação do usuário e commit no `pkm`. A lógica desse fluxo está descrita nos ADRs acima e nas specs de `docs/flows/`; usar como base ao detalhar o diagrama de dados.
 
 ---
 
 ## Convenções de código
 
-> TODO — a ser definido em sessão dedicada.
+> TODO — preencher quando o código surgir. As convenções emergem do código, não de decisões antecipadas. Pontos de partida já definidos pela stack: TypeScript strict, Zod para validação de saídas do agente antes de chegarem à UI ou ao banco, Drizzle para acesso ao SQLite, Route Handlers como BFF do frontend.
