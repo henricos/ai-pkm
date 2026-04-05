@@ -8,7 +8,7 @@ Antes de executar qualquer tarefa, leia estes arquivos:
 
 1. **`docs/overview.md`** — visão e propósito do sistema.
 
-Referência adicional disponível: `docs/flows/` — especificações autoritativas dos fluxos operacionais (um arquivo por fluxo). As skills em `.agents/skills/` são implementações dessas especificações.
+Referência adicional disponível: `flows/` — especificações autoritativas dos fluxos operacionais (um arquivo por fluxo). As skills em `.agents/skills/` são implementações dessas especificações.
 
 ## Idioma
 
@@ -57,9 +57,9 @@ A documentação deste projeto vive em `docs/`:
 - **`docs/pkm-structure.md`** — estrutura de diretórios do repositório e taxonomia de tópicos.
 - **`docs/pkm-conventions.md`** — contratos estruturais do pkm: tipos de item, frontmatter, nomenclatura, índices JSON.
 - **`docs/pkm-naming.md`** — fonte de verdade para nomenclatura de arquivos (slugs, prefixos, autores).
-- **`docs/flows/`** — especificação autoritativa de cada fluxo operacional (um arquivo por fluxo).
+- **`flows/`** — especificação autoritativa de cada fluxo operacional (um arquivo por fluxo).
 
-**Regra de atualização:** ao alterar o comportamento de qualquer fluxo, atualize primeiro a spec em `docs/flows/` e depois propague a mudança para a skill correspondente em `.agents/skills/`.
+**Regra de atualização:** ao alterar o comportamento de qualquer fluxo, atualize primeiro a spec em `flows/` e depois propague a mudança para a skill correspondente em `.agents/skills/`.
 
 ## Desenvolvimento guiado por especificação (SDD)
 
@@ -70,7 +70,7 @@ Este projeto adota Spec-Driven Development como prática de desenvolvimento: qua
 - Se uma mudança alterar o comportamento descrito numa spec existente, atualize a spec como parte da mesma entrega.
 
 **Separação de specs por camada:**
-- `docs/flows/` — especificações das skills operacionais (comportamento do agente PKM). Regra de atualização já descrita na seção "Documentação técnica".
+- `flows/` — especificações das skills operacionais (comportamento do agente PKM). Regra de atualização já descrita na seção "Documentação técnica".
 - Specs da plataforma web (features da aplicação) serão mantidas em pasta própria a definir quando o OpenSpec for configurado.
 
 ## Regras universais

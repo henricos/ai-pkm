@@ -8,7 +8,7 @@ command: /readequar-url
 
 ## Instruções de Execução do Agente
 
-Esta skill implementa o **Fluxo — Readequar URL** descrito em `docs/flows/readequar-url.md`. Readequa o corpo de arquivos `url_` com `modelo: url-resumo` ao template em `models/url-resumo.md`. O trabalho é puramente estrutural — sem re-coleta de fonte, sem pesquisa externa.
+Esta skill implementa o **Fluxo — Readequar URL** descrito em `flows/readequar-url.md`. Readequa o corpo de arquivos `url_` com `modelo: url-resumo` ao template em `models/url-resumo.md`. O trabalho é puramente estrutural — sem re-coleta de fonte, sem pesquisa externa.
 
 **Somente opera em arquivos `url_` com `modelo: url-resumo` e `estado: finalizado`.**
 
@@ -119,5 +119,5 @@ Escreva no arquivo após aprovação (substituição completa do conteúdo, pres
 
 - `.agents/skills/readequar-url/scripts/listar_urls.py` — helper (listar)
 - `models/url-resumo.md` — **template do corpo** (fonte de verdade)
-- `docs/flows/processar-url.md` — contexto do ciclo de vida do arquivo
+- `flows/processar-url.md` — contexto do ciclo de vida do arquivo
 - `schemas/frontmatter-item.md` — esquema de frontmatter de itens de conhecimento

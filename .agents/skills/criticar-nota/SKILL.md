@@ -8,7 +8,7 @@ command: /criticar-nota
 
 ## Instruções de Execução do Agente
 
-Esta skill implementa o fluxo descrito em `docs/flows/criticar-nota.md`. Lê, analisa e critica a qualidade do conteúdo — e, com aprovação do usuário, entra numa sessão interativa de revisão e complemento com pesquisa externa.
+Esta skill implementa o fluxo descrito em `flows/criticar-nota.md`. Lê, analisa e critica a qualidade do conteúdo — e, com aprovação do usuário, entra numa sessão interativa de revisão e complemento com pesquisa externa.
 
 > Se a ferramenta oferecer widget nativo de perguntas (ex: `AskUserQuestion`), use-o para todas as perguntas com opções. Caso contrário, apresente as opções numeradas. Prefira sempre múltipla escolha a perguntas abertas quando a resposta esperada for previsível.
 
@@ -130,5 +130,5 @@ Aguarde direção do usuário: continuar, aprofundar, mudar de direção ou ence
 
 ## Arquivos de Referência
 
-- `docs/flows/criticar-nota.md` — especificação do fluxo
+- `flows/criticar-nota.md` — especificação do fluxo
 - `index/models.json` — catálogo de modelos disponíveis (campo `modelo` do frontmatter aponta para um deles)

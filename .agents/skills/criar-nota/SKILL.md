@@ -8,7 +8,7 @@ command: /criar-nota
 
 ## Instruções de Execução do Agente
 
-Esta skill implementa o **Fluxo — Sessão de Criação de Nota** descrito em `docs/flows/criar-nota.md`. Cada invocação abre uma sessão de trabalho independente sobre um arquivo específico ou uma pasta (tópico ou grupo).
+Esta skill implementa o **Fluxo — Sessão de Criação de Nota** descrito em `flows/criar-nota.md`. Cada invocação abre uma sessão de trabalho independente sobre um arquivo específico ou uma pasta (tópico ou grupo).
 
 A criação é trabalho intelectual pesado — pesquisa, expansão, síntese, construção a partir de rascunhos embrionários. O template correspondente é adotado como guia silencioso de construção desde o início da sessão.
 
@@ -253,6 +253,6 @@ Após definir o arquivo de saída (aplica-se apenas a notas — sem prefixo `url
 
 ## Arquivos de Referência
 
-- `docs/flows/criar-nota.md` — especificação do fluxo de criação de nota
+- `flows/criar-nota.md` — especificação do fluxo de criação de nota
 - `docs/pkm-structure.md` — destinos válidos
 - `index/grupos.json` — grupos disponíveis

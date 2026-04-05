@@ -8,7 +8,7 @@ command: /triar
 
 ## Instruções de Execução do Agente
 
-Esta skill implementa o **Fluxo 2 — Triagem Interativa** descrito em `docs/flows/triagem.md`. Ela analisa todos os itens da inbox, classifica cada um, propõe destinos e apresenta tudo em tabela para aprovação em lote. **NUNCA mova, renomeie ou crie sidecar sem aprovação explícita do usuário.**
+Esta skill implementa o **Fluxo 2 — Triagem Interativa** descrito em `flows/triagem.md`. Ela analisa todos os itens da inbox, classifica cada um, propõe destinos e apresenta tudo em tabela para aprovação em lote. **NUNCA mova, renomeie ou crie sidecar sem aprovação explícita do usuário.**
 
 ---
 
@@ -313,7 +313,7 @@ Sugira ao usuário:
 
 ## Arquivos de Referência
 
-- `docs/flows/triagem.md` — especificação do fluxo de triagem
+- `flows/triagem.md` — especificação do fluxo de triagem
 - `docs/pkm-naming.md` — **fonte de verdade para nomenclatura** (prefixo `url_`, padrão autor-título, palavras banidas)
 - `index/grupos.json` — grupos existentes
 - `index/topicos.json` — tópicos para classificação

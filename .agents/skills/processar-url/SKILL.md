@@ -8,7 +8,7 @@ command: /processar-url
 
 ## Instruções de Execução do Agente
 
-Esta skill implementa o fluxo **Processar URL** descrito em `docs/flows/processar-url.md`. Ela usa o helper local `scripts/processar_url.py` para validar o ambiente, listar itens pendentes, detectar o tipo real da URL e coletar o texto-base do processamento. **NUNCA modifique um arquivo sem aprovação explícita do usuário.**
+Esta skill implementa o fluxo **Processar URL** descrito em `flows/processar-url.md`. Ela usa o helper local `scripts/processar_url.py` para validar o ambiente, listar itens pendentes, detectar o tipo real da URL e coletar o texto-base do processamento. **NUNCA modifique um arquivo sem aprovação explícita do usuário.**
 
 ---
 
@@ -134,7 +134,7 @@ Para cada arquivo selecionado:
 #### 3.3 Formato `url-extrato`
 
 1. Só prossiga se `tipo_detectado` for `web` ou `pdf`.
-2. Gere o cabeçalho padronizado (ver spec em `docs/flows/processar-url.md`, seção "Cabeçalho do arquivo"):
+2. Gere o cabeçalho padronizado (ver spec em `flows/processar-url.md`, seção "Cabeçalho do arquivo"):
    - `# Título` derivado do título original da fonte ou gerado a partir do conteúdo
    - Bloco blockquote com `**Autores:**`, `**Plataforma:**`, `**Publicado em:**` e `**Original:**`
    - Campos `Autores` e `Publicado em` omitidos silenciosamente se ausentes no frontmatter
@@ -150,7 +150,7 @@ Use `texto_base` e `metadados` para elaborar um resumo em `pt-BR`.
 
 **Cabeçalho (obrigatório, antes de qualquer seção):**
 
-Gere o cabeçalho padronizado conforme spec em `docs/flows/processar-url.md`, seção "Cabeçalho do arquivo":
+Gere o cabeçalho padronizado conforme spec em `flows/processar-url.md`, seção "Cabeçalho do arquivo":
 - `# Título` derivado do título original da fonte ou gerado a partir do conteúdo
 - Bloco blockquote com os campos de proveniência na ordem: `**Autores:**` → `**Plataforma:**` → `**Publicado em:**` → `**Original:**`
 - `Autores` e `Publicado em` omitidos silenciosamente se ausentes no frontmatter
@@ -231,7 +231,7 @@ Sugira: *"Use `/commit-push` para registrar as alterações no histórico Git."*
 
 ## Arquivos de Referência
 
-- `docs/flows/processar-url.md` — especificação do fluxo
+- `flows/processar-url.md` — especificação do fluxo
 - `models/url-resumo.md` — **template do corpo para `modelo: url-resumo`**
 - `docs/pkm-naming.md` — **convenção de nomenclatura** (prefixo `url_`, padrão autor-título)
 - `schemas/frontmatter-item.md` — esquema de frontmatter de itens de conhecimento

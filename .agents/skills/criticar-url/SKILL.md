@@ -8,7 +8,7 @@ command: /criticar-url
 
 ## Instruções de Execução do Agente
 
-Esta skill implementa o **Fluxo — Criticar URL** descrito em `docs/flows/criticar-url.md`. Avalia a qualidade editorial de arquivos `url_` com `modelo: url-resumo` usando o texto-fonte cacheado como referência. Não faz pesquisa externa — trabalha exclusivamente com o arquivo e o cache existente.
+Esta skill implementa o **Fluxo — Criticar URL** descrito em `flows/criticar-url.md`. Avalia a qualidade editorial de arquivos `url_` com `modelo: url-resumo` usando o texto-fonte cacheado como referência. Não faz pesquisa externa — trabalha exclusivamente com o arquivo e o cache existente.
 
 **Somente opera em arquivos com `modelo: url-resumo` e `estado: finalizado`.**
 
@@ -125,5 +125,5 @@ Após cada rodada de reescrita, pergunte:
 
 - `.agents/skills/criticar-url/scripts/listar_urls.py` — helper (listar)
 - `models/url-resumo.md` — **template e régua de qualidade**
-- `docs/flows/processar-url.md` — contexto do ciclo de vida e spec de cache
+- `flows/processar-url.md` — contexto do ciclo de vida e spec de cache
 - `.agents/skills/processar-url/scripts/temp/` — localização dos caches de transcript

@@ -4,7 +4,7 @@ Este modelo define o comportamento de extração para arquivos `url_` com `model
 
 **Escopo:** somente arquivos com prefixo `url_`, `modelo: url-extrato`, `estado: rascunho`. Válido apenas para `web` e `pdf` — nunca usar para vídeos (YouTube, Instagram, TikTok).
 
-O cabeçalho de proveniência (H1 + blockquote com Autores/Plataforma/Publicado em/Original) é definido em `docs/flows/processar-url.md` e antecede sempre o conteúdo extraído — é compartilhado com `modelo: url-resumo` e não faz parte deste modelo.
+O cabeçalho de proveniência (H1 + blockquote com Autores/Plataforma/Publicado em/Original) é definido em `flows/processar-url.md` e antecede sempre o conteúdo extraído — é compartilhado com `modelo: url-resumo` e não faz parte deste modelo.
 
 ---
 

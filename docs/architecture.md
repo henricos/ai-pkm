@@ -94,7 +94,7 @@ Quando o volume do acervo tornar a busca por texto insuficiente, ou quando o usu
 
 ## Fluxo de dados do caso mais crítico
 
-> TODO — preencher quando o scaffold existir e os Route Handlers do agente forem implementados. O caso candidato já está claro: execução de skill com proposta de mudança, aprovação do usuário e commit no `pkm`. A lógica desse fluxo está descrita nos ADRs acima e nas specs de `docs/flows/`; usar como base ao detalhar o diagrama de dados.
+> TODO — preencher quando o scaffold existir e os Route Handlers do agente forem implementados. O caso candidato já está claro: execução de skill com proposta de mudança, aprovação do usuário e commit no `pkm`. A lógica desse fluxo está descrita nos ADRs acima e nas specs de `flows/`; usar como base ao detalhar o diagrama de dados.
 
 ---
 

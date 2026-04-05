@@ -8,7 +8,7 @@ command: /reorganizar-topicos
 
 ## Instruções de Execução do Agente
 
-Esta skill implementa o **Fluxo 7 — Reorganizar Tópicos** descrito em `docs/flows/reorganizar-topicos.md`. Seu objetivo é corrigir problemas de organização taxonômica sem violar os invariantes do sistema. **NUNCA crie, renomeie ou mova pastas e arquivos sem aprovação explícita do usuário.**
+Esta skill implementa o **Fluxo 7 — Reorganizar Tópicos** descrito em `flows/reorganizar-topicos.md`. Seu objetivo é corrigir problemas de organização taxonômica sem violar os invariantes do sistema. **NUNCA crie, renomeie ou mova pastas e arquivos sem aprovação explícita do usuário.**
 
 ---
 
@@ -172,7 +172,7 @@ Após executar qualquer reorganização:
 ## Arquivos de referência
 
 - `.agents/skills/reorganizar-topicos/scripts/reorganizar_topicos.py` — helper (executar)
-- `docs/flows/reorganizar-topicos.md` — especificação do fluxo de reorganização de tópicos
+- `flows/reorganizar-topicos.md` — especificação do fluxo de reorganização de tópicos
 - `docs/pkm-structure.md` — regras da taxonomia (seção Taxonomia)
 - `docs/pkm-structure.md` — papel de tópicos, subtópicos e grupos
 - `index/topicos.json` — taxonomia vigente

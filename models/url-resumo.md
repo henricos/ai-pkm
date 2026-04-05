@@ -4,7 +4,7 @@ Este template define a estrutura e as regras de escrita para o corpo de arquivos
 
 **Escopo:** somente arquivos com prefixo `url_`, `modelo: url-resumo`, `estado: finalizado`.
 
-O cabeçalho de proveniência (H1 + blockquote com Autores/Plataforma/Publicado em/Original) é definido em `docs/flows/processar-url.md` e antecede sempre o corpo descrito aqui — é compartilhado com `modelo: url-extrato` e não faz parte deste template.
+O cabeçalho de proveniência (H1 + blockquote com Autores/Plataforma/Publicado em/Original) é definido em `flows/processar-url.md` e antecede sempre o corpo descrito aqui — é compartilhado com `modelo: url-extrato` e não faz parte deste template.
 
 ---
 

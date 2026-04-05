@@ -8,7 +8,7 @@ command: /anotar
 
 ## Instruções de Execução do Agente
 
-Esta skill implementa o fluxo **Anotação Rápida** descrito em `docs/flows/anotar.md`. O objetivo é capturar com fricção mínima: a IA interpreta o input, gera um card compacto e salva após uma única aprovação. **NUNCA salve sem aprovação explícita.**
+Esta skill implementa o fluxo **Anotação Rápida** descrito em `flows/anotar.md`. O objetivo é capturar com fricção mínima: a IA interpreta o input, gera um card compacto e salva após uma única aprovação. **NUNCA salve sem aprovação explícita.**
 
 ---
 
@@ -117,6 +117,6 @@ Após aprovação:
 
 ## Arquivos de Referência
 
-- `docs/flows/anotar.md` — especificação do fluxo
+- `flows/anotar.md` — especificação do fluxo
 - `docs/pkm-naming.md` — convenção de nomes (prefixo `url_`, padrão autor-título)
 - `docs/pkm-structure.md` — definição da `pkm/__inbox/`
