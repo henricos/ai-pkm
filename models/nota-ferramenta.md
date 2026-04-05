@@ -1,6 +1,12 @@
 # Template — Documento de Ferramenta
 
-Este template define a estrutura, tom e regras de escrita para documentos sobre ferramentas, produtos ou serviços.
+Este template define a estrutura, tom e regras de escrita para documentos sobre ferramentas, aplicações, sistemas, serviços, frameworks e bibliotecas.
+
+**Subtipos e particularidades:**
+- **Ferramenta/aplicação/serviço** (ex: Claude Code, Figma, Notion) — modelo funciona integralmente sem ajustes.
+- **Framework** (ex: Django, React, Spring) — "Visão geral" foca em paradigma e API; "Como surgiu" pode ser mais curto.
+- **Biblioteca** (ex: numpy, requests, lodash) — "Visão geral" foca em API e integração; "Preços" pode ser reduzido; "Como surgiu" pode ser 1 parágrafo.
+- **Sistema** (ex: PostgreSQL, Kubernetes, Linux) — "Visão geral" foca em arquitetura e componentes.
 
 ---
 
@@ -50,6 +56,7 @@ Este template define a estrutura, tom e regras de escrita para documentos sobre 
   - Cronologia do desenvolvimento (marcos relevantes, não lista exaustiva de versões)
   - Data de lançamento público
   - Se houver empresa por trás: nome da empresa + link externo confiável seguindo a regra de URL
+- Para bibliotecas ou projetos onde o histórico de origem é desconhecido ou irrelevante para o entendimento do item, 1 parágrafo é suficiente. Não preencher artificialmente quando não há informação substancial disponível.
 - Não inventar informações não encontradas em fontes confiáveis — quando isso ocorrer, a IA deve interromper, avisar o usuário e aguardar direção (ver comportamento da skill)
 
 ---
@@ -67,13 +74,18 @@ Este template define a estrutura, tom e regras de escrita para documentos sobre 
 
 - 3-5 bullets de personas ou cenários de uso
 - Cada bullet descreve quem usa e em que contexto
+- Para frameworks e bibliotecas, evitar bullets genéricos como "desenvolvedores Python" — especificar o contexto de uso e tipo de problema (ex: "engenheiros de ML que precisam manipular arrays numéricos de alta performance")
 
 ---
 
 ### `## Visão geral do funcionamento` — obrigatória
 
 - 2-3 parágrafos
-- Cobre o fluxo ponta a ponta (não lista features)
+- O foco varia por subtipo:
+  - **Ferramenta/serviço**: cobre o fluxo de uso ponta a ponta (não lista features)
+  - **Framework**: cobre o paradigma central e como ele estrutura o código do usuário; snippet de uso básico é especialmente importante aqui
+  - **Biblioteca**: cobre a API de uso e como a lib se integra no ecossistema; snippet de uso é obrigatório
+  - **Sistema**: cobre a arquitetura de componentes principais e o fluxo de dados/requests
 - Inclui snippet de uso básico quando aplicável (code block)
 
 ---
@@ -112,6 +124,7 @@ Este template define a estrutura, tom e regras de escrita para documentos sobre 
 - **Open-source**: informar que é gratuito, nome da licença (MIT, Apache 2.0, GPL, etc.) e o que ela permite ou restringe (uso comercial, fork, redistribuição)
 - **Comercial/freemium**: planos, preços, limitações do plano gratuito se houver
 - Incluir data de referência dos preços pesquisados (ex: "preços verificados em março de 2026")
+- Para bibliotecas ou itens puramente open-source sem planos comerciais e sem nuances de licença relevantes, 1-2 frases são suficientes — não é necessário preencher artificialmente
 
 ---
 
