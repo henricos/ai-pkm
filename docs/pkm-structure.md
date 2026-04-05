@@ -6,7 +6,7 @@ Mapa arquitetônico do repositório. Agentes de IA e humanos devem seguir esta c
 
 - **`__`** (duplo sublinhado) — bandeja de entrada. Apenas `pkm/__inbox/`.
 - **Sem prefixo** — tópicos da taxonomia (ex: `pkm/tecnologia/`, `pkm/saude/`).
-- **`_`** (sublinhado simples) — grupos (ex: `pkm/tecnologia/_meu-framework/`) e subtópicos (ex: `pkm/tecnologia/_llms/`).
+- **`_`** (sublinhado simples) — grupos (ex: `pkm/tecnologia/_meu-framework/`). Grupos são identificados pela presença de `_grupo.md`.
 
 ```
 ai-pkm/
@@ -23,7 +23,7 @@ ai-pkm/
 │   │   └── tiago-forte-metodo-para.md
 │   ├── saude/                        # tópico raiz (sem prefixo)
 │   └── tecnologia/                   # tópico raiz (sem prefixo)
-│       ├── _llms/                    # subtópico (nó da taxonomia, tem _)
+│       ├── llms/                     # subtópico (nó da taxonomia, sem prefixo)
 │       ├── _meu-framework/           # grupo (tem _, tem _grupo.md)
 │       │   ├── _grupo.md
 │       │   └── ...

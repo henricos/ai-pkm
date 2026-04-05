@@ -13,7 +13,17 @@
   },
   {
     "id": "tecnologia",
-    "descricao": "Engenharia de software, programação, arquitetura de sistemas, inteligência artificial, LLMs, agentes, engenharia de prompt, hardware, infraestrutura, ferramentas e DevOps."
+    "descricao": "Engenharia de software, programação, arquitetura de sistemas, inteligência artificial, LLMs, agentes, engenharia de prompt, hardware, infraestrutura, ferramentas e DevOps.",
+    "subtopicos": [
+      {
+        "id": "empresas",
+        "descricao": "Empresas e organizações do setor de tecnologia: fabricantes de hardware, provedores de cloud, labs de IA, plataformas e produtos."
+      },
+      {
+        "id": "conceito",
+        "descricao": "Conceitos, padrões, metodologias e frameworks do universo tecnológico — termos e ideias sem vínculo direto a uma empresa ou ferramenta específica."
+      }
+    ]
   },
   {
     "id": "cultura",
