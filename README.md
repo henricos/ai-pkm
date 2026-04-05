@@ -26,7 +26,7 @@ Com IA disponível como co-desenvolvedora, construir isso é acessível. Faz mai
 
 ## Também é
 
-Um laboratório. O ai-pkm serve como espaço de experimentação para abordagens de desenvolvimento com IA: o projeto adota Spec-Driven Development (SDD), onde cada fluxo é especificado antes de implementado, e experimenta frameworks como OpenSpec para estruturar essas especificações. É uma forma de explorar, na prática, como construir software real com IA como parceira de desenvolvimento — não só como assistente de código.
+Um laboratório. O ai-pkm serve como espaço de experimentação para abordagens de desenvolvimento com IA: o projeto adota Spec-Driven Development (SDD), onde cada fluxo é especificado antes de implementado, e experimenta frameworks como GSD para estruturar e operar o desenvolvimento guiado por especificação. É uma forma de explorar, na prática, como construir software real com IA como parceira de desenvolvimento — não só como assistente de código.
 
 ## Configuração do ambiente
 

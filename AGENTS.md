@@ -63,15 +63,16 @@ A documentação deste projeto vive em `docs/`:
 
 ## Desenvolvimento guiado por especificação (SDD)
 
-Este projeto adota Spec-Driven Development como prática de desenvolvimento: qualquer feature da plataforma começa com uma especificação escrita antes do código. A ferramenta adotada é o OpenSpec, cuja configuração é trabalho futuro.
+Este projeto adota Spec-Driven Development como prática de desenvolvimento: qualquer feature da plataforma começa com uma especificação escrita antes do código. O desenvolvimento de features usa o **GSD** como sistema de operação: as fases de especificação, planejamento e execução acontecem via slash commands (`/gsd-discuss-phase`, `/gsd-plan-phase`, `/gsd-execute-phase`, `/gsd-verify-work`).
 
 **Regras para o agente:**
 - Antes de implementar qualquer feature, verifique se existe uma spec correspondente. Se não existir, sinalize ao operador antes de prosseguir.
 - Se uma mudança alterar o comportamento descrito numa spec existente, atualize a spec como parte da mesma entrega.
+- Para iniciar o desenvolvimento de uma feature nova, use `/gsd-discuss-phase` antes de planejar ou implementar.
 
 **Separação de specs por camada:**
 - `flows/` — especificações das skills operacionais (comportamento do agente PKM). Regra de atualização já descrita na seção "Documentação técnica".
-- Specs da plataforma web (features da aplicação) serão mantidas em pasta própria a definir quando o OpenSpec for configurado.
+- Specs da plataforma web (features da aplicação) são gerenciadas pelo ciclo GSD: discussão em `/gsd-discuss-phase`, plano atômico em `PLAN.md`, execução em `/gsd-execute-phase`.
 
 ## Regras universais
 
