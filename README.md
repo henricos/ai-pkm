@@ -10,7 +10,7 @@ O modelo de colaboração é claro: o humano deposita material bruto, navega o a
 
 O sistema opera em dois modos em paralelo: pela interface web, que é o ambiente principal de uso, e via agentes CLI rodando diretamente sobre o repositório `pkm`. Os dois mundos se sincronizam por Git. O ciclo operacional — captura, triagem, processamento, criação e agrupamento de conhecimento — acontece inteiramente via skills acionadas pelo operador.
 
-A documentação técnica do projeto vive em `docs/`: visão e propósito, requisitos de produto, decisões de arquitetura, convenções do PKM e especificações detalhadas de cada fluxo operacional.
+O projeto é guiado por SDD usando GSD. O contexto vivo do produto fica em `.planning/`; os contratos normativos do domínio PKM ficam em `reference/`; e as skills em `.agents/skills/` são a fonte de verdade operacional do comportamento do sistema.
 
 ## Por que construir isso
 
@@ -26,7 +26,7 @@ Com IA disponível como co-desenvolvedora, construir isso é acessível. Faz mai
 
 ## Também é
 
-Um laboratório. O ai-pkm serve como espaço de experimentação para abordagens de desenvolvimento com IA: o projeto adota Spec-Driven Development (SDD), onde cada fluxo é especificado antes de implementado, e experimenta frameworks como GSD para estruturar e operar o desenvolvimento guiado por especificação. É uma forma de explorar, na prática, como construir software real com IA como parceira de desenvolvimento — não só como assistente de código.
+Um laboratório. O ai-pkm serve como espaço de experimentação para abordagens de desenvolvimento com IA: o projeto adota Spec-Driven Development (SDD) e usa GSD para estruturar o desenvolvimento guiado por especificação. É uma forma de explorar, na prática, como construir software real com IA como parceira de desenvolvimento — não só como assistente de código.
 
 ## Configuração do ambiente
 

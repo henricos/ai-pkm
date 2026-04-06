@@ -79,7 +79,7 @@ Gerado a partir do frontmatter dos arquivos `_grupo.md`. Array JSON de objetos:
 
 ### Índice curado: `topicos.json`
 
-Mantido exclusivamente via `/reorganizar-topicos`. Não é derivado de frontmatter — é a própria fonte da verdade para tópicos válidos. Estrutura descrita em `docs/pkm-structure.md` (seção Taxonomia).
+Mantido exclusivamente via `/reorganizar-topicos`. Não é derivado de frontmatter — é a própria fonte da verdade para tópicos válidos. Estrutura descrita em `reference/pkm/pkm-structure.md` (seção Taxonomia).
 
 ### URLs com processamento pendente
 

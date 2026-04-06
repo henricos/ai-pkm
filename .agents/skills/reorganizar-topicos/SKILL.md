@@ -8,7 +8,7 @@ command: /reorganizar-topicos
 
 ## Instruções de Execução do Agente
 
-Esta skill implementa o **Fluxo 7 — Reorganizar Tópicos** descrito em `flows/reorganizar-topicos.md`. Seu objetivo é corrigir problemas de organização taxonômica sem violar os invariantes do sistema. **NUNCA crie, renomeie ou mova pastas e arquivos sem aprovação explícita do usuário.**
+Esta skill reorganiza a taxonomia do repositório sem violar os invariantes do sistema. **NUNCA crie, renomeie ou mova pastas e arquivos sem aprovação explícita do usuário.**
 
 ---
 
@@ -44,7 +44,7 @@ Use este modo quando o problema estiver dentro de um tópico raiz ou subtópico 
 
 1. Identifique o alvo:
    - tópico raiz (`pkm/[topico]/`)
-   - subtópico (`pkm/[topico]/_[subtopico]/`)
+   - subtópico (`pkm/[topico]/[subtopico]/`)
 2. Se o alvo não tiver sido informado, pergunte qual pasta deve ser analisada.
 
 ### Análise
@@ -84,7 +84,7 @@ python3 .agents/skills/reorganizar-topicos/scripts/reorganizar_topicos.py \
     executar --payload '<json>' --json
 ```
 
-Operações disponíveis: `criar_pasta`, `criar_gitkeep`, `mover`, `atualizar_frontmatter`,
+Operações disponíveis: `criar_pasta`, `criar_gitkeep`, `mover`,
 `atualizar_grupos_json_entrada`, `remover_grupos_json_entrada`, `remover_pasta_vazia`.
 
 O helper executa o lote atomicamente por operação e retorna o resultado de cada uma.
@@ -148,7 +148,7 @@ python3 .agents/skills/reorganizar-topicos/scripts/reorganizar_topicos.py \
 ```
 
 Use as operações `atualizar_topicos_json`, `criar_pasta`, `criar_gitkeep`, `mover`,
-`atualizar_frontmatter`, `atualizar_grupos_json_entrada`, `remover_grupos_json_entrada`
+`atualizar_grupos_json_entrada`, `remover_grupos_json_entrada`
 conforme o plano aprovado.
 
 ---
@@ -157,7 +157,7 @@ conforme o plano aprovado.
 
 Após executar qualquer reorganização:
 
-> *"Reorganização concluída. Recomendo executar `/recriar-indices` para confirmar que os índices estão sincronizados. Use `/commit-push` para registrar no histórico Git."*
+> *"Reorganização concluída. Recomendo executar `/recriar-indices` para confirmar que os índices estão sincronizados."*
 
 ---
 
@@ -167,14 +167,15 @@ Após executar qualquer reorganização:
 - **Se a proposta violar o limite de 2 níveis, descarte-a.**
 - **Não proponha mudança de nível 1 por estética; exija evidência no conteúdo real.**
 - **Não preserve caminhos antigos por compatibilidade implícita; o sistema usa o estado atual como fonte da verdade.**
+- **Subtópicos não usam prefixo `_`.** O prefixo `_` é exclusivo de grupos.
+- **`topico` é derivado do caminho.** Não proponha atualizar esse campo em frontmatter de itens.
 - **Idioma:** pt-BR, exceto trechos literais já existentes nas fontes.
 
 ## Arquivos de referência
 
 - `.agents/skills/reorganizar-topicos/scripts/reorganizar_topicos.py` — helper (executar)
-- `flows/reorganizar-topicos.md` — especificação do fluxo de reorganização de tópicos
-- `docs/pkm-structure.md` — regras da taxonomia (seção Taxonomia)
-- `docs/pkm-structure.md` — papel de tópicos, subtópicos e grupos
+- `reference/pkm/pkm-structure.md` — regras da taxonomia (seção Taxonomia)
+- `reference/pkm/pkm-structure.md` — papel de tópicos, subtópicos e grupos
 - `index/topicos.json` — taxonomia vigente
 - `index/grupos.json` — índice derivado de grupos
-- `schemas/frontmatter-item.md` — contrato dos itens de conhecimento
+- `reference/schemas/frontmatter-item.md` — contrato dos itens de conhecimento

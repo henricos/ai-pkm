@@ -8,7 +8,7 @@ command: /anotar
 
 ## Instruções de Execução do Agente
 
-Esta skill implementa o fluxo **Anotação Rápida** descrito em `flows/anotar.md`. O objetivo é capturar com fricção mínima: a IA interpreta o input, gera um card compacto e salva após uma única aprovação. **NUNCA salve sem aprovação explícita.**
+Esta skill captura anotações com fricção mínima: a IA interpreta o input, gera um card compacto e salva após uma única aprovação. **NUNCA salve sem aprovação explícita.**
 
 ---
 
@@ -39,7 +39,7 @@ Cada item gera um arquivo separado.
 **URL:**
 - Tipo: `url`
 - Corpo: a URL pura, sem nenhum texto adicional
-- Nome provisório: `url_[slug].md` conforme `docs/pkm-naming.md`
+- Nome provisório: `url_[slug].md` conforme `reference/pkm/pkm-naming.md`
   - Use os sinais da URL (domínio/autor e caminho) para montar o slug
   - Ex: `url_karpathy-vibe-coding.md`
 
@@ -111,12 +111,11 @@ Após aprovação:
 - **Corpo de URL = URL pura.** Nenhum texto adicional.
 - **Corpo de nota = frase corrida.** Não use bullets, headers ou frontmatter.
 - **O nome do arquivo é provisório.** O nome definitivo é responsabilidade da triagem.
-- **URLs recebem prefixo `url_`** no nome provisório. Convenção completa em `docs/pkm-naming.md`.
+- **URLs recebem prefixo `url_`** no nome provisório. Convenção completa em `reference/pkm/pkm-naming.md`.
 - **Idioma:** toda comunicação e todo conteúdo gerado devem estar em `pt-BR`.
 - **Fase 1:** sem logs; auditoria exclusivamente via Git.
 
 ## Arquivos de Referência
 
-- `flows/anotar.md` — especificação do fluxo
-- `docs/pkm-naming.md` — convenção de nomes (prefixo `url_`, padrão autor-título)
-- `docs/pkm-structure.md` — definição da `pkm/__inbox/`
+- `reference/pkm/pkm-naming.md` — convenção de nomes (prefixo `url_`, padrão autor-título)
+- `reference/pkm/pkm-structure.md` — definição da `pkm/__inbox/`

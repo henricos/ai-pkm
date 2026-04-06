@@ -8,7 +8,7 @@ command: /validar-estrutura
 
 ## Instruções de Execução do Agente
 
-Esta skill implementa o **Fluxo 9 — Validar Estrutura** descrito em `flows/validar-estrutura.md`. Seu objetivo é executar uma checagem não mutante da coerência estrutural do repositório e devolver o resultado em linguagem humana. **NUNCA modifique arquivos como parte desta skill.**
+Esta skill executa uma checagem não mutante da coerência estrutural do repositório e devolve o resultado em linguagem humana. **NUNCA modifique arquivos como parte desta skill.**
 
 ---
 
@@ -67,8 +67,7 @@ Informe em linguagem direta:
 
 ## Arquivos de referência
 
-- `flows/validar-estrutura.md` — especificação do fluxo de validação estrutural
-- `docs/pkm-structure.md` — estrutura esperada e invariantes da taxonomia (seção Taxonomia)
-- `docs/pkm-conventions.md` — convenções de conteúdo e índices JSON (seção Índices JSON)
-- `schemas/frontmatter-item.md` — contrato dos itens de conhecimento
-- `schemas/frontmatter-grupo.md` — contrato de grupos
+- `reference/pkm/pkm-structure.md` — estrutura esperada e invariantes da taxonomia (seção Taxonomia)
+- `reference/pkm/pkm-conventions.md` — convenções de conteúdo e índices JSON (seção Índices JSON)
+- `reference/schemas/frontmatter-item.md` — contrato dos itens de conhecimento
+- `reference/schemas/frontmatter-grupo.md` — contrato de grupos

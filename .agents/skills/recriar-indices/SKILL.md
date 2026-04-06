@@ -8,7 +8,7 @@ command: /recriar-indices
 
 ## Instruções de Execução do Agente
 
-Esta skill implementa o **Fluxo 6 — Recriar Índices** descrito em `flows/recriar-indices.md`. Ela varre as pastas de tópicos, extrai o frontmatter de arquivos `_grupo.md` e regenera o índice JSON correspondente. **NUNCA sobrescreva índices sem aprovação explícita do usuário.**
+Esta skill varre as pastas de tópicos, extrai o frontmatter de arquivos `_grupo.md` e regenera o índice JSON correspondente. **NUNCA sobrescreva índices sem aprovação explícita do usuário.**
 
 ---
 
@@ -59,7 +59,7 @@ Execute o helper com o subcomando `salvar`:
 python3 .agents/skills/recriar-indices/scripts/recriar_indices.py salvar --json
 ```
 
-Informe: *"Índice recriado com sucesso. Use `/commit-push` para registrar no histórico Git."*
+Informe: *"Índice recriado com sucesso."*
 
 ---
 
@@ -73,7 +73,6 @@ Informe: *"Índice recriado com sucesso. Use `/commit-push` para registrar no hi
 ## Arquivos de Referência
 
 - `.agents/skills/recriar-indices/scripts/recriar_indices.py` — helper (escanear / salvar)
-- `flows/recriar-indices.md` — especificação do fluxo de recriação de índices
-- `docs/pkm-conventions.md` — convenção de índices JSON (seção Índices JSON)
+- `reference/pkm/pkm-conventions.md` — convenção de índices JSON (seção Índices JSON)
 - `index/grupos.json` — índice a ser recriado
-- `schemas/frontmatter-grupo.md` — esquema do `_grupo.md`
+- `reference/schemas/frontmatter-grupo.md` — esquema do `_grupo.md`

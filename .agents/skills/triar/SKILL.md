@@ -8,7 +8,7 @@ command: /triar
 
 ## Instruções de Execução do Agente
 
-Esta skill implementa o **Fluxo 2 — Triagem Interativa** descrito em `flows/triagem.md`. Ela analisa todos os itens da inbox, classifica cada um, propõe destinos e apresenta tudo em tabela para aprovação em lote. **NUNCA mova, renomeie ou crie sidecar sem aprovação explícita do usuário.**
+Esta skill analisa todos os itens da inbox, classifica cada um, propõe destinos e apresenta tudo em tabela para aprovação em lote. **NUNCA mova, renomeie ou crie sidecar sem aprovação explícita do usuário.**
 
 ---
 
@@ -98,7 +98,7 @@ Regras:
 
 Todo item que sai da inbox recebe um nome final proposto, independente do tipo (Markdown ou binário).
 
-A convenção completa de nomenclatura está em `docs/pkm-naming.md`. **Siga-a obrigatoriamente.** Regras essenciais:
+A convenção completa de nomenclatura está em `reference/pkm/pkm-naming.md`. **Siga-a obrigatoriamente.** Regras essenciais:
 
 - **URLs:** prefixo `url_` obrigatório + padrão autor-título (ex: `url_ibm-technology-rag-vs-long-context.md`)
 - **Notas e artigos:** sem prefixo, em português do Brasil, kebab-case (ex: `guia-fine-tuning-llms.md`)
@@ -145,7 +145,7 @@ O valor preenchido aparece como coluna editável na tabela de aprovação (Passo
 
 #### 5.5 Nome final para URL
 
-O nome final de todo arquivo de URL deve seguir obrigatoriamente a convenção em `docs/pkm-naming.md`: prefixo `url_` + autor-título. Ao propor o nome final, siga esta ordem de prioridade:
+O nome final de todo arquivo de URL deve seguir obrigatoriamente a convenção em `reference/pkm/pkm-naming.md`: prefixo `url_` + autor-título. Ao propor o nome final, siga esta ordem de prioridade:
 
 1. **Use o nome do arquivo inbox existente** como primeiro candidato — se foi gerado pelo `/anotar` com contexto do usuário e já tem o prefixo `url_` e o padrão correto, preserve-o
 2. Se o nome for genérico demais (ex: `url-capturada.md`, `link.md`) ou não seguir a convenção, derive o nome correto a partir do contexto ou título do arquivo
@@ -162,7 +162,7 @@ Quando o item for um binário, execute estas etapas antes de montar a proposta:
 
 #### 6.1 Sidecar proposto
 
-Monte um sidecar no formato `nome.extensao.md` com frontmatter conforme `schemas/frontmatter-item.md`.
+Monte um sidecar no formato `nome.extensao.md` com frontmatter conforme `reference/schemas/frontmatter-item.md`.
 
 Regras:
 - `estado: rascunho` é obrigatório.
@@ -212,6 +212,7 @@ data_captura: YYYY-MM-DD
 # Item 3 — arquitetura-de-agentes.svg.md
 ---
 estado: rascunho
+modelo: sidecar
 data_captura: YYYY-MM-DD
 ---
 ```
@@ -294,7 +295,7 @@ Ao final, apresente o resumo:
 
 Sugira ao usuário:
 
-> *"Use `/commit-push` para registrar a triagem no histórico Git."*
+> *"Triagem concluída."*
 
 ---
 
@@ -306,17 +307,16 @@ Sugira ao usuário:
 - **Hierarquia de classificação:** tópico primeiro, depois grupo dentro do tópico.
 - **Nunca invente tópicos.** Consulte `index/topicos.json`.
 - **Pastas de destino sempre existem.** Os tópicos em `topicos.json` já têm pastas no repositório. Não crie pastas nem `.gitkeep` na triagem.
-- **Frontmatter** segue rigorosamente `schemas/frontmatter-item.md`. Campos opcionais desconhecidos são omitidos.
+- **Frontmatter** segue rigorosamente `reference/schemas/frontmatter-item.md`. Campos opcionais desconhecidos são omitidos.
 - **`url` é obrigatório em arquivos com prefixo `url_` e nunca aparece em notas ou sidecars.**
 - **`modelo` e `estado: rascunho` são os campos-chave de URLs; notas recebem `estado: rascunho` e opcionalmente `modelo`.**
-- **Sem logs** — auditoria exclusivamente via histórico Git com `/commit-push`.
+- **Sem logs** — auditoria exclusivamente via histórico Git.
 
 ## Arquivos de Referência
 
-- `flows/triagem.md` — especificação do fluxo de triagem
-- `docs/pkm-naming.md` — **fonte de verdade para nomenclatura** (prefixo `url_`, padrão autor-título, palavras banidas)
+- `reference/pkm/pkm-naming.md` — **fonte de verdade para nomenclatura** (prefixo `url_`, padrão autor-título, palavras banidas)
 - `index/grupos.json` — grupos existentes
 - `index/topicos.json` — tópicos para classificação
 - `index/models.json` — catálogo de modelos disponíveis para notas
-- `docs/pkm-structure.md` — estrutura de destinos
-- `schemas/frontmatter-item.md` — esquema de frontmatter de itens de conhecimento
+- `reference/pkm/pkm-structure.md` — estrutura de destinos
+- `reference/schemas/frontmatter-item.md` — esquema de frontmatter de itens de conhecimento

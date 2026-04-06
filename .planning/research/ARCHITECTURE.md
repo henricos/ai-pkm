@@ -325,9 +325,9 @@ O ponto de maior cuidado e evitar que a UI conheca detalhes do filesystem. Se `s
 ## Sources
 
 - Projeto: `/home/henrico/github/henricos/ai-pkm/.planning/PROJECT.md` — requisitos e escopo atuais do milestone
-- Projeto: `/home/henrico/github/henricos/ai-pkm/docs/overview.md` — contexto do produto e modo file-first
-- Projeto: `/home/henrico/github/henricos/ai-pkm/docs/prd.md` — constraints de single-user, self-hosted e fonte de verdade
-- Projeto: `/home/henrico/github/henricos/ai-pkm/docs/architecture.md` — stack e ADRs existentes
+- Projeto: `/home/henrico/github/henricos/ai-pkm/.planning/PROJECT.md` — contexto do produto e modo file-first
+- Projeto: `/home/henrico/github/henricos/ai-pkm/.planning/REQUIREMENTS.md` — constraints de single-user, self-hosted e fonte de verdade
+- Projeto: `/home/henrico/github/henricos/ai-pkm/.planning/research/ARCHITECTURE.md` — pesquisa de arquitetura disponível até aqui
 - Next.js, Layouts and Pages: https://nextjs.org/docs/app/getting-started/layouts-and-pages — layouts persistentes no App Router, base para shell SPA-like [HIGH]
 - Next.js, Dynamic Route Segments: https://nextjs.org/docs/app/api-reference/file-conventions/dynamic-routes — selecao por URL com catch-all segments [HIGH]
 - Next.js, Route Handlers: https://nextjs.org/docs/app/building-your-application/routing/route-handlers — boundary HTTP pequena para leitura incremental [HIGH]

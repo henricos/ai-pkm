@@ -1,6 +1,6 @@
 ---
 name: readequar-url
-description: "Adapta o corpo de arquivos `url_` com `modelo: url-resumo` já processados a um template novo ou atualizado. O trabalho é puramente estrutural: reposicionar seções, realocar conteúdo entre seções e marcar lacunas como TBD. Não re-coleta a fonte, não usa helper, não avalia qualidade. Use esta skill quando o template `url-resumo.md` mudar depois que arquivos foram processados, ou quando um resumo existente precisa ser estruturado conforme o template atual."
+description: "Adapta o corpo de arquivos `url_` com `modelo: url-resumo` já processados a um template novo ou atualizado. O trabalho é puramente estrutural: reposicionar seções, realocar conteúdo entre seções e marcar lacunas como TBD. Não re-coleta a fonte, não usa helper para processamento e não avalia qualidade. Use esta skill quando o template `url-resumo.md` mudar depois que arquivos foram processados, ou quando um resumo existente precisa ser estruturado conforme o template atual."
 command: /readequar-url
 ---
 
@@ -8,7 +8,7 @@ command: /readequar-url
 
 ## Instruções de Execução do Agente
 
-Esta skill implementa o **Fluxo — Readequar URL** descrito em `flows/readequar-url.md`. Readequa o corpo de arquivos `url_` com `modelo: url-resumo` ao template em `models/url-resumo.md`. O trabalho é puramente estrutural — sem re-coleta de fonte, sem pesquisa externa.
+Esta skill readequa o corpo de arquivos `url_` com `modelo: url-resumo` ao template em `models/url-resumo.md`. O trabalho é puramente estrutural — sem re-coleta de fonte, sem pesquisa externa.
 
 **Somente opera em arquivos `url_` com `modelo: url-resumo` e `estado: finalizado`.**
 
@@ -109,7 +109,7 @@ Escreva no arquivo após aprovação (substituição completa do conteúdo, pres
 ## Regras de Comportamento
 
 - Nunca escreve sem aprovação explícita
-- Não re-coleta fonte, não usa helper Python
+- Não re-coleta fonte, não usa helper Python para processamento do conteúdo
 - Não avalia qualidade de conteúdo — apenas estrutura
 - Lacunas marcadas como TBD são sinais para uma futura sessão de `/criticar-url`
 - Preserva o frontmatter intacto; nunca altera campos de metadados
@@ -119,5 +119,5 @@ Escreva no arquivo após aprovação (substituição completa do conteúdo, pres
 
 - `.agents/skills/readequar-url/scripts/listar_urls.py` — helper (listar)
 - `models/url-resumo.md` — **template do corpo** (fonte de verdade)
-- `flows/processar-url.md` — contexto do ciclo de vida do arquivo
-- `schemas/frontmatter-item.md` — esquema de frontmatter de itens de conhecimento
+- `.agents/skills/processar-url/SKILL.md` — contexto do ciclo de vida do arquivo
+- `reference/schemas/frontmatter-item.md` — esquema de frontmatter de itens de conhecimento

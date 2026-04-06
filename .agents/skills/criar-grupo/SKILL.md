@@ -8,7 +8,7 @@ command: /criar-grupo
 
 ## Instruções de Execução do Agente
 
-Esta skill implementa o **Fluxo 4 — Criar Grupo** descrito em `flows/criar-grupo.md`. Seu objetivo é criar um agrupador de conteúdo dentro de um tópico. **NUNCA crie pastas ou arquivos sem aprovação explícita do usuário.**
+Esta skill cria um agrupador de conteúdo dentro de um tópico. **NUNCA crie pastas ou arquivos sem aprovação explícita do usuário.**
 
 ---
 
@@ -90,7 +90,7 @@ O helper cria o diretório, o `.gitkeep`, o `_grupo.md` com frontmatter e insere
 
 ### Passo 7: Pós-criação
 
-> *"Grupo criado com sucesso em `_[topico]/[slug]/`. Recomendo executar `/recriar-indices` para confirmar que os índices estão sincronizados. Use `/commit-push` para registrar no histórico Git."*
+> *"Grupo criado com sucesso em `pkm/[topico]/_[slug]/`. Recomendo executar `/recriar-indices` para confirmar que os índices estão sincronizados."*
 
 ---
 
@@ -105,7 +105,6 @@ O helper cria o diretório, o `.gitkeep`, o `_grupo.md` com frontmatter e insere
 ## Arquivos de Referência
 
 - `.agents/skills/criar-grupo/scripts/criar_grupo.py` — helper (verificar / criar)
-- `flows/criar-grupo.md` — especificação do fluxo de criação de grupo
 - `index/grupos.json` — índice de grupos (a ser atualizado)
-- `schemas/frontmatter-grupo.md` — esquema do `_grupo.md`
-- `docs/pkm-structure.md` — estrutura de diretórios
+- `reference/schemas/frontmatter-grupo.md` — esquema do `_grupo.md`
+- `reference/pkm/pkm-structure.md` — estrutura de diretórios

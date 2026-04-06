@@ -15,14 +15,14 @@ Uso:
         executar --payload '<json>' --json
 
 Tipos de operação aceitos no payload (array de objetos):
-    {"tipo": "criar_pasta", "caminho": "_topico/sub/"}
-    {"tipo": "criar_gitkeep", "caminho": "_topico/sub/"}
-    {"tipo": "mover", "origem": "_topico/arq.md", "destino": "_topico/sub/arq.md"}
-    {"tipo": "atualizar_frontmatter", "arquivo": "_topico/sub/arq.md", "campos": {"topico": "novo"}}
+    {"tipo": "criar_pasta", "caminho": "pkm/topico/sub/"}
+    {"tipo": "criar_gitkeep", "caminho": "pkm/topico/sub/"}
+    {"tipo": "mover", "origem": "pkm/topico/arq.md", "destino": "pkm/topico/sub/arq.md"}
+    {"tipo": "atualizar_frontmatter", "arquivo": "pkm/topico/sub/arq.md", "campos": {"estado": "finalizado"}}
     {"tipo": "atualizar_topicos_json", "conteudo": [...]}
     {"tipo": "atualizar_grupos_json_entrada", "entrada": {"caminho": "...", "descricao": "...", "topico": "..."}}
-    {"tipo": "remover_grupos_json_entrada", "caminho": "_topico/sub/"}
-    {"tipo": "remover_pasta_vazia", "caminho": "_topico/vazia/"}
+    {"tipo": "remover_grupos_json_entrada", "caminho": "pkm/topico/_grupo/"}
+    {"tipo": "remover_pasta_vazia", "caminho": "pkm/topico/vazia/"}
 """
 from __future__ import annotations
 

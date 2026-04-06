@@ -8,7 +8,7 @@ command: /readequar-nota
 
 ## Instruções de Execução do Agente
 
-Esta skill implementa o **Fluxo — Readequação de Nota** descrito em `flows/readequar-nota.md`. O trabalho é puramente estrutural — reposicionamento, realocação de conteúdo e marcação de lacunas. Sem pesquisa externa, sem avaliação de qualidade.
+Esta skill readequa notas de forma puramente estrutural — reposicionamento, realocação de conteúdo e marcação de lacunas. Sem pesquisa externa, sem avaliação de qualidade.
 
 ---
 
@@ -94,5 +94,4 @@ Escreva no arquivo após aprovação explícita (substituição completa do cont
 
 ## Arquivos de Referência
 
-- `flows/readequar-nota.md` — especificação do fluxo
 - `index/models.json` — catálogo de modelos disponíveis (campo `modelo` do frontmatter aponta para um deles)

@@ -8,7 +8,7 @@ command: /processar-url
 
 ## Instruções de Execução do Agente
 
-Esta skill implementa o fluxo **Processar URL** descrito em `flows/processar-url.md`. Ela usa o helper local `scripts/processar_url.py` para validar o ambiente, listar itens pendentes, detectar o tipo real da URL e coletar o texto-base do processamento. **NUNCA modifique um arquivo sem aprovação explícita do usuário.**
+Esta skill usa o helper local `scripts/processar_url.py` para validar o ambiente, listar itens pendentes, detectar o tipo real da URL e coletar o texto-base do processamento. **NUNCA modifique um arquivo sem aprovação explícita do usuário.**
 
 ---
 
@@ -134,12 +134,7 @@ Para cada arquivo selecionado:
 #### 3.3 Formato `url-extrato`
 
 1. Só prossiga se `tipo_detectado` for `web` ou `pdf`.
-2. Gere o cabeçalho padronizado (ver spec em `flows/processar-url.md`, seção "Cabeçalho do arquivo"):
-   - `# Título` derivado do título original da fonte ou gerado a partir do conteúdo
-   - Bloco blockquote com `**Autores:**`, `**Plataforma:**`, `**Publicado em:**` e `**Original:**`
-   - Campos `Autores` e `Publicado em` omitidos silenciosamente se ausentes no frontmatter
-   - `Plataforma` inferida da URL conforme lista fixa na spec; fallback `Web`
-   - `Original` no formato `[url](url)`
+2. Gere o cabeçalho padronizado conforme `reference/pkm/pkm-url-header-format.md`.
 3. Insira o cabeçalho antes do conteúdo extraído.
 4. Use `texto_base` como conteúdo a inserir após o cabeçalho.
 5. Preserve Markdown limpo, sem menus, rodapés, navegação ou anúncios.
@@ -150,12 +145,7 @@ Use `texto_base` e `metadados` para elaborar um resumo em `pt-BR`.
 
 **Cabeçalho (obrigatório, antes de qualquer seção):**
 
-Gere o cabeçalho padronizado conforme spec em `flows/processar-url.md`, seção "Cabeçalho do arquivo":
-- `# Título` derivado do título original da fonte ou gerado a partir do conteúdo
-- Bloco blockquote com os campos de proveniência na ordem: `**Autores:**` → `**Plataforma:**` → `**Publicado em:**` → `**Original:**`
-- `Autores` e `Publicado em` omitidos silenciosamente se ausentes no frontmatter
-- `Plataforma` inferida da URL conforme lista fixa na spec; fallback `Web`
-- `Original` no formato `[url](url)`
+Gere o cabeçalho padronizado conforme `reference/pkm/pkm-url-header-format.md`.
 
 **Estrutura do corpo:** ver `models/url-resumo.md` — fonte de verdade para seções (`## Síntese`, `## Narrativa`, `## O que fica`, `## Recursos`) e regras de escrita.
 
@@ -199,7 +189,7 @@ Se o arquivo já tiver conteúdo abaixo do frontmatter, pergunte ao usuário se 
 
 #### 3.7 Melhorar o nome do arquivo
 
-Se a extração ou o resumo revelarem um nome melhor do que o definido na triagem, proponha a renomeação do arquivo antes de salvar a versão final. Ao renomear, preserve obrigatoriamente o prefixo `url_` e siga a convenção em `docs/pkm-naming.md`. Só renomeie com aprovação explícita do usuário.
+Se a extração ou o resumo revelarem um nome melhor do que o definido na triagem, proponha a renomeação do arquivo antes de salvar a versão final. Ao renomear, preserve obrigatoriamente o prefixo `url_` e siga a convenção em `reference/pkm/pkm-naming.md`. Só renomeie com aprovação explícita do usuário.
 
 ---
 
@@ -213,7 +203,7 @@ Se a URL não for acessível ou o conteúdo principal não puder ser obtido, inf
 
 > **Processamento concluído.** X URL(s) processada(s), Y pulada(s), Z com erro.
 
-Sugira: *"Use `/commit-push` para registrar as alterações no histórico Git."*
+Sugira: *"Se quiser, registre as alterações no histórico Git."*
 
 ---
 
@@ -231,9 +221,9 @@ Sugira: *"Use `/commit-push` para registrar as alterações no histórico Git."*
 
 ## Arquivos de Referência
 
-- `flows/processar-url.md` — especificação do fluxo
 - `models/url-resumo.md` — **template do corpo para `modelo: url-resumo`**
-- `docs/pkm-naming.md` — **convenção de nomenclatura** (prefixo `url_`, padrão autor-título)
-- `schemas/frontmatter-item.md` — esquema de frontmatter de itens de conhecimento
-- `docs/pkm-structure.md` — estrutura do repositório
+- `reference/pkm/pkm-url-header-format.md` — contrato do cabeçalho compartilhado de arquivos `url_`
+- `reference/pkm/pkm-naming.md` — **convenção de nomenclatura** (prefixo `url_`, padrão autor-título)
+- `reference/schemas/frontmatter-item.md` — esquema de frontmatter de itens de conhecimento
+- `reference/pkm/pkm-structure.md` — estrutura do repositório
 - `scripts/processar_url.py` — helper Python do fluxo

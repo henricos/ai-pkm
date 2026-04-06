@@ -58,7 +58,7 @@ Cada tópico da taxonomia é uma pasta `[topico]/` dentro de `pkm/` (sem prefixo
 - **Subtópicos** — pastas `_[subtopico]/` (com prefixo `_`) para subdivisões taxonômicas do tópico.
 - **Grupos** — pastas `_[grupo]/` (com prefixo `_`) que agrupam conteúdo por objetivo. Cada grupo contém um `_grupo.md` com frontmatter descritivo. Distinção de subtópicos: grupos têm `_grupo.md`, subtópicos não.
 
-A distinção entre conteúdo próprio e itens baseados em URL é feita pelo campo `url` no frontmatter e pelo prefixo `url_` no nome do arquivo: se presente, o arquivo representa uma URL externa; se ausente, é conteúdo próprio. O campo `url` nunca aponta para binários locais pareados com sidecar. As regras completas de nomenclatura estão em [`nomenclatura-de-arquivos.md`](nomenclatura-de-arquivos.md).
+A distinção entre conteúdo próprio e itens baseados em URL é feita pelo campo `url` no frontmatter e pelo prefixo `url_` no nome do arquivo: se presente, o arquivo representa uma URL externa; se ausente, é conteúdo próprio. O campo `url` nunca aponta para binários locais pareados com sidecar. As regras completas de nomenclatura estão em [`pkm-naming.md`](pkm-naming.md).
 
 Grupos não são tarefas nem projetos com prazo — são agrupadores persistentes de conhecimento. Não carregam status, vencimento ou noção de "ativo/inativo"; permanecem enquanto fizer sentido como unidade de organização.
 

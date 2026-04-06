@@ -6,9 +6,14 @@ Regras obrigatórias para qualquer IA (IDEs como Cursor ou Antigravity, CLIs com
 
 Antes de executar qualquer tarefa, leia estes arquivos:
 
-1. **`docs/overview.md`** — visão e propósito do sistema.
+1. **`.planning/PROJECT.md`** — visão atual e contexto do produto.
+2. **`.planning/REQUIREMENTS.md`** — requisitos ativos.
+3. **`.planning/ROADMAP.md`** — direção atual de execução.
 
-Referência adicional disponível: `flows/` — especificações autoritativas dos fluxos operacionais (um arquivo por fluxo). As skills em `.agents/skills/` são implementações dessas especificações.
+Referências normativas adicionais:
+- `reference/pkm/` — contratos e convenções estáveis do domínio PKM.
+- `reference/schemas/` — contratos formais de frontmatter e manifests.
+- `.agents/skills/` — fonte de verdade operacional das skills do projeto.
 
 ## Idioma
 
@@ -47,19 +52,16 @@ A IA é a única escritora de arquivos no repositório `pkm`: toda movimentaçã
 
 No repositório `ai-pkm` (este), a IA e o humano podem colaborar livremente no código e na documentação.
 
-## Documentação técnica
+## Arquitetura documental
 
-A documentação deste projeto vive em `docs/`:
+A informação do projeto está separada por papel:
 
-- **`docs/overview.md`** — visão e propósito.
-- **`docs/prd.md`** — requisitos de produto.
-- **`docs/architecture.md`** — stack, ADRs e decisões técnicas.
-- **`docs/pkm-structure.md`** — estrutura de diretórios do repositório e taxonomia de tópicos.
-- **`docs/pkm-conventions.md`** — contratos estruturais do pkm: tipos de item, frontmatter, nomenclatura, índices JSON.
-- **`docs/pkm-naming.md`** — fonte de verdade para nomenclatura de arquivos (slugs, prefixos, autores).
-- **`flows/`** — especificação autoritativa de cada fluxo operacional (um arquivo por fluxo).
-
-**Regra de atualização:** ao alterar o comportamento de qualquer fluxo, atualize primeiro a spec em `flows/` e depois propague a mudança para a skill correspondente em `.agents/skills/`.
+- **`.planning/`** — contexto vivo do produto `ai-pkm` sob GSD: visão atual, requisitos, roadmap e artefatos de planejamento.
+- **`reference/pkm/`** — referência normativa do domínio PKM: estrutura, convenções e nomenclatura.
+- **`reference/schemas/`** — contratos formais de frontmatter e manifests.
+- **`.agents/skills/`** — fonte de verdade operacional do comportamento das skills.
+- **`models/`** — templates operacionais de conteúdo.
+- **`index/`** — índices e catálogos operacionais usados pelas skills.
 
 ## Desenvolvimento guiado por especificação (SDD)
 
@@ -71,18 +73,18 @@ Este projeto adota Spec-Driven Development como prática de desenvolvimento: qua
 - Para iniciar o desenvolvimento de uma feature nova, use `/gsd-discuss-phase` antes de planejar ou implementar.
 
 **Separação de specs por camada:**
-- `flows/` — especificações das skills operacionais (comportamento do agente PKM). Regra de atualização já descrita na seção "Documentação técnica".
 - Specs da plataforma web (features da aplicação) são gerenciadas pelo ciclo GSD: discussão em `/gsd-discuss-phase`, plano atômico em `PLAN.md`, execução em `/gsd-execute-phase`.
+- O comportamento operacional das skills do PKM vive em `.agents/skills/`; ao alterar uma skill, atualize a própria skill e qualquer contrato normativo em `reference/` que tenha sido afetado.
 
 ## Regras universais
 
 ### Nomenclatura de arquivos
 
-Todos os arquivos do repositório seguem kebab-case. Regras completas em `docs/pkm-conventions.md`.
+Todos os arquivos do repositório seguem kebab-case. Regras completas em `reference/pkm/pkm-conventions.md`.
 
 ### Frontmatter
 
-Arquivos de conhecimento no repositório `pkm` exigem frontmatter conforme contratos em `schemas/` (raiz do projeto). Detalhes em `docs/pkm-conventions.md`.
+Arquivos de conhecimento no repositório `pkm` exigem frontmatter conforme contratos em `reference/schemas/`. Detalhes em `reference/pkm/pkm-conventions.md`.
 
 ### Modelos de nota
 
@@ -107,4 +109,3 @@ Para checagem não mutante de coerência, use a skill `/validar-estrutura`.
 ### Rastreabilidade
 
 Sem arquivos de log de IA; auditoria exclusivamente via mensagem de commit Git.
-

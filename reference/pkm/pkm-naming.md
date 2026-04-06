@@ -101,7 +101,7 @@ url_ibm-technology-rag-vs-long-context.md
 
 ## Arquivos do sistema
 
-As regras acima valem para **todo o repositório** — não apenas para arquivos de conhecimento em `pkm/[topico]/`. Arquivos em `docs/`, `.agents/skills/` e demais pastas de infraestrutura também seguem kebab-case.
+As regras acima valem para **todo o repositório** — não apenas para arquivos de conhecimento em `pkm/[topico]/`. Arquivos em `reference/`, `.agents/skills/` e demais pastas de infraestrutura também seguem kebab-case.
 
 Resumo da convenção de `_` vs `-`:
 
