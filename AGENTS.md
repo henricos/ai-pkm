@@ -115,3 +115,24 @@ Isso se aplica a qualquer agente, incluindo fluxos GSD (`/gsd-discuss-phase`, `/
 ### Rastreabilidade
 
 Sem arquivos de log de IA; auditoria exclusivamente via mensagem de commit Git.
+
+## Referência de UI (Stitch output)
+
+Antes de implementar qualquer tela, leia:
+- `DESIGN.md` (raiz do projeto) — sistema de design: tokens de cor, tipografia, espaçamento e componentes gerados pelo Google Stitch
+- `reference/ui/screens/<número-nome>/` — export da tela correspondente gerada no Stitch
+
+**Regras de uso do Stitch output:**
+- O export é referência de layout e composição visual — não código de produção
+- Preservar a intenção de layout: posicionamento, hierarquia, proporções
+- Componentizar: quebrar em componentes reutilizáveis em `src/components/`
+- Adaptar tokens: substituir valores literais por tokens do `tailwind.config` derivados do `DESIGN.md`
+- Integrar com shadcn/ui: substituir elementos HTML brutos pelos componentes shadcn equivalentes
+- Nunca copiar um arquivo de `reference/ui/screens/` diretamente para `src/` sem refatoração
+
+**Mapeamento tela → pasta de referência:**
+- Fase 1 (login) → `reference/ui/screens/01-login/`
+- Fase 2 (navegação) → `reference/ui/screens/02-navigation-shell/`
+- Fase 3 (viewer Markdown) → `reference/ui/screens/03-content-viewer/`
+- Fase 4 (imagem/PDF + sidecar) → `reference/ui/screens/04-media-viewer/`
+- Fase 5 (modo apresentação) → `reference/ui/screens/05-presentation-mode/`

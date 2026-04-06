@@ -8,7 +8,7 @@
 
 Autenticação single-user + modelo canônico read-only sobre o `pkm` montado externamente + setup de runtime. A camada web passa a ler o pkm por um `ItemRepository` com identidade estável por item. A UI da Fase 1 se limita à tela de login (minimalista); a shell principal de navegação é Fase 2.
 
-**Pré-requisito de workflow:** Executar sessão no Google Stitch 2 para definir a identidade visual da v2 e gerar `DESIGN.md` antes da implementação da Fase 1. O `DESIGN.md` gerado deve ser commitado na raiz do projeto antes de iniciar o plano.
+**Pré-requisito de workflow:** `DESIGN.md` e as telas de referência do Stitch devem existir antes da implementação da Fase 1. O brief para o Stitch está em `.planning/STITCH-BRIEF.md`. Após a sessão no Stitch, os exports ficam em `reference/ui/screens/` e o `DESIGN.md` na raiz do projeto — ambos commitados antes de iniciar o plano.
 
 </domain>
 
@@ -35,9 +35,9 @@ Autenticação single-user + modelo canônico read-only sobre o `pkm` montado ex
 - **D-11:** Documentação de setup local (README ou `docs/dev-setup.md`) cobre como subir a aplicação apontando para um pkm por path/volume
 
 ### Workflow Stitch 2 + DESIGN.md (pré-implementação)
-- **D-12:** Sessão no Google Stitch 2 acontece antes da implementação da Fase 1 para definir a identidade visual da v2
-- **D-13:** `DESIGN.md` gerado pelo Stitch é commitado na raiz do projeto e serve como âncora de estilo para o agente em todas as fases subsequentes
-- **D-14:** `AGENTS.md` referencia `DESIGN.md` como spec de estilo obrigatória para geração de UI
+- **D-12:** `DESIGN.md` existe na raiz do projeto (gerado no Stitch a partir de `.planning/STITCH-BRIEF.md`, commitado antes da Fase 1) — âncora de estilo para todas as fases
+- **D-13:** Telas de referência do Stitch existem em `reference/ui/screens/` — o agente usa como base de layout, não como código final; a pasta desta fase é `reference/ui/screens/01-login/`
+- **D-14:** Regras de uso do Stitch output estão em `AGENTS.md` §Referência de UI: preservar intenção de layout, componentizar, adaptar tokens para shadcn/ui + `tailwind.config`, integrar com lógica real; nunca copiar export bruto para `src/`
 
 ### Claude's Discretion
 - Estrutura interna de pastas do Next.js (`app/`, `lib/`, `types/`, `components/`)
@@ -68,7 +68,8 @@ Autenticação single-user + modelo canônico read-only sobre o `pkm` montado ex
 - `index/topicos.json` — índice de tópicos válidos
 
 ### Design (gerado antes da Fase 1)
-- `DESIGN.md` — âncora de estilo gerado pelo Stitch 2 (pode não existir ainda; commitado antes da implementação)
+- `DESIGN.md` — âncora de estilo gerado pelo Stitch 2 (deve existir na raiz antes de iniciar o plano)
+- `reference/ui/screens/01-login/` — export React/Tailwind da tela de login gerado no Stitch (usar como referência de layout)
 
 </canonical_refs>
 
@@ -95,7 +96,7 @@ Autenticação single-user + modelo canônico read-only sobre o `pkm` montado ex
 <specifics>
 ## Specific Ideas
 
-- **Workflow Stitch → importar fontes**: usuário roda Stitch 2 com spec das telas da v2, exporta React/Tailwind components, traz para o projeto por cópia ou MCP, e o Claude Code adapta/valida contra a spec e o DESIGN.md
+- **Workflow Stitch → importar fontes**: usuário usa `.planning/STITCH-BRIEF.md` como prompt no Stitch 2, exporta React/Tailwind components para `reference/ui/screens/01-login/` e DESIGN.md para a raiz, e o Claude Code adapta/valida contra a spec seguindo as regras em `AGENTS.md §Referência de UI`
 - **DESIGN.md como âncora**: padrão lançado pelo Google Stitch com 9 seções (cores, tipografia, componentes, layout, elevação, responsive, do's/don'ts, agent prompt guide), versionado em Git, lido nativamente por Claude Code
 - **ItemRepository contract**: `listTopics(): Topic[]`, `listGroups(topic: string): Group[]`, `getItem(id: string): Item`, `searchByName(q: string): Item[]` — permite trocar implementação na v3 sem alterar navegação, viewer e busca
 
@@ -104,8 +105,7 @@ Autenticação single-user + modelo canônico read-only sobre o `pkm` montado ex
 <deferred>
 ## Deferred Ideas
 
-- Integração MCP do Stitch para importação automática de componentes — explorar quando disponível; por ora a importação é manual (cópia ou MCP genérico)
-- Geração da tela de login no próprio Stitch como parte da sessão pré-Fase 1 — possível mas não obrigatório; a tela de login pode ser minimalista por padrão
+- Integração MCP do Stitch para importação automática de componentes — explorar quando disponível; por ora a importação é manual (cópia direta para `reference/ui/screens/`)
 - Busca textual avançada com popup/lista de resultados — explicitamente fora da v2 ativa; ARC-04 prepara a seam mas não implementa
 - Preview de `.excalidraw` somente leitura — backlog futuro
 
