@@ -1,6 +1,6 @@
 {
   "model_profile": "balanced",
-  "commit_docs": true,
+  "commit_docs": false,
   "parallelization": false,
   "search_gitignored": false,
   "brave_search": false,
@@ -35,5 +35,8 @@
   "agent_skills": {},
   "resolve_model_ids": "omit",
   "mode": "interactive",
-  "granularity": "standard"
+  "granularity": "standard",
+  "planning": {
+    "commit_docs": false
+  }
 }

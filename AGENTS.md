@@ -106,6 +106,12 @@ Nunca invente tópicos. Consulte `index/topicos.json` antes de classificar qualq
 
 Para checagem não mutante de coerência, use a skill `/validar-estrutura`.
 
+### Commits
+
+**Nunca faça commits automáticos.** Antes de qualquer commit, avise o operador e aguarde aprovação explícita. Use sempre a skill `/commit-push` para criar commits neste repositório — ela aplica o estilo, o idioma e o processo corretos definidos pelo projeto.
+
+Isso se aplica a qualquer agente, incluindo fluxos GSD (`/gsd-discuss-phase`, `/gsd-plan-phase`, `/gsd-execute-phase` e similares): mesmo que o workflow instrua a fazer commit de artefatos de planejamento, o agente deve propor o commit e aguardar aprovação, usando `/commit-push`.
+
 ### Rastreabilidade
 
 Sem arquivos de log de IA; auditoria exclusivamente via mensagem de commit Git.
