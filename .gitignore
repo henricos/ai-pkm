@@ -52,6 +52,7 @@ Thumbs.db
 *~
 
 # Ferramentas de IA — configurações locais
+.codex
 .claude/settings.local.json
 .cursor/settings.local.json
 
