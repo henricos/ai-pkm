@@ -20,11 +20,13 @@ Permitir operar o PKM com auxilio de IA, alternando entre uma experiencia visual
 ### Active
 
 - [ ] Entregar uma interface web para navegacao e exibicao do acervo PKM, sem capacidades de edicao manual
+- [ ] Exigir autenticacao single-user na interface web, inclusive em ambiente local/dev, com credenciais configuradas fora do repositorio
 - [ ] Exibir uma arvore navegavel com topicos, subtopicos, grupos, arquivos e inbox, com painel esquerdo retratil
 - [ ] Renderizar Markdown com boa fidelidade visual, usando bibliotecas maduras para formulas, blocos de codigo e formatacao rica
 - [ ] Exibir imagens como item principal com boa experiencia de visualizacao, mantendo sidecars textuais ocultos da arvore e acessiveis no viewer
 - [ ] Oferecer modo de apresentacao minimo com tela cheia do viewer, recolhimento do painel esquerdo, temas de leitura/apresentacao e ponteiro laser temporario
 - [ ] Implementar busca textual simples por nome de arquivo, conteudo Markdown e sidecars textuais, sem indexar frontmatter
+- [ ] Rodar com configuracao por variaveis de ambiente e acesso ao `pkm` por path/volume montado, preservando caminho limpo para empacotamento futuro
 
 ### Out of Scope
 
@@ -33,6 +35,7 @@ Permitir operar o PKM com auxilio de IA, alternando entre uma experiencia visual
 - Audio e video no viewer web — nao fazem parte do alvo atual
 - Busca semantica por embeddings/RAG — backlog futuro, nao escopo da versao ativa
 - Migracao de indices JSON para banco de dados — direcao futura, nao requisito da versao ativa
+- Deploy publicado em Kubernetes/VPS e casca mobile/WebView dedicada — direcao futura, nao escopo da versao ativa
 
 ## Context
 
@@ -42,6 +45,8 @@ O alvo de produto foi reorganizado em versoes. A `v1` corresponde ao que ja exis
 
 Dentro da `v2`, a prioridade e primeiro estruturar a aplicacao e entregar visualizacao confiavel do acervo, antes de aprofundar refinamentos visuais e capacidades mais avancadas de apresentacao. O modo apresentacao e desejavel na `v2`, mas e secundario em relacao ao objetivo principal de navegar e ler bem o conteudo.
 
+A `v2` tambem precisa nascer com restricoes operacionais minimas corretas: autenticacao single-user desde o inicio, configuracao por variaveis de ambiente, e acesso ao `pkm` sempre por montagem/path externo, tanto em dev quanto em runtime futuro empacotado. O objetivo nao e resolver deploy publicado agora, mas evitar um desenho acoplado ao ambiente local atual.
+
 A interface desejada se inspira em ferramentas como Obsidian na estrutura de navegacao, mas com visual mais clean e leve. A coluna esquerda concentra arvore, busca, configuracoes e area futura de status/chamada da console de IA; a area direita concentra o viewer do item selecionado e sua barra de acoes. Breadcrumbs nao sao necessarios porque a propria arvore ja cumpre esse papel.
 
 ## Constraints
@@ -49,9 +54,13 @@ A interface desejada se inspira em ferramentas como Obsidian na estrutura de nav
 - **Product model**: A web da fase atual e estritamente de navegacao e exibicao — a edicao continua fora do escopo para preservar o papel da IA como escritora exclusiva
 - **Source of truth**: O repositorio `pkm` continua como fonte primaria de verdade — a camada web nao pode romper o modelo file-first
 - **Compatibility**: A nova experiencia web nao pode quebrar nem substituir a operacao local via CLI — as duas devem coexistir
+- **Authentication**: A interface web exige login single-user em todos os ambientes, inclusive local/dev — acesso nao deve ficar aberto por conveniencia de desenvolvimento
+- **Runtime config**: Credenciais e paths devem vir de variaveis de ambiente ou configuracao externa — nada sensivel entra em commit
+- **PKM access**: O `pkm` e sempre montado externamente por path/volume — a aplicacao nao assume conteudo embutido no proprio repo
 - **Viewer scope**: Markdown e imagem sao prioritarios; PDF e secundario; audio/video ficam fora — alinhado ao uso real esperado do acervo
 - **Search scope**: A busca textual da versao ativa cobre nome de arquivo, Markdown e sidecars textuais, mas nao frontmatter nem embeddings — para manter complexidade controlada
 - **UI approach**: O projeto deve preferir bibliotecas maduras e padroes consolidados para renderizacao e visualizacao — evitar reinventar componentes centrais cedo demais
+- **Responsiveness**: A interface deve degradar bem em mobile e evitar decisoes que inviabilizem uso futuro em WebView — sem transformar mobile em escopo principal agora
 
 ## Key Decisions
 
@@ -63,6 +72,8 @@ A interface desejada se inspira em ferramentas como Obsidian na estrutura de nav
 | Deixar execucao agentica web para `v4` | Preserva foco da versao ativa e evita misturar viewer com console/automacao cedo demais | ✓ Good |
 | Ocultar sidecars da arvore e exibi-los como informacao complementar do item principal | A unidade logica de navegacao deve ser o arquivo principal, nao seus artefatos auxiliares | ✓ Good |
 | Tratar design visual detalhado como fase interna da `v2`, possivelmente com apoio de ferramenta externa | Permite primeiro estabilizar a base funcional e depois implementar a interface fiel a uma spec visual melhor trabalhada | — Pending |
+| Exigir autenticacao single-user desde a `v2` | Mesmo sendo sistema de uma pessoa, a experiencia publicada e local precisa ter acesso protegido e coerente | ✓ Good |
+| Tratar `pkm` como dependencia montada e configurada externamente | Evita acoplamento com o ambiente de desenvolvimento atual e prepara o caminho para Docker/deploy futuro | ✓ Good |
 
 ## Evolution
 
