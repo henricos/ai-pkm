@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+
+<html class="light" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Presentation Mode - The Living Archive</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-lowest": "#ffffff",
+                        "primary-fixed": "#e0f2ff",
+                        "inverse-primary": "#a5d6ff",
+                        "on-primary-fixed": "#001e2f",
+                        "inverse-surface": "#0a0c10",
+                        "surface-variant": "#f0f2f5",
+                        "on-tertiary-container": "#1d192b",
+                        "surface": "#ffffff",
+                        "secondary-container": "#f1f3f4",
+                        "on-tertiary": "#ffffff",
+                        "outline": "#8e9199",
+                        "inverse-on-surface": "#f0f2f5",
+                        "on-secondary-fixed-variant": "#44474e",
+                        "surface-container-low": "#f7f9fc",
+                        "error-container": "#f9dedc",
+                        "surface-container-high": "#ebeef2",
+                        "secondary-fixed": "#e1e2e1",
+                        "surface-tint": "#0061a4",
+                        "on-secondary-container": "#1f1f1f",
+                        "tertiary-fixed-dim": "#cfbcff",
+                        "secondary": "#5e5e5e",
+                        "surface-container": "#f0f4f8",
+                        "surface-dim": "#d8dae0",
+                        "outline-variant": "#c4c7cf",
+                        "error": "#b3261e",
+                        "on-primary": "#ffffff",
+                        "on-secondary-fixed": "#1d1b20",
+                        "on-surface": "#1a1c1e",
+                        "background": "#ffffff",
+                        "tertiary-dim": "#ccc2dc",
+                        "primary-dim": "#004a77",
+                        "on-tertiary-fixed-variant": "#49454f",
+                        "on-primary-fixed-variant": "#004a77",
+                        "surface-container-highest": "#e1e3e8",
+                        "on-background": "#1a1c1e",
+                        "on-secondary": "#ffffff",
+                        "primary": "#0061a4",
+                        "tertiary-fixed": "#eaddff",
+                        "secondary-dim": "#474747",
+                        "tertiary": "#7d5260",
+                        "primary-container": "#d1e4ff",
+                        "on-primary-container": "#001d36",
+                        "error-dim": "#8c1d18",
+                        "surface-bright": "#ffffff",
+                        "tertiary-container": "#ffd8e4",
+                        "on-error": "#ffffff",
+                        "on-error-container": "#410002",
+                        "secondary-fixed-dim": "#c5c6c5",
+                        "primary-fixed-dim": "#a5d6ff",
+                        "on-tertiary-fixed": "#21005d",
+                        "on-surface-variant": "#44474e"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "1rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Inter", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["JetBrains Mono", "monospace"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .laser-trail {
+            pointer-events: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 100;
+        }
+        .laser-point {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: #3b82f6;
+            border-radius: 50%;
+            box-shadow: 0 0 20px 6px rgba(59, 130, 246, 0.5);
+            transform: translate(-50%, -50%);
+        }
+        .laser-path {
+            stroke: #3b82f6;
+            stroke-width: 1.5;
+            fill: none;
+            opacity: 0.2;
+            stroke-linecap: round;
+        }
+        .editorial-max-width {
+            max-width: 840px;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(16px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.08);
+        }
+        .tech-border {
+            border-left: 1px solid rgba(0, 97, 164, 0.1);
+            border-right: 1px solid rgba(0, 97, 164, 0.1);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 20;
+        }
+        body {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container overflow-x-hidden">
+<!-- Laser Pointer Visual Effect -->
+<div class="laser-trail">
+<svg class="w-full h-full">
+<path class="laser-path" d="M 450 300 C 500 280, 550 450, 700 420"></path>
+</svg>
+<div class="laser-point" style="left: 700px; top: 420px;"></div>
+</div>
+<!-- Main Presentation Content -->
+<main class="min-h-screen flex flex-col items-center pt-32 pb-64 px-8">
+<article class="editorial-max-width w-full space-y-24">
+<!-- Metadata Header -->
+<header class="space-y-10">
+<div class="flex items-center gap-4">
+<span class="font-label text-[0.625rem] font-bold uppercase tracking-[0.2em] text-primary">DOC_STRAT_01</span>
+<span class="h-[1px] w-8 bg-outline-variant"></span>
+<span class="font-label text-[0.625rem] font-bold uppercase tracking-[0.2em] text-on-surface-variant">Q1_2026</span>
+</div>
+<h1 class="font-headline text-7xl font-bold leading-[1.05] text-on-surface tracking-tight">
+                    Estratégia de Produto 2026: <span class="text-primary">Ecossistemas de Inteligência</span>
+</h1>
+<div class="flex items-center gap-6 pt-6">
+<div class="flex -space-x-3">
+<img alt="Curator Avatar" class="w-10 h-10 rounded-full border-2 border-surface object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuChUIpwIKmLvKhDwwS3dlPRCNpeTHsz-GfsvMtUwcUgFtSWRncsx4RP4jMqsbB_y8brKqSpRb97A7HyRaba5S3I8ejJ1QOIGK-_LjBPRtMHvH33DkJjc0aYJkom5ekSQh5CtgJuSnfk8gttARgyDwe8rgWZyStU5aFkafTU4tREvvhqwI8qSvne2lrSrvU1dyB-IeFzcOvEu3nkMDvWGR5Ydm5XgbL1BI6tQKebUG3-yow8Bvb-cMKgp2Ykd3X_rfFpqyt_pk9ZFi0"/>
+<div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center border-2 border-surface">
+<span class="material-symbols-outlined text-sm text-white">memory</span>
+</div>
+</div>
+<div>
+<p class="font-label text-[0.65rem] font-bold text-on-surface uppercase tracking-wider">Autorizado por AI Console</p>
+<p class="font-label text-[0.65rem] text-on-surface-variant uppercase tracking-wider">Sync: 12 JAN 2026</p>
+</div>
+</div>
+</header>
+<!-- Abstract Section -->
+<section class="border-y border-outline-variant/30 py-16">
+<p class="text-3xl font-light leading-relaxed text-on-surface-variant">
+                    "O futuro da gestão do conhecimento não reside na captura de dados, mas na síntese de contextos. Em 2026, nossa infraestrutura deixará de ser um repositório para se tornar um organismo vivo."
+                </p>
+</section>
+<!-- Content Body -->
+<div class="space-y-16 text-xl leading-relaxed text-on-surface font-light">
+<div class="space-y-6">
+<h2 class="font-label text-[0.75rem] font-bold tracking-[0.3em] text-primary uppercase">I. A Transição da Busca para a Descoberta</h2>
+<p>
+                        A interface tradicional de 'busca' é um artefato de uma era de escassez. No Living Archive, implementaremos o motor de <strong class="font-semibold text-on-surface">Navegação Telepática</strong>. O sistema antecipa a necessidade de referências cruzadas antes mesmo da consulta ser formulada, utilizando análise semântica em tempo real do texto em edição.
+                    </p>
+</div>
+<div class="my-20 grid grid-cols-12 gap-12 items-center">
+<div class="col-span-5">
+<div class="relative group">
+<div class="absolute -inset-0.5 bg-gradient-to-r from-primary to-blue-400 rounded-lg blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
+<img alt="AI Network Visualization" class="relative rounded-lg w-full bg-surface" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBieCerTPhyUdFe9JCzYWwMPtiyA0P0PmPVer2J0WkrvCn8T5ZXJgOVlnO3aDFanmmWRZiBbK6oTLMfSxr4RYolJ2fD-2Gkj7o6rlpe0B4ithu2-65X6ipzGA8Xd3RS83OxU55h6pnDc6Fk2WU7YpuUNE4Hd-wfSA7UFLoZVYOYSQzkjZ_jmJNUR7B_pFjfMp1aQiTLtl_SAd0lgZTe2H8D-8ToKdVaG1Fg0LTQoXH8a2_j8MKULhYTeNapbeeN6uSTO-uz5pfjtUU"/>
+</div>
+<p class="font-label text-[0.6rem] mt-6 text-on-surface-variant tracking-widest uppercase flex items-center gap-2">
+<span class="w-1 h-1 bg-primary rounded-full"></span>
+                            FIG_01: Neural_Kernel_v4
+                        </p>
+</div>
+<div class="col-span-7">
+<p>
+                            Não estamos apenas conectando notas; estamos mapeando a ontologia pessoal do usuário. Cada entrada (Entry) no sistema fortalece a malha de sub-tópicos, permitindo que o usuário visualize seu próprio pensamento através de grafos tridimensionais que evoluem organicamente.
+                        </p>
+</div>
+</div>
+<div class="space-y-6">
+<h2 class="font-label text-[0.75rem] font-bold tracking-[0.3em] text-primary uppercase">II. Design Silencioso</h2>
+<p>
+                        A redução de ruído visual é nosso maior recurso tecnológico. Removemos todas as 'affordances' desnecessárias. A tipografia foi escolhida para evocar o estado mental de fluxo, minimizando o cansaço cognitivo durante sessões de 3 a 5 horas de trabalho profundo.
+                    </p>
+</div>
+<blockquote class="bg-surface-container-low p-12 rounded-xl border-l-4 border-primary">
+<p class="text-2xl font-medium text-on-surface italic">"Onde há excesso de interface, há escassez de pensamento."</p>
+</blockquote>
+<p>
+                    A arquitetura 'No-Line' que adotamos não é apenas estética; é funcional. Ela permite que a mente flua entre blocos de conteúdo sem as interrupções visuais de bordas e grades rígidas. O espaço negativo é o componente mais importante deste sistema.
+                </p>
+</div>
+<!-- Footer Statement -->
+<footer class="pt-16 pb-8 border-t border-outline-variant/30">
+<div class="flex justify-between items-center">
+<div class="space-y-1">
+<p class="font-label text-[0.625rem] font-bold uppercase tracking-widest text-primary">Status: Confidencial</p>
+<p class="font-headline text-lg font-bold">The Living Archive Core Strategy</p>
+</div>
+<div class="text-right">
+<p class="font-label text-[0.65rem] text-on-surface-variant uppercase tracking-tighter">Página 01 // 12</p>
+</div>
+</div>
+</footer>
+</article>
+</main>
+<!-- Modern Floating Control Bar - Relocated to bottom-left corner -->
+<div class="fixed bottom-8 left-8 flex items-center gap-1 p-1.5 rounded-full glass-panel z-50">
+<button class="w-11 h-11 flex items-center justify-center rounded-full hover:bg-white/50 transition-all group">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary">close</span>
+</button>
+<div class="w-[1px] h-5 bg-outline-variant/50 mx-1"></div>
+<div class="flex items-center gap-1 bg-primary/10 rounded-full px-1">
+<button class="w-11 h-11 flex items-center justify-center rounded-full bg-primary text-white shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">flare</span>
+</button>
+<button class="w-11 h-11 flex items-center justify-center rounded-full hover:bg-white/50 transition-all group">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary">edit_note</span>
+</button>
+</div>
+<div class="w-[1px] h-5 bg-outline-variant/50 mx-1"></div>
+<div class="pl-3 pr-5 flex flex-col justify-center border-r border-outline-variant/20">
+<p class="font-label text-[0.55rem] font-bold uppercase tracking-widest text-primary leading-none mb-0.5">Laser_State</p>
+<p class="font-label text-[0.65rem] font-medium text-on-surface uppercase leading-none">Ativo_01</p>
+</div>
+<button class="w-11 h-11 flex items-center justify-center rounded-full hover:bg-white/50 transition-all group">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary">grid_view</span>
+</button>
+</div>
+<!-- Interface Overlays -->
+<div class="fixed top-10 left-10 pointer-events-none">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full border border-outline-variant/30 flex items-center justify-center bg-white/40 backdrop-blur-md">
+<span class="material-symbols-outlined text-[18px] text-primary">hub</span>
+</div>
+<p class="font-label text-[0.65rem] text-on-surface font-bold tracking-[0.2em] uppercase">Living_Archive_Core</p>
+</div>
+</div>
+<div class="fixed top-10 right-10 pointer-events-none">
+<div class="flex items-center gap-4 bg-white/40 backdrop-blur-md px-4 py-2 rounded-full border border-outline-variant/30">
+<div class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse shadow-[0_0_8px_rgba(0,97,164,0.6)]"></span>
+<p class="font-label text-[0.65rem] text-on-surface font-bold tracking-[0.2em] uppercase">Stream_Active</p>
+</div>
+<div class="w-[1px] h-3 bg-outline-variant/50"></div>
+<p class="font-label text-[0.65rem] text-on-surface-variant font-bold tracking-[0.2em] uppercase">Mode: Present</p>
+</div>
+</div>
+</body></html>

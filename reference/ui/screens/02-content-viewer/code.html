@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ai-pkm | Modern Clean</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-container-lowest": "#ffffff",
+                      "primary-fixed": "#d4e4fa",
+                      "inverse-primary": "#d7e7fd",
+                      "on-primary-fixed": "#324152",
+                      "inverse-surface": "#0e0e0e",
+                      "surface-variant": "#f1f5f9",
+                      "on-tertiary-container": "#4d4e68",
+                      "surface": "#ffffff",
+                      "secondary-container": "#e2e8f0",
+                      "on-tertiary": "#fbf8ff",
+                      "outline": "#cbd5e1",
+                      "inverse-on-surface": "#94a3b8",
+                      "on-secondary-fixed-variant": "#4d5d73",
+                      "surface-container-low": "#f8fafc",
+                      "error-container": "#fee2e2",
+                      "surface-container-high": "#f1f5f9",
+                      "secondary-fixed": "#d3e4fe",
+                      "surface-tint": "#2563eb",
+                      "on-secondary-container": "#1e293b",
+                      "tertiary-fixed-dim": "#cfcfef",
+                      "secondary": "#475569",
+                      "surface-container": "#f8fafc",
+                      "surface-dim": "#e2e8f0",
+                      "outline-variant": "#e2e8f0",
+                      "error": "#ef4444",
+                      "on-primary": "#ffffff",
+                      "on-secondary-fixed": "#314055",
+                      "on-surface": "#0f172a",
+                      "background": "#ffffff",
+                      "tertiary-dim": "#50516c",
+                      "primary-dim": "#1e40af",
+                      "on-tertiary-fixed-variant": "#565873",
+                      "on-primary-fixed-variant": "#1e3a8a",
+                      "surface-container-highest": "#f1f5f9",
+                      "on-background": "#0f172a",
+                      "on-secondary": "#ffffff",
+                      "primary": "#2563eb",
+                      "tertiary-fixed": "#ddddfe",
+                      "secondary-dim": "#44546a",
+                      "tertiary": "#5c5d78",
+                      "primary-container": "#dbeafe",
+                      "on-primary-container": "#1e40af",
+                      "error-dim": "#7f1d1d",
+                      "surface-bright": "#ffffff",
+                      "tertiary-container": "#ddddfe",
+                      "on-error": "#ffffff",
+                      "on-error-container": "#7f1d1d",
+                      "secondary-fixed-dim": "#c5d6f0",
+                      "primary-fixed-dim": "#c6d6eb",
+                      "on-tertiary-fixed": "#3a3b55",
+                      "on-surface-variant": "#64748b"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.375rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "fontFamily": {
+                      "headline": ["Inter", "sans-serif"],
+                      "body": ["Inter", "sans-serif"],
+                      "label": ["Inter", "sans-serif"]
+              }
+            },
+          },
+        }
+      </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 20;
+        }
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface selection:bg-primary-container selection:text-on-primary-container font-sans">
+<!-- SideNavBar (Modern Clean Revision) -->
+<aside class="fixed left-0 top-0 h-screen w-64 bg-slate-50 dark:bg-slate-900 flex flex-col py-6 px-4 z-40 border-r border-slate-200 dark:border-slate-800">
+<div class="px-2 mb-8">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-md overflow-hidden bg-slate-200">
+<img alt="User Profile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOr_6OqXWH-Y-uHptmUnfAqhBMMOYv1Xop4kcC8_KrZavCT0jtftnzb41Mc1zm8zu395KHj35IlVP2065dQUm-kbcGPNHPmyWEiMuPnqR0L-YO0XRtSwM_KAzDDlu38wPY0pS6bUjqY1ehGRj7_-lyVFr5MfFK6IhIUxNexKRYbGqx4V-HbCeanKYYHbHyaDAZBfv8XYFiD0ZcnRQ6bGQU3x6iy5sF7b3VPLSbigrrKm0qmXPcdilBnM-43z1X1FHOwx0rj_A-0jI"/>
+</div>
+<div class="flex flex-col">
+<span class="text-lg font-semibold text-slate-900 dark:text-slate-100 tracking-tight">ai-pkm</span>
+<span class="text-[10px] font-medium uppercase tracking-wider text-slate-500">Digital Curator</span>
+</div>
+</div>
+</div>
+<div class="px-2 mb-6">
+<button class="w-full bg-slate-900 dark:bg-slate-100 text-slate-50 dark:text-slate-900 py-2 rounded-lg text-sm font-medium flex items-center justify-center gap-2 hover:opacity-90 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[18px]">add</span>
+            New Entry
+        </button>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center justify-between px-3 py-2 text-slate-500 hover:bg-slate-200/50 dark:hover:bg-slate-800/80 rounded-lg transition-colors group" href="#">
+<div class="flex items-center gap-3 text-sm font-medium">
+<span class="material-symbols-outlined text-[20px]">inbox</span>
+                Inbox
+            </div>
+<span class="text-[10px] font-bold bg-blue-600 text-white px-1.5 py-0.5 rounded-full">5</span>
+</a>
+<div class="mt-4">
+<div class="flex items-center gap-3 px-3 py-2 text-slate-400 text-xs font-semibold uppercase tracking-widest">
+                Explore
+            </div>
+<div class="space-y-0.5">
+<a class="flex items-center gap-3 px-3 py-2 text-slate-500 hover:bg-slate-200/50 dark:hover:bg-slate-800/80 rounded-lg transition-colors text-sm font-medium" href="#">
+<span class="material-symbols-outlined text-[20px]">folder_open</span>
+                    Topics
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-500 hover:bg-slate-200/50 dark:hover:bg-slate-800/80 rounded-lg transition-colors text-sm font-medium" href="#">
+<span class="material-symbols-outlined text-[20px]">account_tree</span>
+                    Subtopics
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-blue-700 dark:text-blue-300 bg-white dark:bg-slate-800 rounded-lg text-sm font-semibold" href="#">
+<span class="material-symbols-outlined text-[20px]">schema</span>
+                    Groups
+                </a>
+</div>
+</div>
+</nav>
+<div class="mt-auto pt-6 space-y-1 border-t border-slate-200 dark:border-slate-800">
+<a class="flex items-center gap-3 px-3 py-2 text-slate-500 hover:bg-slate-200/50 dark:hover:bg-slate-800/80 rounded-lg transition-colors text-sm font-medium" href="#">
+<span class="material-symbols-outlined text-[20px]">search</span>
+            Search
+        </a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-500 hover:bg-slate-200/50 dark:hover:bg-slate-800/80 rounded-lg transition-colors text-sm font-medium" href="#">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+            Settings
+        </a>
+<div class="flex items-center gap-3 px-3 py-3 text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 rounded-lg text-sm font-semibold mt-2 cursor-pointer">
+<span class="material-symbols-outlined text-[20px]">memory</span>
+            AI Console
+        </div>
+</div>
+</aside>
+<!-- Main Workspace -->
+<main class="ml-64 min-h-screen flex flex-col bg-white">
+<!-- TopNavBar (Modern Clean Revision) -->
+<header class="fixed top-0 right-0 left-64 h-16 flex items-center justify-between px-8 z-40 bg-white/70 dark:bg-slate-950/70 backdrop-blur-md">
+<h1 class="text-xl font-bold tracking-tighter text-slate-900 dark:text-slate-50">ai-pkm</h1>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-1">
+<button class="p-2 text-slate-500 hover:text-slate-900 dark:hover:text-slate-100 transition-transform active:scale-95">
+<span class="material-symbols-outlined">present_to_all</span>
+</button>
+<button class="p-2 text-slate-500 hover:text-slate-900 dark:hover:text-slate-100 transition-transform active:scale-95">
+<span class="material-symbols-outlined">download</span>
+</button>
+<button class="p-2 text-slate-500 hover:text-slate-900 dark:hover:text-slate-100 transition-transform active:scale-95">
+<span class="material-symbols-outlined">info</span>
+</button>
+</div>
+<div class="h-4 w-[1px] bg-slate-200 dark:bg-slate-800 mx-2"></div>
+<button class="text-slate-400 hover:text-slate-900">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+</header>
+<!-- Content Area (High-End Digital Reader) -->
+<div class="flex-1 pt-24 px-12 max-w-[1440px] mx-auto w-full flex gap-12 pb-24">
+<!-- Reader Pane -->
+<div class="flex-1 max-w-[760px]">
+<article class="font-sans">
+<header class="mb-16">
+<div class="text-[10px] font-bold uppercase tracking-[0.3em] text-blue-600 mb-6">Archive // Estratégia de Produto 2026</div>
+<h2 class="text-5xl font-extrabold tracking-tight text-slate-900 leading-[1.1] mb-6">O Futuro da Curadoria Autônoma</h2>
+<div class="h-1 w-12 bg-slate-900"></div>
+</header>
+<div class="space-y-10 text-lg leading-relaxed text-slate-600 font-normal">
+<p>
+                        A transição de uma ferramenta de produtividade para um <span class="text-slate-900 font-medium italic">The Living Archive</span> exige uma redefinição fundamental de como interagimos com a informação. Em 2026, o foco não é mais a captura de dados, mas o refinamento da intenção.
+                    </p>
+<div class="py-4">
+<h3 class="text-2xl font-bold text-slate-900 tracking-tight mb-4 flex items-center gap-3">
+<span class="text-sm font-mono text-slate-400">01.</span> 
+                            A Assimetria como Princípio
+                        </h3>
+<p>
+                            Interfaces rígidas criam mentes rígidas. Nosso novo sistema de grid utiliza a assimetria para guiar o olhar editorialmente, priorizando blocos de pensamento sobre listas de tarefas. A beleza reside no espaço entre as palavras.
+                        </p>
+</div>
+<div class="relative pl-10 my-16">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-blue-600"></div>
+<p class="text-3xl font-light text-slate-900 leading-snug tracking-tight">
+                            "O arquivo não é um depósito; é um organismo que respira, cresce e esquece o que não é mais vital."
+                        </p>
+</div>
+<p>
+                        Para implementar isso, utilizaremos camadas de profundidade tonal em vez de bordas. O conteúdo deve parecer flutuar sobre o canvas, permitindo que o usuário se concentre na síntese criativa sem distrações estruturais.
+                    </p>
+<div class="group relative aspect-[16/10] w-full rounded-2xl bg-slate-100 overflow-hidden my-16 border border-slate-200">
+<img alt="Workspace aesthetic" class="w-full h-full object-cover grayscale transition-all duration-700 group-hover:grayscale-0" data-alt="Minimalist desk setup with an open journal, a premium pen, and a single branch in a glass vase, warm soft lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3zM8gT_5DrqNOjiZ0zDRvE-poJs452Qu2dHQ5ONZJyu0x8Tunc12VFYrOWDLGO_0hgbLxGmssHa0fi_kdKWKhRmpuY054CzXeBop3Yb5WxTNuDRTlESbGxQmm445hxm35cHDDW7yk7_MJ4aIiM0frO4HS7XWwALiS4cnfIgK9fF4ekd96szloXAfie6S-mtO7ir7QzpCB9RsDWt7II3GMPFUSe1okiR12hR8qwHA_ux2Q0oXWfXyagW7XRL-e1ymUl_4vjBWEtIQ"/>
+<div class="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/10 transition-colors"></div>
+</div>
+<div class="py-4">
+<h3 class="text-2xl font-bold text-slate-900 tracking-tight mb-4 flex items-center gap-3">
+<span class="text-sm font-mono text-slate-400">02.</span> 
+                            Integração com a Consciência Artificial
+                        </h3>
+<p>
+                            O console de IA não deve agir como um assistente externo, mas como uma extensão da memória de trabalho. Ele deve sussurrar conexões latentes no rodapé do documento, nunca interrompendo o fluxo da escrita.
+                        </p>
+</div>
+</div>
+</article>
+</div>
+<!-- Precise Sidecar Info Panel -->
+<aside class="w-72 space-y-10 shrink-0">
+<!-- Modular Info Section -->
+<section class="space-y-6">
+<div class="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-slate-400">
+<span class="w-4 h-[1px] bg-slate-300"></span>
+                    Meta
+                </div>
+<div class="space-y-3">
+<div class="p-3 bg-slate-50 rounded-lg border border-slate-100 flex flex-col gap-1">
+<span class="text-[10px] text-slate-400 font-semibold uppercase">Created</span>
+<span class="text-sm font-medium text-slate-900">Jan 12, 2026</span>
+</div>
+<div class="p-3 bg-slate-50 rounded-lg border border-slate-100 flex flex-col gap-1">
+<span class="text-[10px] text-slate-400 font-semibold uppercase">Revision</span>
+<span class="text-sm font-medium text-slate-900">v2.4 (4h ago)</span>
+</div>
+</div>
+<div>
+<span class="text-[10px] text-slate-400 font-bold uppercase tracking-widest block mb-3">Associations</span>
+<div class="flex flex-wrap gap-1.5">
+<span class="px-2 py-1 bg-blue-50 text-blue-600 rounded text-[10px] font-bold uppercase">#Strategy</span>
+<span class="px-2 py-1 bg-slate-100 text-slate-600 rounded text-[10px] font-bold uppercase">#AI_Ethics</span>
+<span class="px-2 py-1 bg-slate-100 text-slate-600 rounded text-[10px] font-bold uppercase">#System</span>
+</div>
+</div>
+</section>
+<!-- Sidecar Module -->
+<section class="p-5 bg-slate-900 rounded-2xl text-white relative overflow-hidden shadow-xl">
+<div class="relative z-10">
+<h4 class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-[14px] text-blue-400" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+                        Analysis
+                    </h4>
+<textarea class="w-full bg-transparent border-none focus:ring-0 text-sm font-medium leading-relaxed text-slate-300 resize-none h-44 p-0 placeholder:text-slate-600" placeholder="Notes here...">As referências ao minimalismo arquitetônico de 2024 devem ser cruzadas com o manifesto da computação calma. A IA sugere adicionar um capítulo sobre "A Estética do Silêncio".</textarea>
+<div class="mt-4 pt-4 border-t border-slate-800 flex justify-between items-center">
+<span class="text-[9px] font-bold uppercase text-slate-500 tracking-tighter">Sync Active</span>
+<button class="text-blue-400 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[18px]">push_pin</span>
+</button>
+</div>
+</div>
+<div class="absolute -right-4 -bottom-4 w-24 h-24 bg-blue-600/10 rounded-full blur-2xl"></div>
+</section>
+<!-- Precise Visual -->
+<div class="rounded-xl overflow-hidden border border-slate-100">
+<img alt="Abstract texture" class="w-full aspect-square object-cover grayscale opacity-50" data-alt="Abstract macro shot of architectural concrete and shadows creating geometric lines and depth" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCWs12M6RMo-xoov3Ek-8OFalK-wE9g3mDKjeU28Vp5zguy2it4hrzRpPLFD-vJj_nhoLE5CakN2jQopJekvD1vjMw1YS5TZqIc4rMQhBQIxIk6PI7EFLffc5FIWX1YaW8AnUEZGBiFUZ1J0Nu572kFwGshFtM6RuRDH0eh7KAa8R-eYvJ_kPDdO5xyhg1gvBTP5aHGmLZROFsPSGbJ44Z07BQlTtrgCohzkyV6NZcqVCM3loCUrrDW2_riOP4EWdSV2oxLef0-EDs"/>
+</div>
+</aside>
+</div>
+</main>
+<!-- Floating Action -->
+<div class="fixed bottom-8 right-8 z-50">
+<button class="w-14 h-14 rounded-2xl bg-blue-600 text-white shadow-2xl flex items-center justify-center hover:bg-blue-700 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[28px]">edit_note</span>
+</button>
+</div>
+</body></html>

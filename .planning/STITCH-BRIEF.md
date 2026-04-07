@@ -714,13 +714,11 @@ Se o Stitch representar isso, deve deixar visualmente clara a diferença.
 
 ### O output desejado
 
-- React
-- Tailwind CSS
-- TypeScript
+- HTML
+- imagem de screenshot/export visual
 - componentes organizados por superfície ou estado
 - dados mockados, sem lógica de negócio real
 - handlers simulados ou vazios quando necessário
-- JSX com classes Tailwind, não CSS modules
 - sem dependência de backend real
 - sem integração real com filesystem
 - sem autenticação real
@@ -728,8 +726,8 @@ Se o Stitch representar isso, deve deixar visualmente clara a diferença.
 O Stitch deve gerar material utilizável como referência visual e estrutural.
 
 Isso significa, idealmente:
-- componentes ou telas em `.tsx`
-- props tipadas ou facilmente tipáveis
+- arquivos `html` legíveis o suficiente para servir como referência estrutural
+- screenshots ou imagens exportadas para capturar composição e atmosfera visual
 - boa separação visual entre superfícies
 - markup legível o suficiente para ser usado como referência na implementação real
 

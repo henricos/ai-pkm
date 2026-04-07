@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-container-lowest": "#ffffff",
+                        "primary-fixed": "#d4e4fa",
+                        "inverse-primary": "#d7e7fd",
+                        "on-primary-fixed": "#324152",
+                        "inverse-surface": "#0e0e0e",
+                        "surface-variant": "#e4e2e2",
+                        "on-tertiary-container": "#4d4e68",
+                        "surface": "#f8fafc",
+                        "secondary-container": "#d3e4fe",
+                        "on-tertiary": "#fbf8ff",
+                        "outline": "#94a3b8",
+                        "inverse-on-surface": "#9e9c9c",
+                        "on-secondary-fixed-variant": "#4d5d73",
+                        "surface-container-low": "#f1f5f9",
+                        "error-container": "#fe8983",
+                        "surface-container-high": "#e2e8f0",
+                        "secondary-fixed": "#d3e4fe",
+                        "surface-tint": "#2563eb",
+                        "on-secondary-container": "#435368",
+                        "tertiary-fixed-dim": "#cfcfef",
+                        "secondary": "#475569",
+                        "surface-container": "#f1f5f9",
+                        "surface-dim": "#cbd5e1",
+                        "outline-variant": "#e2e8f0",
+                        "error": "#ef4444",
+                        "on-primary": "#ffffff",
+                        "on-secondary-fixed": "#314055",
+                        "on-surface": "#0f172a",
+                        "background": "#f8fafc",
+                        "tertiary-dim": "#50516c",
+                        "primary-dim": "#1e40af",
+                        "on-tertiary-fixed-variant": "#565873",
+                        "on-primary-fixed-variant": "#1e3a8a",
+                        "surface-container-highest": "#e2e8f0",
+                        "on-background": "#0f172a",
+                        "on-secondary": "#ffffff",
+                        "primary": "#2563eb",
+                        "tertiary-fixed": "#ddddfe",
+                        "secondary-dim": "#334155",
+                        "tertiary": "#5c5d78",
+                        "primary-container": "#dbeafe",
+                        "on-primary-container": "#1e40af",
+                        "error-dim": "#7f1d1d",
+                        "surface-bright": "#f8fafc",
+                        "tertiary-container": "#e0e7ff",
+                        "on-error": "#ffffff",
+                        "on-error-container": "#7f1d1d",
+                        "secondary-fixed-dim": "#c5d6f0",
+                        "primary-fixed-dim": "#bfdbfe",
+                        "on-tertiary-fixed": "#3a3b55",
+                        "on-surface-variant": "#64748b"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    fontFamily: {
+                        "headline": ["Inter", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["Inter", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #f8fafc;
+            color: #0f172a;
+            font-family: 'Inter', sans-serif;
+        }
+        .editorial-shadow {
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .tree-line::before {
+            content: '';
+            position: absolute;
+            left: 23px;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background-color: #e2e8f0;
+        }
+        .dark .tree-line::before {
+            background-color: #1e293b;
+        }
+    </style>
+</head>
+<body class="font-body selection:bg-primary-container selection:text-on-primary-container">
+<!-- SideNavBar Component -->
+<aside class="fixed left-0 top-0 h-full flex flex-col py-6 px-4 z-40 bg-slate-50 dark:bg-slate-900 w-64 border-r border-slate-200 dark:border-slate-800">
+<div class="px-2">
+<div class="flex items-center gap-3 mb-8">
+<div class="w-10 h-10 rounded-full overflow-hidden border border-slate-200 dark:border-slate-700">
+<img alt="User Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_qyQ3X7k26GUqsGLtNnCq4pk0KfEwIRWSKtIi5n-_s6NNXiW7Ct-gWpwiBkju7WtuHRv9MEzdsxu_Rh5haZVZDdZ2FI-QSTVCf6qHzf2qx8xKcUCmS-b4e4sr4_ecwvqn0C8kDMc2LsBvV9N1ARxIXXQzocv3K5WHV94KNIWuha8Hh2yN23TohNKAHi1hBs0mNjbzNNomE2apy9cs4GEKvZMwcJMOWp2m9y_Dx_PjkFrezG9TeKLnF9SDkusSd4G8B1cFmEovf38"/>
+</div>
+<div>
+<h1 class="text-lg font-semibold text-slate-900 dark:text-slate-100 leading-tight">ai-pkm</h1>
+<p class="text-[10px] uppercase tracking-wider text-slate-500 font-bold">Digital Curator</p>
+</div>
+</div>
+<button class="w-full flex items-center justify-center gap-2 bg-blue-600 dark:bg-blue-500 text-white py-2.5 px-4 rounded-lg font-sans text-sm font-medium mb-8 hover:opacity-90 active:opacity-80 transition-all duration-150">
+<span class="material-symbols-outlined text-sm">add</span>
+            New Entry
+        </button>
+<nav class="space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-slate-800/80 transition-colors font-sans text-sm font-medium tracking-tight" href="#">
+<span class="material-symbols-outlined text-[18px]">inbox</span>
+                Inbox
+            </a>
+<!-- Hierarchical Tree -->
+<div class="mt-4">
+<div class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-900 dark:text-slate-100 font-semibold font-sans text-sm tracking-tight">
+<span class="material-symbols-outlined text-[18px] text-slate-400">expand_more</span>
+<span class="material-symbols-outlined text-[18px]">folder_open</span>
+                    Topics
+                </div>
+<div class="relative tree-line ml-1">
+<!-- Subtopic Level -->
+<div class="ml-8 space-y-1 mt-1">
+<div class="flex items-center gap-3 px-3 py-1.5 rounded-lg text-slate-500 dark:text-slate-400 font-sans text-sm font-medium tracking-tight">
+<span class="material-symbols-outlined text-[18px] text-slate-300">expand_more</span>
+<span class="material-symbols-outlined text-[18px]">account_tree</span>
+                            Subtopics
+                        </div>
+<!-- Group Level -->
+<div class="ml-8 space-y-1">
+<div class="flex items-center gap-3 px-3 py-1.5 rounded-lg text-slate-500 dark:text-slate-400 font-sans text-sm font-medium tracking-tight">
+<span class="material-symbols-outlined text-[18px] text-slate-300">expand_more</span>
+<span class="material-symbols-outlined text-[18px]">schema</span>
+                                Groups
+                            </div>
+<!-- File Level (Active) -->
+<div class="ml-8 space-y-1">
+<a class="flex items-center gap-3 px-3 py-1.5 rounded-lg text-blue-700 dark:text-blue-300 bg-white dark:bg-slate-800 font-semibold font-sans text-sm tracking-tight border-l-2 border-blue-600 shadow-sm" href="#">
+<span class="material-symbols-outlined text-[18px]">description</span>
+                                    Arquitetura...
+                                </a>
+<a class="flex items-center gap-3 px-3 py-1.5 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-slate-800/80 transition-colors font-sans text-sm font-medium tracking-tight" href="#">
+<span class="material-symbols-outlined text-[18px]">description</span>
+                                    Nodes.pdf
+                                </a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</div>
+<div class="mt-auto px-2">
+<nav class="space-y-1">
+<a class="flex items-center gap-3 px-4 py-2 text-slate-500 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-slate-800/80 transition-colors font-sans text-sm font-medium tracking-tight" href="#">
+<span class="material-symbols-outlined text-[20px]">search</span>
+                Search
+            </a>
+<a class="flex items-center gap-3 px-4 py-2 text-slate-500 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-slate-800/80 transition-colors font-sans text-sm font-medium tracking-tight" href="#">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+                Settings
+            </a>
+<a class="flex items-center gap-3 px-4 py-2 text-slate-500 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-slate-800/80 transition-colors font-sans text-sm font-medium tracking-tight" href="#">
+<span class="material-symbols-outlined text-[20px]">memory</span>
+                AI Console
+            </a>
+</nav>
+</div>
+</aside>
+<!-- Main Workspace -->
+<main class="ml-64 flex flex-col h-screen overflow-hidden">
+<!-- TopNavBar Component -->
+<header class="fixed top-0 right-0 left-64 h-16 flex items-center justify-between px-8 z-40 bg-white/70 dark:bg-slate-950/70 backdrop-blur-md">
+<h2 class="text-xl font-bold tracking-tighter text-slate-900 dark:text-slate-50 font-sans">Arquitetura do Sistema.png</h2>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-4 text-sm font-sans font-medium text-slate-500">
+<button class="hover:text-slate-900 dark:hover:text-slate-100 transition-colors flex items-center gap-1.5 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-lg">present_to_all</span>
+                    Presentation
+                </button>
+<button class="hover:text-slate-900 dark:hover:text-slate-100 transition-colors flex items-center gap-1.5 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-lg">download</span>
+                    Download
+                </button>
+</div>
+<div class="flex items-center gap-4 text-slate-500">
+<span class="material-symbols-outlined cursor-pointer hover:text-slate-900 dark:hover:text-slate-100 transition-colors active:scale-95 transition-transform">info</span>
+<span class="material-symbols-outlined cursor-pointer hover:text-slate-900 dark:hover:text-slate-100 transition-colors active:scale-95 transition-transform">more_vert</span>
+</div>
+</div>
+</header>
+<div class="flex-1 flex overflow-hidden px-8 pb-8 pt-20 gap-8">
+<!-- Content Area: Image Viewer (Dark Mode Background for Focus) -->
+<div class="flex-1 flex flex-col min-w-0">
+<div class="flex-1 bg-[#0f172a] rounded-xl relative overflow-hidden flex items-center justify-center shadow-2xl">
+<!-- Subtle Tech Grid -->
+<div class="absolute inset-0 opacity-[0.03] pointer-events-none" style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 32px 32px;"></div>
+<img alt="clean minimal technical architectural diagram" class="max-w-[90%] max-h-[85%] object-contain relative z-10" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBkGDIZUmkM-evbnKyy71e8QBWK9YKL2nF0bO7jVE4vNhz0Hg9PYm706ZRN9ujosEQmL9Dxj6HTIKMf7cpdN83Y3z8EwLTh6khF4OxdovpawMhFRjLB1XAGf7FyUf0uPkSK9Va6gmqMTcwz4tQQ10bUy2ZdPra63T8pWnb2_VMNcv8w3Y_7ytdvBKOBVROtIOyk9brmgUJ1NrtwgYa8DtS2FcFpWDt7VH-srpGnF3z9XMLGiYlgijHIGsIWmcqh9FxylMReG5UFDd8"/>
+<!-- Zoom/UI Controls -->
+<div class="absolute bottom-6 left-1/2 -translate-x-1/2 bg-slate-800/80 backdrop-blur-md px-3 py-1.5 rounded-full flex items-center gap-2 border border-slate-700 shadow-xl">
+<button class="text-slate-400 hover:text-white p-1 rounded-full hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-xl">zoom_out</span>
+</button>
+<span class="font-sans text-[11px] font-bold text-slate-300 border-x border-slate-700 px-4">100%</span>
+<button class="text-slate-400 hover:text-white p-1 rounded-full hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-xl">zoom_in</span>
+</button>
+<div class="w-px h-4 bg-slate-700 mx-1"></div>
+<button class="text-slate-400 hover:text-white p-1 rounded-full hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-xl">fullscreen</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Sidecar Panel: Precise & Tech-inspired -->
+<aside class="w-80 flex flex-col no-scrollbar overflow-y-auto bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6">
+<div class="mb-8">
+<div class="flex items-center gap-2 mb-3">
+<span class="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse"></span>
+<h3 class="font-sans text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">Context Analysis</h3>
+</div>
+<p class="font-sans text-[15px] font-medium leading-relaxed text-slate-800 dark:text-slate-200 mb-6">
+                    Infrastructure map for the <span class="text-blue-600 font-bold">Living Archive</span> core compute layer.
+                </p>
+</div>
+<div class="space-y-8">
+<!-- Technical Specs -->
+<section>
+<h4 class="font-sans text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-4 flex items-center justify-between">
+<span>System Specs</span>
+<span class="material-symbols-outlined text-xs">analytics</span>
+</h4>
+<ul class="space-y-5">
+<li class="group">
+<span class="block text-xs font-bold text-slate-900 dark:text-slate-100 mb-1">Ingestion Layer</span>
+<p class="text-xs text-slate-500 leading-relaxed">Asynchronous nodes with vector embedding protocols for conceptual indexing.</p>
+</li>
+<li class="group">
+<span class="block text-xs font-bold text-slate-900 dark:text-slate-100 mb-1">Semantic Mesh</span>
+<p class="text-xs text-slate-500 leading-relaxed">Centralized neural graph cluster for autonomous metadata linkage.</p>
+</li>
+<li class="group">
+<span class="block text-xs font-bold text-slate-900 dark:text-slate-100 mb-1">Archival Bridge</span>
+<p class="text-xs text-slate-500 leading-relaxed">Cold storage tier for long-term historical retrieval optimization.</p>
+</li>
+</ul>
+</section>
+<!-- Metadata Grid -->
+<section class="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-lg border border-slate-100 dark:border-slate-800">
+<div class="grid grid-cols-2 gap-y-4 font-sans text-[10px]">
+<div>
+<span class="block text-slate-400 font-bold uppercase tracking-tighter mb-1">Dimensions</span>
+<span class="text-slate-700 dark:text-slate-300 font-medium">3840 × 2160 px</span>
+</div>
+<div>
+<span class="block text-slate-400 font-bold uppercase tracking-tighter mb-1">Format</span>
+<span class="text-slate-700 dark:text-slate-300 font-medium">PNG (Lossless)</span>
+</div>
+<div>
+<span class="block text-slate-400 font-bold uppercase tracking-tighter mb-1">Indexed</span>
+<span class="text-slate-700 dark:text-slate-300 font-medium">Oct 24, 2023</span>
+</div>
+<div>
+<span class="block text-slate-400 font-bold uppercase tracking-tighter mb-1">Trust Score</span>
+<span class="text-blue-600 dark:text-blue-400 font-bold">98.4%</span>
+</div>
+</div>
+</section>
+<!-- Concept Tags -->
+<section>
+<h4 class="font-sans text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-3">Linked Concepts</h4>
+<div class="flex flex-wrap gap-1.5">
+<span class="px-2 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 text-[10px] font-bold rounded hover:border-blue-500 hover:text-blue-600 transition-all cursor-pointer">INFRASTRUCTURE</span>
+<span class="px-2 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 text-[10px] font-bold rounded hover:border-blue-500 hover:text-blue-600 transition-all cursor-pointer">CLOUD_NET</span>
+<span class="px-2 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 text-[10px] font-bold rounded hover:border-blue-500 hover:text-blue-600 transition-all cursor-pointer">AI_NODE</span>
+<span class="px-2 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 text-[10px] font-bold rounded hover:border-blue-500 hover:text-blue-600 transition-all cursor-pointer">ARCH_SYS</span>
+</div>
+</section>
+</div>
+<!-- Footer Action -->
+<div class="mt-auto pt-6 border-t border-slate-100 dark:border-slate-800">
+<button class="w-full text-left font-sans text-[11px] font-bold flex items-center justify-between text-slate-500 hover:text-blue-600 transition-colors uppercase tracking-widest">
+<span>Source Document</span>
+<span class="material-symbols-outlined text-base">arrow_forward_ios</span>
+</button>
+</div>
+</aside>
+</div>
+</main>
+</body></html>

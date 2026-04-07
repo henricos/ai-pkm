@@ -36,7 +36,7 @@ Autenticação single-user + modelo canônico read-only sobre o `pkm` montado ex
 
 ### Workflow Stitch 2 + DESIGN.md (pré-implementação)
 - **D-12:** `DESIGN.md` existe na raiz do projeto (gerado no Stitch a partir de `.planning/STITCH-BRIEF.md`, commitado antes da Fase 1) — âncora de estilo para todas as fases
-- **D-13:** Telas de referência do Stitch existem em `reference/ui/screens/` — o agente usa como base de layout, não como código final; a pasta desta fase é `reference/ui/screens/01-login/`
+- **D-13:** Referências visuais do Stitch existem em `reference/ui/screens/` — o agente usa como base de layout, não como código final
 - **D-14:** Regras de uso do Stitch output estão em `AGENTS.md` §Referência de UI: preservar intenção de layout, componentizar, adaptar tokens para shadcn/ui + `tailwind.config`, integrar com lógica real; nunca copiar export bruto para `src/`
 
 ### Claude's Discretion
@@ -69,7 +69,7 @@ Autenticação single-user + modelo canônico read-only sobre o `pkm` montado ex
 
 ### Design (gerado antes da Fase 1)
 - `DESIGN.md` — âncora de estilo gerado pelo Stitch 2 (deve existir na raiz antes de iniciar o plano)
-- `reference/ui/screens/01-login/` — export React/Tailwind da tela de login gerado no Stitch (usar como referência de layout)
+- `reference/ui/screens/` — referências visuais do Stitch em `html` e imagem, usadas como inspiração de layout
 
 </canonical_refs>
 
@@ -96,7 +96,7 @@ Autenticação single-user + modelo canônico read-only sobre o `pkm` montado ex
 <specifics>
 ## Specific Ideas
 
-- **Workflow Stitch → importar fontes**: usuário usa `.planning/STITCH-BRIEF.md` como prompt no Stitch 2, exporta React/Tailwind components para `reference/ui/screens/01-login/` e DESIGN.md para a raiz, e o Claude Code adapta/valida contra a spec seguindo as regras em `AGENTS.md §Referência de UI`
+- **Workflow Stitch → importar fontes**: usuário usa `.planning/STITCH-BRIEF.md` como prompt no Stitch 2, exporta referências em `html` e imagem para `reference/ui/screens/` e `DESIGN.md` para a raiz, e o Claude Code adapta/valida contra a spec seguindo as regras em `AGENTS.md §Referência de UI`
 - **DESIGN.md como âncora**: padrão lançado pelo Google Stitch com 9 seções (cores, tipografia, componentes, layout, elevação, responsive, do's/don'ts, agent prompt guide), versionado em Git, lido nativamente por Claude Code
 - **ItemRepository contract**: `listTopics(): Topic[]`, `listGroups(topic: string): Group[]`, `getItem(id: string): Item`, `searchByName(q: string): Item[]` — permite trocar implementação na v3 sem alterar navegação, viewer e busca
 
