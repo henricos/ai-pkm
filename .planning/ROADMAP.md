@@ -29,7 +29,14 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. A aplicacao inicia com credenciais e path do `pkm` vindos de configuracao externa, sem depender de conteudo embutido no repositorio.
   3. Navegacao, viewer e futuras seams de busca passam a consumir o mesmo item logico read-only, com identidade estavel para o mesmo conteudo.
   4. Existe um fluxo documentado e reproduzivel para subir a aplicacao localmente apontando para um `pkm` montado por path/volume.
-**Plans**: TBD
+**Plans**: 4 plans
+
+Plans:
+- [ ] 01-01-PLAN.md — Bootstrap Next.js 16 + design system @theme tokens + scaffolding Vitest
+- [ ] 01-02-PLAN.md — Autenticacao NextAuth v5 + middleware universal + tela de login Stitch→shadcn
+- [ ] 01-03-PLAN.md — ItemRepository interface + FsItemRepository filesystem + path traversal security
+- [ ] 01-04-PLAN.md — Documentacao de setup local + home autenticada + checkpoint visual
+
 **UI hint**: yes
 
 ### Phase 2: Navigation Shell
@@ -91,7 +98,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Secure Read Model Foundation | 0/TBD | Not started | - |
+| 1. Secure Read Model Foundation | 0/4 | Not started | - |
 | 2. Navigation Shell | 0/TBD | Not started | - |
 | 3. Reading Viewer | 0/TBD | Not started | - |
 | 4. Asset Viewer and Item Context | 0/TBD | Not started | - |
