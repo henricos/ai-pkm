@@ -241,3 +241,48 @@ describe("decode → namespace round-trip", () => {
     expect(decoded).toBe(originalId);
   });
 });
+
+// ── NAV-04: Item ativo destacado corretamente (T-02-10) ───────────────────────
+
+describe("AppShell — item ativo (NAV-04)", () => {
+  test("item da inbox com href correspondente recebe aria-current=page", () => {
+    const inboxItemHref = snapshotComInbox.inbox[0]!.href; // "/inbox/nota-importante.md"
+
+    render(
+      <AppShell snapshot={snapshotComInbox} activeHref={inboxItemHref}>
+        <div>workspace</div>
+      </AppShell>
+    );
+
+    // O link que representa o item ativo deve ter aria-current="page"
+    const activeLink = document.querySelector(`a[href="${inboxItemHref}"]`);
+    expect(activeLink).not.toBeNull();
+    expect(activeLink?.getAttribute("aria-current")).toBe("page");
+  });
+
+  test("item da biblioteca com href correspondente recebe aria-current=page", () => {
+    const libraryItemHref = snapshotComInbox.tree[0]!.items[0]!.href; // "/library/tecnologia/ferramenta.md"
+
+    render(
+      <AppShell snapshot={snapshotComInbox} activeHref={libraryItemHref}>
+        <div>workspace</div>
+      </AppShell>
+    );
+
+    // O ancestral "tecnologia" deve ser auto-expandido, tornando o item visível
+    const activeLink = document.querySelector(`a[href="${libraryItemHref}"]`);
+    expect(activeLink).not.toBeNull();
+    expect(activeLink?.getAttribute("aria-current")).toBe("page");
+  });
+
+  test("nenhum item recebe aria-current=page quando activeHref não corresponde a nenhum item", () => {
+    render(
+      <AppShell snapshot={snapshotComInbox} activeHref="/inbox/inexistente.md">
+        <div>workspace</div>
+      </AppShell>
+    );
+
+    const activeLinks = document.querySelectorAll("a[aria-current='page']");
+    expect(activeLinks.length).toBe(0);
+  });
+});
