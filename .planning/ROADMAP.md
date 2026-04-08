@@ -34,7 +34,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 Plans:
 - [x] 01-01-PLAN.md — Bootstrap Next.js 16 + design system @theme tokens + scaffolding Vitest
 - [x] 01-02-PLAN.md — Autenticacao NextAuth v5 + middleware universal + tela de login Stitch→shadcn
-- [ ] 01-03-PLAN.md — ItemRepository interface + FsItemRepository filesystem + path traversal security
+- [x] 01-03-PLAN.md — ItemRepository interface + FsItemRepository filesystem + path traversal security
 - [ ] 01-04-PLAN.md — Documentacao de setup local + home autenticada + checkpoint visual
 
 **UI hint**: yes
