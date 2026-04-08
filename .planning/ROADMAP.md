@@ -12,7 +12,7 @@ O caminho da `v2` e transformar o PKM ja validado em CLI numa experiencia web se
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Secure Read Model Foundation** - Autenticacao single-user, runtime externo e modelo canonico read-only sobre o `pkm`.
+- [x] **Phase 1: Secure Read Model Foundation** - Autenticacao single-user, runtime externo e modelo canonico read-only sobre o `pkm`.
 - [ ] **Phase 2: Navigation Shell** - Shell persistente com arvore, inbox separada, filtro estrutural e URLs navegaveis.
 - [ ] **Phase 3: Reading Viewer** - Viewer principal de Markdown com cabecalho contextual e composicao de leitura confiavel.
 - [ ] **Phase 4: Asset Viewer and Item Context** - Tratamento de imagem, PDF, sidecars e fallbacks no mesmo item logico.
@@ -98,7 +98,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Secure Read Model Foundation | 0/4 | Not started | - |
+| 1. Secure Read Model Foundation | 4/4 | Completed | 2026-04-08 |
 | 2. Navigation Shell | 0/TBD | Not started | - |
 | 3. Reading Viewer | 0/TBD | Not started | - |
 | 4. Asset Viewer and Item Context | 0/TBD | Not started | - |

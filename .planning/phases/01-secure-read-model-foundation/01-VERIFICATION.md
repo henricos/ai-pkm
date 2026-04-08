@@ -1,34 +1,18 @@
 ---
 phase: 01-secure-read-model-foundation
-verified: 2026-04-08T07:45:00Z
-status: gaps_found
-score: 3/4 must-haves verified
-gaps:
-  - truth: "npm run test passa (todos os testes)"
-    status: failed
-    reason: "1 de 11 testes falha — env.test.ts 'RUN-01: lança ZodError com mensagem clara quando PKM_PATH está ausente'. O teste espera que import('../lib/env') rejeite com erro contendo 'PKM_PATH é obrigatório', mas env.ts chama process.exit(1) em vez de lançar exceção. O framework de testes captura '[Error: process.exit unexpectedly called with \"1\"]' em vez da mensagem esperada."
-    artifacts:
-      - path: "src/lib/env.ts"
-        issue: "parseEnv() chama process.exit(1) quando vars estão ausentes em vez de lançar ZodError — comportamento correto para produção, mas incompatível com o teste que usa dynamic import para verificar a mensagem de erro"
-      - path: "src/__tests__/env.test.ts"
-        issue: "Teste usa 'await import(\"../lib/env\")' e espera rejeição com mensagem de ZodError, mas recebe 'Error: process.exit unexpectedly called with \"1\"' — teste e implementação têm expectativas incompatíveis"
-    missing:
-      - "Alinhar env.test.ts para verificar o stderr output de process.exit(1) em vez de esperar rejeição por ZodError, OU refatorar env.ts para lançar ZodError e capturar na borda de startup (ex: em layout.tsx ou start script)"
-human_verification:
-  - test: "Verificar autenticação end-to-end no browser"
-    expected: "Acesso a / sem sessão redireciona para /login; credenciais corretas → home com tópicos; cookie httpOnly=true no DevTools"
-    why_human: "Comportamento real do middleware (proxy.ts), redirect e cookie httpOnly só podem ser confirmados no runtime do navegador com Next.js rodando"
-  - test: "Verificar visual da tela de login vs referência Stitch"
-    expected: "Card centralizado, campos username/password, botão 'Sign In' em azul suave, sem rounded-xl, cores do DESIGN.md"
-    why_human: "Fidelidade visual ao Stitch (code.html) só pode ser avaliada por humano"
+verified: 2026-04-08T20:20:00Z
+status: verified_complete
+score: 4/4 must-haves verified
+gaps: []
+human_verification: []
 ---
 
 # Phase 1: Secure Read Model Foundation — Relatório de Verificação
 
 **Objetivo da Fase:** Usuario consegue abrir a aplicacao com login protegido e a web passa a ler o `pkm` montado externamente por um modelo canonico read-only, sem romper o fluxo file-first.
-**Verificado:** 2026-04-08T07:45:00Z
-**Status:** gaps_found
-**Re-verificação:** Não — verificação inicial
+**Verificado:** 2026-04-08T20:20:00Z
+**Status:** verified_complete
+**Re-verificação:** Sim — revalidação local e confirmação humana no navegador
 
 ---
 
@@ -45,18 +29,22 @@ human_verification:
 
 **Score Verdades:** 4/4 verificadas
 
-### Nota sobre `npm run test`
+### Revalidação automatizada
 
-Apesar das 4 verdades de alto nível estarem verificadas, **1 de 11 testes falha**:
+Na revalidação local de 2026-04-08:
 
+```text
+✓ src/__tests__/auth.test.ts (3 tests)
+✓ src/__tests__/env.test.ts (2 tests)
+✓ src/__tests__/item-repository.test.ts (6 tests)
+Tests 11 passed (11)
 ```
-FAIL src/__tests__/env.test.ts > env validation > RUN-01: lança ZodError com mensagem clara quando PKM_PATH está ausente
-Error: expect(received).toSatisfy()
-Expected value to satisfy: [Function anonymous]
-Received: [Error: process.exit unexpectedly called with "1"]
-```
 
-O teste expects que `import('../lib/env')` rejeite com um erro contendo "PKM_PATH é obrigatório". Porém `env.ts` usa `process.exit(1)` (comportamento fail-fast adequado para produção), que o Vitest intercepta como `process.exit unexpectedly called` — não uma rejeição de Promise com a mensagem esperada. O plano PLAN-02 listava `npm run test passa` como critério de sucesso, portanto este é um gap a fechar.
+Além disso:
+
+- `npm run typecheck` passou sem erros
+- `npm run build` passou com `.env.local`
+- A fonte Inter foi migrada de `next/font/google` para `next/font/local`, com arquivos `.woff2` versionados em `src/app/fonts/`
 
 ---
 
@@ -77,6 +65,7 @@ O teste expects que `import('../lib/env')` rejeite com um erro contendo "PKM_PAT
 | `src/components/login-form.tsx` | Formulário de login shadcn/ui | ✓ VERIFICADO | `"use client"`; chama `signIn("credentials", { redirect: false })`; mensagem de erro genérica sem revelar campo; tokens DESIGN.md (sem `rounded-xl`, `text-slate-*`, `bg-blue-*`) |
 | `src/app/(auth)/login/page.tsx` | Página /login | ✓ VERIFICADO | Server Component; verifica sessão e redireciona se autenticado; layout com tokens DESIGN.md |
 | `src/app/page.tsx` | Home autenticada com smoke test do read model | ✓ VERIFICADO | Verifica sessão via `auth()` + redirect; instancia `FsItemRepository` e chama `listTopics()` — dados reais, não hardcoded |
+| `src/app/layout.tsx` + `src/app/fonts/` | Integração tipográfica self-hosted | ✓ VERIFICADO | `localFont()` injeta `--font-sans` no `<html>` usando arquivos locais `inter-latin-400/500/600/700-normal.woff2` versionados no projeto |
 | `src/lib/pkm/types.ts` | Tipos canônicos do domínio PKM | ✓ VERIFICADO | Exporta `Item`, `ItemType`, `ItemEstado`, `Topic`, `Subtopic`, `Group` |
 
 ---
@@ -109,9 +98,9 @@ O teste expects que `import('../lib/env')` rejeite com um erro contendo "PKM_PAT
 
 | Comportamento | Verificação | Resultado | Status |
 |---------------|-------------|-----------|--------|
-| `npm run build` passa | `npm run build 2>&1` | Compilação bem-sucedida; rota `ƒ Proxy (Middleware)` presente | ✓ PASS |
-| `npm run typecheck` passa | `npm run typecheck 2>&1` | Sem erros de tipo | ✓ PASS |
-| `npm run test` passa | `npm run test 2>&1` | 1 falha de 11 testes — env.test.ts RUN-01 | ✗ FAIL |
+| `npm run build` passa | `npm run build` | Compilação bem-sucedida com `.env.local` e Inter self-hosted via `next/font/local` | ✓ PASS |
+| `npm run typecheck` passa | `npm run typecheck` | Sem erros de tipo | ✓ PASS |
+| `npm run test` passa | `npm run test` | 11 de 11 testes verdes | ✓ PASS |
 | `FsItemRepository` implementa `ItemRepository` | typecheck + teste ARC-04 | `const repo: ItemRepository = new FsItemRepository()` compila sem erro | ✓ PASS |
 | Path traversal rejeitado | teste RUN-02 em item-repository.test.ts | `getItem("../../../etc/passwd")` lança `Error("Path traversal detectado")` | ✓ PASS |
 
@@ -138,39 +127,34 @@ O teste expects que `import('../lib/env')` rejeite com um erro contendo "PKM_PAT
 
 | Arquivo | Linha | Padrão | Severidade | Impacto |
 |---------|-------|--------|------------|---------|
-| `src/__tests__/env.test.ts` | 29 | Teste espera rejeição por ZodError mas implementação usa `process.exit(1)` | ⚠️ Aviso | Teste falha — `npm run test` retorna exit 1 |
 | `src/lib/pkm/fs-item-repository.ts` | 92 | `searchByName()` retorna `[]` sempre | ℹ️ Info | Stub intencional (ARC-04 seam); não bloqueia nenhum objetivo da Fase 1 |
+| `src/app/layout.tsx` | 1 | Dependência anterior de `next/font/google` exigia rede no build | ✓ Resolvido | Layout agora usa `next/font/local` com ativos versionados em `src/app/fonts/` |
 
 ---
 
 ## Verificação Humana Necessária
 
-### 1. Fluxo de Autenticação End-to-End
+Confirmada pelo operador em 2026-04-08:
 
-**Teste:** Configurar `.env.local` com 5 vars, rodar `npm run dev`, abrir http://localhost:3000
-**Esperado:** Redireciona automaticamente para `/login`; credenciais corretas → home com lista de tópicos; credenciais erradas → mensagem genérica "Credenciais inválidas"; cookie `next-auth.session-token` com `httpOnly=true` no DevTools
-**Por que humano:** Comportamento real do middleware `proxy.ts` em runtime, redirect de sessão e propriedades de cookie só podem ser confirmados no browser com Next.js rodando
-
-### 2. Verificação Visual da Tela de Login
-
-**Teste:** Abrir `/login` no browser e comparar com `reference/ui/screens/01-login/code.html`
-**Esperado:** Card centralizado (max-w-[400px]), campos username e password com labels uppercase, botão "Sign In" com gradiente azul, sem bordas com raio excessivo (`rounded-xl`), paleta de cores do DESIGN.md (tons neutros, azul discreto)
-**Por que humano:** Fidelidade visual ao Stitch só pode ser avaliada visualmente por humano
+- redirecionamento de `/` para `/login`
+- mensagem genérica com credencial inválida
+- login bem-sucedido e acesso à home autenticada
+- renderização visual aprovada no navegador
+- tipografia Inter self-hosted aprovada em runtime real
 
 ---
 
-## Resumo dos Gaps
+## Resumo do Estado
 
-**1 gap bloqueante: `npm run test` falha** — o teste `RUN-01: lança ZodError com mensagem clara quando PKM_PATH está ausente` em `src/__tests__/env.test.ts` falha porque há uma incompatibilidade entre a implementação e a expectativa do teste:
+A Fase 1 está concluída corretamente:
 
-- **Implementação (env.ts):** ao receber vars inválidas, chama `process.exit(1)` com mensagem de erro no stderr — comportamento correto para produção (fail-fast, o servidor não sobe)
-- **Teste (env.test.ts):** espera que `import('../lib/env')` rejeite a Promise com um `Error` contendo "PKM_PATH é obrigatório" — o Vitest intercepta `process.exit(1)` como `Error: process.exit unexpectedly called with "1"`
-
-**Solução recomendada:** Atualizar `env.test.ts` para mockar `process.exit` e verificar que foi chamado com `1` E que o stderr continha a mensagem de erro — sem alterar `env.ts` que tem o comportamento correto. Alternativamente, verificar o stderr capturado via `consoleSpy`. Não refatorar `env.ts` para lançar ZodError sem `process.exit` pois isso mudaria o comportamento de startup da aplicação.
-
-Os 2 itens de verificação humana (fluxo auth end-to-end e visual da tela de login) são para confirmação do comportamento em runtime — os artefatos correspondentes existem, são substanciais e estão conectados.
+- implementação completa
+- validação automatizada verde (`test`, `typecheck`, `build`)
+- autenticação validada em runtime
+- Inter distribuída junto da aplicação via `next/font/local`
+- verificação humana de login e visual concluída
 
 ---
 
-_Verificado: 2026-04-08T07:45:00Z_
+_Verificado: 2026-04-08T20:20:00Z_
 _Verificador: Claude (gsd-verifier)_

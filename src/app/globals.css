@@ -31,7 +31,7 @@
   --color-surface-container-high: #dee3e5;
 
   /* === Tipografia — Inter Grid Scale (DESIGN.md §3) === */
-  --font-sans: "Inter", sans-serif;
+  --font-sans: "Inter", "Segoe UI", Arial, sans-serif;
   /* Font sizes */
   --text-display-lg: 3.5rem;
   --text-headline-sm: 1.5rem;
