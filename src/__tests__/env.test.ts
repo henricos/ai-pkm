@@ -17,19 +17,24 @@ describe("env validation", () => {
     vi.resetModules();
   });
 
-  test("RUN-01: lança ZodError com mensagem clara quando PKM_PATH está ausente", async () => {
-    // Remover PKM_PATH do ambiente
+  test("RUN-01: chama process.exit(1) com mensagem clara quando PKM_PATH está ausente", async () => {
     delete process.env.PKM_PATH;
     process.env.AUTH_USERNAME = "testuser";
     process.env.AUTH_PASSWORD = "testpassword123";
-    process.env.NEXTAUTH_SECRET = "12345678901234567890123456789012"; // 32 chars
+    process.env.NEXTAUTH_SECRET = "12345678901234567890123456789012";
     process.env.NEXTAUTH_URL = "http://localhost:3000";
 
-    // Zod 4 serializa ZodError como JSON array — verificar que contém a mensagem do campo
-    await expect(import("../lib/env")).rejects.toSatisfy((err: unknown) => {
-      if (!(err instanceof Error)) return false;
-      return err.message.includes("PKM_PATH é obrigatório");
+    const exitSpy = vi.spyOn(process, "exit").mockImplementation(() => {
+      throw new Error("process.exit called");
     });
+    const errorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+
+    await expect(import("../lib/env")).rejects.toThrow("process.exit called");
+    expect(exitSpy).toHaveBeenCalledWith(1);
+    expect(errorSpy.mock.calls.join()).toContain("PKM_PATH");
+
+    exitSpy.mockRestore();
+    errorSpy.mockRestore();
   });
 
   test("RUN-01: parse bem-sucedido quando todas as 5 vars obrigatórias estão presentes", async () => {
