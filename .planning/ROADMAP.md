@@ -47,9 +47,14 @@ Plans:
   1. Usuario ve inbox destacada acima da arvore principal e consegue navegar topicos, subtopicos, grupos e arquivos sem trocar de pagina perceptivelmente.
   2. Painel esquerdo pode ser recolhido e reaberto sem perder o item aberto nem a sensacao de shell unica.
   3. O item selecionado fica destacado, com icones e indicadores visuais coerentes para tipo, status e contagens relevantes da estrutura.
-  4. Usuario consegue restringir a inbox e a arvore por nome com filtro tolerante a maiusculas/minusculas e acentos, claramente distinto de busca textual avancada.
+  4. Usuario consegue restringir a arvore principal por nome com filtro tolerante a maiusculas/minusculas e acentos, claramente distinto de busca textual avancada e sem afetar a inbox.
   5. Cada item aberto atualiza uma URL propria e navegavel, permitindo retorno direto ao mesmo contexto.
-**Plans**: TBD
+**Plans**: 3 plans
+
+Plans:
+- [ ] 02-01-PLAN.md — NavigationSnapshot + route helpers + contagens e ancestry da shell
+- [ ] 02-02-PLAN.md — Layout persistente `(shell)` + rotas `library`/`inbox` + estado vazio/editorial
+- [ ] 02-03-PLAN.md — Inbox lane + árvore interativa + filtro estrutural com highlight
 **UI hint**: yes
 
 ### Phase 3: Reading Viewer
@@ -99,7 +104,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Secure Read Model Foundation | 4/4 | Completed | 2026-04-08 |
-| 2. Navigation Shell | 0/TBD | Not started | - |
+| 2. Navigation Shell | 0/3 | Not started | - |
 | 3. Reading Viewer | 0/TBD | Not started | - |
 | 4. Asset Viewer and Item Context | 0/TBD | Not started | - |
 | 5. Presentation Mode | 0/TBD | Not started | - |

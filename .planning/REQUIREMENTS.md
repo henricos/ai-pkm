@@ -45,7 +45,7 @@ Requirements para a `v2`, focada em navegacao e exibicao web do acervo PKM. A `v
 
 ### Filtering
 
-- [ ] **FIL-01**: Topo da coluna esquerda oferece campo de filtro estrutural dedicado a restringir a arvore e a inbox por nome, sem buscar em conteudo.
+- [ ] **FIL-01**: Topo da coluna esquerda oferece campo de filtro estrutural dedicado a restringir a arvore principal por nome, sem buscar em conteudo nem afetar a inbox.
 - [ ] **FIL-02**: Filtro estrutural e tolerante a diferencas de maiusculas/minusculas e acentos.
 - [ ] **FIL-03**: Interface diferencia visualmente filtro estrutural de busca textual avancada, por exemplo com iconografia distinta.
 
