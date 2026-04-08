@@ -388,6 +388,41 @@ function projectTopic(
 // ─────────────────────────────────────────────
 
 /**
+ * Resolve um item canônico a partir do seu ID lógico (path relativo ao pkm).
+ *
+ * Utilizado pelas páginas de rota depois do decode dos params de URL.
+ * Garante que a resolução do item nunca seja ad hoc — passa sempre por este
+ * serviço canônico (T-02-06, T-02-07).
+ *
+ * Retorna null se o item não existir no snapshot ou não for acessível.
+ * Nenhum path absoluto é exposto no resultado.
+ */
+export async function getItemById(
+  itemId: string,
+): Promise<import("./navigation-types").NavigationItemRef | null> {
+  const snapshot = await getNavigationSnapshot();
+
+  // Buscar na inbox
+  const inboxItem = snapshot.inbox.find((e) => e.id === itemId);
+  if (inboxItem) return inboxItem;
+
+  // Buscar recursivamente na árvore
+  function searchTree(
+    nodes: import("./navigation-types").NavigationTreeNode[],
+  ): import("./navigation-types").NavigationItemRef | null {
+    for (const node of nodes) {
+      const found = node.items.find((item) => item.id === itemId);
+      if (found) return found;
+      const inChild = searchTree(node.children);
+      if (inChild) return inChild;
+    }
+    return null;
+  }
+
+  return searchTree(snapshot.tree);
+}
+
+/**
  * Gera o NavigationSnapshot completo para a shell.
  *
  * Esta função é server-side only. Nunca deve ser importada em Client Components.
