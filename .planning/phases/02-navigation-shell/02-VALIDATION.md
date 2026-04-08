@@ -1,10 +1,11 @@
 ---
 phase: 2
 slug: navigation-shell
-status: draft
+status: validated
 nyquist_compliant: true
-wave_0_complete: false
+wave_0_complete: true
 created: 2026-04-08
+audited: 2026-04-08
 ---
 
 # Phase 2 — Validation Strategy
@@ -38,17 +39,17 @@ created: 2026-04-08
 
 | Task ID | Plan | Wave | Requirement | Threat Ref | Secure Behavior | Test Type | Automated Command | File Exists | Status |
 |---------|------|------|-------------|------------|-----------------|-----------|-------------------|-------------|--------|
-| 2-01-01 | 01 | 1 | NAV-01 | T-02-01 | Snapshot separa inbox da árvore e calcula contagens corretamente | unit | `npm run test -- src/__tests__/navigation-service.test.ts` | ❌ W1 | ⬜ pending |
-| 2-01-02 | 01 | 1 | NAV-02 | T-02-03 | Inbox usa namespace distinto e fica fora da árvore estrutural | unit | `npm run test -- src/__tests__/navigation-service.test.ts` | ❌ W1 | ⬜ pending |
-| 2-01-03 | 01 | 1 | NAV-06 | T-02-01 | Agrupadores expõem `count` consistente | unit | `npm run test -- src/__tests__/navigation-service.test.ts` | ❌ W1 | ⬜ pending |
-| 2-01-04 | 01 | 1 | NAV-07 | T-02-01 | Estado visual é mantido separado do tipo do item | unit | `npm run test -- src/__tests__/navigation-service.test.ts` | ❌ W1 | ⬜ pending |
-| 2-01-05 | 01 | 1 | NAV-08 | T-02-02 | Hrefs canônicos e ancestry suportam reveal por URL | unit | `npm run test -- src/__tests__/navigation-service.test.ts` | ❌ W1 | ⬜ pending |
-| 2-02-01 | 02 | 2 | NAV-03 | T-02-05 | Shell persiste e rail recolhe/reabre sem perder o item | component | `npm run test -- src/__tests__/app-shell.test.tsx` | ❌ W2 | ⬜ pending |
-| 2-02-02 | 02 | 2 | NAV-04 | T-02-10 | Item ativo é derivado da URL e destacado corretamente | component | `npm run test -- src/__tests__/app-shell.test.tsx` | ❌ W2 | ⬜ pending |
-| 2-02-03 | 02 | 2 | NAV-08 | T-02-06 | Rotas `library` e `inbox` resolvem item por helper canônico seguro | component | `npm run test -- src/__tests__/app-shell.test.tsx` | ❌ W2 | ⬜ pending |
-| 2-03-01 | 03 | 3 | FIL-01 | T-02-12 | Filtro atua só na árvore principal e nunca toca a inbox | unit | `npm run test -- src/__tests__/filter-tree.test.ts` | ❌ W3 | ⬜ pending |
-| 2-03-02 | 03 | 3 | FIL-02 | T-02-09 | Filtro tolera caixa, acento e pequena variação sem virar busca agressiva | unit | `npm run test -- src/__tests__/filter-tree.test.ts` | ❌ W3 | ⬜ pending |
-| 2-03-03 | 03 | 3 | FIL-03 | T-02-12 | UI diferencia filtro estrutural de busca futura por rótulo e iconografia | component | `npm run test -- src/__tests__/filter-tree.test.ts` | ❌ W3 | ⬜ pending |
+| 2-01-01 | 01 | 1 | NAV-01 | T-02-01 | Snapshot separa inbox da árvore e calcula contagens corretamente | unit | `npm run test -- src/__tests__/navigation-service.test.ts` | ✅ | ✅ green |
+| 2-01-02 | 01 | 1 | NAV-02 | T-02-03 | Inbox usa namespace distinto e fica fora da árvore estrutural | unit | `npm run test -- src/__tests__/navigation-service.test.ts` | ✅ | ✅ green |
+| 2-01-03 | 01 | 1 | NAV-06 | T-02-01 | Agrupadores expõem `count` consistente | unit | `npm run test -- src/__tests__/navigation-service.test.ts` | ✅ | ✅ green |
+| 2-01-04 | 01 | 1 | NAV-07 | T-02-01 | Estado visual é mantido separado do tipo do item | unit | `npm run test -- src/__tests__/navigation-service.test.ts` | ✅ | ✅ green |
+| 2-01-05 | 01 | 1 | NAV-08 | T-02-02 | Hrefs canônicos e ancestry suportam reveal por URL | unit | `npm run test -- src/__tests__/navigation-service.test.ts` | ✅ | ✅ green |
+| 2-02-01 | 02 | 2 | NAV-03 | T-02-05 | Shell persiste e rail recolhe/reabre sem perder o item | component | `npm run test -- src/__tests__/app-shell.test.tsx` | ✅ | ✅ green |
+| 2-02-02 | 02 | 2 | NAV-04 | T-02-10 | Item ativo é derivado da URL e destacado corretamente | component | `npm run test -- src/__tests__/app-shell.test.tsx` | ✅ | ✅ green |
+| 2-02-03 | 02 | 2 | NAV-08 | T-02-06 | Rotas `library` e `inbox` resolvem item por helper canônico seguro | component | `npm run test -- src/__tests__/app-shell.test.tsx` | ✅ | ✅ green |
+| 2-03-01 | 03 | 3 | FIL-01 | T-02-12 | Filtro atua só na árvore principal e nunca toca a inbox | unit | `npm run test -- src/__tests__/filter-tree.test.ts` | ✅ | ✅ green |
+| 2-03-02 | 03 | 3 | FIL-02 | T-02-09 | Filtro tolera caixa, acento e pequena variação sem virar busca agressiva | unit | `npm run test -- src/__tests__/filter-tree.test.ts` | ✅ | ✅ green |
+| 2-03-03 | 03 | 3 | FIL-03 | T-02-12 | UI diferencia filtro estrutural de busca futura por rótulo e iconografia | component | `npm run test -- src/__tests__/filter-tree.test.ts` | ✅ | ✅ green |
 
 *Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
 
@@ -56,9 +57,9 @@ created: 2026-04-08
 
 ## Wave 0 Requirements
 
-- [ ] `src/__tests__/navigation-service.test.ts` — cobre NAV-01, NAV-02, NAV-06, NAV-07, NAV-08
-- [ ] `src/__tests__/app-shell.test.tsx` — cobre NAV-03, NAV-04, NAV-08
-- [ ] `src/__tests__/filter-tree.test.ts` — cobre FIL-01, FIL-02, FIL-03
+- [x] `src/__tests__/navigation-service.test.ts` — cobre NAV-01, NAV-02, NAV-06, NAV-07, NAV-08
+- [x] `src/__tests__/app-shell.test.tsx` — cobre NAV-03, NAV-04, NAV-08
+- [x] `src/__tests__/filter-tree.test.ts` — cobre FIL-01, FIL-02, FIL-03
 
 ---
 
@@ -81,4 +82,16 @@ created: 2026-04-08
 - [x] Feedback latency < 60s
 - [x] `nyquist_compliant: true` set in frontmatter
 
-**Approval:** pending
+**Approval:** approved — 2026-04-08
+
+---
+
+## Validation Audit 2026-04-08
+
+| Metric | Count |
+|--------|-------|
+| Gaps found | 1 |
+| Resolved | 1 |
+| Escalated | 0 |
+
+Gap resolvido: NAV-04 (`app-shell.test.tsx` — 3 novos testes para `activeHref`/`aria-current`). Suite final: **68/68 testes verdes**.
