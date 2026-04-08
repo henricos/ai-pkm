@@ -64,4 +64,4 @@ Desktop.ini
 *.tsbuildinfo
 
 # Repositórios locais montados
-pkm
+/pkm
