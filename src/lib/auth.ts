@@ -3,6 +3,9 @@ import Credentials from "next-auth/providers/credentials";
 import { env } from "@/lib/env";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
+  logger: {
+    error: (error) => console.error(`[auth] ${error.name}: ${error.message}`),
+  },
   providers: [
     Credentials({
       async authorize(credentials) {

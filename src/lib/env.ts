@@ -19,4 +19,18 @@ const envSchema = z.object({
     .url("NEXTAUTH_URL deve ser uma URL válida"),
 });
 
-export const env = envSchema.parse(process.env);
+function parseEnv() {
+  const result = envSchema.safeParse(process.env);
+  if (!result.success) {
+    const issues = result.error.issues
+      .map((i) => `  • ${i.path.join(".")}: ${i.message}`)
+      .join("\n");
+    console.error(
+      `\n❌ Variáveis de ambiente inválidas ou ausentes:\n\n${issues}\n`
+    );
+    process.exit(1);
+  }
+  return result.data;
+}
+
+export const env = parseEnv();

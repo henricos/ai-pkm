@@ -11,12 +11,13 @@ export function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") ?? "/";
-  const error = searchParams.get("error");
   const [isLoading, setIsLoading] = useState(false);
+  const [authError, setAuthError] = useState<string | null>(null);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setIsLoading(true);
+    setAuthError(null);
     const formData = new FormData(e.currentTarget);
     const result = await signIn("credentials", {
       username: formData.get("username") as string,
@@ -25,9 +26,11 @@ export function LoginForm() {
       callbackUrl,
     });
     setIsLoading(false);
-    if (result?.ok) {
+    if (!result?.error) {
       router.push(callbackUrl);
       router.refresh();
+    } else {
+      setAuthError("Credenciais inválidas. Verifique usuário e senha.");
     }
   }
 
@@ -74,7 +77,7 @@ export function LoginForm() {
       </div>
 
       {/* Alerta de erro de autenticação — mensagem genérica sem revelar qual campo está errado (T-1-06) */}
-      {error && (
+      {authError && (
         <div className="flex items-center gap-3 p-3 bg-surface-container rounded-sm border border-outline-variant/15">
           <p className="text-[0.75rem] font-medium text-on-surface">
             Credenciais inválidas. Verifique usuário e senha.
