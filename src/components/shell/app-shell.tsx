@@ -1,13 +1,14 @@
 "use client";
 
 import React, { useState, useCallback } from "react";
+import { usePathname } from "next/navigation";
 import type { NavigationSnapshot } from "@/lib/navigation/navigation-types";
 import { LeftRail } from "@/components/shell/left-rail";
 
 interface AppShellProps {
   snapshot: NavigationSnapshot;
   children: React.ReactNode;
-  /** href do item ativo derivado da URL atual (T-02-10) */
+  /** href do item ativo — quando omitido, derivado automaticamente via usePathname() (T-02-10) */
   activeHref?: string;
 }
 
@@ -29,7 +30,9 @@ interface AppShellProps {
  * - Snapshot sanitizado server-side pelo NavigationService
  * - Item ativo derivado exclusivamente da URL (T-02-10)
  */
-export function AppShell({ snapshot, children, activeHref }: AppShellProps) {
+export function AppShell({ snapshot, children, activeHref: activeHrefProp }: AppShellProps) {
+  const pathname = usePathname();
+  const activeHref = activeHrefProp ?? pathname ?? undefined;
   const [railOpen, setRailOpen] = useState(true);
 
   const toggleRail = useCallback(() => {
