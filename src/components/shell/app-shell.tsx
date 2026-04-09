@@ -16,14 +16,14 @@ interface AppShellProps {
  * AppShell — chrome estrutural da shell persistente (Phase 2).
  *
  * Estrutura:
- * - Rail esquerdo recolhível com filtro estrutural, inbox e árvore (LeftRail)
+ * - Rail esquerdo recolhível e redimensionável com filtro, inbox e árvore
  * - Área principal (workspace) única que não remonta ao navegar entre rotas
  *
  * Design alinhado ao DESIGN.md:
  * - No-Line Rule: separação por tonalidade de fundo, sem bordas 1px
  * - Glassmorphism no rail conforme §4
  * - Surface hierarchy: rail em surface-container-low, workspace em surface-container-lowest
- * - 8px grid (padding múltiplos de 8)
+ * - 8px grid
  *
  * Segurança:
  * - Componente client puro — nenhum dado sensível chega aqui
@@ -48,67 +48,57 @@ export function AppShell({ snapshot, children, activeHref: activeHrefProp }: App
         className={[
           "flex flex-col h-full transition-all duration-200 ease-in-out overflow-hidden",
           "bg-surface-container-low",
-          railOpen ? "w-64" : "w-12",
+          railOpen ? "w-72" : "w-12",
         ].join(" ")}
       >
-        {/* Topo do rail: toggle */}
+        {/* Topo do rail: título */}
         <div className="flex items-center h-12 px-3 shrink-0">
+          {railOpen && (
+            <span
+              className="text-[0.6875rem] font-semibold uppercase tracking-[0.05em] text-on-surface/40 truncate"
+              aria-hidden="true"
+            >
+              PKM
+            </span>
+          )}
+        </div>
+
+        {/* Conteúdo do rail — sempre participa do layout flex para o toggle ficar no rodapé */}
+        <div
+          id="rail-content"
+          className="flex-1 overflow-hidden min-h-0"
+          aria-hidden={!railOpen}
+        >
+          {railOpen && <LeftRail snapshot={snapshot} activeHref={activeHref} />}
+        </div>
+
+        {/* Toggle << / >> posicionado na borda inferior */}
+        <div className="shrink-0 flex items-center justify-end px-2 py-2">
           <button
             onClick={toggleRail}
             aria-label={railOpen ? "Recolher painel" : "Expandir painel"}
             aria-expanded={railOpen}
             aria-controls="rail-content"
-            className="flex items-center justify-center w-6 h-6 rounded-sm text-on-surface/50 hover:text-on-surface hover:bg-surface-container transition-colors"
+            className="flex items-center justify-center w-7 h-7 rounded-sm text-on-surface/35 hover:text-on-surface hover:bg-surface-container transition-colors"
           >
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 16 16"
-              fill="none"
-              aria-hidden="true"
-            >
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
               {railOpen ? (
-                /* Ícone "recolher" — seta para esquerda */
-                <path
-                  d="M10 4L6 8L10 12"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              ) : (
-                /* Ícone "expandir" — três linhas */
+                /* Recolher: << */
                 <>
-                  <line x1="3" y1="4" x2="13" y2="4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                  <line x1="3" y1="8" x2="13" y2="8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                  <line x1="3" y1="12" x2="13" y2="12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                  <path d="M9 4L5 8L9 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M13 4L9 8L13 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </>
+              ) : (
+                /* Expandir: >> */
+                <>
+                  <path d="M4 4L8 8L4 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M8 4L12 8L8 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 </>
               )}
             </svg>
           </button>
-
-          {railOpen && (
-            <div className="flex-1 min-w-0 ml-3 flex items-center justify-between">
-              <span
-                className="text-[0.6875rem] font-semibold uppercase tracking-[0.05em] text-on-surface/40 truncate"
-                aria-hidden="true"
-              >
-                PKM
-              </span>
-              {/* Reserva para settings/status (D-25) */}
-              <div className="w-4 h-4" aria-hidden="true" />
-            </div>
-          )}
         </div>
 
-        {/* Conteúdo do rail (oculto quando recolhido) */}
-        <div
-          id="rail-content"
-          className={["flex-1 overflow-hidden min-h-0", railOpen ? "" : "hidden"].join(" ")}
-          aria-hidden={!railOpen}
-        >
-          <LeftRail snapshot={snapshot} activeHref={activeHref} />
-        </div>
       </aside>
 
       {/* ── Área principal (workspace) ── */}

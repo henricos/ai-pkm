@@ -53,6 +53,19 @@ interface GroupIndex {
 // ─────────────────────────────────────────────
 
 /**
+ * Formata um id kebab-case em rótulo legível para exibição na árvore.
+ * Remove prefixo `_`, substitui hífens por espaços e capitaliza cada palavra.
+ * Ex: "desenvolvimento-pessoal" → "Desenvolvimento Pessoal", "_superapp" → "Superapp"
+ */
+function formatLabel(id: string): string {
+  return id
+    .replace(/^_+/, "")
+    .split("-")
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(" ");
+}
+
+/**
  * Infere o itemKind visual a partir do nome/extensão do arquivo (D-11).
  * Separação entre tipo (o que é) e estado (em que estado está).
  */
@@ -113,7 +126,8 @@ function readEstadoForBinary(absPath: string): "rascunho" | "finalizado" {
 }
 
 /**
- * Lista arquivos de um diretório, excluindo sidecars.
+ * Lista arquivos de um diretório, excluindo sidecars, arquivos ocultos e
+ * arquivos de convenção do PKM (prefixo `_`).
  * Retorna apenas nomes de arquivo (não subdiretórios).
  */
 function listFiles(dirPath: string): string[] {
@@ -121,12 +135,9 @@ function listFiles(dirPath: string): string[] {
   try {
     const entries = fs.readdirSync(dirPath, { withFileTypes: true });
     return entries
-      .filter((e) => {
-        if (typeof e === "string") return true;
-        return e.isFile();
-      })
-      .map((e) => (typeof e === "string" ? e : e.name))
-      .filter((name) => !isSidecar(name));
+      .filter((e) => e.isFile())
+      .map((e) => e.name)
+      .filter((name) => !name.startsWith(".") && name !== "_grupo.md" && !isSidecar(name));
   } catch {
     return [];
   }
@@ -186,7 +197,6 @@ function projectInbox(pkmRoot: string): InboxEntry[] {
 function projectGroup(
   topicId: string,
   groupDirName: string,
-  groupDescricao: string,
   pkmRoot: string,
   ancestorIds: string[],
   ancestorsByItemId: Record<string, string[]>,
@@ -207,7 +217,7 @@ function projectGroup(
 
   const node: NavigationTreeNode = {
     id: groupPath,
-    label: groupDescricao,
+    label: formatLabel(groupDirName),
     kind: "group",
     count: items.length,
     children: [],
@@ -224,7 +234,6 @@ function projectGroup(
 function projectSubtopic(
   topicId: string,
   subtopicId: string,
-  subtopicDescricao: string,
   groups: GroupIndex[],
   pkmRoot: string,
   ancestorIds: string[],
@@ -273,7 +282,6 @@ function projectSubtopic(
     return projectGroup(
       `${topicId}/${subtopicId}`,
       groupDirName,
-      g.descricao,
       pkmRoot,
       [...ancestorIds, subtopicPath],
       ancestorsByItemId,
@@ -286,7 +294,7 @@ function projectSubtopic(
 
   const node: NavigationTreeNode = {
     id: subtopicPath,
-    label: subtopicDescricao,
+    label: formatLabel(subtopicId),
     kind: "subtopic",
     count: totalCount,
     children: groupNodes,
@@ -344,7 +352,6 @@ function projectTopic(
     projectSubtopic(
       topic.id,
       sub.id,
-      sub.descricao,
       groups,
       pkmRoot,
       [topicPath],
@@ -359,7 +366,6 @@ function projectTopic(
     return projectGroup(
       topic.id,
       groupDirName,
-      g.descricao,
       pkmRoot,
       [topicPath],
       ancestorsByItemId,
@@ -373,7 +379,7 @@ function projectTopic(
 
   const node: NavigationTreeNode = {
     id: topicPath,
-    label: topic.descricao,
+    label: formatLabel(topic.id),
     kind: "topic",
     count: totalCount,
     children: allChildren,

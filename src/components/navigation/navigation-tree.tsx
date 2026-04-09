@@ -7,19 +7,16 @@
  * - Inicia mostrando apenas tópicos raiz (D-07) — expandidos por autoexpansão
  * - Autoexpande ancestrais quando item ativo é detectado por URL (D-08)
  * - Aceita árvore filtrada (FilteredTreeNode) ou original (NavigationTreeNode)
+ * - Quando filterQuery está ativo, expande todos os nós do resultado
+ * - Ao limpar o filtro, restaura o estado de expansão anterior
  * - Não afeta a inbox — recebe apenas `tree` do snapshot (T-02-12)
  *
  * Segurança (T-02-10):
  * - O item ativo é derivado exclusivamente da URL atual (activeHref passado pelo pai)
  * - Nenhum estado solto de "seleção" é mantido aqui
- *
- * Props:
- * - tree: array de nós raiz (pode ser filtrado)
- * - activeHref: href canônico do item ativo na URL
- * - ancestorsByItemId: mapa do snapshot para autoexpansão de ancestrais (D-08)
  */
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import type { NavigationTreeNode } from "@/lib/navigation/navigation-types";
 import type { FilteredTreeNode } from "@/lib/navigation/filter-tree";
 import { TreeNode } from "@/components/navigation/tree-node";
@@ -27,18 +24,13 @@ import { TreeNode } from "@/components/navigation/tree-node";
 type AnyTreeNode = NavigationTreeNode | FilteredTreeNode;
 
 interface NavigationTreeProps {
-  /** Árvore a renderizar (original ou filtrada) */
   tree: AnyTreeNode[];
-  /** href canônico do item ativo derivado da URL atual */
   activeHref?: string;
-  /** Mapa de item.id → IDs de agrupadores ancestrais para autoexpansão (D-08) */
   ancestorsByItemId: Record<string, string[]>;
+  /** Query de filtro ativo — quando não-vazio, todos os nós são expandidos */
+  filterQuery?: string;
 }
 
-/**
- * Calcula o conjunto inicial de IDs expandidos com base na URL atual.
- * Percorre ancestorsByItemId para encontrar os ancestrais do item ativo.
- */
 function computeInitialExpanded(
   activeHref: string | undefined,
   tree: AnyTreeNode[],
@@ -46,7 +38,6 @@ function computeInitialExpanded(
 ): Set<string> {
   if (!activeHref) return new Set();
 
-  // Encontrar o item ativo na árvore pelo href
   function findItemId(nodes: AnyTreeNode[]): string | null {
     for (const node of nodes) {
       for (const item of node.items) {
@@ -65,39 +56,72 @@ function computeInitialExpanded(
   return new Set(ancestors);
 }
 
+/** Coleta todos os IDs de nós agrupadores da árvore (para expandir tudo) */
+function collectAllNodeIds(nodes: AnyTreeNode[]): Set<string> {
+  const ids = new Set<string>();
+  function walk(ns: AnyTreeNode[]) {
+    for (const n of ns) {
+      ids.add(n.id);
+      walk(n.children);
+    }
+  }
+  walk(nodes);
+  return ids;
+}
+
 export function NavigationTree({
   tree,
   activeHref,
   ancestorsByItemId,
+  filterQuery = "",
 }: NavigationTreeProps) {
-  // Estado de expansão — inicia com ancestrais do item ativo expandidos (D-08)
   const [expandedIds, setExpandedIds] = useState<Set<string>>(() =>
     computeInitialExpanded(activeHref, tree, ancestorsByItemId),
   );
 
-  // Recomputar expandidos quando a URL muda (navegação direta por URL)
+  // Guarda o estado de expansão anterior ao filtro para restaurar ao limpar
+  const savedExpandedIds = useRef<Set<string> | null>(null);
+  const prevFilterQuery = useRef(filterQuery);
+
+  // Reage à mudança do filterQuery
   useEffect(() => {
+    const wasFiltering = prevFilterQuery.current !== "";
+    const isFiltering = filterQuery !== "";
+    prevFilterQuery.current = filterQuery;
+
+    if (isFiltering && !wasFiltering) {
+      // Filtro acabou de ser ativado: salva estado atual e expande tudo
+      savedExpandedIds.current = expandedIds;
+      setExpandedIds(collectAllNodeIds(tree));
+    } else if (isFiltering && wasFiltering) {
+      // Filtro mudou (refinamento): expande todos os nós do novo resultado
+      setExpandedIds(collectAllNodeIds(tree));
+    } else if (!isFiltering && wasFiltering) {
+      // Filtro foi limpo: restaura estado salvo
+      setExpandedIds(savedExpandedIds.current ?? computeInitialExpanded(activeHref, tree, ancestorsByItemId));
+      savedExpandedIds.current = null;
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filterQuery, tree]);
+
+  // Autoexpande ancestrais ao navegar por URL (sem filtro ativo)
+  useEffect(() => {
+    if (filterQuery) return;
     const newExpanded = computeInitialExpanded(activeHref, tree, ancestorsByItemId);
     if (newExpanded.size > 0) {
       setExpandedIds((prev) => {
-        // Adicionar novos ancestrais sem colapsar o que o usuário já expandiu
         const merged = new Set(prev);
-        for (const id of newExpanded) {
-          merged.add(id);
-        }
+        for (const id of newExpanded) merged.add(id);
         return merged;
       });
     }
-  }, [activeHref, tree, ancestorsByItemId]);
+  }, [activeHref, tree, ancestorsByItemId, filterQuery]);
 
   const handleToggle = useCallback((id: string) => {
     setExpandedIds((prev) => {
       const next = new Set(prev);
-      if (next.has(id)) {
-        next.delete(id);
-      } else {
-        next.add(id);
-      }
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
       return next;
     });
   }, []);

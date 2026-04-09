@@ -32,11 +32,9 @@ interface InboxLaneProps {
  * Componente separado para garantir que a inbox nunca passe pelo filtro estrutural.
  */
 export function InboxLane({ entries, activeHref }: InboxLaneProps) {
-  if (entries.length === 0) return null;
-
   return (
     <section aria-label="Inbox" className="px-3 py-2">
-      {/* Cabeçalho da seção */}
+      {/* Cabeçalho sempre visível */}
       <div className="flex items-center justify-between mb-1.5">
         <span
           className="text-[0.6875rem] font-semibold uppercase tracking-[0.05em] text-on-surface/40"
@@ -44,15 +42,18 @@ export function InboxLane({ entries, activeHref }: InboxLaneProps) {
         >
           Inbox
         </span>
-        <span
-          className="text-[0.6875rem] font-semibold tabular-nums text-on-surface/30"
-          aria-label={`${entries.length} itens na inbox`}
-        >
-          {entries.length}
-        </span>
+        {entries.length > 0 && (
+          <span
+            className="text-[0.6875rem] font-semibold tabular-nums text-on-surface/30"
+            aria-label={`${entries.length} itens na inbox`}
+          >
+            {entries.length}
+          </span>
+        )}
       </div>
 
-      {/* Lista compacta */}
+      {/* Lista compacta — só renderiza quando há itens */}
+      {entries.length > 0 && (
       <ul className="space-y-0.5" role="list">
         {entries.map((entry) => {
           const isActive = activeHref === entry.href;
@@ -98,6 +99,7 @@ export function InboxLane({ entries, activeHref }: InboxLaneProps) {
           );
         })}
       </ul>
+      )}
     </section>
   );
 }

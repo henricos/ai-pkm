@@ -93,6 +93,30 @@ export function TreeNode({
           </svg>
         </span>
 
+        {/* Ícone de pasta por tipo de agrupador */}
+        <span className="shrink-0 text-on-surface/40" aria-hidden="true">
+          {node.kind === "group" ? (
+            /* Grupo: pasta com ponto interno */
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path
+                d="M1 3.5h3.2l.9.9H11a.6.6 0 0 1 .6.6v5.4a.6.6 0 0 1-.6.6H1a.6.6 0 0 1-.6-.6V4.1a.6.6 0 0 1 .6-.6z"
+                stroke="currentColor"
+                strokeWidth="1.1"
+              />
+              <circle cx="6" cy="7.5" r="1" fill="currentColor" />
+            </svg>
+          ) : (
+            /* Tópico / subtópico: pasta simples */
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path
+                d="M1 3.5h3.2l.9.9H11a.6.6 0 0 1 .6.6v5.4a.6.6 0 0 1-.6.6H1a.6.6 0 0 1-.6-.6V4.1a.6.6 0 0 1 .6-.6z"
+                stroke="currentColor"
+                strokeWidth="1.1"
+              />
+            </svg>
+          )}
+        </span>
+
         {/* Label do agrupador */}
         <span className="truncate flex-1">{node.label}</span>
 

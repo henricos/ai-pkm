@@ -40,8 +40,6 @@ export function LeftRail({ snapshot, activeHref }: LeftRailProps) {
     [snapshot.tree, filterQuery],
   );
 
-  const hasInbox = snapshot.inbox.length > 0;
-
   return (
     <div className="flex flex-col h-full min-h-0">
       {/* 1. Filtro estrutural (FIL-01, FIL-03) */}
@@ -52,20 +50,16 @@ export function LeftRail({ snapshot, activeHref }: LeftRailProps) {
         />
       </div>
 
-      {/* Área com scroll */}
-      <div className="flex-1 overflow-y-auto overflow-x-hidden min-h-0 pb-4">
-        {/* 2. Inbox — separada e nunca filtrada */}
-        {hasInbox && (
-          <InboxLane entries={snapshot.inbox} activeHref={activeHref} />
-        )}
+      {/* Área com scroll — scrollbar fina e discreta */}
+      <div className="flex-1 overflow-y-auto overflow-x-hidden min-h-0 pb-4 pr-1 rail-scroll">
+        {/* 2. Inbox — separada e nunca filtrada; cabeçalho sempre visível */}
+        <InboxLane entries={snapshot.inbox} activeHref={activeHref} />
 
         {/* 3. Divisor tonal (sem borda explícita — No-Line Rule) */}
-        {hasInbox && (
-          <div
-            className="mx-3 my-1.5 h-px bg-surface-container"
-            aria-hidden="true"
-          />
-        )}
+        <div
+          className="mx-3 my-1.5 h-px bg-surface-container"
+          aria-hidden="true"
+        />
 
         {/* 4. Cabeçalho da biblioteca */}
         <div className="px-3 pt-2 pb-1">
@@ -79,6 +73,7 @@ export function LeftRail({ snapshot, activeHref }: LeftRailProps) {
           tree={filteredTree}
           activeHref={activeHref}
           ancestorsByItemId={snapshot.ancestorsByItemId}
+          filterQuery={filterQuery}
         />
       </div>
     </div>

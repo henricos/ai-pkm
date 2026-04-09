@@ -23,10 +23,10 @@ export default async function LoginPage() {
               </span>
             </div>
             <h1 className="text-[1.5rem] font-medium tracking-[-0.01em] text-on-surface">
-              System Access
+              Acesso ao Sistema
             </h1>
             <p className="text-on-surface/60 text-[0.875rem] mt-1">
-              Authorized curators only.
+              Apenas curadores autorizados.
             </p>
           </div>
 
@@ -38,10 +38,13 @@ export default async function LoginPage() {
 
         {/* Footer discreto */}
         <footer className="mt-8 text-center">
-          <div className="flex items-center justify-center gap-4 text-on-surface/30 text-[0.6875rem] font-semibold uppercase tracking-[0.1em]">
-            <span>Encrypted</span>
-            <span className="w-1 h-1 bg-outline-variant rounded-full" />
-            <span>V. 2.0.0</span>
+          <div className="text-on-surface/30 text-[0.6875rem] font-semibold uppercase tracking-[0.1em]">
+            <span>
+              v{process.env.npm_package_version ?? "0.1.0"}
+              {process.env.NEXT_PUBLIC_GIT_HASH
+                ? ` · ${process.env.NEXT_PUBLIC_GIT_HASH}`
+                : ""}
+            </span>
           </div>
         </footer>
       </div>

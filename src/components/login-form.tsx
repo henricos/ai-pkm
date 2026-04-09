@@ -78,8 +78,8 @@ export function LoginForm() {
 
       {/* Alerta de erro de autenticação — mensagem genérica sem revelar qual campo está errado (T-1-06) */}
       {authError && (
-        <div className="flex items-center gap-3 p-3 bg-surface-container rounded-sm border border-outline-variant/15">
-          <p className="text-[0.75rem] font-medium text-on-surface">
+        <div className="flex items-center gap-3 p-3 bg-destructive/8 rounded-sm border border-destructive/25">
+          <p className="text-[0.75rem] font-medium text-destructive">
             Credenciais inválidas. Verifique usuário e senha.
           </p>
         </div>
@@ -91,7 +91,7 @@ export function LoginForm() {
         disabled={isLoading}
         className="w-full gradient-cta text-on-tertiary py-3 font-semibold text-[0.875rem] rounded-sm hover:opacity-90 active:scale-[0.98] transition-all"
       >
-        {isLoading ? "Aguarde..." : "Sign In"}
+        {isLoading ? "Aguarde..." : "Entrar"}
       </Button>
     </form>
   );

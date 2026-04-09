@@ -68,21 +68,21 @@ blocked: 0
 ## Gaps
 
 - truth: "Inbox lane com posição correta (filtro dentro da seção biblioteca, antes da árvore), contador correto (zero quando vazia), e estado vazio explícito sem item fantasma"
-  status: failed
+  status: fixed
   reason: "User reported: filtro acima da inbox (deveria ser dentro da seção biblioteca); contador mostra 1 quando vazia (suspeita .gitignore contado); inbox vazia exibe item fantasma com ícone sem nome"
   severity: minor
   test: 4
-  root_cause: ""
-  artifacts: []
+  root_cause: "listFiles incluía arquivos ocultos (ex: .gitkeep) que não são itens reais. Fix: filtrar nomes iniciados com '.'. Decisão conceitual: filtro permanece acima de tudo (posição atual mantida); InboxLane passa a sempre exibir o cabeçalho, lista condicional."
+  artifacts: ["src/lib/navigation/navigation-service.ts", "src/components/shell/inbox-lane.tsx", "src/components/shell/left-rail.tsx"]
   missing: []
   debug_session: ""
 
 - truth: "Árvore exibe apenas itens reais do PKM, sem arquivos ocultos; contador preciso em todos os agrupadores"
-  status: failed
+  status: fixed
   reason: "User reported: itens fantasma na árvore e contador com 1 a mais em agrupadores; suspeita que arquivo oculto (ex: .gitignore) está sendo incluído como item pelo listFiles"
   severity: minor
   test: 5
-  root_cause: ""
-  artifacts: []
+  root_cause: "listFiles incluía arquivos ocultos (prefixo '.') e o arquivo de convenção '_grupo.md' presente dentro de pastas de grupo. Fix: filtrar nomes com '.' e o arquivo '_grupo.md' especificamente."
+  artifacts: ["src/lib/navigation/navigation-service.ts"]
   missing: []
   debug_session: ""

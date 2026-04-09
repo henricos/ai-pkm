@@ -3,9 +3,9 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: paused
-stopped_at: Phase 2 encerrada corretamente; Phase 3 ainda nao iniciada — operador pausou para retomar depois
-last_updated: "2026-04-08T23:30:00.000Z"
-last_activity: 2026-04-08 -- Phase 02 security audit complete (12/12 threats closed, SECURITY.md gerado)
+stopped_at: Ajustes pós-UAT Phase 1 e Phase 2 concluídos; pronto para iniciar Phase 3 (reading-viewer)
+last_updated: "2026-04-09T00:00:00.000Z"
+last_activity: 2026-04-09 -- Ajustes pós-UAT Phase 1 e Phase 2 aplicados (login traduzido, labels da árvore, ícones de pasta, inbox sempre visível, filtro auto-expande, toggle <</>>, scrollbar, w-72)
 progress:
   total_phases: 5
   completed_phases: 2
