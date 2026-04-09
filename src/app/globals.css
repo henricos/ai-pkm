@@ -1,6 +1,29 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
+@import "katex/dist/katex.min.css";
+
+@plugin "@tailwindcss/typography";
+
+@layer utilities {
+  .prose {
+    --tw-prose-body: var(--color-on-surface);
+    --tw-prose-headings: var(--color-on-surface);
+    --tw-prose-links: var(--color-tertiary);
+    --tw-prose-bold: var(--color-on-surface);
+    --tw-prose-counters: color-mix(in srgb, var(--color-on-surface) 60%, transparent);
+    --tw-prose-bullets: color-mix(in srgb, var(--color-on-surface) 40%, transparent);
+    --tw-prose-hr: var(--color-outline-variant);
+    --tw-prose-quotes: var(--color-on-surface);
+    --tw-prose-quote-borders: var(--color-outline-variant);
+    --tw-prose-captions: color-mix(in srgb, var(--color-on-surface) 60%, transparent);
+    --tw-prose-code: var(--color-on-surface);
+    --tw-prose-pre-code: var(--color-on-surface);
+    --tw-prose-pre-bg: var(--color-surface-container-low);
+    --tw-prose-th-borders: var(--color-outline-variant);
+    --tw-prose-td-borders: var(--color-outline-variant);
+  }
+}
 
 @theme {
   /* === Cores — The Digital Curator (DESIGN.md §2) === */
