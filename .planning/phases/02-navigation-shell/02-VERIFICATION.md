@@ -20,8 +20,8 @@ human_verification:
 
 **Phase Goal:** Usuario navega o acervo inteiro em uma shell unica com inbox separada, arvore estruturada, filtro estrutural e selecao compartilhavel por URL.
 **Verified:** 2026-04-08T19:34:00Z
-**Status:** gaps_found
-**Re-verification:** Nao — verificacao inicial
+**Status:** verified
+**Re-verification:** Sim — corpo atualizado apos correcao do gap NAV-04 (2026-04-09)
 
 ---
 
@@ -33,11 +33,11 @@ human_verification:
 |---|-------|--------|---------|
 | 1 | Usuario ve inbox destacada acima da arvore e navega sem trocar de pagina perceptivelmente | VERIFIED | InboxLane e NavigationTree sao componentes separados no LeftRail; shell usa App Router layout persistente; 18/18 testes app-shell passam |
 | 2 | Painel esquerdo pode ser recolhido e reaberto sem perder o item aberto nem a sensacao de shell unica | VERIFIED | AppShell usa useState(true) para railOpen; aria-hidden no conteudo do rail; filho (workspace/children) permanece montado; testes confirmam |
-| 3 | Item selecionado fica destacado, com icones e indicadores visuais coerentes para tipo, status e contagens | PARTIAL | Infraestrutura completa (activeHref prop chain, aria-current, ItemKindIcon, estado discreto, contagens), mas activeHref nunca e injetado da URL real pelo layout — destaque nao funciona em producao |
+| 3 | Item selecionado fica destacado, com icones e indicadores visuais coerentes para tipo, status e contagens | VERIFIED | activeHref injetado via usePathname() em ShellClientWrapper (Client Component); prop chain completa; aria-current="page"; autoexpansao de ancestrais funcional; UAT test 6 passou; 68/68 testes verdes |
 | 4 | Filtro tolerante a maiusculas/acentos, distinto de busca textual, sem afetar inbox | VERIFIED | filterNavigationTree implementado em duas etapas (regex+fuzzy), TreeFilterInput com icone de funil, inbox nunca passa pelo pipeline; 14/14 testes filter-tree passam |
 | 5 | Cada item aberto atualiza URL propria e navegavel | VERIFIED | Rotas /library/[...path] e /inbox/[item] implementadas; decode via helpers canonicos; round-trip testado; 18/18 app-shell testes confirmam namespaces |
 
-**Score:** 4/5 truths verified (1 partial — gap ativo)
+**Score:** 5/5 truths verified
 
 ---
 
@@ -77,7 +77,7 @@ human_verification:
 | `src/components/shell/left-rail.tsx` | `filter-tree.ts` | filterNavigationTree | WIRED | useMemo aplica filtro apenas em snapshot.tree |
 | `src/components/navigation/tree-node.tsx` | `navigation-types.ts` | NavigationTreeNode | WIRED | Import e uso nos props confirmados |
 | `src/components/navigation/tree-node.tsx` | `route-helpers.ts` | href (item terminal) | WIRED | Items usam item.href diretamente (gerado por itemToHref no servico) |
-| `src/app/(shell)/layout.tsx` | `app-shell.tsx` | activeHref | BROKEN | Layout nao passa activeHref — prop existe mas nunca e preenchida pela URL real |
+| `src/app/(shell)/layout.tsx` | `app-shell.tsx` | activeHref | WIRED | ShellClientWrapper (Client Component) usa usePathname() e injeta activeHref em AppShell; corrigido pos-UAT |
 
 ---
 
@@ -87,7 +87,7 @@ human_verification:
 |----------|---------------|--------|--------------------|--------|
 | `src/components/shell/inbox-lane.tsx` | entries (InboxEntry[]) | snapshot.inbox via getNavigationSnapshot | Sim — fs.readdirSync da __inbox real + frontmatter | FLOWING |
 | `src/components/navigation/navigation-tree.tsx` | tree (NavigationTreeNode[]) | snapshot.tree via getNavigationSnapshot | Sim — projeta topicos.json + grupos.json + arquivos reais do PKM | FLOWING |
-| `src/components/navigation/tree-node.tsx` | activeHref (item highlight) | Prop passada pelo pai | Nao — activeHref nunca e injetado da URL real pelo layout | HOLLOW_PROP |
+| `src/components/navigation/tree-node.tsx` | activeHref (item highlight) | usePathname() via ShellClientWrapper | Sim — derivado da URL real do navegador | FLOWING |
 
 ---
 
@@ -110,7 +110,7 @@ human_verification:
 | NAV-01 | 02-01, 02-03 | Arvore de topicos/subtopicos/grupos/arquivos | SATISFIED | NavigationTree + TreeNode implementados; 22 testes snapshot |
 | NAV-02 | 02-01, 02-03 | Inbox como secao propria acima da arvore | SATISFIED | InboxLane componente separado; LeftRail compos inbox antes da tree |
 | NAV-03 | 02-02 | Painel recolhivel sem perder item aberto | SATISFIED | AppShell useState(railOpen); children permanece montado; 4 testes rail |
-| NAV-04 | 02-03 | Item selecionado visualmente destacado | PARTIAL | Infraestrutura completa (aria-current, bg-surface-container), mas activeHref nao injetado da URL real |
+| NAV-04 | 02-03 | Item selecionado visualmente destacado | SATISFIED | activeHref injetado via usePathname() em ShellClientWrapper; aria-current="page"; autoexpansao de ancestrais funcional; UAT test 6 passou |
 | NAV-05 | 02-03 | Icones distintos por tipo de item | SATISFIED | ItemKindIcon com 5 tipos (markdown, image, excalidraw, pdf, binary) |
 | NAV-06 | 02-01, 02-03 | Contagens nos nos relevantes | SATISFIED | count calculado recursivamente no NavigationService; exibido em TreeNode e InboxLane |
 | NAV-07 | 02-01, 02-03 | Indicadores visuais rascunho/finalizado | SATISFIED | estado separado de itemKind; dot discreto em rascunho; cor diferenciada |
@@ -126,7 +126,7 @@ human_verification:
 | Arquivo | Linha | Padrao | Severidade | Impacto |
 |---------|-------|--------|------------|---------|
 | `src/components/shell/workspace-item-state.tsx` | 67 | "Visualizacao rica disponivel na proxima fase." | Informativo | Stub intencional documentado — escopo da phase 3 |
-| `src/app/(shell)/layout.tsx` | 31 | `<AppShell snapshot={snapshot}>` sem activeHref | Bloqueador | activeHref nao injetado — destaque do item ativo inoperante em producao |
+| `src/app/(shell)/layout.tsx` | 31 | `<AppShell snapshot={snapshot}>` sem activeHref | Resolvido | ShellClientWrapper inserido entre layout e AppShell; activeHref derivado de usePathname() — corrigido pos-UAT |
 
 ---
 
@@ -136,7 +136,8 @@ human_verification:
 
 **Teste:** Abrir a aplicacao, navegar para um item de biblioteca via URL direta (ex: `/library/topico/meu-arquivo.md`). Observar o rail esquerdo.
 **Esperado:** O item correspondente fica visualmente destacado no rail (background diferenciado, font-medium, aria-current="page") e os ancestrais ficam expandidos automaticamente.
-**Por que humano:** O destaque depende de activeHref ser injetado da URL real — atualmente nao funciona (gap confirmado). Este teste deve FALHAR ate que o gap seja corrigido.
+**Por que humano:** O destaque e visual e depende do activeHref ser injetado da URL real via usePathname().
+**Resultado UAT:** PASSOU — test 6 confirmado pelo usuario apos correcao do ShellClientWrapper.
 
 #### 2. Rail recolhivel com item aberto
 
@@ -154,15 +155,11 @@ human_verification:
 
 ### Gaps Summary
 
-**1 gap ativo bloqueando a truth 3 do roadmap (destaque do item ativo):**
+**Nenhum gap ativo. Phase 2 encerrada.**
 
-O problema e arquitetural: o `layout.tsx` e um Server Component que nao tem acesso ao `usePathname()` hook do Next.js. A prop `activeHref` existe em toda a cadeia de componentes (AppShell -> LeftRail -> InboxLane/NavigationTree -> TreeNode/InboxLane), mas o valor nunca e injetado a partir da URL corrente no fluxo real de renderizacao.
+Gap identificado na verificacao inicial (2026-04-08) e resolvido antes do encerramento da phase:
 
-Os testes passam porque injetam `activeHref` diretamente nos mocks — eles testam que o mecanismo de destaque *funciona quando recebe o valor*, mas nao testam que *o valor e derivado da URL real*.
-
-**Solucao recomendada:** Criar um Client Component intermediario (ex: `ShellClientWrapper`) que use `usePathname()` e injete `activeHref` em `AppShell`. O layout server-side passaria o snapshot para esse wrapper client.
-
-**Impacto:** NAV-04 (item selecionado visualmente destacado) nao esta plenamente entregue. Autoexpansao de ancestrais (D-08) tambem e afetada.
+- **NAV-04 — activeHref nao injetado da URL real:** `layout.tsx` e Server Component sem acesso a `usePathname()`. Solucao aplicada: `ShellClientWrapper` (Client Component) inserido entre o layout e o `AppShell`, derivando `activeHref` de `usePathname()` e injetando na prop chain. Testes adicionados: 3 novos casos em `app-shell.test.tsx` cobrindo `activeHref`/`aria-current`. Suite final: 68/68 testes verdes. UAT test 6 confirmado pelo usuario.
 
 ---
 
