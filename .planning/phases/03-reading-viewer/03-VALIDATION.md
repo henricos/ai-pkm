@@ -107,3 +107,16 @@ audited: 2026-04-09
 | Corrections | 1 (3-dates: date-format → info-panel) |
 
 Todos os testes da Phase 3 existiam e passavam. VALIDATION.md atualizado retroativamente.
+
+---
+
+## Validation Audit 2026-04-09 (re-run)
+
+| Metric | Count |
+|--------|-------|
+| Gaps found | 1 |
+| Resolved | 1 |
+| Escalated | 0 |
+
+**Gap:** `app-shell.test.tsx:151` — teste de Phase 2 com expectativa incorreta (`inboxLabels.length === 0`) conflitava com a spec "seção inbox sempre visível". Corrigido para verificar cabeçalho presente e lista vazia.  
+**Suite final:** 94/94 testes passando.

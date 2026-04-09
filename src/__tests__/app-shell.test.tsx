@@ -148,16 +148,20 @@ describe("AppShell — namespaces library e inbox", () => {
     expect(labels.length).toBeGreaterThan(0);
   });
 
-  test("não exibe seção inbox quando snapshot está vazio", () => {
+  test("exibe cabeçalho inbox mas sem itens quando snapshot está vazio", () => {
     render(
       <AppShell snapshot={snapshotVazio}>
         <div>workspace</div>
       </AppShell>
     );
 
-    // Não deve existir label "Inbox" se não há itens
+    // Cabeçalho "Inbox" sempre visível (seção permanente)
     const inboxLabels = screen.queryAllByText(/^inbox$/i);
-    expect(inboxLabels.length).toBe(0);
+    expect(inboxLabels.length).toBeGreaterThan(0);
+
+    // Nenhum item de lista renderizado
+    const listItems = screen.queryAllByRole("listitem");
+    expect(listItems.length).toBe(0);
   });
 
   test("item da inbox usa namespace /inbox/ na URL", () => {
