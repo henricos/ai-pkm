@@ -1,10 +1,11 @@
 ---
 phase: 3
 slug: reading-viewer
-status: draft
-nyquist_compliant: false
-wave_0_complete: false
+status: complete
+nyquist_compliant: true
+wave_0_complete: true
 created: 2026-04-09
+audited: 2026-04-09
 ---
 
 # Phase 3 — Validation Strategy
@@ -39,15 +40,15 @@ created: 2026-04-09
 
 | Task ID | Plan | Wave | Requirement | Threat Ref | Secure Behavior | Test Type | Automated Command | File Exists | Status |
 |---------|------|------|-------------|------------|-----------------|-----------|-------------------|-------------|--------|
-| 3-W0-01 | W0 | 0 | VIEW-02, VIEW-08 | — | N/A | unit/snapshot | `npm test -- markdown-viewer` | ❌ W0 | ⬜ pending |
-| 3-W0-02 | W0 | 0 | CTX-01, CTX-02 | — | N/A | render | `npm test -- viewer-header` | ❌ W0 | ⬜ pending |
-| 3-W0-03 | W0 | 0 | CTX-03, CTX-04 | — | N/A | unit | `npm test -- info-panel` | ❌ W0 | ⬜ pending |
-| 3-repo | — | 1 | VIEW-01 | T-3-01 | getItemContent valida path traversal igual a getItem | unit | `npm test -- item-repository` | ❌ W0 | ⬜ pending |
-| 3-viewer | — | 1 | VIEW-02, VIEW-08 | — | N/A | snapshot | `npm test -- markdown-viewer` | ❌ W0 | ⬜ pending |
-| 3-header | — | 1 | CTX-01, CTX-02 | T-3-03 | paths absolutos nunca enviados ao cliente | render | `npm test -- viewer-header` | ❌ W0 | ⬜ pending |
-| 3-panel | — | 2 | CTX-03, CTX-04 | — | N/A | unit | `npm test -- info-panel` | ❌ W0 | ⬜ pending |
-| 3-dates | — | 2 | CTX-04 | — | N/A | unit | `npm test -- date-format` | ❌ W0 | ⬜ pending |
-| 3-download | — | 2 | CTX-02 | T-3-04 | Route Handler verifica auth() antes de servir | unit | `npm test -- raw-route` | ❌ W0 | ⬜ pending |
+| 3-W0-01 | W0 | 0 | VIEW-02, VIEW-08 | — | N/A | unit/snapshot | `npm test -- markdown-viewer` | ✅ | ✅ green |
+| 3-W0-02 | W0 | 0 | CTX-01, CTX-02 | — | N/A | render | `npm test -- viewer-header` | ✅ | ✅ green |
+| 3-W0-03 | W0 | 0 | CTX-03, CTX-04 | — | N/A | unit | `npm test -- info-panel` | ✅ | ✅ green |
+| 3-repo | — | 1 | VIEW-01 | T-3-01 | getItemContent valida path traversal igual a getItem | unit | `npm test -- item-repository` | ✅ | ✅ green |
+| 3-viewer | — | 1 | VIEW-02, VIEW-08 | — | N/A | snapshot | `npm test -- markdown-viewer` | ✅ | ✅ green |
+| 3-header | — | 1 | CTX-01, CTX-02 | T-3-03 | paths absolutos nunca enviados ao cliente | render | `npm test -- viewer-header` | ✅ | ✅ green |
+| 3-panel | — | 2 | CTX-03, CTX-04 | — | N/A | unit | `npm test -- info-panel` | ✅ | ✅ green |
+| 3-dates | — | 2 | CTX-04 | — | N/A | unit | `npm test -- info-panel` | ✅ | ✅ green |
+| 3-download | — | 2 | CTX-02 | T-3-04 | Route Handler verifica auth() antes de servir | unit | `npm test -- raw-route` | ✅ | ✅ green |
 
 *Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
 
@@ -55,9 +56,9 @@ created: 2026-04-09
 
 ## Wave 0 Requirements
 
-- [ ] `src/__tests__/markdown-viewer.test.tsx` — VIEW-02, VIEW-08 (estrutura HTML, classe prose aplicada, render sem crash)
-- [ ] `src/__tests__/viewer-header.test.tsx` — CTX-01 (tópico › grupo), CTX-02 (botões presentes: download, apresentação desabilitado, ℹ️)
-- [ ] `src/__tests__/info-panel.test.tsx` — CTX-03 (toggle abre/fecha), CTX-04 (campos formatados)
+- [x] `src/__tests__/markdown-viewer.test.tsx` — VIEW-02, VIEW-08 (estrutura HTML, classe prose aplicada, render sem crash)
+- [x] `src/__tests__/viewer-header.test.tsx` — CTX-01 (tópico › grupo), CTX-02 (botões presentes: download, apresentação desabilitado, ℹ️)
+- [x] `src/__tests__/info-panel.test.tsx` — CTX-03 (toggle abre/fecha), CTX-04 (campos formatados)
 
 ---
 
@@ -85,11 +86,24 @@ created: 2026-04-09
 
 ## Validation Sign-Off
 
-- [ ] All tasks have `<automated>` verify or Wave 0 dependencies
-- [ ] Sampling continuity: no 3 consecutive tasks without automated verify
-- [ ] Wave 0 covers all MISSING references
-- [ ] No watch-mode flags
-- [ ] Feedback latency < 30s
-- [ ] `nyquist_compliant: true` set in frontmatter
+- [x] All tasks have `<automated>` verify or Wave 0 dependencies
+- [x] Sampling continuity: no 3 consecutive tasks without automated verify
+- [x] Wave 0 covers all MISSING references
+- [x] No watch-mode flags
+- [x] Feedback latency < 30s
+- [x] `nyquist_compliant: true` set in frontmatter
 
-**Approval:** pending
+**Approval:** 2026-04-09
+
+---
+
+## Validation Audit 2026-04-09
+
+| Metric | Count |
+|--------|-------|
+| Gaps found | 0 |
+| Resolved | 9 |
+| Escalated | 0 |
+| Corrections | 1 (3-dates: date-format → info-panel) |
+
+Todos os testes da Phase 3 existiam e passavam. VALIDATION.md atualizado retroativamente.
