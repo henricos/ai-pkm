@@ -79,3 +79,47 @@ describe("FsItemRepository", () => {
     expect(() => repo.getItem("../../../etc/passwd")).toThrow("Path traversal detectado");
   });
 });
+
+describe("FsItemRepository — Phase 3 methods", () => {
+  test("VIEW-01: getItemContent() retorna conteúdo Markdown sem frontmatter", () => {
+    vi.mocked(fs.readFileSync).mockReturnValue(
+      "---\nestado: rascunho\nmodelo: nota-conceito\ndata_captura: 2026-01-01\n---\n# Meu Conteúdo\n\nTexto aqui."
+    );
+    vi.mocked(fs.existsSync).mockReturnValue(true);
+    const repo = new FsItemRepository();
+    const content = repo.getItemContent("tecnologia/nota.md");
+    expect(content).toContain("# Meu Conteúdo");
+    expect(content).not.toContain("estado:");
+    expect(content).not.toContain("---");
+  });
+
+  test("T-3-01: getItemContent() lança Path traversal para id com ../", () => {
+    const repo = new FsItemRepository();
+    expect(() => repo.getItemContent("../../../etc/passwd")).toThrow("Path traversal detectado");
+  });
+
+  test("CTX-04: getItemFrontmatter() retorna campos do frontmatter incluindo tipo", () => {
+    vi.mocked(fs.readFileSync).mockReturnValue(
+      "---\ntipo: url-extrato\nestado: finalizado\nmodelo: url-extrato\ndata_captura: 2026-03-07\nurl: https://exemplo.com\nautores: [\"Autor Um\"]\n---\nConteúdo."
+    );
+    vi.mocked(fs.existsSync).mockReturnValue(true);
+    const repo = new FsItemRepository();
+    const fm = repo.getItemFrontmatter("tecnologia/url_exemplo.md");
+    expect(fm?.estado).toBe("finalizado");
+    expect(fm?.tipo).toBe("url-extrato");
+    expect(fm?.url).toBe("https://exemplo.com");
+    expect(fm?.autores).toEqual(["Autor Um"]);
+  });
+
+  test("T-3-01: getItemFrontmatter() lança Path traversal para id com ../", () => {
+    const repo = new FsItemRepository();
+    expect(() => repo.getItemFrontmatter("../../../etc/passwd")).toThrow("Path traversal detectado");
+  });
+
+  test("CTX-04: getItemFrontmatter() retorna null para arquivo inexistente", () => {
+    vi.mocked(fs.existsSync).mockReturnValue(false);
+    const repo = new FsItemRepository();
+    const fm = repo.getItemFrontmatter("tecnologia/inexistente.md");
+    expect(fm).toBeNull();
+  });
+});

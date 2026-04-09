@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import type { ItemRepository } from "./item-repository";
-import type { Item, Topic, Group, ItemType, ItemEstado } from "./types";
+import type { Item, Topic, Group, ItemType, ItemEstado, RawFrontmatter } from "./types";
 import { env } from "@/lib/env";
 
 /**
@@ -42,15 +42,8 @@ export class FsItemRepository implements ItemRepository {
   }
 
   getItem(id: string): Item | null {
-    // ID é path relativo URL-decoded (D-08)
     const decoded = decodeURIComponent(id);
-
-    // Segurança: validar que o path resolvido começa com pkmRoot
-    // (impede path traversal via ../ — T-1-10)
-    const absPath = path.resolve(this.pkmRoot, decoded);
-    if (!absPath.startsWith(this.pkmRoot + path.sep) && absPath !== this.pkmRoot) {
-      throw new Error(`Path traversal detectado: ${id}`);
-    }
+    const absPath = this.resolveAndValidatePath(id);
 
     if (!fs.existsSync(absPath)) return null;
 
@@ -93,6 +86,31 @@ export class FsItemRepository implements ItemRepository {
     // Fase 1: implementação stub — retorna vazio.
     // Fase futura: busca por nome nos índices (ARC-04 — seam preparada).
     return [];
+  }
+
+  getItemContent(id: string): string {
+    const absPath = this.resolveAndValidatePath(id);
+    if (!fs.existsSync(absPath)) return "";
+    const raw = fs.readFileSync(absPath, "utf-8");
+    const { content } = matter(raw);
+    return content.trim();
+  }
+
+  getItemFrontmatter(id: string): RawFrontmatter | null {
+    const absPath = this.resolveAndValidatePath(id);
+    if (!fs.existsSync(absPath)) return null;
+    const raw = fs.readFileSync(absPath, "utf-8");
+    const { data } = matter(raw);
+    return data as RawFrontmatter;
+  }
+
+  private resolveAndValidatePath(id: string): string {
+    const decoded = decodeURIComponent(id);
+    const absPath = path.resolve(this.pkmRoot, decoded);
+    if (!absPath.startsWith(this.pkmRoot + path.sep) && absPath !== this.pkmRoot) {
+      throw new Error(`Path traversal detectado: ${id}`);
+    }
+    return absPath;
   }
 
   private inferType(filename: string, relPath: string): ItemType {
