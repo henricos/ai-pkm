@@ -43,6 +43,23 @@ export interface Item {
   sidecarPath?: string;
 }
 
+/**
+ * Campos de frontmatter lidos diretamente do arquivo Markdown (Phase 3 — CTX-04)
+ * Usado pelo InfoPanel para exibir metadados de forma editorial.
+ * Campos opcionais são omitidos quando ausentes no frontmatter.
+ *
+ * D-16: tipo + estado → chips coloridos (top, maior destaque no InfoPanel)
+ */
+export interface RawFrontmatter {
+  tipo?: string;
+  estado: string;
+  modelo?: string;
+  data_captura?: string;
+  data_publicacao?: string;
+  url?: string;
+  autores?: string[];
+}
+
 /** Subtópico — nó filho de um tópico */
 export interface Subtopic {
   id: string;

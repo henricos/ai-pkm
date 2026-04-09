@@ -8,7 +8,7 @@
  * REGRA: Todos os consumers (Server Components, Route Handlers) dependem
  * desta interface, nunca diretamente de FsItemRepository.
  */
-import type { Item, Topic, Group } from "./types";
+import type { Item, Topic, Group, RawFrontmatter } from "./types";
 
 export interface ItemRepository {
   /**
@@ -35,4 +35,18 @@ export interface ItemRepository {
    * Fase futura: busca textual no conteúdo (ARC-04 — seam preparada).
    */
   searchByName(q: string): Item[];
+
+  /**
+   * Retorna o conteúdo Markdown puro do item, sem o bloco de frontmatter.
+   * Usado pelo MarkdownViewer (VIEW-01, VIEW-02).
+   * Lança Error se o ID contém path traversal.
+   */
+  getItemContent(id: string): string;
+
+  /**
+   * Retorna os campos de frontmatter do item para o InfoPanel (CTX-04).
+   * Retorna null se o arquivo não existir.
+   * Lança Error se o ID contém path traversal.
+   */
+  getItemFrontmatter(id: string): RawFrontmatter | null;
 }
