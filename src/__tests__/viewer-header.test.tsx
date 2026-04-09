@@ -71,11 +71,13 @@ describe("ViewerHeader", () => {
       />
     );
 
-    // O href codifica o itemId como path para o raw endpoint
-    const downloadLink = document.querySelector(
-      'a[href="/api/pkm/raw/tecnologia%2Fnota.md"]'
-    );
-    expect(downloadLink).not.toBeNull();
+    // Usa data-testid para evitar dependência de normalização de URL pelo jsdom
+    const downloadLink = screen.getByTestId("download-link");
+    expect(downloadLink).toBeTruthy();
+    const href = downloadLink.getAttribute("href") ?? "";
+    expect(href).toContain("/api/pkm/raw/");
+    expect(href).toContain("tecnologia");
+    expect(href).toContain("nota.md");
   });
 
   test("CTX-02: botão de apresentação está presente e desabilitado", () => {
