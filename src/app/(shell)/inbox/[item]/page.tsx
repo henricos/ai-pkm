@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { decodeInboxParam } from "@/lib/navigation/route-helpers";
 import { getItemById } from "@/lib/navigation/navigation-service";
-import { WorkspaceItemState } from "@/components/shell/workspace-item-state";
+import { ViewerPage } from "@/components/viewer/viewer-page";
 
 /**
  * Página de item da inbox — entrada URL-driven (D-23, D-26).
@@ -9,11 +9,9 @@ import { WorkspaceItemState } from "@/components/shell/workspace-item-state";
  * Segurança (T-02-06): decodifica params apenas via helper canônico
  * decodeInboxParam — nenhuma concatenação livre.
  *
- * Segurança (T-02-07): mostra apenas título/tipo/estado —
- * nenhum conteúdo bruto, path absoluto ou sidecar exposto.
- *
  * A autenticação já foi verificada no ShellLayout (T-02-05).
  * Cada item aberto entra no histórico normal do browser (D-24).
+ * O conteúdo raw é lido server-side via ViewerPage → FsItemRepository.
  */
 export default async function InboxItemPage({
   params,
@@ -32,5 +30,5 @@ export default async function InboxItemPage({
     notFound();
   }
 
-  return <WorkspaceItemState item={item} />;
+  return <ViewerPage item={item} />;
 }
