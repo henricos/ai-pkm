@@ -11,7 +11,7 @@
  * - Testes de arquivo binário verificam Content-Type correto por extensão
  */
 
-import { describe, test, expect, vi, beforeEach } from "vitest";
+import { describe, test, expect, vi, beforeEach, type Mock } from "vitest";
 
 // Mocks necessários antes do import do route handler
 vi.mock("@/lib/auth", () => ({
@@ -50,6 +50,16 @@ import { GET } from "@/app/api/pkm/raw/[...path]/route";
 import { auth } from "@/lib/auth";
 import { FsItemRepository } from "@/lib/pkm/fs-item-repository";
 import fs from "fs";
+import type { Session } from "next-auth";
+
+const mockedAuth = auth as unknown as Mock<() => Promise<Session | null>>;
+
+function createSession(): Session {
+  return {
+    user: { id: "1", name: "Henrico", email: "user@example.com" },
+    expires: "2099-01-01",
+  };
+}
 
 // ── T-3-04: autenticação obrigatória ─────────────────────────────────────────
 
@@ -69,7 +79,7 @@ describe("GET /api/pkm/raw/[...path]", () => {
 
   test("T-3-04: retorna 401 quando não autenticado", async () => {
     // Simula sessão nula (usuário não autenticado)
-    vi.mocked(auth).mockResolvedValue(null);
+    mockedAuth.mockResolvedValue(null);
 
     const request = new Request(
       "http://localhost:3000/api/pkm/raw/tecnologia/nota.md"
@@ -85,10 +95,7 @@ describe("GET /api/pkm/raw/[...path]", () => {
 
   test("CTX-02: retorna 200 com conteúdo quando autenticado (arquivo .md)", async () => {
     // Simula sessão autenticada
-    vi.mocked(auth).mockResolvedValue({
-      user: { id: "1", name: "Henrico", email: "user@example.com" },
-      expires: "2099-01-01",
-    });
+    mockedAuth.mockResolvedValue(createSession());
 
     const request = new Request(
       "http://localhost:3000/api/pkm/raw/tecnologia/nota.md"
@@ -108,10 +115,7 @@ describe("GET /api/pkm/raw/[...path]", () => {
   // ── CTX-02: download de arquivo binário — PDF ───────────────────────────────
 
   test("CTX-02: retorna 200 com Content-Type application/pdf para arquivo .pdf", async () => {
-    vi.mocked(auth).mockResolvedValue({
-      user: { id: "1", name: "Henrico", email: "user@example.com" },
-      expires: "2099-01-01",
-    });
+    mockedAuth.mockResolvedValue(createSession());
 
     const mockRepo = {
       getItemContent: vi.fn().mockReturnValue(""),
@@ -135,10 +139,7 @@ describe("GET /api/pkm/raw/[...path]", () => {
   // ── Arquivo não encontrado ───────────────────────────────────────────────────
 
   test("retorna 404 quando arquivo não existe no filesystem", async () => {
-    vi.mocked(auth).mockResolvedValue({
-      user: { id: "1", name: "Henrico", email: "user@example.com" },
-      expires: "2099-01-01",
-    });
+    mockedAuth.mockResolvedValue(createSession());
     vi.mocked(fs.existsSync).mockReturnValue(false);
 
     const request = new Request(
@@ -154,10 +155,7 @@ describe("GET /api/pkm/raw/[...path]", () => {
   // ── Path traversal ───────────────────────────────────────────────────────────
 
   test("retorna 400 para tentativa de path traversal", async () => {
-    vi.mocked(auth).mockResolvedValue({
-      user: { id: "1", name: "Henrico", email: "user@example.com" },
-      expires: "2099-01-01",
-    });
+    mockedAuth.mockResolvedValue(createSession());
 
     const mockRepo = {
       getItemContent: vi.fn(),

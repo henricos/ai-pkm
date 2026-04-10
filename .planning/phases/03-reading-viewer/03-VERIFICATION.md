@@ -1,8 +1,8 @@
 ---
 phase: 03-reading-viewer
 verified: 2026-04-10T00:49:23Z
-status: passed
-score: 5/5 success criteria verified (code level)
+status: verified_complete
+score: 5/5 success criteria verified + human UAT passed
 re_verification:
   previous_status: gaps_found
   previous_score: 13/17
@@ -36,8 +36,8 @@ human_verification:
 
 **Phase Goal:** Usuário lê conteúdo principal do item em um viewer rico e estável, com cabeçalho contextual e composição visual apropriada para leitura.
 **Verificado:** 2026-04-10T00:49:23Z
-**Status:** human_needed
-**Re-verificação:** Sim — após fechamento dos gaps da verificação anterior (03-VERIFICATION.md de 2026-04-09)
+**Status:** verified_complete
+**Re-verificação:** Sim — após fechamento dos gaps da verificação anterior e confirmação do `03-HUMAN-UAT.md`
 
 ## Objetivo Alcançado
 
@@ -51,7 +51,7 @@ human_verification:
 | SC-4 | Painel de informações abre dentro da área de conteúdo e apresenta metadados de forma editorial | ✓ VERIFICADO (codigo) / ? HUMANO (abertura real) | InfoPanel: chips D-16, Intl pt-BR, campos ausentes omitidos, slot D-18, Escape fecha — 8/8 testes verdes; crash corrigido (data_captura normalizada) |
 | SC-5 | Experiência não quebra em telas menores (mobile, WebView) | ✓ VERIFICADO (codigo) / ? HUMANO (visual) | max-w-prose, overflow-hidden nos containers, truncate nos spans — estrutura responsiva implementada |
 
-**Pontuação:** 5/5 success criteria verificados no nível de código (todos os 102 testes passando). Verificação visual humana ainda pendente para SC-2, SC-4 e SC-5.
+**Pontuação:** 5/5 success criteria verificados no nível de código e 6/6 checks de UAT humano aprovados. Fechamento oficial da fase concluído.
 
 ### Gaps da Verificação Anterior — Status
 
@@ -176,54 +176,25 @@ human_verification:
 
 Nenhum anti-padrão bloqueador encontrado.
 
-### Verificação Humana Necessária
+### Verificação Humana Concluída
 
-#### 1. Renderização completa do viewer no browser (SC-2)
+Referência: `03-HUMAN-UAT.md` com `status: passed` em 2026-04-10.
 
-**Teste:** Selecionar um item Markdown com código, tabelas, fórmulas ($$...$$), task lists e links externos
-**Esperado:** Área direita renderiza: syntax highlight Shiki, fórmulas KaTeX renderizadas (cifrão monetário sem ativar LaTeX), tabelas GFM formatadas, task lists com checkboxes, links externos em nova aba
-**Por que humano:** MarkdownViewer é Server Component assíncrono — não testável em jsdom. Shiki e KaTeX são plugins assíncronos que requerem runtime Node.js real.
-
-#### 2. Abertura do painel de informações sem crash (SC-4)
-
-**Teste:** Selecionar um item com `data_captura: 2026-03-07` (sem aspas no YAML) e clicar em ℹ️
-**Esperado:** InfoPanel abre sem crash RangeError, exibindo data formatada como "7 mar. 2026", chips de tipo+estado no topo, campos ausentes omitidos, painel empurra conteúdo (push layout, não overlay)
-**Por que humano:** Crash corrigido via normalização no servidor, mas abertura real do painel e push layout flex requerem browser com renderização React real.
-
-#### 3. Glassmorphism ao rolar (SC-1)
-
-**Teste:** Rolar o conteúdo de um item Markdown longo no viewer
-**Esperado:** Header fica sticky; após scrollTop > 8px aplica efeito glassmorphism (backdrop-blur + surface 70%); antes de rolar fica transparente
-**Por que humano:** Comportamento de scroll e efeito visual não verificáveis em jsdom.
-
-#### 4. Download autenticado e binários sem corrupção (CTX-02)
-
-**Teste:** Clicar no botão de download para um .md e para um PDF com sessão ativa
-**Esperado:** .md baixa sem frontmatter; PDF baixa sem corrupção; sem sessão retorna 401
-**Por que humano:** Autenticação real e comportamento de download de binários requerem servidor Next.js rodando.
-
-#### 5. Responsividade mobile (RUN-04 / SC-5)
-
-**Teste:** Abrir viewer em viewport de 375px ou redimensionar browser para tela estreita
-**Esperado:** Conteúdo não transborda horizontalmente, max-w-prose mantém legibilidade, header não quebra, painel de informações não quebra layout
-**Por que humano:** Responsividade visual requer inspeção em viewport real.
-
-#### 6. Arquivos não-Markdown exibem mensagem de formato não suportado
-
-**Teste:** Selecionar um item PDF ou imagem na árvore de navegação
-**Esperado:** Área de conteúdo exibe "Formato não suportado para visualização" com instrução de usar download — sem mostrar conteúdo binário bruto
-**Por que humano:** Branch por itemKind testado unitariamente (5/5 testes), mas renderização real no browser confirma a experiência completa.
+- Renderização Markdown rica no browser: PASS
+- InfoPanel abre sem crash com `data_captura` YAML não quoted: PASS
+- Header sticky com glassmorphism ao rolar: PASS
+- Download autenticado de `.md` e binários sem corrupção: PASS
+- Responsividade mobile em 375px: PASS
+- Itens não-Markdown exibem fallback de formato não suportado: PASS
 
 ## Sumário
 
-A Phase 3 está completamente implementada no nível de código com **102/102 testes passando**. Os dois gaps da verificação anterior foram fechados:
+A Phase 3 está completamente implementada no nível de código com **102/102 testes passando**. O bloqueio de `typecheck` pós-entrega também foi eliminado no fechamento oficial da fase. Os dois gaps da verificação anterior foram fechados:
 
 1. **markdown-viewer tests:** mock do componente assíncrono resolvido — 4/4 verdes
 2. **viewer-header download href:** estratégia de seleção corrigida via data-testid — 7/7 verdes
 
-Os quatro gaps do UAT (cifrão monetário, binários brutos, download corrompido, crash do painel) também foram corrigidos pelo plano 06 e estão marcados como `status: fixed` no 03-UAT.md.
-
-O status é `human_needed` porque os success criteria visuais do ROADMAP (renderização Shiki/KaTeX, glassmorphism, push layout, responsividade mobile) não são verificáveis programaticamente em jsdom e requerem inspeção no browser.
+Os quatro gaps do UAT (cifrão monetário, binários brutos, download corrompido, crash do painel) também foram corrigidos pelo plano 06 e estão marcados como `status: fixed` no 03-UAT.md. A verificação humana requerida foi concluída com aprovação integral em `03-HUMAN-UAT.md`.
 
 ---
 

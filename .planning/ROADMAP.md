@@ -13,8 +13,8 @@ O caminho da `v2` e transformar o PKM ja validado em CLI numa experiencia web se
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Secure Read Model Foundation** - Autenticacao single-user, runtime externo e modelo canonico read-only sobre o `pkm`.
-- [ ] **Phase 2: Navigation Shell** - Shell persistente com arvore, inbox separada, filtro estrutural e URLs navegaveis.
-- [ ] **Phase 3: Reading Viewer** - Viewer principal de Markdown com cabecalho contextual e composicao de leitura confiavel.
+- [x] **Phase 2: Navigation Shell** - Shell persistente com arvore, inbox separada, filtro estrutural e URLs navegaveis.
+- [x] **Phase 3: Reading Viewer** - Viewer principal de Markdown com cabecalho contextual e composicao de leitura confiavel.
 - [ ] **Phase 4: Asset Viewer and Item Context** - Tratamento de imagem, PDF, sidecars e fallbacks no mesmo item logico.
 - [ ] **Phase 5: Presentation Mode** - Modo de apresentacao interno com temas prontos e ponteiro laser temporario.
 
@@ -67,7 +67,14 @@ Plans:
   3. O cabecalho do viewer mostra titulo e acoes do item atual, incluindo download, entrada em apresentacao e acesso ao painel de informacoes.
   4. O painel de informacoes abre dentro da area de conteudo e apresenta metadados de forma editorial, sem despejar YAML cru nem parecer codigo-fonte.
   5. A experiencia nao quebra em telas menores a ponto de inviabilizar uso mobile ou empacotamento futuro em WebView.
-**Plans**: TBD
+**Plans**: 6 plans
+Plans:
+- [x] 03-01-PLAN.md — Wave 0 de testes do viewer e contratos de frontmatter
+- [x] 03-02-PLAN.md — Pipeline rica de Markdown com bibliotecas maduras
+- [x] 03-03-PLAN.md — Painel editorial de metadados e contexto do item
+- [x] 03-04-PLAN.md — ViewerHeader contextual com acoes e composicao de leitura
+- [x] 03-05-PLAN.md — Integracao do viewer na shell persistente e layout responsivo
+- [x] 03-06-PLAN.md — Fechamento dos gaps de UAT e re-verificacao final
 **UI hint**: yes
 
 ### Phase 4: Asset Viewer and Item Context
@@ -105,6 +112,6 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 |-------|----------------|--------|-----------|
 | 1. Secure Read Model Foundation | 4/4 | Completed | 2026-04-08 |
 | 2. Navigation Shell | 3/3 | Completed | 2026-04-08 |
-| 3. Reading Viewer | 5/5 | Completed | 2026-04-09 |
+| 3. Reading Viewer | 6/6 | Completed | 2026-04-10 |
 | 4. Asset Viewer and Item Context | 0/TBD | Not started | - |
 | 5. Presentation Mode | 0/TBD | Not started | - |

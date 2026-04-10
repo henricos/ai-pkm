@@ -1,11 +1,11 @@
 ---
 phase: 3
 slug: reading-viewer
-status: complete
+status: validated
 nyquist_compliant: true
 wave_0_complete: true
 created: 2026-04-09
-audited: 2026-04-09
+audited: 2026-04-10
 ---
 
 # Phase 3 — Validation Strategy
@@ -120,3 +120,16 @@ Todos os testes da Phase 3 existiam e passavam. VALIDATION.md atualizado retroat
 
 **Gap:** `app-shell.test.tsx:151` — teste de Phase 2 com expectativa incorreta (`inboxLabels.length === 0`) conflitava com a spec "seção inbox sempre visível". Corrigido para verificar cabeçalho presente e lista vazia.  
 **Suite final:** 94/94 testes passando.
+
+---
+
+## Validation Audit 2026-04-10 (phase closure)
+
+| Metric | Count |
+|--------|-------|
+| Test files passing | 11/11 |
+| Tests passing | 102/102 |
+| Typecheck errors | 0 |
+| Human UAT gaps | 0 |
+
+**Closure result:** `npm test` e `npm run typecheck` verdes; verificação humana concluída em `03-HUMAN-UAT.md`; fase apta para fechamento oficial.

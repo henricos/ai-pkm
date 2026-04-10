@@ -36,6 +36,8 @@ const frontmatterBase: RawFrontmatter = {
   data_captura: "2026-03-07",
 };
 
+const onClose = vi.fn();
+
 // ── CTX-03: visibilidade do painel ───────────────────────────────────────────
 
 describe("InfoPanel", () => {
@@ -43,6 +45,7 @@ describe("InfoPanel", () => {
     render(
       <InfoPanel
         panelOpen={true}
+        onClose={onClose}
         frontmatter={frontmatterBase}
         topic="tecnologia"
       />
@@ -61,6 +64,7 @@ describe("InfoPanel", () => {
     render(
       <InfoPanel
         panelOpen={true}
+        onClose={onClose}
         frontmatter={{ ...frontmatterBase, estado: "rascunho" }}
         topic="tecnologia"
       />
@@ -73,6 +77,7 @@ describe("InfoPanel", () => {
     render(
       <InfoPanel
         panelOpen={true}
+        onClose={onClose}
         frontmatter={{ ...frontmatterBase, estado: "finalizado" }}
         topic="tecnologia"
       />
@@ -85,6 +90,7 @@ describe("InfoPanel", () => {
     render(
       <InfoPanel
         panelOpen={true}
+        onClose={onClose}
         frontmatter={{ ...frontmatterBase, data_captura: "2026-03-07" }}
         topic="tecnologia"
       />
@@ -99,6 +105,7 @@ describe("InfoPanel", () => {
     render(
       <InfoPanel
         panelOpen={true}
+        onClose={onClose}
         frontmatter={frontmatterBase} // sem autores
         topic="tecnologia"
       />
@@ -113,6 +120,7 @@ describe("InfoPanel", () => {
     render(
       <InfoPanel
         panelOpen={true}
+        onClose={onClose}
         frontmatter={{ ...frontmatterBase, url: "https://exemplo.com" }}
         topic="tecnologia"
       />
@@ -126,6 +134,7 @@ describe("InfoPanel", () => {
     render(
       <InfoPanel
         panelOpen={true}
+        onClose={onClose}
         frontmatter={{ ...frontmatterBase, autores: ["João Silva"] }}
         topic="tecnologia"
       />
@@ -138,6 +147,7 @@ describe("InfoPanel", () => {
     render(
       <InfoPanel
         panelOpen={true}
+        onClose={onClose}
         frontmatter={{ ...frontmatterBase, data_publicacao: "2025-11" }}
         topic="tecnologia"
       />

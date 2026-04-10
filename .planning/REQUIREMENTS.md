@@ -112,33 +112,33 @@ Preenchido durante a criacao do roadmap.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| ACC-01 | Phase 1 | Pending |
-| ACC-02 | Phase 1 | Pending |
-| ACC-03 | Phase 1 | Pending |
-| NAV-01 | Phase 2 | Pending |
-| NAV-02 | Phase 2 | Pending |
-| NAV-03 | Phase 2 | Pending |
-| NAV-04 | Phase 2 | Pending |
-| NAV-05 | Phase 2 | Pending |
-| NAV-06 | Phase 2 | Pending |
-| NAV-07 | Phase 2 | Pending |
-| NAV-08 | Phase 2 | Pending |
-| VIEW-01 | Phase 3 | Pending |
-| VIEW-02 | Phase 3 | Pending |
-| VIEW-03 | Phase 3 | Pending |
+| ACC-01 | Phase 1 | Validated |
+| ACC-02 | Phase 1 | Validated |
+| ACC-03 | Phase 1 | Validated |
+| NAV-01 | Phase 2 | Validated |
+| NAV-02 | Phase 2 | Validated |
+| NAV-03 | Phase 2 | Validated |
+| NAV-04 | Phase 2 | Validated |
+| NAV-05 | Phase 2 | Validated |
+| NAV-06 | Phase 2 | Validated |
+| NAV-07 | Phase 2 | Validated |
+| NAV-08 | Phase 2 | Validated |
+| VIEW-01 | Phase 3 | Validated |
+| VIEW-02 | Phase 3 | Validated |
+| VIEW-03 | Phase 3 | Validated |
 | VIEW-04 | Phase 4 | Pending |
 | VIEW-05 | Phase 4 | Pending |
 | VIEW-06 | Phase 4 | Pending |
 | VIEW-07 | Phase 4 | Pending |
-| VIEW-08 | Phase 3 | Pending |
-| CTX-01 | Phase 3 | Pending |
-| CTX-02 | Phase 3 | Pending |
-| CTX-03 | Phase 3 | Pending |
-| CTX-04 | Phase 3 | Pending |
+| VIEW-08 | Phase 3 | Validated |
+| CTX-01 | Phase 3 | Validated |
+| CTX-02 | Phase 3 | Validated |
+| CTX-03 | Phase 3 | Validated |
+| CTX-04 | Phase 3 | Validated |
 | CTX-05 | Phase 4 | Pending |
-| FIL-01 | Phase 2 | Pending |
-| FIL-02 | Phase 2 | Pending |
-| FIL-03 | Phase 2 | Pending |
+| FIL-01 | Phase 2 | Validated |
+| FIL-02 | Phase 2 | Validated |
+| FIL-03 | Phase 2 | Validated |
 | PRS-01 | Phase 5 | Pending |
 | PRS-02 | Phase 5 | Pending |
 | PRS-03 | Phase 5 | Pending |
@@ -146,14 +146,14 @@ Preenchido durante a criacao do roadmap.
 | PRS-05 | Phase 5 | Pending |
 | PRS-06 | Phase 5 | Pending |
 | PRS-07 | Phase 5 | Pending |
-| ARC-01 | Phase 1 | Pending |
-| ARC-02 | Phase 1 | Pending |
-| ARC-03 | Phase 1 | Pending |
-| ARC-04 | Phase 1 | Pending |
-| RUN-01 | Phase 1 | Pending |
-| RUN-02 | Phase 1 | Pending |
-| RUN-03 | Phase 1 | Pending |
-| RUN-04 | Phase 3 | Pending |
+| ARC-01 | Phase 1 | Validated |
+| ARC-02 | Phase 1 | Validated |
+| ARC-03 | Phase 1 | Validated |
+| ARC-04 | Phase 1 | Validated |
+| RUN-01 | Phase 1 | Validated |
+| RUN-02 | Phase 1 | Validated |
+| RUN-03 | Phase 1 | Validated |
+| RUN-04 | Phase 3 | Validated |
 
 **Coverage:**
 - v2 requirements: 42 total
@@ -173,4 +173,4 @@ Itens explicitamente registrados como backlog futuro:
 
 ---
 *Requirements defined: 2026-04-06*
-*Last updated: 2026-04-06 after roadmap traceability update*
+*Last updated: 2026-04-10 after phase 3 official closure*
