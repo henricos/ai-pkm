@@ -8,7 +8,7 @@
  * REGRA: Todos os consumers (Server Components, Route Handlers) dependem
  * desta interface, nunca diretamente de FsItemRepository.
  */
-import type { Item, Topic, Group, RawFrontmatter } from "./types";
+import type { Item, Topic, Group, RawFrontmatter, BinaryContext } from "./types";
 
 export interface ItemRepository {
   /**
@@ -49,4 +49,12 @@ export interface ItemRepository {
    * Lança Error se o ID contém path traversal.
    */
   getItemFrontmatter(id: string): RawFrontmatter | null;
+
+  /**
+   * Retorna o contexto binário do item: conteúdo e frontmatter do sidecar .md adjacente.
+   * O arquivo binário em si NUNCA é lido como texto (D-07, CTX-05).
+   * Retorna { sidecarContent: null, sidecarFrontmatter: null } se não houver sidecar.
+   * Lança Error se o ID contém path traversal.
+   */
+  getBinaryContext(id: string): BinaryContext;
 }

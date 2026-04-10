@@ -73,6 +73,20 @@ export interface Topic {
   subtopicos?: Subtopic[];
 }
 
+/**
+ * Contexto de item binário — Phase 4 (CTX-05)
+ *
+ * Retornado por getBinaryContext(). Contém o sidecar .md adjacente
+ * parseado como Markdown + frontmatter. O arquivo binário em si nunca
+ * é lido como texto (D-07).
+ */
+export interface BinaryContext {
+  /** Corpo Markdown do sidecar sem frontmatter. Null se sidecar ausente. */
+  sidecarContent: string | null;
+  /** Frontmatter do sidecar. Null se sidecar ausente. */
+  sidecarFrontmatter: RawFrontmatter | null;
+}
+
 /** Grupo — pasta _grupo dentro de um tópico */
 export interface Group {
   /** Caminho relativo à raiz do repositório ai-pkm (ex: "pkm/tecnologia/_superapp/") */

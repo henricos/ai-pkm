@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import type { ItemRepository } from "./item-repository";
-import type { Item, Topic, Group, ItemType, ItemEstado, RawFrontmatter } from "./types";
+import type { Item, Topic, Group, ItemType, ItemEstado, RawFrontmatter, BinaryContext } from "./types";
 import { env } from "@/lib/env";
 
 /**
@@ -109,6 +109,28 @@ export class FsItemRepository implements ItemRepository {
     }
 
     return data as RawFrontmatter;
+  }
+
+  getBinaryContext(id: string): BinaryContext {
+    const absPath = this.resolveAndValidatePath(id);
+    const sidecarPath = absPath + ".md";
+
+    if (!fs.existsSync(sidecarPath)) {
+      return { sidecarContent: null, sidecarFrontmatter: null };
+    }
+
+    const raw = fs.readFileSync(sidecarPath, "utf-8");
+    const { content, data } = matter(raw);
+
+    // Normalizar data_captura igual a getItemFrontmatter
+    if (data.data_captura instanceof Date) {
+      data.data_captura = (data.data_captura as Date).toISOString().slice(0, 10);
+    }
+
+    return {
+      sidecarContent: content.trim() || null,
+      sidecarFrontmatter: data as RawFrontmatter,
+    };
   }
 
   /** Expõe resolveAndValidatePath como público para uso no route handler de download */
