@@ -35,10 +35,6 @@ interface ViewerPageProps {
 export async function ViewerPage({ item }: ViewerPageProps) {
   const repo = new FsItemRepository();
 
-  // Frontmatter sempre lido — usado pelo InfoPanel para todos os tipos
-  const rawFrontmatter = repo.getItemFrontmatter(item.id);
-  const frontmatter: RawFrontmatter = rawFrontmatter ?? { estado: item.estado };
-
   // Derivar topic e group do item.id
   const decoded = decodeURIComponent(item.id);
   const segments = decoded.split("/");
@@ -50,9 +46,11 @@ export async function ViewerPage({ item }: ViewerPageProps) {
 
   // ── Branch por itemKind (T-04-06: ANTES de qualquer getItemContent) ─────────
 
-  // Markdown — único branch que usa getItemContent()
+  // Markdown — único branch que usa getItemContent() e frontmatter próprio
   if (item.itemKind === "markdown") {
     const content = repo.getItemContent(item.id) ?? "";
+    const rawFrontmatter = repo.getItemFrontmatter(item.id);
+    const frontmatter: RawFrontmatter = rawFrontmatter ?? { estado: item.estado };
     return (
       <ViewerClientShell
         topic={topic}
@@ -67,8 +65,11 @@ export async function ViewerPage({ item }: ViewerPageProps) {
   }
 
   // Buscar contexto binário (sidecar) para todos os itens não-markdown (CTX-05)
+  // Binários não têm frontmatter próprio — usar o sidecar como fonte de metadados
   const binaryContext = repo.getBinaryContext(item.id);
   const sidecarContent = binaryContext?.sidecarContent ?? null;
+  // Sidecar tem estado/data_captura reais; fallback para dado da navegação
+  const frontmatter: RawFrontmatter = binaryContext?.sidecarFrontmatter ?? { estado: item.estado };
 
   // Derivar URLs de preview inline e download attachment (VIEW-05, D-04, D-06b)
   const encodedId = item.id;

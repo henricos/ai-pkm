@@ -191,9 +191,18 @@ export function InfoPanel({ panelOpen, onClose, frontmatter, topic, group, sidec
 
         {/* D-18 / CTX-05: Sidecar editorial — Phase 4 preenche este slot (D-08, D-09) */}
         {sidecarContent ? (
-          <div data-testid="sidecar-content-phase4" data-slot="sidecar-content-phase4">
-            <SidecarMarkdown content={sidecarContent} />
-          </div>
+          <>
+            {/* Divisor visual antes do contexto editorial */}
+            <div className="border-t border-outline-variant/20 -mx-5" aria-hidden="true" />
+            <div data-testid="sidecar-content-phase4" data-slot="sidecar-content-phase4">
+              <span className="text-[0.6875rem] font-semibold uppercase tracking-[0.05em] text-on-surface/40">
+                Contexto
+              </span>
+              <div className="mt-2">
+                <SidecarMarkdown content={sidecarContent} />
+              </div>
+            </div>
+          </>
         ) : (
           <div data-slot="sidecar-content-phase4" aria-hidden="true" />
         )}
