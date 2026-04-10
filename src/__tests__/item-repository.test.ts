@@ -123,3 +123,97 @@ describe("FsItemRepository — Phase 3 methods", () => {
     expect(fm).toBeNull();
   });
 });
+
+/**
+ * Phase 4 — Contratos de sidecar para itens binários (CTX-05)
+ *
+ * D-07: getBinaryContext() lê apenas o .md adjacente, nunca o binário em si.
+ * D-08: retorna sidecarContent e sidecarFrontmatter do .md adjacente.
+ * T-04-04: parse de sidecar usa react-markdown seguro, sem rehype-raw.
+ *
+ * ESTADO: RED — getBinaryContext ainda não existe na interface nem na implementação.
+ * Estes testes travam o contrato antes da implementação em planos posteriores.
+ */
+describe("FsItemRepository — getBinaryContext (CTX-05, D-07, D-08)", () => {
+  const sidecarMarkdown = "---\nestado: finalizado\n---\n# Contexto da imagem\n\nDescrição editorial.";
+  const binaryId = "tecnologia/_superapp/foto.png";
+
+  beforeEach(() => {
+    vi.mocked(fs.existsSync).mockImplementation((p: unknown) => {
+      // O arquivo binário existe
+      if (String(p).endsWith("foto.png")) return true;
+      // O sidecar .md existe
+      if (String(p).endsWith("foto.png.md")) return true;
+      return false;
+    });
+
+    vi.mocked(fs.readFileSync).mockImplementation((p: unknown, opts?: unknown) => {
+      const s = String(p);
+      if (s.endsWith("topicos.json")) return mockTopicos;
+      if (s.endsWith("grupos.json")) return mockGrupos;
+      // Sidecar .md é lido como texto normalmente
+      if (s.endsWith("foto.png.md")) return sidecarMarkdown;
+      // Se alguém tentar ler o binário com encoding utf-8, lançar erro para
+      // capturar o risco de parse incorreto (T-04-05, D-07)
+      if (s.endsWith("foto.png") && opts === "utf-8") {
+        throw new Error("Binary file should not be read as UTF-8 text");
+      }
+      return "";
+    });
+  });
+
+  test("D-07, D-08: getBinaryContext() retorna sidecarContent do .md adjacente sem ler o binário", () => {
+    const repo = new FsItemRepository();
+
+    // getBinaryContext deve existir na implementação (RED até Wave 1)
+    expect(typeof (repo as unknown as Record<string, unknown>).getBinaryContext).toBe("function");
+
+    const ctx = (repo as unknown as { getBinaryContext: (id: string) => { sidecarContent: string | null; sidecarFrontmatter: Record<string, unknown> | null } }).getBinaryContext(binaryId);
+
+    // Deve retornar o conteúdo Markdown do sidecar (sem o frontmatter)
+    expect(ctx.sidecarContent).not.toBeNull();
+    expect(ctx.sidecarContent).toContain("# Contexto da imagem");
+    expect(ctx.sidecarContent).not.toContain("estado:");
+  });
+
+  test("D-08: getBinaryContext() retorna sidecarFrontmatter do .md adjacente", () => {
+    const repo = new FsItemRepository();
+    const ctx = (repo as unknown as { getBinaryContext: (id: string) => { sidecarContent: string | null; sidecarFrontmatter: Record<string, unknown> | null } }).getBinaryContext(binaryId);
+
+    expect(ctx.sidecarFrontmatter).not.toBeNull();
+    expect(ctx.sidecarFrontmatter?.estado).toBe("finalizado");
+  });
+
+  test("D-07: getBinaryContext() NÃO lê o arquivo binário como UTF-8", () => {
+    const repo = new FsItemRepository();
+
+    // O mock lança se o binário for lido como utf-8
+    // Se a implementação ler o binário, este teste falhará com o erro do mock
+    expect(() => {
+      (repo as unknown as { getBinaryContext: (id: string) => unknown }).getBinaryContext(binaryId);
+    }).not.toThrow("Binary file should not be read as UTF-8 text");
+  });
+
+  test("D-07: getBinaryContext() retorna contexto nulo quando sidecar não existe", () => {
+    // Sem sidecar .md adjacente
+    vi.mocked(fs.existsSync).mockImplementation((p: unknown) => {
+      if (String(p).endsWith("foto.png")) return true;
+      if (String(p).endsWith("foto.png.md")) return false; // sidecar ausente
+      return false;
+    });
+
+    const repo = new FsItemRepository();
+    const ctx = (repo as unknown as { getBinaryContext: (id: string) => { sidecarContent: string | null; sidecarFrontmatter: Record<string, unknown> | null } }).getBinaryContext(binaryId);
+
+    // Contexto nulo quando sidecar não existe — item lógico estável sem erro
+    expect(ctx.sidecarContent).toBeNull();
+    expect(ctx.sidecarFrontmatter).toBeNull();
+  });
+
+  test("T-3-01: getBinaryContext() lança Path traversal para id com ../", () => {
+    const repo = new FsItemRepository();
+    expect(() => {
+      (repo as unknown as { getBinaryContext: (id: string) => unknown }).getBinaryContext("../../../etc/passwd");
+    }).toThrow("Path traversal detectado");
+  });
+});
