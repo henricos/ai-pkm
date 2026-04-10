@@ -65,3 +65,6 @@ Desktop.ini
 
 # Repositórios locais montados
 /pkm
+
+# Arquivos temporários locais
+/tmp
