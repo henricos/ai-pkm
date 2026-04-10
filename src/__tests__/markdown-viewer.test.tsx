@@ -5,6 +5,7 @@
  * - VIEW-02: renderiza Markdown sem crash, links externos em nova aba,
  *            links internos navegam na shell
  * - VIEW-08: aplica classe prose e prose-sm ao container article
+ *            e usa um wrapper centralizado com largura fluida e teto amplo
  *
  * Notas de implementação:
  * 1. MarkdownViewer é async Server Component — chamar como função e renderizar
@@ -64,7 +65,10 @@ vi.mock("rehype-katex", () => ({ default: () => {} }));
 vi.mock("@shikijs/rehype", () => ({ default: () => {} }));
 
 // Import real
-import { MarkdownViewer } from "@/components/viewer/markdown-viewer";
+import {
+  MarkdownViewer,
+  preserveBlockquoteLineBreaks,
+} from "@/components/viewer/markdown-viewer";
 
 // ── VIEW-02: renderização básica ─────────────────────────────────────────────
 
@@ -83,6 +87,50 @@ describe("MarkdownViewer", () => {
     const article = document.querySelector("article");
     expect(article).not.toBeNull();
     expect(article?.className).toContain("prose");
+    expect(article?.className).toContain("max-w-none");
+  });
+
+  test("VIEW-08: centraliza o markdown em wrapper com largura responsiva", async () => {
+    render(await MarkdownViewer({ content: "Texto de exemplo." }));
+
+    const content = screen.getByTestId("markdown-content");
+    const wrapper = content.parentElement;
+
+    expect(wrapper).not.toBeNull();
+    expect(wrapper?.className).toContain("mx-auto");
+    expect(wrapper?.className).toContain("max-w-[80rem]");
+  });
+
+  test('preserva quebras de linha em sequências de ">"', () => {
+    const input = [
+      "> **Autores:** Tiago Forte",
+      "> **Plataforma:** Web",
+      "> **Publicado em:** 2023-02-24",
+      "> **Original:** [https://fortelabs.com/blog/para/](https://fortelabs.com/blog/para/)",
+    ].join("\n");
+
+    const output = preserveBlockquoteLineBreaks(input);
+
+    expect(output).toContain("> **Autores:** Tiago Forte  \n");
+    expect(output).toContain("> **Plataforma:** Web  \n");
+    expect(output).toContain("> **Publicado em:** 2023-02-24  \n");
+    expect(output.endsWith(")")).toBe(true);
+  });
+
+  test('não duplica quebra explícita já existente em sequências de ">"', () => {
+    const input = [
+      "> **Autores:** Tiago Forte  ",
+      "> **Plataforma:** Web<br />",
+      "> **Publicado em:** 2023-02-24",
+    ].join("\n");
+
+    const output = preserveBlockquoteLineBreaks(input);
+
+    expect(output).toContain("> **Autores:** Tiago Forte  \n");
+    expect(output).toContain("> **Plataforma:** Web<br />\n");
+    expect(output).toContain("> **Publicado em:** 2023-02-24");
+    expect(output).not.toContain("> **Autores:** Tiago Forte    \n");
+    expect(output).not.toContain("> **Plataforma:** Web<br />  \n");
   });
 
   test("VIEW-02: links externos recebem target=_blank e rel=noopener noreferrer", async () => {
