@@ -34,7 +34,7 @@ export async function MarkdownViewer({ content }: MarkdownViewerProps) {
       data-testid="markdown-content"
     >
       <MarkdownAsync
-        remarkPlugins={[remarkGfm, remarkMath]}
+        remarkPlugins={[remarkGfm, [remarkMath, { singleDollarTextMath: false }]]}
         rehypePlugins={[
           rehypeKatex,
           [rehypeShiki, { theme: "github-light" }],
