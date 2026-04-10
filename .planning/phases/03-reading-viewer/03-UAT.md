@@ -1,9 +1,9 @@
 ---
 status: resolved
 phase: 03-reading-viewer
-source: [03-01-SUMMARY.md, 03-02-SUMMARY.md, 03-03-SUMMARY.md, 03-04-SUMMARY.md, 03-05-SUMMARY.md]
+source: [03-01-SUMMARY.md, 03-02-SUMMARY.md, 03-03-SUMMARY.md, 03-04-SUMMARY.md, 03-05-SUMMARY.md, 03-06-SUMMARY.md, 03-HUMAN-UAT.md]
 started: 2026-04-09T22:52:14Z
-updated: 2026-04-09T22:53:00Z
+updated: 2026-04-10T00:55:00Z
 ---
 
 ## Current Test
@@ -14,9 +14,8 @@ updated: 2026-04-09T22:53:00Z
 
 ### 1. Renderização de Markdown
 expected: Ao clicar em qualquer item na LeftRail (biblioteca ou inbox), o conteúdo aparece renderizado como Markdown rico: headings com hierarquia visual, negrito/itálico, listas, tabelas GFM, blocos de código com syntax highlighting (Shiki) — não texto bruto com frontmatter visível.
-result: issue
-reported: "markdown .md renderiza ok sem frontmatter. mas: (1) cifrão ($) em texto comum ativa LaTeX math mode — ex: valor monetário gera erros KaTeX com chars Unicode pt-BR (ã, õ, —, –); (2) .pdf mostra fonte bruto ao invés de renderizar; (3) .excalidraw mostra JSON bruto ao invés de diagrama; (4) .jpg mostra fonte ao invés de imagem — provável efeito colateral do LaTeX ativado pelo fonte"
-severity: major
+result: pass
+note: "Reverificado após 03-06: cifrão monetário não ativa LaTeX, Markdown rico permanece estável e itens não-Markdown não exibem conteúdo bruto."
 
 ### 2. Cabeçalho sticky com breadcrumb
 expected: O ViewerHeader aparece fixo no topo da área de conteúdo. Lado esquerdo mostra "TÓPICO › GRUPO" (maiúsculas, rastreável) e um chip de estado do item (ex: "rascunho" ou "finalizado"). Para itens da inbox, exibe "INBOX".
@@ -28,27 +27,21 @@ result: pass
 
 ### 4. Download do arquivo raw
 expected: O botão de download no ViewerHeader (ícone de download) aciona o download do arquivo Markdown bruto. O browser abre diálogo de salvar ou baixa diretamente o arquivo .md com o conteúdo original (incluindo frontmatter).
-result: issue
-reported: "MD baixou sem frontmatter (usuário acha que pode ser melhor assim). PDF, JPG e Excalidraw baixaram corrompidos — suspeita de problema de encoding no path para arquivos binários"
-severity: major
+result: pass
+note: "Reverificado após 03-06: binários baixam sem corrupção; para .md, o comportamento final aceito é download sem frontmatter."
 
 ### 5. Toggle do painel de informações
 expected: Clicar no botão ℹ️ no ViewerHeader abre um painel lateral direito (280px) com metadados do item. Clicar novamente fecha o painel. O painel empurra o conteúdo para a esquerda (push layout) — não sobrepõe.
-result: issue
-reported: "ao clicar gera crash: RangeError: Invalid time value em formatDataCaptura (info-panel.tsx:37) — Intl.DateTimeFormat.format() recebe data inválida, provavelmente campo data_captura com formato inesperado"
-severity: blocker
+result: pass
+note: "Reverificado após 03-06: painel abre sem crash, com push layout e metadados formatados."
 
 ### 6. Fecha painel com Escape
 expected: Com o painel de informações aberto, pressionar a tecla Escape fecha o painel automaticamente.
-result: blocked
-blocked_by: prior-phase
-reason: "painel crasha ao abrir (teste 5) — impossível testar Escape sem painel funcionando"
+result: pass
 
 ### 7. Metadados formatados em pt-BR no painel
 expected: O painel de informações exibe os metadados do item formatados: datas em português (ex: "7 mar. 2026"), URL como link clicável, autores como chips, estado e tipo com destaque. Campos ausentes não aparecem (sem "N/A" ou campos vazios).
-result: blocked
-blocked_by: prior-phase
-reason: "painel crasha ao abrir (teste 5) — impossível testar metadados sem painel funcionando"
+result: pass
 
 ### 8. Links externos abrem em nova aba
 expected: Links externos no conteúdo Markdown (iniciando com http:// ou https://) abrem em nova aba (target="_blank"). Links internos navegam normalmente sem abrir nova aba.
@@ -57,11 +50,11 @@ result: pass
 ## Summary
 
 total: 8
-passed: 3
-issues: 3
+passed: 8
+issues: 0
 pending: 0
 skipped: 0
-blocked: 2
+blocked: 0
 
 ## Gaps
 
