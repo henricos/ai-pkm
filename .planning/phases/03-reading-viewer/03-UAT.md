@@ -1,5 +1,5 @@
 ---
-status: diagnosed
+status: resolved
 phase: 03-reading-viewer
 source: [03-01-SUMMARY.md, 03-02-SUMMARY.md, 03-03-SUMMARY.md, 03-04-SUMMARY.md, 03-05-SUMMARY.md]
 started: 2026-04-09T22:52:14Z
@@ -66,7 +66,7 @@ blocked: 2
 ## Gaps
 
 - truth: "Cifrão ($) em texto comum não deve ativar math mode LaTeX"
-  status: failed
+  status: fixed
   reason: "User reported: valores monetários com $ disparam KaTeX, gerando erros com chars Unicode pt-BR (ã, õ, —, –)"
   severity: major
   test: 1
@@ -79,7 +79,7 @@ blocked: 2
   debug_session: ""
 
 - truth: "Arquivos não-Markdown (PDF, Excalidraw, imagens) devem exibir visualização adequada ou mensagem de tipo não suportado — não conteúdo bruto"
-  status: failed
+  status: fixed
   reason: "User reported: .pdf mostra fonte bruto; .excalidraw mostra JSON bruto; .jpg mostra fonte bruto"
   severity: major
   test: 1
@@ -92,7 +92,7 @@ blocked: 2
   debug_session: ""
 
 - truth: "Download de arquivos binários (PDF, JPG, Excalidraw) deve servir o arquivo original sem corrupção"
-  status: failed
+  status: fixed
   reason: "User reported: PDF, JPG e Excalidraw baixaram corrompidos"
   severity: major
   test: 4
@@ -108,7 +108,7 @@ blocked: 2
   debug_session: ""
 
 - truth: "Painel de informações abre sem crash ao clicar ℹ️"
-  status: failed
+  status: fixed
   reason: "User reported: crash RangeError: Invalid time value em formatDataCaptura (info-panel.tsx:37)"
   severity: blocker
   test: 5

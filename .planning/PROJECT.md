@@ -22,7 +22,7 @@ Permitir operar o PKM com auxilio de IA, alternando entre uma experiencia visual
 - [ ] Entregar uma interface web para navegacao e exibicao do acervo PKM, sem capacidades de edicao manual
 - [ ] Exigir autenticacao single-user na interface web, inclusive em ambiente local/dev, com credenciais configuradas fora do repositorio
 - [ ] Exibir uma arvore navegavel com topicos, subtopicos, grupos, arquivos e inbox, com painel esquerdo retratil
-- [ ] Renderizar Markdown com boa fidelidade visual, usando bibliotecas maduras para formulas, blocos de codigo e formatacao rica
+- ✓ Renderizar Markdown com boa fidelidade visual, usando bibliotecas maduras para formulas, blocos de codigo e formatacao rica — Validado na Phase 3
 - [ ] Exibir imagens como item principal com boa experiencia de visualizacao, mantendo sidecars textuais ocultos da arvore e acessiveis no viewer
 - [ ] Oferecer modo de apresentacao minimo com tela cheia do viewer, recolhimento do painel esquerdo, temas de leitura/apresentacao e ponteiro laser temporario
 - [ ] Implementar busca textual simples por nome de arquivo, conteudo Markdown e sidecars textuais, sem indexar frontmatter
@@ -93,4 +93,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-04-06 after initialization*
+*Last updated: 2026-04-10 — Phase 3 complete (reading-viewer)*
