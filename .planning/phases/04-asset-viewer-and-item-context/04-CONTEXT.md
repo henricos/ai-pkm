@@ -17,11 +17,13 @@ Completar o viewer para itens nao-Markdown da `v2`: imagens e PDFs passam a abri
 - **D-01:** Imagens abrem como conteudo principal do viewer, centralizadas e tratadas como peca principal da tela, nao como anexo secundario.
 - **D-02:** A experiencia de imagem deve ser clean e editorial, sem barras, molduras ou chrome pesado que destoem do restante da shell.
 - **D-03:** O comportamento base e `object-contain` com enquadramento confortavel e controles minimos de zoom in/out + reset simples. Pan livre, toolbar extensa e outras ferramentas avancadas nao sao prioridade.
+- **D-03b:** A implementacao de imagem deve priorizar solucao leve no stack atual (HTML/CSS/React simples) antes de considerar biblioteca dedicada de media viewer.
 
 ### Viewer de PDF
 - **D-04:** PDF usa preview inline basico e limpo dentro do viewer quando o navegador suportar, sem UI carregada nem abrir outra aba por padrao.
 - **D-05:** O foco do PDF e o conteudo. Controles como busca interna, barra rica, thumbnails e chrome de leitor completo sao extras e nao obrigatorios nesta fase.
 - **D-06:** O download continua sendo a acao normal do browser a partir do botao existente no header; nao e necessario abrir outra aba nem criar fluxo alternativo.
+- **D-06b:** A estrategia preferencial para PDF nesta fase e aproveitar preview inline nativo do browser antes de pesquisar ou introduzir stacks mais pesadas como leitor dedicado.
 
 ### Sidecar e contexto complementar
 - **D-07:** Binario + sidecar continuam sendo um unico item logico: o sidecar nao reaparece na navegacao e entra apenas como contexto do item principal.
@@ -34,13 +36,13 @@ Completar o viewer para itens nao-Markdown da `v2`: imagens e PDFs passam a abri
 
 ### Preview de Excalidraw
 - **D-12:** Ha preferencia explicita por preview somente leitura de `.excalidraw`, sem editor embutido e sem virar uma subfase de edicao.
-- **D-13:** Se o preview read-only de Excalidraw for viavel com baixo custo e sem introduzir uma superficie de edicao, ele deve entrar nesta fase; caso contrario, o planner pode definir fallback claro sem expandir escopo.
+- **D-13:** Preview read-only de `.excalidraw` nao e compromisso desta fase. So deve entrar se for trivial, de baixo custo e claramente sem superficie de edicao; caso contrario, o fallback atual de formato nao suportado e aceitavel e nao bloqueia a fase.
 
 ### the agent's Discretion
-- Biblioteca concreta de zoom/preview de imagem, desde que preserve a experiencia clean e evite chrome pesado.
-- Estrategia tecnica exata de preview inline de PDF, desde que seja basica, embutida e degrade para download sem outra aba obrigatoria.
+- Biblioteca concreta de zoom/preview de imagem, apenas se a implementacao leve no stack atual se mostrar insuficiente e desde que preserve a experiencia clean e evite chrome pesado.
+- Estrategia tecnica exata de preview inline de PDF, desde que priorize a opcao nativa e permaneça basica, embutida e degrade para download sem outra aba obrigatoria.
 - Forma exata de renderizar o Markdown do sidecar dentro do `InfoPanel`, desde que pareca contexto editorial e nao um segundo viewer competindo com o principal.
-- Viabilidade tecnica final do preview read-only de `.excalidraw`, desde que qualquer solucao mantenha ausencia de edicao.
+- Viabilidade tecnica final do preview read-only de `.excalidraw`, mas sem transformar isso em trilha principal de pesquisa desta fase.
 
 </decisions>
 
@@ -49,8 +51,9 @@ Completar o viewer para itens nao-Markdown da `v2`: imagens e PDFs passam a abri
 
 - "O importante e focar no conteudo" foi a direcao central para imagem e PDF: o viewer nao deve introduzir barras, bordas ou UI chamativa que brigue com a leitura.
 - Para PDFs, zoom e find foram explicitamente classificados como extras, nao como alvo principal da fase.
+- Para PDFs, a primeira aposta deve ser preview inline nativo do browser; stacks dedicadas de leitura so entram se houver blocker real.
 - O sidecar e um `.md` associado ao binario, nao um dump de frontmatter; por isso ele deve ser exibido como conteudo complementar, nao como metadado tecnico.
-- Excalidraw com preview e desejavel, mas apenas se continuar claramente read-only e nao contaminar a fase com capacidades de edicao.
+- Excalidraw com preview e desejavel apenas como bonus de baixo custo; se exigir investigacao ampla, biblioteca pesada ou risco de edicao, o fallback atual basta nesta fase.
 
 </specifics>
 
