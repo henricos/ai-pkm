@@ -87,7 +87,11 @@ Plans:
   3. Sidecars textuais deixam de poluir a navegacao e passam a aparecer apenas como contexto do item binario principal.
   4. Quando um arquivo nao tem preview renderizavel, o usuario recebe mensagem clara e ainda consegue baixar o arquivo diretamente.
   5. Binarios com sidecar exibem o texto complementar dentro do painel de informacoes do item principal.
-**Plans**: TBD
+**Plans**: 3 plans
+Plans:
+- [ ] 04-01-PLAN.md — Wave 0 de testes para imagem, PDF, sidecar e rota de preview inline
+- [ ] 04-02-PLAN.md — Contrato de sidecar no ItemRepository + rota autenticada de preview inline
+- [ ] 04-03-PLAN.md — Viewers leves de imagem/PDF + sidecar no InfoPanel + fallback editorial
 **UI hint**: yes
 
 ### Phase 5: Presentation Mode
