@@ -18,6 +18,7 @@ import { FsItemRepository } from "@/lib/pkm/fs-item-repository";
 import { MarkdownViewer } from "@/components/viewer/markdown-viewer";
 import { ViewerClientShell } from "@/components/viewer/viewer-client-shell";
 import type { RawFrontmatter } from "@/lib/pkm/types";
+import type { NavigationItemKind } from "@/lib/navigation/navigation-types";
 
 interface ViewerPageProps {
   item: {
@@ -25,6 +26,7 @@ interface ViewerPageProps {
     label: string;
     scope: string;
     estado: "rascunho" | "finalizado";
+    itemKind: NavigationItemKind;
   };
 }
 
@@ -47,6 +49,28 @@ export async function ViewerPage({ item }: ViewerPageProps) {
     ? segments.find((s, i) => i > 0 && i < segments.length - 1 && s.startsWith("_"))
     : undefined;
   const group = groupSegment?.replace(/^_/, "") ?? undefined;
+
+  // Bloquear formatos não-Markdown antes de chamar MarkdownViewer (gap UAT #2)
+  if (item.itemKind !== "markdown") {
+    return (
+      <ViewerClientShell
+        topic={topic}
+        group={group}
+        estado={item.estado}
+        itemId={item.id}
+        frontmatter={frontmatter}
+      >
+        <div
+          className="flex flex-col items-center justify-center h-64 gap-3 text-on-surface/40"
+          data-testid="unsupported-format"
+        >
+          <span className="text-4xl" aria-hidden="true">📄</span>
+          <p className="text-sm">Formato não suportado para visualização</p>
+          <p className="text-xs">Use o botão de download para acessar o arquivo</p>
+        </div>
+      </ViewerClientShell>
+    );
+  }
 
   return (
     <ViewerClientShell
