@@ -23,6 +23,7 @@ import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 import rehypeShiki from "@shikijs/rehype";
+import { shikiRehypeOptions } from "@/lib/markdown/shiki";
 
 interface MarkdownViewerProps {
   content: string;
@@ -53,10 +54,7 @@ export async function MarkdownViewer({ content }: MarkdownViewerProps) {
       >
         <MarkdownAsync
           remarkPlugins={[remarkGfm, [remarkMath, { singleDollarTextMath: false }]]}
-          rehypePlugins={[
-            rehypeKatex,
-            [rehypeShiki, { theme: "github-light" }],
-          ]}
+          rehypePlugins={[rehypeKatex, [rehypeShiki, shikiRehypeOptions]]}
           components={{
             a({ href, children, ...props }) {
               const isExternal = href?.startsWith("http://") || href?.startsWith("https://");

@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import type { NavigationSnapshot } from "@/lib/navigation/navigation-types";
+import { appBrand } from "@/lib/app-brand";
 import { LeftRail } from "@/components/shell/left-rail";
 
 interface AppShellProps {
@@ -34,10 +35,19 @@ export function AppShell({ snapshot, children, activeHref: activeHrefProp }: App
   const pathname = usePathname();
   const activeHref = activeHrefProp ?? pathname ?? undefined;
   const [railOpen, setRailOpen] = useState(true);
+  const [workspacePending, setWorkspacePending] = useState(false);
 
   const toggleRail = useCallback(() => {
     setRailOpen((prev) => !prev);
   }, []);
+
+  const handleNavigationStart = useCallback(() => {
+    setWorkspacePending(true);
+  }, []);
+
+  useEffect(() => {
+    setWorkspacePending(false);
+  }, [pathname]);
 
   return (
     <div className="flex h-screen overflow-hidden bg-surface">
@@ -58,7 +68,7 @@ export function AppShell({ snapshot, children, activeHref: activeHrefProp }: App
               className="text-[0.6875rem] font-semibold uppercase tracking-[0.05em] text-on-surface/40 truncate"
               aria-hidden="true"
             >
-              PKM
+              {appBrand.appName}
             </span>
           )}
         </div>
@@ -69,7 +79,13 @@ export function AppShell({ snapshot, children, activeHref: activeHrefProp }: App
           className="flex-1 overflow-hidden min-h-0"
           aria-hidden={!railOpen}
         >
-          {railOpen && <LeftRail snapshot={snapshot} activeHref={activeHref} />}
+          {railOpen && (
+            <LeftRail
+              snapshot={snapshot}
+              activeHref={activeHref}
+              onNavigationStart={handleNavigationStart}
+            />
+          )}
         </div>
 
         {/* Toggle << / >> posicionado na borda inferior */}
@@ -103,9 +119,16 @@ export function AppShell({ snapshot, children, activeHref: activeHrefProp }: App
 
       {/* ── Área principal (workspace) ── */}
       <main
-        className="flex-1 min-w-0 h-full overflow-y-auto bg-surface-container-lowest"
+        className="relative flex-1 min-w-0 h-full overflow-y-auto bg-surface-container-lowest"
         aria-label="Área de conteúdo"
       >
+        {workspacePending && (
+          <div className="pointer-events-none absolute inset-x-0 top-0 z-50">
+            <div className="h-0.5 overflow-hidden bg-surface-container">
+              <div className="workspace-loading-bar h-full w-1/3" />
+            </div>
+          </div>
+        )}
         {children}
       </main>
     </div>

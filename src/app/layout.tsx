@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { cn } from "@/lib/utils";
+import { appBrand } from "@/lib/app-brand";
 import "./globals.css";
 
 const inter = localFont({
@@ -31,8 +32,11 @@ const inter = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "ai-pkm",
-  description: "Plataforma de gestão de conhecimento pessoal operada por IA.",
+  title: {
+    default: appBrand.appName,
+    template: `${appBrand.appName} · %s`,
+  },
+  description: appBrand.appDescription,
 };
 
 export default function RootLayout({

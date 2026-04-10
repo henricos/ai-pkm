@@ -260,6 +260,33 @@ body {
   background: color-mix(in srgb, var(--color-on-surface) 50%, transparent);
 }
 
+@keyframes workspace-loading {
+  0% {
+    transform: translateX(-140%);
+    opacity: 0.2;
+  }
+
+  20% {
+    opacity: 0.7;
+  }
+
+  100% {
+    transform: translateX(360%);
+    opacity: 0.2;
+  }
+}
+
+.workspace-loading-bar {
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--color-on-surface) 8%, transparent),
+    color-mix(in srgb, var(--color-on-surface) 28%, transparent),
+    color-mix(in srgb, var(--color-on-surface) 14%, transparent)
+  );
+  box-shadow: 0 0 16px color-mix(in srgb, var(--color-on-surface) 10%, transparent);
+  animation: workspace-loading 1s ease-in-out infinite;
+}
+
 @theme inline {
   --font-heading: var(--font-sans);
   --font-sans: var(--font-sans);

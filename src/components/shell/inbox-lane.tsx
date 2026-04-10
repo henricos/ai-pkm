@@ -17,6 +17,7 @@
  */
 
 import React from "react";
+import Link from "next/link";
 import type { InboxEntry } from "@/lib/navigation/navigation-types";
 import { ItemKindIcon } from "@/components/navigation/item-kind-icon";
 
@@ -25,13 +26,14 @@ interface InboxLaneProps {
   entries: InboxEntry[];
   /** href do item ativo na URL atual */
   activeHref?: string;
+  onNavigationStart?: () => void;
 }
 
 /**
  * Lista compacta da inbox.
  * Componente separado para garantir que a inbox nunca passe pelo filtro estrutural.
  */
-export function InboxLane({ entries, activeHref }: InboxLaneProps) {
+export function InboxLane({ entries, activeHref, onNavigationStart }: InboxLaneProps) {
   return (
     <section aria-label="Inbox" className="px-3 py-2">
       {/* Cabeçalho sempre visível */}
@@ -59,8 +61,12 @@ export function InboxLane({ entries, activeHref }: InboxLaneProps) {
           const isActive = activeHref === entry.href;
           return (
             <li key={entry.id}>
-              <a
+              <Link
                 href={entry.href}
+                prefetch
+                onClick={() => {
+                  if (!isActive) onNavigationStart?.();
+                }}
                 aria-current={isActive ? "page" : undefined}
                 title={entry.label}
                 className={[
@@ -94,7 +100,7 @@ export function InboxLane({ entries, activeHref }: InboxLaneProps) {
                     title="rascunho"
                   />
                 )}
-              </a>
+              </Link>
             </li>
           );
         })}

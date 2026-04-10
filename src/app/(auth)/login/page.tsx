@@ -2,6 +2,7 @@ import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { LoginForm } from "@/components/login-form";
 import { Suspense } from "react";
+import { appBrand } from "@/lib/app-brand";
 
 export default async function LoginPage() {
   // Se já autenticado, redirecionar para /
@@ -19,7 +20,7 @@ export default async function LoginPage() {
               {/* Símbolo sem dependência de Material Icons na Fase 1 */}
               <span className="text-tertiary font-mono text-lg font-bold leading-none">◈</span>
               <span className="text-[1.125rem] font-semibold tracking-tight text-on-surface">
-                ai-pkm
+                {appBrand.appName}
               </span>
             </div>
             <h1 className="text-[1.5rem] font-medium tracking-[-0.01em] text-on-surface">

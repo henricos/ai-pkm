@@ -29,6 +29,7 @@ interface NavigationTreeProps {
   ancestorsByItemId: Record<string, string[]>;
   /** Query de filtro ativo — quando não-vazio, todos os nós são expandidos */
   filterQuery?: string;
+  onNavigationStart?: () => void;
 }
 
 function computeInitialExpanded(
@@ -74,6 +75,7 @@ export function NavigationTree({
   activeHref,
   ancestorsByItemId,
   filterQuery = "",
+  onNavigationStart,
 }: NavigationTreeProps) {
   const [expandedIds, setExpandedIds] = useState<Set<string>>(() =>
     computeInitialExpanded(activeHref, tree, ancestorsByItemId),
@@ -145,6 +147,7 @@ export function NavigationTree({
             expandedIds={expandedIds}
             onToggle={handleToggle}
             depth={0}
+            onNavigationStart={onNavigationStart}
           />
         ))}
       </ul>

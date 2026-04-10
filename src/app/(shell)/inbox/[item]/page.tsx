@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { decodeInboxParam } from "@/lib/navigation/route-helpers";
 import { getItemById } from "@/lib/navigation/navigation-service";
@@ -13,6 +14,24 @@ import { ViewerPage } from "@/components/viewer/viewer-page";
  * Cada item aberto entra no histórico normal do browser (D-24).
  * O conteúdo raw é lido server-side via ViewerPage → FsItemRepository.
  */
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ item: string }>;
+}): Promise<Metadata> {
+  const resolvedParams = await params;
+  const itemId = decodeInboxParam(resolvedParams.item);
+  const item = await getItemById(itemId);
+
+  if (!item || item.scope !== "inbox") {
+    return {};
+  }
+
+  return {
+    title: item.label,
+  };
+}
+
 export default async function InboxItemPage({
   params,
 }: {

@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
+import { warmMarkdownPipeline } from "@/lib/markdown/shiki";
 import { getNavigationSnapshot } from "@/lib/navigation/navigation-service";
 import { AppShell } from "@/components/shell/app-shell";
 
@@ -27,6 +28,7 @@ export default async function ShellLayout({
 
   // Carrega snapshot server-side — nenhum path absoluto é exposto ao cliente
   const snapshot = await getNavigationSnapshot();
+  warmMarkdownPipeline();
 
   return <AppShell snapshot={snapshot}>{children}</AppShell>;
 }

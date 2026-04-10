@@ -28,9 +28,10 @@ interface LeftRailProps {
   snapshot: NavigationSnapshot;
   /** href do item ativo derivado da URL atual (T-02-10) */
   activeHref?: string;
+  onNavigationStart?: () => void;
 }
 
-export function LeftRail({ snapshot, activeHref }: LeftRailProps) {
+export function LeftRail({ snapshot, activeHref, onNavigationStart }: LeftRailProps) {
   const [filterQuery, setFilterQuery] = useState("");
 
   // Árvore filtrada — calculada apenas quando o query muda (useMemo)
@@ -53,7 +54,11 @@ export function LeftRail({ snapshot, activeHref }: LeftRailProps) {
       {/* Área com scroll — scrollbar fina e discreta */}
       <div className="flex-1 overflow-y-auto overflow-x-hidden min-h-0 pb-4 pr-1 rail-scroll">
         {/* 2. Inbox — separada e nunca filtrada; cabeçalho sempre visível */}
-        <InboxLane entries={snapshot.inbox} activeHref={activeHref} />
+        <InboxLane
+          entries={snapshot.inbox}
+          activeHref={activeHref}
+          onNavigationStart={onNavigationStart}
+        />
 
         {/* 3. Divisor tonal (sem borda explícita — No-Line Rule) */}
         <div
@@ -74,6 +79,7 @@ export function LeftRail({ snapshot, activeHref }: LeftRailProps) {
           activeHref={activeHref}
           ancestorsByItemId={snapshot.ancestorsByItemId}
           filterQuery={filterQuery}
+          onNavigationStart={onNavigationStart}
         />
       </div>
     </div>

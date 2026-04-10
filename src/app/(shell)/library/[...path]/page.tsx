@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { decodeLibraryParams } from "@/lib/navigation/route-helpers";
 import { getItemById } from "@/lib/navigation/navigation-service";
@@ -13,6 +14,24 @@ import { ViewerPage } from "@/components/viewer/viewer-page";
  * A resolução do item passa obrigatoriamente por getItemById (helper canônico).
  * O conteúdo raw é lido server-side via ViewerPage → FsItemRepository.
  */
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ path: string[] }>;
+}): Promise<Metadata> {
+  const resolvedParams = await params;
+  const itemId = decodeLibraryParams(resolvedParams);
+  const item = await getItemById(itemId);
+
+  if (!item || item.scope !== "library") {
+    return {};
+  }
+
+  return {
+    title: item.label,
+  };
+}
+
 export default async function LibraryItemPage({
   params,
 }: {

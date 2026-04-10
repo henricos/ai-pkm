@@ -18,6 +18,7 @@
  */
 
 import React from "react";
+import Link from "next/link";
 import type { NavigationTreeNode } from "@/lib/navigation/navigation-types";
 import type { FilteredTreeNode, ItemWithOffsets } from "@/lib/navigation/filter-tree";
 import { ItemKindIcon } from "@/components/navigation/item-kind-icon";
@@ -37,6 +38,7 @@ interface TreeNodeProps {
   onToggle: (id: string) => void;
   /** Nível de indentação (0 = raiz) */
   depth?: number;
+  onNavigationStart?: () => void;
 }
 
 // ── Componente ──────────────────────────────────────────────────────────────────
@@ -47,6 +49,7 @@ export function TreeNode({
   expandedIds,
   onToggle,
   depth = 0,
+  onNavigationStart,
 }: TreeNodeProps) {
   const isExpanded = expandedIds.has(node.id);
   const hasChildren = node.children.length > 0;
@@ -145,6 +148,7 @@ export function TreeNode({
                   expandedIds={expandedIds}
                   onToggle={onToggle}
                   depth={depth + 1}
+                  onNavigationStart={onNavigationStart}
                 />
               ))}
             </ul>
@@ -157,8 +161,12 @@ export function TreeNode({
                 const isActive = activeHref === item.href;
                 return (
                   <li key={item.id}>
-                    <a
+                    <Link
                       href={item.href}
+                      prefetch
+                      onClick={() => {
+                        if (!isActive) onNavigationStart?.();
+                      }}
                       aria-current={isActive ? "page" : undefined}
                       title={item.label}
                       style={{ paddingLeft: `${8 + indentPx + 16}px` }}
@@ -197,7 +205,7 @@ export function TreeNode({
                           title="rascunho"
                         />
                       )}
-                    </a>
+                    </Link>
                   </li>
                 );
               })}
