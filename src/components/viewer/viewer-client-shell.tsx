@@ -27,6 +27,8 @@ interface ViewerClientShellProps {
   itemId: string;
   frontmatter: RawFrontmatter;
   children: React.ReactNode;
+  /** Corpo Markdown do sidecar adjacente — Phase 4, CTX-05 */
+  sidecarContent?: string | null;
 }
 
 export function ViewerClientShell({
@@ -36,6 +38,7 @@ export function ViewerClientShell({
   itemId,
   frontmatter,
   children,
+  sidecarContent,
 }: ViewerClientShellProps) {
   const [panelOpen, setPanelOpen] = useState(false);
   const togglePanel = useCallback(() => setPanelOpen((p) => !p), []);
@@ -67,6 +70,7 @@ export function ViewerClientShell({
         frontmatter={frontmatter}
         topic={topic}
         group={group}
+        sidecarContent={sidecarContent}
       />
     </div>
   );

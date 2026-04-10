@@ -40,11 +40,13 @@ vi.mock("@/lib/env", () => ({
 // chamado em itens binários (T-04-05).
 const mockGetItemContent = vi.fn().mockReturnValue("# Conteúdo markdown");
 const mockGetItemFrontmatter = vi.fn().mockReturnValue({ estado: "finalizado" });
+const mockGetBinaryContext = vi.fn().mockReturnValue({ sidecarContent: null, sidecarFrontmatter: null });
 
 vi.mock("@/lib/pkm/fs-item-repository", () => ({
   FsItemRepository: vi.fn().mockImplementation(() => ({
     getItemContent: mockGetItemContent,
     getItemFrontmatter: mockGetItemFrontmatter,
+    getBinaryContext: mockGetBinaryContext,
   })),
 }));
 

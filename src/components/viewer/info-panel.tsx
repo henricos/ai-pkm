@@ -16,6 +16,7 @@
 
 import { useEffect } from "react";
 import type { RawFrontmatter } from "@/lib/pkm/types";
+import { SidecarMarkdown } from "@/components/viewer/sidecar-markdown";
 
 interface InfoPanelProps {
   panelOpen: boolean;
@@ -23,6 +24,8 @@ interface InfoPanelProps {
   frontmatter: RawFrontmatter;
   topic: string;
   group?: string;
+  /** Corpo Markdown do sidecar adjacente ao binário — Phase 4, CTX-05, D-08, D-09 */
+  sidecarContent?: string | null;
 }
 
 // ── Formatação de datas em pt-BR (sem date-fns — Intl nativo) ──────────────
@@ -88,7 +91,7 @@ function Chip({ children, variant = "neutral" }: {
 
 // ── Componente principal ────────────────────────────────────────────────────
 
-export function InfoPanel({ panelOpen, onClose, frontmatter, topic, group }: InfoPanelProps) {
+export function InfoPanel({ panelOpen, onClose, frontmatter, topic, group, sidecarContent }: InfoPanelProps) {
   // D-15: Escape fecha o painel
   useEffect(() => {
     if (!panelOpen) return;
@@ -186,8 +189,14 @@ export function InfoPanel({ panelOpen, onClose, frontmatter, topic, group }: Inf
           </FieldRow>
         )}
 
-        {/* D-18: Slot reservado para texto de sidecar — vazio em Phase 3 */}
-        <div data-slot="sidecar-content-phase4" aria-hidden="true" />
+        {/* D-18 / CTX-05: Sidecar editorial — Phase 4 preenche este slot (D-08, D-09) */}
+        {sidecarContent ? (
+          <div data-testid="sidecar-content-phase4" data-slot="sidecar-content-phase4">
+            <SidecarMarkdown content={sidecarContent} />
+          </div>
+        ) : (
+          <div data-slot="sidecar-content-phase4" aria-hidden="true" />
+        )}
       </div>
     </aside>
   );
