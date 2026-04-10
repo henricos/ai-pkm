@@ -101,6 +101,13 @@ export class FsItemRepository implements ItemRepository {
     if (!fs.existsSync(absPath)) return null;
     const raw = fs.readFileSync(absPath, "utf-8");
     const { data } = matter(raw);
+
+    // Normalizar data_captura: gray-matter parseia datas YAML não-quotadas como Date JS.
+    // InfoPanel espera string "YYYY-MM-DD" — converter se necessário.
+    if (data.data_captura instanceof Date) {
+      data.data_captura = (data.data_captura as Date).toISOString().slice(0, 10);
+    }
+
     return data as RawFrontmatter;
   }
 
