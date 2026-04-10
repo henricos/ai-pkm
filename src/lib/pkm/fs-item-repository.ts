@@ -111,6 +111,11 @@ export class FsItemRepository implements ItemRepository {
     return data as RawFrontmatter;
   }
 
+  /** Expõe resolveAndValidatePath como público para uso no route handler de download */
+  resolveItemPath(id: string): string {
+    return this.resolveAndValidatePath(id);
+  }
+
   private resolveAndValidatePath(id: string): string {
     const decoded = decodeURIComponent(id);
     const absPath = path.resolve(this.pkmRoot, decoded);
