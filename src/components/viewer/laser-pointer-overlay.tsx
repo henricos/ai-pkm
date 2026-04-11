@@ -77,17 +77,17 @@ export function LaserPointerOverlay({
     }
   }, [active]);
 
-  // Dissipação por RAF — pausa quando documento oculto (T-05-08)
+  // RAF: única fonte de setTrail — prune + sincroniza estado a cada frame (T-05-08)
+  // Handlers de ponteiro atualizam apenas trailRef; RAF é o único escritor de setTrail,
+  // eliminando renders concorrentes que causavam pontos isolados no rastro.
   useEffect(() => {
     const tick = () => {
-      if (!isHiddenRef.current && activeRef.current) {
+      if (!isHiddenRef.current) {
         const now = performance.now();
         const cutoff = now - trailDurationMs;
         const pruned = trailRef.current.filter((p) => p.timestamp > cutoff);
-        if (pruned.length !== trailRef.current.length) {
-          trailRef.current = pruned;
-          setTrail([...pruned]);
-        }
+        trailRef.current = pruned;
+        setTrail([...pruned]);
       }
       rafRef.current = requestAnimationFrame(tick);
     };
@@ -119,12 +119,16 @@ export function LaserPointerOverlay({
     };
   }, []);
 
+  /** Distância mínima entre pontos consecutivos (px) — evita segmentos sub-pixel
+   *  que com stroke-linecap:round ficam como círculos isolados ("pontilhados") */
+  const MIN_POINT_DIST = 3;
+
   // Rastro apenas com mouse pressionado (pointerdown ativo)
+  // Handlers apenas atualizam trailRef — RAF é o único escritor de setTrail
   const handlePointerDown = useCallback(
     (e: React.PointerEvent) => {
       if (!active || isHiddenRef.current) return;
       isPressedRef.current = true;
-      // setPointerCapture pode não estar disponível em ambientes de teste (jsdom)
       const el = e.currentTarget as HTMLElement;
       if (typeof el.setPointerCapture === "function") {
         el.setPointerCapture(e.pointerId);
@@ -133,14 +137,7 @@ export function LaserPointerOverlay({
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
       if (!isFinite(x) || !isFinite(y)) return;
-      const point: TrailPoint = {
-        id: ++pointIdCounter,
-        x,
-        y,
-        timestamp: performance.now(),
-      };
-      trailRef.current = [point];
-      setTrail([point]);
+      trailRef.current = [{ id: ++pointIdCounter, x, y, timestamp: performance.now() }];
     },
     [active]
   );
@@ -152,14 +149,14 @@ export function LaserPointerOverlay({
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
       if (!isFinite(x) || !isFinite(y)) return;
-      const point: TrailPoint = {
-        id: ++pointIdCounter,
-        x,
-        y,
-        timestamp: performance.now(),
-      };
-      trailRef.current = [...trailRef.current, point];
-      setTrail([...trailRef.current]);
+      // Filtro de distância mínima — ignora pontos sub-pixel que viram "pontos soltos"
+      const last = trailRef.current[trailRef.current.length - 1];
+      if (last) {
+        const dx = x - last.x;
+        const dy = y - last.y;
+        if (Math.sqrt(dx * dx + dy * dy) < MIN_POINT_DIST) return;
+      }
+      trailRef.current = [...trailRef.current, { id: ++pointIdCounter, x, y, timestamp: performance.now() }];
     },
     [active]
   );

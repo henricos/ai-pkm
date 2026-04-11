@@ -30,7 +30,7 @@ export function PresentationControls({
   return (
     <div
       data-testid="presentation-controls"
-      className="flex items-center gap-1 px-2 py-1.5 rounded-sm bg-surface/80 backdrop-blur-sm shadow-ambient"
+      className="flex items-center gap-1 px-2 py-1.5 rounded-sm glass shadow-ambient"
       role="toolbar"
       aria-label="Controles de apresentação"
     >

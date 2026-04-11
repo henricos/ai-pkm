@@ -40,7 +40,7 @@ interface PresentationOverlayProps {
 }
 
 /** Tempo de inatividade até os controles se ocultarem automaticamente (ms) */
-const CONTROLS_HIDE_DELAY = 3000;
+const CONTROLS_HIDE_DELAY = 1000;
 
 export function PresentationOverlay({
   onExit,
