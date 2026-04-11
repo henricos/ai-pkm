@@ -106,10 +106,10 @@ Plans:
   5. Usuario pode alternar entre temas prontos de leitura/apresentacao, incluindo variantes inspiradas em ChatGPT, GitHub e Excalidraw.
 **Plans**: 4 plans
 Plans:
-- [ ] 05-01-PLAN.md — Wave 0 de testes para presentation mode, hit area, laser e presets do viewer
-- [ ] 05-02-PLAN.md — Presentation shell interno + controles discretos + bloqueio do InfoPanel
-- [ ] 05-03-PLAN.md — Laser pointer overlay com rastro temporal dentro e fora do modo apresentacao
-- [ ] 05-04-PLAN.md — Presets ChatGPT/GitHub/Excalidraw no viewer + persistencia local + fechamento manual
+- [x] 05-01-PLAN.md — Wave 0 de testes para presentation mode, hit area, laser e presets do viewer
+- [x] 05-02-PLAN.md — Presentation shell interno + controles discretos + bloqueio do InfoPanel
+- [x] 05-03-PLAN.md — Laser pointer overlay com rastro temporal dentro e fora do modo apresentacao
+- [x] 05-04-PLAN.md — Presets ChatGPT/GitHub/Excalidraw no viewer + persistencia local + fechamento manual
 **UI hint**: yes
 
 ## Progress
@@ -124,3 +124,15 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 | 3. Reading Viewer | 6/6 | Completed | 2026-04-10 |
 | 4. Asset Viewer and Item Context | 3/3 | Complete    | 2026-04-11 |
 | 5. Presentation Mode | 0/4 | Planned | - |
+
+## Backlog
+
+### Phase 999.1: Refinar identidade visual dos temas do viewer (BACKLOG)
+
+**Goal:** Trabalhar os presets ChatGPT, GitHub e Excalidraw com fidelidade real às aplicações-referência — fonte, tamanho, espaçamento, alinhamento e paleta de cores. As variações atuais são funcionais mas discretas demais para representar a identidade de cada app.
+**Context:** Criado após validação da fase 5. Os presets existem e funcionam (persistência, escopo, coexistência com laser/presentation mode), mas a identidade visual precisa de sessão dedicada.
+**Requirements:** TBD
+**Plans:** 0 plans
+
+Plans:
+- [ ] TBD (promote with /gsd-review-backlog when ready)
