@@ -18,7 +18,7 @@ interface UnsupportedViewerProps {
 export function UnsupportedViewer({ itemKind }: UnsupportedViewerProps) {
   return (
     <div
-      className="flex flex-col items-center justify-center h-64 gap-3 text-on-surface/50 px-6"
+      className="flex flex-col items-center justify-center h-64 gap-3 text-on-surface/50 px-6 viewer-unsupported-container"
       data-testid="unsupported-format"
       data-item-kind={itemKind}
     >

@@ -22,7 +22,7 @@ export function ImageViewer({ src, alt = "" }: ImageViewerProps) {
   const [scale, setScale] = useState(1);
 
   return (
-    <div className="flex flex-col items-center gap-4 p-6 min-h-[60vh] w-full">
+    <div className="flex flex-col items-center gap-4 p-6 min-h-[60vh] w-full viewer-image-container">
       {/* Área de visualização — container com overflow para acomodar zoom */}
       <div className="flex-1 flex items-center justify-center w-full overflow-auto">
         <img

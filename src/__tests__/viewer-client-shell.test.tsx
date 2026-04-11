@@ -52,7 +52,7 @@ vi.mock("@/components/viewer/viewer-header", () => ({
       </button>
       <button
         data-testid="toggle-panel-button"
-        aria-pressed={String(panelOpen)}
+        aria-pressed={panelOpen ? "true" : "false"}
         onClick={onTogglePanel}
         disabled={presentationActive}
       >

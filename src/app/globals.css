@@ -410,3 +410,171 @@ body {
     @apply font-sans;
   }
 }
+
+/* ============================================================================
+ * Viewer theme presets — Phase 5 (PRS-06, PRS-07)
+ *
+ * Cada preset é escopo exclusivo ao root do viewer via [data-theme].
+ * A shell inteira NÃO é afetada (D-17, T-05-11).
+ * Diferenças são moderadas: identidade perceptível sem skins radicais (D-18).
+ * ============================================================================ */
+
+/* --- preset: chatgpt --------------------------------------------------------
+ * Leitura limpa e neutra: coluna editorial estreita, fundo puro, texto suave.
+ * Inspirado na interface de chat do ChatGPT — foco em legibilidade contínua.
+ * --------------------------------------------------------------------------- */
+[data-theme="chatgpt"] {
+  background-color: #ffffff;
+}
+
+[data-theme="chatgpt"] .prose {
+  --tw-prose-body: #343541;
+  --tw-prose-headings: #202123;
+  --tw-prose-links: #10a37f;
+  --tw-prose-code: #343541;
+  --tw-prose-pre-bg: #f7f7f8;
+  --tw-prose-hr: #e5e5e5;
+  --tw-prose-quote-borders: #d1d1d1;
+  color: #343541;
+  max-width: 48rem;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+[data-theme="chatgpt"] .prose :where(code):not(:where(pre code, [class~="not-prose"], [class~="not-prose"] *)) {
+  background: #f7f7f8;
+  color: #343541;
+  border: 1px solid #e5e5e5;
+}
+
+[data-theme="chatgpt"] .prose :where(pre):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+  background: #f7f7f8;
+  border: 1px solid #e5e5e5;
+}
+
+/* --- preset: github ---------------------------------------------------------
+ * Documentação técnica: fonte levemente maior, fundo puro, code blocks com
+ * bordas mais nítidas. Inspirado no GitHub Markdown rendering.
+ * --------------------------------------------------------------------------- */
+[data-theme="github"] {
+  background-color: #ffffff;
+}
+
+[data-theme="github"] .prose {
+  --tw-prose-body: #1f2328;
+  --tw-prose-headings: #1f2328;
+  --tw-prose-links: #0969da;
+  --tw-prose-code: #1f2328;
+  --tw-prose-pre-bg: #f6f8fa;
+  --tw-prose-hr: #d8dee4;
+  --tw-prose-quote-borders: #d0d7de;
+  --tw-prose-th-borders: #d8dee4;
+  --tw-prose-td-borders: #d0d7de;
+  color: #1f2328;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+
+[data-theme="github"] .prose :where(h1):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid #d8dee4;
+}
+
+[data-theme="github"] .prose :where(h2):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid #d8dee4;
+}
+
+[data-theme="github"] .prose :where(code):not(:where(pre code, [class~="not-prose"], [class~="not-prose"] *)) {
+  background: rgba(175, 184, 193, 0.2);
+  color: #1f2328;
+  padding: 0.2em 0.4em;
+  border-radius: 6px;
+  font-size: 85%;
+}
+
+[data-theme="github"] .prose :where(pre):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+  background: #f6f8fa;
+  border: 1px solid #d8dee4;
+  border-radius: 6px;
+}
+
+[data-theme="github"] .prose :where(blockquote):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+  border-left: 4px solid #d0d7de;
+  color: #656d76;
+  padding-left: 1em;
+}
+
+/* --- preset: excalidraw -----------------------------------------------------
+ * Atmosfera leve e diagramática: fundo levemente off-white, espaçamento maior,
+ * tipografia mais leve. Inspirado no canvas do Excalidraw.
+ * --------------------------------------------------------------------------- */
+[data-theme="excalidraw"] {
+  background-color: #fafaf8;
+}
+
+[data-theme="excalidraw"] .prose {
+  --tw-prose-body: #3d3929;
+  --tw-prose-headings: #1e1b16;
+  --tw-prose-links: #e67c00;
+  --tw-prose-code: #3d3929;
+  --tw-prose-pre-bg: #f0ede6;
+  --tw-prose-hr: #ddd9cf;
+  --tw-prose-quote-borders: #d4cfb8;
+  color: #3d3929;
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  letter-spacing: 0.01em;
+}
+
+[data-theme="excalidraw"] .prose :where(h1, h2, h3):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+[data-theme="excalidraw"] .prose :where(code):not(:where(pre code, [class~="not-prose"], [class~="not-prose"] *)) {
+  background: #f0ede6;
+  color: #3d3929;
+  border: 1px solid #d4cfb8;
+  border-radius: 4px;
+}
+
+[data-theme="excalidraw"] .prose :where(pre):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+  background: #f0ede6;
+  border: 1px solid #d4cfb8;
+  border-radius: 4px;
+}
+
+[data-theme="excalidraw"] .prose :where(blockquote):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+  border-left: 3px solid #e67c00;
+  color: #5a5040;
+  background: rgba(230, 124, 0, 0.04);
+  padding: 0.5em 1em;
+}
+
+/* --- Superfícies não-markdown: image-viewer, pdf-viewer, unsupported-viewer -
+ * Os containers de imagem, PDF e fallback adaptam fundo e contraste ao preset.
+ * --------------------------------------------------------------------------- */
+
+/* ChatGPT: fundo puro, sem alteração nos controles de zoom */
+[data-theme="chatgpt"] .viewer-image-container,
+[data-theme="chatgpt"] .viewer-pdf-container,
+[data-theme="chatgpt"] .viewer-unsupported-container {
+  background-color: #ffffff;
+}
+
+/* GitHub: fundo levemente cinza como o GitHub no modo arquivo */
+[data-theme="github"] .viewer-image-container,
+[data-theme="github"] .viewer-pdf-container,
+[data-theme="github"] .viewer-unsupported-container {
+  background-color: #f6f8fa;
+}
+
+/* Excalidraw: fundo off-white quente */
+[data-theme="excalidraw"] .viewer-image-container,
+[data-theme="excalidraw"] .viewer-pdf-container,
+[data-theme="excalidraw"] .viewer-unsupported-container {
+  background-color: #fafaf8;
+}

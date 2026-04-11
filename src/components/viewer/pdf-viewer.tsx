@@ -21,7 +21,7 @@ interface PdfViewerProps {
 
 export function PdfViewer({ previewUrl, downloadUrl }: PdfViewerProps) {
   return (
-    <div className="flex flex-col h-full min-h-[70vh] w-full">
+    <div className="flex flex-col h-full min-h-[70vh] w-full viewer-pdf-container">
       <object
         data={previewUrl}
         type="application/pdf"
