@@ -7,6 +7,10 @@
  * - activeTheme — preset de tema do viewer (Phase 5, PRS-06)
  * - laserEnabled — toggle do ponteiro laser (Phase 5, PRS-05)
  *
+ * SSR Safety: o tema NUNCA é lido do localStorage durante o render inicial.
+ * Inicializa com DEFAULT_THEME para que servidor e cliente concordem.
+ * Após a montagem (useEffect), aplica o tema salvo — evita erro de hidratação.
+ *
  * Layout push (D-14, Phase 3):
  * AppShell > main (h-full overflow-y-auto)
  *   ViewerClientShell (flex h-full overflow-hidden)
@@ -29,42 +33,19 @@
 
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { ViewerHeader } from "@/components/viewer/viewer-header";
 import { InfoPanel } from "@/components/viewer/info-panel";
 import { PresentationOverlay } from "@/components/viewer/presentation-overlay";
 import { LaserPointerOverlay } from "@/components/viewer/laser-pointer-overlay";
+import { ViewerThemeRoot } from "@/components/viewer/viewer-theme";
 import {
-  ViewerThemeRoot,
-  VIEWER_PRESETS,
+  DEFAULT_THEME,
+  readSavedTheme,
+  saveTheme,
+  type ViewerTheme,
 } from "@/components/viewer/viewer-theme";
 import type { RawFrontmatter } from "@/lib/pkm/types";
-import type { ViewerThemePreset } from "@/components/viewer/viewer-header";
-
-const STORAGE_KEY = "viewer-theme";
-
-/** Lê o preset salvo no localStorage de forma resiliente (T-05-12) */
-function readStoredTheme(): ViewerThemePreset {
-  try {
-    const stored =
-      typeof window !== "undefined" ? localStorage.getItem(STORAGE_KEY) : null;
-    if (stored && stored in VIEWER_PRESETS) return stored as ViewerThemePreset;
-  } catch {
-    // Fallback silencioso
-  }
-  return "default";
-}
-
-/** Persiste o preset no localStorage de forma resiliente (T-05-12) */
-function writeStoredTheme(preset: ViewerThemePreset): void {
-  try {
-    if (typeof window !== "undefined") {
-      localStorage.setItem(STORAGE_KEY, preset);
-    }
-  } catch {
-    // Falha silenciosa
-  }
-}
 
 interface ViewerClientShellProps {
   topic: string;
@@ -94,10 +75,15 @@ export function ViewerClientShell({
   // Phase 5: modo apresentação interno (PRS-01, PRS-02)
   const [isPresentationMode, setIsPresentationMode] = useState(false);
 
-  // Phase 5: preset de tema do viewer (PRS-06) — inicializa do localStorage
-  const [activeTheme, setActiveTheme] = useState<ViewerThemePreset>(
-    () => readStoredTheme()
-  );
+  // Phase 5: preset de tema do viewer (PRS-06)
+  // SSR Safety: inicializa com DEFAULT_THEME — servidor e cliente concordam no render inicial.
+  // Lê o localStorage apenas após a montagem (useEffect).
+  const [activeTheme, setActiveTheme] = useState<ViewerTheme>(DEFAULT_THEME);
+
+  useEffect(() => {
+    const saved = readSavedTheme();
+    if (saved) setActiveTheme(saved);
+  }, []);
 
   // Phase 5: toggle do ponteiro laser (PRS-05)
   const [laserEnabled, setLaserEnabled] = useState(false);
@@ -122,6 +108,7 @@ export function ViewerClientShell({
         <div
           id="viewer-scroll"
           className="flex-1 min-w-0 overflow-y-auto bg-surface-container-lowest"
+          data-theme={activeTheme}
         >
           <ViewerHeader
             topic={topic}
@@ -134,7 +121,7 @@ export function ViewerClientShell({
             activeTheme={activeTheme}
             onChangeTheme={(theme) => {
               setActiveTheme(theme);
-              writeStoredTheme(theme);
+              saveTheme(theme);
             }}
             presentationActive={isPresentationMode}
             laserEnabled={laserEnabled}

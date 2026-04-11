@@ -3,10 +3,10 @@
  *
  * Header sticky do viewer:
  * - Esquerda: tópico › grupo (label-sm uppercase) + chip de estado
- * - Direita: [seletor de tema Phase 5] + [apresentação] + [download] + [ℹ️ painel]
+ * - Direita: [seletor de tema Phase 5] + [laser Phase 5] + [apresentação Phase 5] + [download] + [ℹ️ painel]
  *
  * Glassmorphism ao rolar (D-10): ouve scroll no elemento #viewer-scroll
- * (id fixo do container de scroll definido em ViewerPage — 03-05-PLAN.md)
+ * (id fixo do container de scroll definido em ViewerClientShell)
  *
  * Decisões (03-CONTEXT.md + 05-CONTEXT.md):
  * - D-10: sticky + glassmorphism ao rolar
@@ -21,8 +21,14 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import {
+  VIEWER_THEMES,
+  VIEWER_THEME_LABELS,
+  type ViewerTheme,
+} from "@/components/viewer/viewer-theme";
 
-export type ViewerThemePreset = "default" | "chatgpt" | "github" | "excalidraw";
+/** @deprecated Use ViewerTheme from viewer-theme */
+export type ViewerThemePreset = ViewerTheme;
 
 interface ViewerHeaderProps {
   topic: string;
@@ -34,9 +40,9 @@ interface ViewerHeaderProps {
   /** PRS-01: callback para entrar no modo apresentação */
   onEnterPresentation?: () => void;
   /** PRS-06: preset de tema ativo (Phase 5) */
-  activeTheme?: ViewerThemePreset;
+  activeTheme?: ViewerTheme;
   /** PRS-06: callback para trocar preset de tema (Phase 5) */
-  onChangeTheme?: (theme: ViewerThemePreset) => void;
+  onChangeTheme?: (theme: ViewerTheme) => void;
   /** PRS-07: modo apresentação ativo — bloqueia InfoPanel e oculta seletor de tema */
   presentationActive?: boolean;
   /** PRS-05: laser ativo fora do modo apresentação */
@@ -44,15 +50,6 @@ interface ViewerHeaderProps {
   /** PRS-05: callback para ligar/desligar o laser */
   onToggleLaser?: () => void;
 }
-
-const THEME_LABELS: Record<ViewerThemePreset, string> = {
-  default: "Padrão",
-  chatgpt: "ChatGPT",
-  github: "GitHub",
-  excalidraw: "Excalidraw",
-};
-
-const THEMES: ViewerThemePreset[] = ["default", "chatgpt", "github", "excalidraw"];
 
 export function ViewerHeader({
   topic,
@@ -130,7 +127,7 @@ export function ViewerHeader({
             <button
               type="button"
               onClick={() => setThemeMenuOpen((v) => !v)}
-              aria-label={`Tema: ${THEME_LABELS[activeTheme]}`}
+              aria-label={`Tema: ${VIEWER_THEME_LABELS[activeTheme]}`}
               title="Trocar tema de leitura"
               className="flex items-center justify-center w-8 h-8 rounded-sm text-on-surface/50 hover:text-on-surface hover:bg-surface-container transition-colors"
             >
@@ -144,7 +141,7 @@ export function ViewerHeader({
             </button>
             {themeMenuOpen && onChangeTheme && (
               <div className="absolute right-0 top-full mt-1 z-20 bg-surface-container-lowest shadow-ambient rounded-sm border border-outline-variant/15 py-1 min-w-[120px]">
-                {THEMES.map((theme) => (
+                {VIEWER_THEMES.map((theme) => (
                   <button
                     key={theme}
                     type="button"
@@ -159,7 +156,7 @@ export function ViewerHeader({
                         : "text-on-surface/60 hover:text-on-surface hover:bg-surface-container",
                     ].join(" ")}
                   >
-                    {THEME_LABELS[theme]}
+                    {VIEWER_THEME_LABELS[theme]}
                   </button>
                 ))}
               </div>

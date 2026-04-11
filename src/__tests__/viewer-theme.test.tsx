@@ -1,25 +1,17 @@
 /**
- * Testes do ViewerTheme — Phase 5 (05-01) · Wave 0 · RED
+ * Testes do viewer-theme — Phase 5 (PRS-06, PRS-07)
  *
- * Cobre os comportamentos exigidos por PRS-06, PRS-07:
- * - PRS-06 / D-17: presets afetam apenas o root do viewer, sem vazar
- *                  para a AppShell global.
- * - PRS-06 / D-18: as diferenças entre presets são moderadas (sem reestruturar
- *                  o layout).
- * - PRS-06 / D-19: a troca de tema ocorre no header, fora do modo apresentação.
- * - PRS-06: persistência local do preset com fallback seguro sem localStorage.
- *
- * O módulo viewer-theme ainda não existe:
- * @/components/viewer/viewer-theme
- *
- * ESTADO: RED — o arquivo acima não existe → import falha.
+ * Cobre:
+ * - Utilitários: isValidTheme, readSavedTheme, saveTheme, themeRootClass, themeProseClass
+ * - Constantes: DEFAULT_THEME, VIEWER_THEMES, VIEWER_THEME_LABELS, VIEWER_PRESETS
+ * - Context API: ViewerThemeProvider, useViewerTheme (D-19, T-05-12)
+ * - Root component: ViewerThemeRoot (D-17 — escopo restrito ao viewer root)
  */
 
 import { describe, test, expect, vi, beforeEach, afterEach } from "vitest";
 import { render, screen, fireEvent, act } from "@testing-library/react";
 import React from "react";
 
-// Mock do env
 vi.mock("@/lib/env", () => ({
   env: {
     PKM_PATH: "/mock/pkm",
@@ -30,22 +22,64 @@ vi.mock("@/lib/env", () => ({
   },
 }));
 
-// Import real do módulo que ainda não existe → RED
 import {
   VIEWER_PRESETS,
+  VIEWER_THEMES,
+  VIEWER_THEME_LABELS,
+  DEFAULT_THEME,
+  isValidTheme,
+  readSavedTheme,
+  saveTheme,
+  themeRootClass,
+  themeProseClass,
   useViewerTheme,
   ViewerThemeProvider,
   ViewerThemeRoot,
 } from "@/components/viewer/viewer-theme";
 
-// ── Estrutura dos presets ────────────────────────────────────────────────────
+// ── Utilitários: isValidTheme ────────────────────────────────────────────────
 
-describe("viewer-theme — PRS-06: estrutura dos presets", () => {
-  /**
-   * PRS-06 / D-20: o conjunto inicial de presets deve incluir variantes
-   * inspiradas em ChatGPT, GitHub e Excalidraw.
-   */
-  test("PRS-06: VIEWER_PRESETS inclui variantes default, chatgpt, github e excalidraw", () => {
+describe("isValidTheme", () => {
+  test("aceita os quatro presets válidos", () => {
+    expect(isValidTheme("default")).toBe(true);
+    expect(isValidTheme("chatgpt")).toBe(true);
+    expect(isValidTheme("github")).toBe(true);
+    expect(isValidTheme("excalidraw")).toBe(true);
+  });
+
+  test("rejeita valores inválidos", () => {
+    expect(isValidTheme("dark")).toBe(false);
+    expect(isValidTheme("")).toBe(false);
+    expect(isValidTheme("light")).toBe(false);
+    expect(isValidTheme("custom")).toBe(false);
+  });
+});
+
+// ── Constantes ───────────────────────────────────────────────────────────────
+
+describe("DEFAULT_THEME", () => {
+  test('é "default"', () => {
+    expect(DEFAULT_THEME).toBe("default");
+  });
+});
+
+describe("VIEWER_THEMES", () => {
+  test("contém os quatro presets", () => {
+    expect(VIEWER_THEMES).toEqual(["default", "chatgpt", "github", "excalidraw"]);
+  });
+});
+
+describe("VIEWER_THEME_LABELS", () => {
+  test("tem rótulo para cada preset", () => {
+    expect(VIEWER_THEME_LABELS.default).toBe("Padrão");
+    expect(VIEWER_THEME_LABELS.chatgpt).toBe("ChatGPT");
+    expect(VIEWER_THEME_LABELS.github).toBe("GitHub");
+    expect(VIEWER_THEME_LABELS.excalidraw).toBe("Excalidraw");
+  });
+});
+
+describe("VIEWER_PRESETS — PRS-06: estrutura dos presets", () => {
+  test("PRS-06: inclui variantes default, chatgpt, github e excalidraw", () => {
     const presetKeys = Object.keys(VIEWER_PRESETS);
     expect(presetKeys).toContain("default");
     expect(presetKeys).toContain("chatgpt");
@@ -53,12 +87,8 @@ describe("viewer-theme — PRS-06: estrutura dos presets", () => {
     expect(presetKeys).toContain("excalidraw");
   });
 
-  /**
-   * PRS-06 / D-18: cada preset tem atributos moderadamente distintos,
-   * sem reestruturar o layout.
-   */
   test("PRS-06: cada preset tem nome e classe CSS distintos", () => {
-    for (const [key, preset] of Object.entries(VIEWER_PRESETS)) {
+    for (const [, preset] of Object.entries(VIEWER_PRESETS)) {
       expect(preset).toHaveProperty("name");
       expect(preset).toHaveProperty("className");
       expect(typeof preset.name).toBe("string");
@@ -69,14 +99,85 @@ describe("viewer-theme — PRS-06: estrutura dos presets", () => {
   });
 });
 
-// ── Escopo do preset: apenas o viewer root ───────────────────────────────────
+// ── Utilitários: readSavedTheme ──────────────────────────────────────────────
+
+describe("readSavedTheme", () => {
+  beforeEach(() => { localStorage.clear(); });
+  afterEach(() => { localStorage.clear(); });
+
+  test("retorna null quando não há nada salvo", () => {
+    expect(readSavedTheme()).toBeNull();
+  });
+
+  test("retorna o tema salvo quando válido", () => {
+    localStorage.setItem("viewer-theme", "github");
+    expect(readSavedTheme()).toBe("github");
+  });
+
+  test("retorna null quando o valor salvo é inválido", () => {
+    localStorage.setItem("viewer-theme", "dark-mode-invalid");
+    expect(readSavedTheme()).toBeNull();
+  });
+
+  test("retorna null quando localStorage lança erro", () => {
+    const spy = vi.spyOn(Storage.prototype, "getItem").mockImplementation(() => {
+      throw new Error("storage unavailable");
+    });
+    expect(readSavedTheme()).toBeNull();
+    spy.mockRestore();
+  });
+});
+
+// ── Utilitários: saveTheme ───────────────────────────────────────────────────
+
+describe("saveTheme", () => {
+  beforeEach(() => { localStorage.clear(); });
+  afterEach(() => { localStorage.clear(); });
+
+  test("persiste o tema no localStorage", () => {
+    saveTheme("github");
+    expect(localStorage.getItem("viewer-theme")).toBe("github");
+  });
+
+  test("não lança erro quando localStorage falha", () => {
+    const spy = vi.spyOn(Storage.prototype, "setItem").mockImplementation(() => {
+      throw new Error("quota exceeded");
+    });
+    expect(() => saveTheme("chatgpt")).not.toThrow();
+    spy.mockRestore();
+  });
+});
+
+// ── Utilitários: themeRootClass / themeProseClass ────────────────────────────
+
+describe("themeRootClass", () => {
+  test("default retorna classe de superfície padrão", () => {
+    expect(themeRootClass("default")).toContain("bg-surface-container-lowest");
+  });
+  test("chatgpt retorna fundo branco", () => {
+    expect(themeRootClass("chatgpt")).toContain("bg-[#ffffff]");
+  });
+  test("github retorna fundo branco com texto escuro", () => {
+    const cls = themeRootClass("github");
+    expect(cls).toContain("bg-[#ffffff]");
+    expect(cls).toContain("text-[#1f2328]");
+  });
+  test("excalidraw retorna fundo creme", () => {
+    expect(themeRootClass("excalidraw")).toContain("bg-[#f5f0e8]");
+  });
+});
+
+describe("themeProseClass", () => {
+  test("todos os presets retornam string com 'prose'", () => {
+    for (const theme of VIEWER_THEMES) {
+      expect(themeProseClass(theme)).toContain("prose");
+    }
+  });
+});
+
+// ── ViewerThemeRoot — D-17: escopo restrito ao viewer root ───────────────────
 
 describe("ViewerThemeRoot — PRS-06 / D-17: escopo restrito ao viewer root", () => {
-  /**
-   * D-17: o preset ativo é aplicado apenas no root do viewer.
-   * O ViewerThemeRoot aplica a classe do preset como data-attribute ou className
-   * em um elemento específico — não na tag <html> ou <body>.
-   */
   test("PRS-06: o preset é aplicado no root do viewer, não no body", () => {
     render(
       <ViewerThemeRoot activeTheme="github">
@@ -84,33 +185,25 @@ describe("ViewerThemeRoot — PRS-06 / D-17: escopo restrito ao viewer root", ()
       </ViewerThemeRoot>
     );
 
-    // O root do viewer deve ter o atributo ou classe do preset
     const viewerRoot = screen.getByTestId("viewer-theme-root");
     expect(viewerRoot).toBeTruthy();
 
-    // Deve ter data-theme ou className indicando o preset
     const hasTheme =
       viewerRoot.getAttribute("data-theme") === "github" ||
       viewerRoot.className.includes("github") ||
       viewerRoot.className.includes(VIEWER_PRESETS.github.className);
     expect(hasTheme).toBe(true);
 
-    // O body NÃO deve ter o tema aplicado
     expect(document.body.getAttribute("data-theme")).not.toBe("github");
     expect(document.documentElement.getAttribute("data-theme")).not.toBe("github");
   });
 
-  /**
-   * D-17: markdown, imagem, PDF e fallback recebem o mesmo contexto de tema
-   * no viewer root.
-   */
   test("PRS-06: ViewerThemeRoot envolve qualquer tipo de conteúdo com o mesmo contexto de tema", () => {
     const { rerender } = render(
       <ViewerThemeRoot activeTheme="chatgpt">
         <div data-testid="markdown-viewer">Markdown</div>
       </ViewerThemeRoot>
     );
-
     expect(screen.getByTestId("viewer-theme-root")).toBeTruthy();
 
     rerender(
@@ -118,7 +211,6 @@ describe("ViewerThemeRoot — PRS-06 / D-17: escopo restrito ao viewer root", ()
         <div data-testid="image-viewer">Imagem</div>
       </ViewerThemeRoot>
     );
-
     expect(screen.getByTestId("viewer-theme-root")).toBeTruthy();
 
     rerender(
@@ -126,20 +218,14 @@ describe("ViewerThemeRoot — PRS-06 / D-17: escopo restrito ao viewer root", ()
         <div data-testid="pdf-viewer">PDF</div>
       </ViewerThemeRoot>
     );
-
     expect(screen.getByTestId("viewer-theme-root")).toBeTruthy();
   });
 });
 
-// ── Persistência local com fallback seguro ───────────────────────────────────
+// ── Context API — T-05-12: persistência com fallback seguro ──────────────────
 
-describe("viewer-theme — PRS-06: persistência local com fallback seguro", () => {
-  /**
-   * PRS-06: a persistência local do preset usa fallback seguro quando
-   * localStorage não está disponível.
-   */
-  test("PRS-06: useViewerTheme não lança erro quando localStorage está indisponível", () => {
-    // Simular localStorage indisponível — salvar spies para restaurar depois
+describe("ViewerThemeProvider / useViewerTheme — T-05-12", () => {
+  test("T-05-12: useViewerTheme não lança erro quando localStorage está indisponível", async () => {
     const getItemSpy = vi.spyOn(window.localStorage, "getItem").mockImplementation(() => {
       throw new Error("localStorage unavailable");
     });
@@ -164,27 +250,21 @@ describe("viewer-theme — PRS-06: persistência local com fallback seguro", () 
         </ViewerThemeProvider>
       );
 
-      // Deve usar o preset padrão como fallback
+      await act(async () => { await Promise.resolve(); });
+
       const consumer = screen.getByTestId("theme-consumer");
       expect(consumer.getAttribute("data-theme")).toBeTruthy();
 
-      // Tentar mudar o tema não deve lançar erro
       fireEvent.click(screen.getByRole("button"));
-    } catch (e) {
+    } catch {
       errorThrown = true;
     }
 
     expect(errorThrown).toBe(false);
-
-    // Restaurar os spies usando as referências salvas
     getItemSpy.mockRestore();
     setItemSpy.mockRestore();
   });
 
-  /**
-   * PRS-06: quando localStorage está disponível, o preset é persistido
-   * e restaurado.
-   */
   test("PRS-06: preset é persistido no localStorage quando disponível", () => {
     const TestComponent = () => {
       const { activeTheme, setTheme } = useViewerTheme();
@@ -202,21 +282,13 @@ describe("viewer-theme — PRS-06: persistência local com fallback seguro", () 
     );
 
     fireEvent.click(screen.getByTestId("set-github"));
-
-    // O tema deve ser persistido no localStorage
-    const stored = localStorage.getItem("viewer-theme");
-    expect(stored).toBe("github");
+    expect(localStorage.getItem("viewer-theme")).toBe("github");
   });
 });
 
-// ── PRS-06 / D-19: seletor de tema fora do modo apresentação ─────────────────
+// ── D-19: tema só muda fora do modo apresentação ─────────────────────────────
 
 describe("viewer-theme — D-19: tema só muda fora do modo apresentação", () => {
-  /**
-   * D-19: a troca de tema acontece pelo botão reservado no header do viewer,
-   * fora do modo apresentação. Verificar que o useViewerTheme tem mecanismo
-   * de bloqueio quando presentationActive=true.
-   */
   test("D-19: setTheme é ignorado quando presentationActive=true", () => {
     const TestComponent = ({ presentationActive }: { presentationActive: boolean }) => {
       const { activeTheme, setTheme } = useViewerTheme();
@@ -241,8 +313,6 @@ describe("viewer-theme — D-19: tema só muda fora do modo apresentação", () 
     const beforeTheme = screen.getByTestId("theme-consumer").getAttribute("data-theme");
     fireEvent.click(screen.getByTestId("set-theme"));
     const afterTheme = screen.getByTestId("theme-consumer").getAttribute("data-theme");
-
-    // O tema não deve mudar durante o modo apresentação
     expect(afterTheme).toBe(beforeTheme);
   });
 
@@ -268,7 +338,6 @@ describe("viewer-theme — D-19: tema só muda fora do modo apresentação", () 
     );
 
     fireEvent.click(screen.getByTestId("set-theme"));
-    const afterTheme = screen.getByTestId("theme-consumer").getAttribute("data-theme");
-    expect(afterTheme).toBe("excalidraw");
+    expect(screen.getByTestId("theme-consumer").getAttribute("data-theme")).toBe("excalidraw");
   });
 });

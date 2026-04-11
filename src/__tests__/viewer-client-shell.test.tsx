@@ -1,24 +1,17 @@
 /**
- * Testes do ViewerClientShell — Phase 5 (05-01) · Wave 0 · RED
+ * Testes do ViewerClientShell — Phase 5 (PRS-01, PRS-02, PRS-07)
  *
- * Cobre os comportamentos exigidos por PRS-01, PRS-02, PRS-07:
- * - PRS-01 / D-03: entrar em presentation mode é operação interna da app,
- *                  não simples fullscreen nativo.
- * - PRS-02 / D-08: Esc sai do modo apresentação.
- * - PRS-07 / D-02: InfoPanel fica indisponível no modo apresentação.
- *
- * ESTADO: RED — ViewerClientShell ainda não implementa estado de
- * presentationMode. O componente atual só gerencia panelOpen.
- *
- * Mocks leves: os viewers (MarkdownViewer, ImageViewer, PdfViewer) são
- * substituídos por divs com data-testid para manter o teste focado na shell.
+ * Cobre:
+ * - PRS-01 / D-03: entrar em presentation mode é operação interna da app
+ * - PRS-02 / D-08: Esc sai do modo apresentação
+ * - PRS-07 / D-02: InfoPanel fica indisponível no modo apresentação
+ * - SSR Safety: tema inicializa com "default", aplica localStorage após montagem
  */
 
-import { describe, test, expect, vi } from "vitest";
+import { describe, test, expect, vi, beforeEach, afterEach } from "vitest";
 import { render, screen, fireEvent, act } from "@testing-library/react";
 import React from "react";
 
-// Mock do env
 vi.mock("@/lib/env", () => ({
   env: {
     PKM_PATH: "/mock/pkm",
@@ -29,20 +22,28 @@ vi.mock("@/lib/env", () => ({
   },
 }));
 
-// Mock do ViewerHeader — expõe onEnterPresentation para acionar o modo
+// Mock do ViewerHeader — expõe callbacks para acionar presentation mode e tema
 vi.mock("@/components/viewer/viewer-header", () => ({
   ViewerHeader: ({
     panelOpen,
     onTogglePanel,
     onEnterPresentation,
     presentationActive,
+    activeTheme,
+    onChangeTheme,
   }: {
     panelOpen: boolean;
     onTogglePanel: () => void;
     onEnterPresentation?: () => void;
     presentationActive?: boolean;
+    activeTheme?: string;
+    onChangeTheme?: (t: string) => void;
   }) => (
-    <div data-testid="viewer-header" data-presentation-active={String(presentationActive)}>
+    <div
+      data-testid="viewer-header"
+      data-presentation-active={String(presentationActive)}
+      data-active-theme={activeTheme ?? "default"}
+    >
       <button
         data-testid="presentation-button"
         onClick={onEnterPresentation}
@@ -58,11 +59,18 @@ vi.mock("@/components/viewer/viewer-header", () => ({
       >
         Painel
       </button>
+      <button
+        data-testid="theme-cycle-btn"
+        onClick={() => onChangeTheme?.("github")}
+        aria-label={`Tema: ${activeTheme ?? "default"}`}
+      >
+        Tema
+      </button>
     </div>
   ),
 }));
 
-// Mock do InfoPanel — expõe panelOpen como data-testid
+// Mock do InfoPanel
 vi.mock("@/components/viewer/info-panel", () => ({
   InfoPanel: ({
     panelOpen,
@@ -79,7 +87,6 @@ vi.mock("@/components/viewer/info-panel", () => ({
   ),
 }));
 
-// Import real — presentationMode ainda não existe no componente → RED
 import { ViewerClientShell } from "@/components/viewer/viewer-client-shell";
 
 const defaultProps = {
@@ -94,10 +101,6 @@ const ChildContent = () => <div data-testid="main-content">Conteúdo principal</
 // ── PRS-01 / D-03: Modo apresentação interno ─────────────────────────────────
 
 describe("ViewerClientShell — PRS-01: entrar em presentation mode", () => {
-  /**
-   * PRS-01 / D-03: entrar no modo apresentação oculta o header normal
-   * e preserva o conteúdo principal.
-   */
   test("PRS-01: entrar em presentation mode oculta o header e preserva o conteúdo", () => {
     render(
       <ViewerClientShell {...defaultProps}>
@@ -105,26 +108,16 @@ describe("ViewerClientShell — PRS-01: entrar em presentation mode", () => {
       </ViewerClientShell>
     );
 
-    // Acionar o modo apresentação via botão do header
-    const presentationBtn = screen.getByTestId("presentation-button");
-    fireEvent.click(presentationBtn);
+    fireEvent.click(screen.getByTestId("presentation-button"));
 
-    // Conteúdo principal deve continuar visível
     expect(screen.getByTestId("main-content")).toBeTruthy();
 
-    // Header deve estar oculto ou marcado como inativo no modo apresentação
-    // (o shell aplica presentationActive=true ao header)
     const header = screen.queryByTestId("viewer-header");
     if (header) {
-      // Se o header ainda está no DOM, deve estar marcado como presentation ativo
       expect(header.getAttribute("data-presentation-active")).toBe("true");
     }
   });
 
-  /**
-   * PRS-07 / D-02: no modo apresentação, o InfoPanel não pode ser aberto.
-   * O toggle deve estar desabilitado.
-   */
   test("PRS-07: InfoPanel não pode ser aberto no modo apresentação", () => {
     render(
       <ViewerClientShell {...defaultProps}>
@@ -132,25 +125,16 @@ describe("ViewerClientShell — PRS-01: entrar em presentation mode", () => {
       </ViewerClientShell>
     );
 
-    // Entrar no modo apresentação
-    const presentationBtn = screen.getByTestId("presentation-button");
-    fireEvent.click(presentationBtn);
+    fireEvent.click(screen.getByTestId("presentation-button"));
 
-    // O painel de toggle deve estar desabilitado
     const toggleBtn = screen.queryByTestId("toggle-panel-button");
     if (toggleBtn) {
       expect(toggleBtn.hasAttribute("disabled")).toBe(true);
     }
 
-    // InfoPanel não deve aparecer
     expect(screen.queryByTestId("info-panel")).toBeNull();
   });
 
-  /**
-   * PRS-01: o modo apresentação é estado interno da shell,
-   * não simples toggle de CSS ou fullscreen nativo.
-   * Verifica que existe uma estrutura de "palco" no DOM ao entrar.
-   */
   test("PRS-01: estrutura de palco (presentation-stage) existe ao entrar no modo", () => {
     render(
       <ViewerClientShell {...defaultProps}>
@@ -158,14 +142,10 @@ describe("ViewerClientShell — PRS-01: entrar em presentation mode", () => {
       </ViewerClientShell>
     );
 
-    // Antes de entrar no modo, não há palco
     expect(screen.queryByTestId("presentation-stage")).toBeNull();
 
-    // Entrar no modo apresentação
-    const presentationBtn = screen.getByTestId("presentation-button");
-    fireEvent.click(presentationBtn);
+    fireEvent.click(screen.getByTestId("presentation-button"));
 
-    // Estrutura de palco deve aparecer
     expect(screen.getByTestId("presentation-stage")).toBeTruthy();
   });
 });
@@ -173,10 +153,6 @@ describe("ViewerClientShell — PRS-01: entrar em presentation mode", () => {
 // ── PRS-02 / D-08: Saída por Esc ─────────────────────────────────────────────
 
 describe("ViewerClientShell — PRS-02: sair com Esc", () => {
-  /**
-   * PRS-02 / D-08: pressionar Esc sai do modo apresentação e volta
-   * ao shell normal.
-   */
   test("PRS-02: Esc sai do modo apresentação e restaura o shell normal", () => {
     render(
       <ViewerClientShell {...defaultProps}>
@@ -184,43 +160,29 @@ describe("ViewerClientShell — PRS-02: sair com Esc", () => {
       </ViewerClientShell>
     );
 
-    // Entrar no modo apresentação
-    const presentationBtn = screen.getByTestId("presentation-button");
-    fireEvent.click(presentationBtn);
-
-    // Confirmar que entrou no modo
+    fireEvent.click(screen.getByTestId("presentation-button"));
     expect(screen.getByTestId("presentation-stage")).toBeTruthy();
 
-    // Pressionar Esc
     fireEvent.keyDown(document, { key: "Escape", code: "Escape" });
 
-    // O palco deve desaparecer
     expect(screen.queryByTestId("presentation-stage")).toBeNull();
   });
 
-  /**
-   * PRS-02: após sair do modo apresentação via Esc, o shell
-   * volta ao estado normal (header visível, toggle do painel funcional).
-   */
   test("PRS-02: após Esc, o header volta ao estado normal e InfoPanel pode ser aberto", () => {
-    const { container } = render(
+    render(
       <ViewerClientShell {...defaultProps}>
         <ChildContent />
       </ViewerClientShell>
     );
 
-    // Entrar e sair do modo apresentação
-    const presentationBtn = screen.getByTestId("presentation-button");
-    fireEvent.click(presentationBtn);
+    fireEvent.click(screen.getByTestId("presentation-button"));
     fireEvent.keyDown(document, { key: "Escape", code: "Escape" });
 
-    // O header deve estar em modo normal (presentation-active = false)
     const header = screen.queryByTestId("viewer-header");
     if (header) {
       expect(header.getAttribute("data-presentation-active")).toBe("false");
     }
 
-    // O toggle do painel deve estar habilitado novamente
     const toggleBtn = screen.getByTestId("toggle-panel-button");
     expect(toggleBtn.hasAttribute("disabled")).toBe(false);
   });
@@ -229,10 +191,6 @@ describe("ViewerClientShell — PRS-02: sair com Esc", () => {
 // ── Compatibilidade com tipos de viewer ──────────────────────────────────────
 
 describe("ViewerClientShell — presentation mode por tipo de viewer", () => {
-  /**
-   * PRS-01: o modo apresentação deve funcionar para qualquer tipo de conteúdo
-   * (markdown, imagem, PDF), não apenas markdown.
-   */
   test("PRS-01: modo apresentação funciona com conteúdo de imagem", () => {
     render(
       <ViewerClientShell {...defaultProps} itemId="tecnologia/foto.png">
@@ -240,8 +198,7 @@ describe("ViewerClientShell — presentation mode por tipo de viewer", () => {
       </ViewerClientShell>
     );
 
-    const presentationBtn = screen.getByTestId("presentation-button");
-    fireEvent.click(presentationBtn);
+    fireEvent.click(screen.getByTestId("presentation-button"));
 
     expect(screen.getByTestId("presentation-stage")).toBeTruthy();
     expect(screen.getByTestId("image-viewer")).toBeTruthy();
@@ -254,10 +211,55 @@ describe("ViewerClientShell — presentation mode por tipo de viewer", () => {
       </ViewerClientShell>
     );
 
-    const presentationBtn = screen.getByTestId("presentation-button");
-    fireEvent.click(presentationBtn);
+    fireEvent.click(screen.getByTestId("presentation-button"));
 
     expect(screen.getByTestId("presentation-stage")).toBeTruthy();
     expect(screen.getByTestId("pdf-viewer")).toBeTruthy();
+  });
+});
+
+// ── SSR Safety: tema inicializa com "default" ─────────────────────────────────
+
+describe("ViewerClientShell — tema SSR", () => {
+  beforeEach(() => { localStorage.clear(); });
+  afterEach(() => { localStorage.clear(); });
+
+  test("inicializa com tema 'default' (seguro para SSR)", () => {
+    render(<ViewerClientShell {...defaultProps}><ChildContent /></ViewerClientShell>);
+
+    const header = screen.getByTestId("viewer-header");
+    expect(header.getAttribute("data-active-theme")).toBe("default");
+  });
+
+  test("aplica tema salvo do localStorage após montagem", async () => {
+    localStorage.setItem("viewer-theme", "github");
+
+    render(<ViewerClientShell {...defaultProps}><ChildContent /></ViewerClientShell>);
+
+    await act(async () => { await Promise.resolve(); });
+
+    const header = screen.getByTestId("viewer-header");
+    expect(header.getAttribute("data-active-theme")).toBe("github");
+  });
+
+  test("ignora tema inválido no localStorage e mantém 'default'", async () => {
+    localStorage.setItem("viewer-theme", "tema-invalido");
+
+    render(<ViewerClientShell {...defaultProps}><ChildContent /></ViewerClientShell>);
+
+    await act(async () => { await Promise.resolve(); });
+
+    const header = screen.getByTestId("viewer-header");
+    expect(header.getAttribute("data-active-theme")).toBe("default");
+  });
+
+  test("onChangeTheme persiste no localStorage", async () => {
+    render(<ViewerClientShell {...defaultProps}><ChildContent /></ViewerClientShell>);
+
+    await act(async () => {
+      screen.getByTestId("theme-cycle-btn").click();
+    });
+
+    expect(localStorage.getItem("viewer-theme")).toBe("github");
   });
 });

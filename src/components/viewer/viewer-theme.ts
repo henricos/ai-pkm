@@ -1,11 +1,11 @@
 /**
- * viewer-theme — Module (Phase 5, PRS-06, PRS-07)
+ * viewer-theme — Presets de tema do viewer (Phase 5, PRS-06, PRS-07)
  *
- * Define os presets de tema do viewer e expõe:
- * - VIEWER_PRESETS: catálogo dos presets disponíveis (nome + classe CSS)
- * - ViewerThemeProvider: Context provider para estado compartilhado do tema
- * - useViewerTheme: hook para ler e alterar o preset ativo
- * - ViewerThemeRoot: wrapper que aplica o preset ao root do viewer (data-theme + className)
+ * Define os presets de tema e expõe:
+ * - Tipos e constantes: ViewerTheme, VIEWER_THEMES, VIEWER_THEME_LABELS, DEFAULT_THEME, VIEWER_PRESETS
+ * - Utilitários SSR-safe: isValidTheme, readSavedTheme, saveTheme, themeRootClass, themeProseClass
+ * - Context API: ViewerThemeProvider, useViewerTheme
+ * - Root component: ViewerThemeRoot
  *
  * Requisitos:
  * - PRS-06 / D-17: o preset afeta apenas o root do viewer, nunca <html> ou <body>
@@ -13,9 +13,8 @@
  * - PRS-06 / D-19: setTheme ignora mudanças quando presentationActive=true
  * - T-05-12: fallback silencioso quando localStorage não estiver disponível
  *
- * Estratégia: data-attribute `data-theme="<preset>"` no root do viewer.
- * Os estilos derivados são controlados no globals.css por seletores
- * `[data-theme="chatgpt"] .prose`, `[data-theme="github"] .prose`, etc.
+ * SSR Safety: localStorage NUNCA é lido durante render.
+ * Inicializa com DEFAULT_THEME; aplica tema salvo em useEffect após montagem.
  */
 
 "use client";
@@ -24,33 +23,51 @@ import React, {
   createContext,
   useContext,
   useState,
+  useEffect,
   useCallback,
   type ReactNode,
 } from "react";
 
-// ── Contratos de preset ─────────────────────────────────────────────────────
+// ── Tipos e constantes ───────────────────────────────────────────────────────
 
-export type ViewerThemePresetKey = "default" | "chatgpt" | "github" | "excalidraw";
+export type ViewerTheme = "default" | "chatgpt" | "github" | "excalidraw";
+/** @deprecated Use ViewerTheme */
+export type ViewerThemePresetKey = ViewerTheme;
 
 export interface ViewerPreset {
   /** Nome legível exibido no seletor de tema */
   name: string;
-  /** Classe CSS aplicada ao root do viewer (data-theme="<key>" é o mecanismo primário) */
+  /** Classe CSS aplicada ao root do viewer */
   className: string;
   /** Descrição breve da identidade visual */
   description: string;
 }
 
+export const VIEWER_THEMES: ViewerTheme[] = [
+  "default",
+  "chatgpt",
+  "github",
+  "excalidraw",
+];
+
+export const VIEWER_THEME_LABELS: Record<ViewerTheme, string> = {
+  default: "Padrão",
+  chatgpt: "ChatGPT",
+  github: "GitHub",
+  excalidraw: "Excalidraw",
+};
+
+export const DEFAULT_THEME: ViewerTheme = "default";
+
 /**
  * Catálogo dos presets disponíveis.
- *
  * Identidades visuais (D-18 — diferenças moderadas):
  * - default: composição atual do viewer, sem alteração visual extra
  * - chatgpt: leitura limpa e neutra — sans-serif, fundo quase-branco, coluna estreita
- * - github: documentação técnica — fonte levemente maior, code blocks com bordas tênues
+ * - github: documentação técnica — code blocks com bordas tênues
  * - excalidraw: atmosfera diagrama — fundo suave off-white, texto menos denso
  */
-export const VIEWER_PRESETS: Record<ViewerThemePresetKey, ViewerPreset> = {
+export const VIEWER_PRESETS: Record<ViewerTheme, ViewerPreset> = {
   default: {
     name: "Padrão",
     className: "viewer-theme-default",
@@ -74,42 +91,74 @@ export const VIEWER_PRESETS: Record<ViewerThemePresetKey, ViewerPreset> = {
 };
 
 const STORAGE_KEY = "viewer-theme";
-const DEFAULT_PRESET: ViewerThemePresetKey = "default";
 
-// ── Utilitário de localStorage resiliente ───────────────────────────────────
+// ── Utilitários SSR-safe ─────────────────────────────────────────────────────
 
-function readStoredTheme(): ViewerThemePresetKey {
-  try {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored && stored in VIEWER_PRESETS) {
-      return stored as ViewerThemePresetKey;
-    }
-  } catch {
-    // T-05-12: localStorage indisponível ou restrito — continua com default
-  }
-  return DEFAULT_PRESET;
+export function isValidTheme(value: string): value is ViewerTheme {
+  return (VIEWER_THEMES as string[]).includes(value);
 }
 
-function writeStoredTheme(preset: ViewerThemePresetKey): void {
+/**
+ * Lê o tema salvo do localStorage.
+ * Retorna null se indisponível ou inválido.
+ * NUNCA chamar durante render (SSR) — usar apenas em useEffect ou event handlers.
+ */
+export function readSavedTheme(): ViewerTheme | null {
   try {
-    localStorage.setItem(STORAGE_KEY, preset);
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved && isValidTheme(saved)) return saved;
   } catch {
-    // T-05-12: falha silenciosa — o viewer continua funcional
+    // T-05-12: localStorage pode não estar disponível
+  }
+  return null;
+}
+
+export function saveTheme(theme: ViewerTheme): void {
+  try {
+    localStorage.setItem(STORAGE_KEY, theme);
+  } catch {
+    // T-05-12: falha silenciosa
+  }
+}
+
+export function themeRootClass(theme: ViewerTheme): string {
+  switch (theme) {
+    case "chatgpt":
+      return "bg-[#ffffff] text-[#0d0d0d]";
+    case "github":
+      return "bg-[#ffffff] text-[#1f2328]";
+    case "excalidraw":
+      return "bg-[#f5f0e8] text-[#1b1b1f]";
+    default:
+      return "bg-surface-container-lowest";
+  }
+}
+
+export function themeProseClass(theme: ViewerTheme): string {
+  switch (theme) {
+    case "chatgpt":
+      return "prose prose-neutral max-w-none";
+    case "github":
+      return "prose prose-sm prose-github max-w-none";
+    case "excalidraw":
+      return "prose prose-sm prose-stone max-w-none";
+    default:
+      return "prose prose-sm max-w-none bg-surface-container-lowest";
   }
 }
 
 // ── Context ──────────────────────────────────────────────────────────────────
 
 interface ViewerThemeContextValue {
-  activeTheme: ViewerThemePresetKey;
+  activeTheme: ViewerTheme;
   setTheme: (
-    preset: ViewerThemePresetKey,
+    preset: ViewerTheme,
     options?: { presentationActive?: boolean }
   ) => void;
 }
 
 const ViewerThemeContext = createContext<ViewerThemeContextValue>({
-  activeTheme: DEFAULT_PRESET,
+  activeTheme: DEFAULT_THEME,
   setTheme: () => {},
 });
 
@@ -117,28 +166,36 @@ const ViewerThemeContext = createContext<ViewerThemeContextValue>({
 
 interface ViewerThemeProviderProps {
   children: ReactNode;
-  /** Preset inicial — se omitido, lê do localStorage ou usa default */
-  initialTheme?: ViewerThemePresetKey;
+  /** Preset inicial — se omitido, lê do localStorage após montagem */
+  initialTheme?: ViewerTheme;
 }
 
 export function ViewerThemeProvider({
   children,
   initialTheme,
 }: ViewerThemeProviderProps) {
-  const [activeTheme, setActiveTheme] = useState<ViewerThemePresetKey>(
-    () => initialTheme ?? readStoredTheme()
+  // SSR Safety: inicializa com o default para que servidor e cliente concordem.
+  // O tema salvo é aplicado em useEffect, após a hidratação.
+  const [activeTheme, setActiveTheme] = useState<ViewerTheme>(
+    initialTheme ?? DEFAULT_THEME
   );
+
+  useEffect(() => {
+    if (!initialTheme) {
+      const saved = readSavedTheme();
+      if (saved) setActiveTheme(saved);
+    }
+  }, [initialTheme]);
 
   const setTheme = useCallback(
     (
-      preset: ViewerThemePresetKey,
+      preset: ViewerTheme,
       options?: { presentationActive?: boolean }
     ) => {
       // D-19: ignorar mudança durante o modo apresentação
       if (options?.presentationActive) return;
-
       setActiveTheme(preset);
-      writeStoredTheme(preset);
+      saveTheme(preset);
     },
     []
   );
@@ -152,12 +209,6 @@ export function ViewerThemeProvider({
 
 // ── Hook ─────────────────────────────────────────────────────────────────────
 
-/**
- * Retorna o preset ativo e um setter que:
- * - Persiste no localStorage
- * - Ignora mudanças quando `presentationActive=true` (D-19)
- * - Não lança erro quando localStorage estiver indisponível (T-05-12)
- */
 export function useViewerTheme(): ViewerThemeContextValue {
   return useContext(ViewerThemeContext);
 }
@@ -165,16 +216,14 @@ export function useViewerTheme(): ViewerThemeContextValue {
 // ── ViewerThemeRoot ──────────────────────────────────────────────────────────
 
 interface ViewerThemeRootProps {
-  activeTheme: ViewerThemePresetKey;
+  activeTheme: ViewerTheme;
   children: ReactNode;
   className?: string;
 }
 
 /**
  * Aplica o preset ativo como data-attribute e className no root do viewer.
- *
  * D-17: nunca aplica em <html> ou <body>.
- * O seletor CSS `[data-theme="<key>"] .prose` derivará os estilos.
  */
 export function ViewerThemeRoot({
   activeTheme,
