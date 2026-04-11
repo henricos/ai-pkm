@@ -2,18 +2,17 @@
  * LaserPointerOverlay — Ponteiro laser com rastro temporal (Phase 5)
  *
  * Overlay transversal ao viewer que implementa rastro temporal com
- * dissipação progressiva e efeito de cauda de cometa (espessura variável).
+ * dissipação progressiva e efeito de cauda de cometa (afunilamento).
  *
  * Comportamento do rastro:
  * - O rastro só é desenhado enquanto o botão do mouse está pressionado (pointerdown)
- * - Ao soltar o mouse (pointerup), o rastro começa a dissipar normalmente
- * - O cursor muda para crosshair quando o laser está ativo mas o mouse não está pressionado
+ * - Ao soltar o mouse (pointerup), o rastro congela e inicia fade baseado em releaseTime
+ * - Sem retração: pontos não são prunados durante o fade — somem juntos
  *
  * Efeito cauda de cometa:
- * - Os pontos são conectados por segmentos de linha SVG para garantir continuidade
- * - A espessura de cada segmento varia proporcionalmente à idade: ponto novo = grosso,
- *   ponto antigo = fino (até zero)
- * - Usa stroke-linecap round para suavidade nas pontas
+ * - Renderizado como polígono SVG preenchido (ribbon) via buildTaperedRibbonPath
+ * - Tail (ponto mais antigo) = largura zero; head (ponto mais recente) = MAX_STROKE_WIDTH
+ * - Fade: opacidade total por 60% da vida, depois fade linear para zero nos últimos 40%
  *
  * Proteções:
  * - pointer-events: none quando inativo (T-05-09)
@@ -37,7 +36,7 @@ interface TrailPoint {
 interface LaserPointerOverlayProps {
   /** Liga/desliga o laser. Quando false, overlay não captura eventos. */
   active: boolean;
-  /** Janela de dissipação do rastro em ms (padrão: 700). */
+  /** Janela de dissipação do rastro em ms (padrão: 400). Hold: ~100ms, fade: ~300ms. */
   trailDurationMs?: number;
   /** Passado pelo shell — sem efeito funcional no overlay em si. */
   presentationMode?: boolean;
@@ -48,14 +47,61 @@ let pointIdCounter = 0;
 
 /** Espessura máxima do traço no ponto mais recente (em px) */
 const MAX_STROKE_WIDTH = 5;
-/** Espessura mínima abaixo da qual o segmento fica transparente */
-const MIN_STROKE_WIDTH = 0.5;
-/** Distância mínima entre pontos consecutivos (px) — evita segmentos sub-pixel com linecap:round */
+/** Distância mínima entre pontos consecutivos (px) */
 const MIN_POINT_DIST = 3;
+
+/**
+ * Constrói um polígono SVG afunilado (ribbon) para o rastro laser.
+ * Tail (index 0) → ponto de largura zero; Head (último) → MAX_STROKE_WIDTH.
+ * Produz um único <path> fill sem artifacts de linecap.
+ */
+function buildTaperedRibbonPath(points: TrailPoint[]): string {
+  const n = points.length;
+  const left: Array<{ x: number; y: number }> = [];
+  const right: Array<{ x: number; y: number }> = [];
+
+  for (let i = 0; i < n; i++) {
+    const halfW = (MAX_STROKE_WIDTH / 2) * (i / (n - 1));
+
+    let dx: number, dy: number;
+    if (i === 0) {
+      dx = points[1].x - points[0].x;
+      dy = points[1].y - points[0].y;
+    } else if (i === n - 1) {
+      dx = points[i].x - points[i - 1].x;
+      dy = points[i].y - points[i - 1].y;
+    } else {
+      // Tangente central para suavidade
+      dx = points[i + 1].x - points[i - 1].x;
+      dy = points[i + 1].y - points[i - 1].y;
+    }
+
+    const len = Math.sqrt(dx * dx + dy * dy) || 1;
+    dx /= len;
+    dy /= len;
+
+    // Perpendicular (rotação 90°)
+    const px = -dy;
+    const py = dx;
+
+    left.push({ x: points[i].x + px * halfW, y: points[i].y + py * halfW });
+    right.push({ x: points[i].x - px * halfW, y: points[i].y - py * halfW });
+  }
+
+  // Caminho: lado esquerdo para frente + lado direito para trás (fechando o polígono)
+  let d = `M ${left[0].x.toFixed(1)} ${left[0].y.toFixed(1)}`;
+  for (let i = 1; i < left.length; i++) {
+    d += ` L ${left[i].x.toFixed(1)} ${left[i].y.toFixed(1)}`;
+  }
+  for (let i = right.length - 1; i >= 0; i--) {
+    d += ` L ${right[i].x.toFixed(1)} ${right[i].y.toFixed(1)}`;
+  }
+  return d + " Z";
+}
 
 export function LaserPointerOverlay({
   active,
-  trailDurationMs = 700,
+  trailDurationMs = 400,
   children,
 }: LaserPointerOverlayProps) {
   const [trail, setTrail] = useState<TrailPoint[]>([]);
@@ -65,6 +111,8 @@ export function LaserPointerOverlay({
   const isHiddenRef = useRef(false);
   const activeRef = useRef(active);
   const isPressedRef = useRef(false);
+  /** Timestamp de quando o mouse foi solto — base estável para o fade. Null enquanto desenhando. */
+  const releaseTimeRef = useRef<number | null>(null);
 
   // Sincronizar ref com prop (evita stale closure no RAF)
   useEffect(() => {
@@ -75,23 +123,34 @@ export function LaserPointerOverlay({
   useEffect(() => {
     if (!active) {
       isPressedRef.current = false;
+      releaseTimeRef.current = null;
       setIsPressed(false);
       trailRef.current = [];
       setTrail([]);
     }
   }, [active]);
 
-  // RAF: única fonte de setTrail — prune + sincroniza estado a cada frame (T-05-08)
-  // Handlers de ponteiro atualizam apenas trailRef; RAF é o único escritor de setTrail,
-  // eliminando renders concorrentes que causavam pontos isolados no rastro.
+  // RAF: única fonte de setTrail (T-05-08)
+  // Enquanto pressionado: pruna pontos antigos para limitar o comprimento do rastro.
+  // Após soltar: congela os pontos (sem pruning) e limpa tudo ao fim do fade.
   useEffect(() => {
     const tick = () => {
       if (!isHiddenRef.current) {
         const now = performance.now();
-        const cutoff = now - trailDurationMs;
-        const pruned = trailRef.current.filter((p) => p.timestamp > cutoff);
-        trailRef.current = pruned;
-        setTrail([...pruned]);
+
+        if (isPressedRef.current) {
+          // Enquanto desenhando: pruna pontos mais velhos que trailDurationMs
+          const cutoff = now - trailDurationMs;
+          trailRef.current = trailRef.current.filter((p) => p.timestamp > cutoff);
+        } else if (releaseTimeRef.current !== null) {
+          // Fade em andamento: não pruna — limpa tudo quando o fade termina
+          if (now - releaseTimeRef.current >= trailDurationMs) {
+            trailRef.current = [];
+            releaseTimeRef.current = null;
+          }
+        }
+
+        setTrail([...trailRef.current]);
       }
       rafRef.current = requestAnimationFrame(tick);
     };
@@ -123,12 +182,11 @@ export function LaserPointerOverlay({
     };
   }, []);
 
-  // Rastro apenas com mouse pressionado (pointerdown ativo)
-  // Handlers apenas atualizam trailRef — RAF é o único escritor de setTrail
   const handlePointerDown = useCallback(
     (e: React.PointerEvent) => {
       if (!active || isHiddenRef.current) return;
       isPressedRef.current = true;
+      releaseTimeRef.current = null; // cancela fade pendente ao recomeçar
       setIsPressed(true);
       const el = e.currentTarget as HTMLElement;
       if (typeof el.setPointerCapture === "function") {
@@ -150,7 +208,6 @@ export function LaserPointerOverlay({
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
       if (!isFinite(x) || !isFinite(y)) return;
-      // Filtro de distância mínima — ignora pontos sub-pixel que viram "pontos soltos"
       const last = trailRef.current[trailRef.current.length - 1];
       if (last) {
         const dx = x - last.x;
@@ -165,16 +222,23 @@ export function LaserPointerOverlay({
   const handlePointerUp = useCallback(() => {
     isPressedRef.current = false;
     setIsPressed(false);
+    // Inicia o fade a partir de agora (referência estável, não muda com pruning)
+    if (trailRef.current.length > 0) {
+      releaseTimeRef.current = performance.now();
+    }
   }, []);
 
   /**
-   * Renderiza o rastro como uma série de segmentos de linha SVG,
-   * cada um com espessura proporcional à posição relativa no rastro
-   * (efeito cauda de cometa: grosso na ponta, fino na cauda).
+   * Renderiza o rastro como polígono SVG afunilado (ribbon).
+   * - 0 pontos: null
+   * - 1 ponto: <circle> (sem ribbon possível)
+   * - 2+ pontos: <path> fill via buildTaperedRibbonPath
+   *
+   * Opacidade: 1.0 por 60% da vida após soltar, fade linear para 0 nos últimos 40%.
+   * Sem floor — some de vez ao invés de ficar translúcido.
    */
   const renderTrail = () => {
     if (trail.length < 2) {
-      // Único ponto: renderizar como círculo
       if (trail.length === 1) {
         return (
           <circle
@@ -191,43 +255,28 @@ export function LaserPointerOverlay({
       return null;
     }
 
-    const now = performance.now();
-    const segments: React.ReactNode[] = [];
-
-    for (let i = 1; i < trail.length; i++) {
-      const prev = trail[i - 1];
-      const curr = trail[i];
-
-      // Posição relativa no rastro: 0 = cauda mais antiga, 1 = ponta mais nova
-      const relativePos = i / (trail.length - 1);
-
-      // Espessura proporcional à posição: ponta = MAX, cauda = MIN
-      const strokeWidth =
-        MIN_STROKE_WIDTH + (MAX_STROKE_WIDTH - MIN_STROKE_WIDTH) * relativePos;
-
-      // Opacidade baseada na idade do ponto atual
-      const age = now - curr.timestamp;
-      const opacity = Math.max(0, 1 - age / trailDurationMs);
-
-      if (opacity < 0.01) continue;
-
-      segments.push(
-        <line
-          key={`seg-${prev.id}-${curr.id}`}
-          data-testid="laser-trail-point"
-          x1={prev.x}
-          y1={prev.y}
-          x2={curr.x}
-          y2={curr.y}
-          stroke="#ef4444"
-          strokeWidth={strokeWidth}
-          strokeLinecap="round"
-          opacity={opacity}
-        />
-      );
+    // Opacidade baseada no tempo desde o mouseup (releaseTimeRef — ref estável)
+    let opacity = 1.0;
+    const releaseTime = releaseTimeRef.current;
+    if (releaseTime !== null) {
+      const t = Math.min(1, (performance.now() - releaseTime) / trailDurationMs);
+      const holdFraction = 100 / 400; // ~100ms intacto, ~300ms fade
+      const fadeProgress = Math.max(0, (t - holdFraction) / (1 - holdFraction));
+      opacity = 1 - fadeProgress;
     }
 
-    return segments;
+    const d = buildTaperedRibbonPath(trail);
+
+    return (
+      <path
+        key="laser-trail"
+        data-testid="laser-trail-point"
+        d={d}
+        fill="#ef4444"
+        stroke="none"
+        opacity={opacity}
+      />
+    );
   };
 
   return (
