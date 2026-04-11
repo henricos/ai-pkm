@@ -2,16 +2,18 @@
 phase: 05-presentation-mode
 plan: "03"
 subsystem: viewer/laser
-tags: [laser-pointer, overlay, presentation-mode, svg, raf]
+tags: [laser-pointer, overlay, presentation-mode, svg, raf, comet-tail]
 dependency_graph:
   requires: [05-01, 05-02]
   provides: [laser-pointer-overlay, laser-integration]
-  affects: [viewer-client-shell, presentation-overlay, presentation-controls]
+  affects: [viewer-client-shell, presentation-overlay, presentation-controls, viewer-header]
 tech_stack:
   added: []
   patterns:
     - SVG overlay com requestAnimationFrame para rastro temporal
-    - PointerEvents + timestamps para dissipação progressiva
+    - PointerEvents (pointerdown/pointerup) para click-drag exclusivo
+    - Espessura variável por posição relativa (efeito cauda de cometa)
+    - Segmentos <line> SVG com stroke-linecap/linejoin round para continuidade
     - Page Visibility API para pausa do loop de animação
 key_files:
   created:
@@ -19,23 +21,29 @@ key_files:
   modified:
     - src/components/viewer/viewer-client-shell.tsx
     - src/components/viewer/presentation-overlay.tsx
+    - src/components/viewer/presentation-controls.tsx
+    - src/components/viewer/viewer-header.tsx
+    - src/__tests__/laser-pointer-overlay.test.tsx
 decisions:
   - Implementação local com SVG em vez de @excalidraw/laser-pointer — garante testabilidade com jsdom e evita dependência nova
-  - data-testid=laser-trail-point em cada circle SVG para rastreabilidade nos testes
-  - pointer-events: none quando active=false — não bloqueia conteúdo (T-05-09)
-  - Rastro limpo ao mudar active para false e ao desmontar (T-05-10)
+  - Rastro apenas com pointerdown ativo — hover não gera rastro (pós-validação manual)
+  - Segmentos <line> SVG em vez de <circle> por ponto — garante continuidade em movimentos rápidos
+  - Espessura variável por posição relativa no rastro — efeito cauda de cometa (ponta grossa, cauda fina)
+  - Ícone de caneta (pen SVG) nos dois pontos de entrada do laser (header e controls)
+  - Toggle do laser no ViewerHeader — acessível fora do presentation mode
+  - Guarda opcional para setPointerCapture (não disponível no jsdom)
 metrics:
-  duration: ~15min
+  duration: ~30min (inclui validação manual e correções)
   completed: 2026-04-11
-  tasks_completed: 2
+  tasks_completed: 3
   tasks_total: 3
   files_created: 1
-  files_modified: 2
+  files_modified: 5
 ---
 
 # Phase 5 Plan 03: Laser Pointer Overlay Summary
 
-**One-liner:** Ponteiro laser com rastro SVG temporal e dissipação progressiva, integrado como camada transversal ao viewer dentro e fora do modo apresentação.
+**One-liner:** Ponteiro laser com rastro SVG de cauda de cometa (espessura variável), ativado por click-drag, integrado como camada transversal ao viewer com toggle no header e nos controles de apresentação.
 
 ## Tasks Completed
 
@@ -43,39 +51,88 @@ metrics:
 |---|------|--------|---------|
 | 1 | Construir overlay temporal do laser | `720311e` | `laser-pointer-overlay.tsx` (criado) |
 | 2 | Integrar o laser ao shell e aos controles | `a8fcc31` | `viewer-client-shell.tsx`, `presentation-overlay.tsx` |
+| 3 | Correções pós-validação manual | `5927e02` | `laser-pointer-overlay.tsx`, `presentation-controls.tsx`, `viewer-header.tsx`, `viewer-client-shell.tsx`, `laser-pointer-overlay.test.tsx` |
 
 ## What Was Built
 
-### Task 1: LaserPointerOverlay
+### Task 1–2: LaserPointerOverlay (implementação inicial)
 
-Componente `src/components/viewer/laser-pointer-overlay.tsx` que:
+- Overlay SVG absolutamente posicionado sobre o conteúdo do viewer
+- Registro de amostras de posição com timestamp e dissipação por `requestAnimationFrame`
+- Pausa do loop com Page Visibility API (T-05-08)
+- `pointer-events: none` quando `active=false` (T-05-09)
+- Limpeza da trilha ao desligar e ao desmontar (T-05-10)
 
-- Renderiza um overlay SVG absolutamente posicionado sobre o conteúdo do viewer
-- Registra amostras de posição com timestamp via `onMouseMove`
-- Descarta amostras antigas via `requestAnimationFrame` (janela configurável via `trailDurationMs`, padrão 700ms)
-- Pausa o loop quando o documento fica oculto (Page Visibility API — T-05-08)
-- Não captura eventos quando `active=false` (`pointer-events: none` — T-05-09)
-- Limpa a trilha ao desligar (`active` muda para `false`) e ao desmontar (T-05-10)
-- Cada ponto do rastro tem `data-testid="laser-trail-point"` para testabilidade
-- Ponto de cursor ativo com glow via `drop-shadow` CSS filter
+### Task 3: Correções pós-validação manual
 
-### Task 2: Integração ao shell e controles
+Cinco problemas identificados na validação no browser e corrigidos:
 
-- `ViewerClientShell`: envolveu `children` com `LaserPointerOverlay` fora do modo apresentação — laser funciona em markdown, imagem, PDF e fallback sem código por tipo
-- `PresentationOverlay`: envolveu `children` com `LaserPointerOverlay` dentro do modo apresentação — laser funciona no palco com `presentationMode=true`
-- `laserEnabled` já estava no estado do shell (05-02); a integração apenas conectou o overlay
+**1. Ícone de caneta nos dois pontos de entrada**
+- `PresentationControls`: substituído ícone de alvo/cruz pelo ícone de caneta (pen SVG)
+- `ViewerHeader`: adicionado botão com ícone de caneta para toggle do laser fora do presentation mode
+- `ViewerClientShell`: passa `laserEnabled` e `onToggleLaser` ao `ViewerHeader`
+
+**2. Rastro ativo apenas com mouse pressionado (click-drag)**
+- Substituiu `onMouseMove` por `onPointerDown` + `onPointerMove` + `onPointerUp`
+- Rastro só é registrado quando `isPressedRef.current === true`
+- Hover sem pressionar não gera nenhum ponto
+
+**3. Efeito cauda de cometa (espessura variável)**
+- Cada segmento tem espessura proporcional à sua posição relativa no rastro
+- Posição 0 (cauda mais antiga) = `MIN_STROKE_WIDTH` (0.5px)
+- Posição 1 (ponta mais nova) = `MAX_STROKE_WIDTH` (5px)
+- Fórmula: `strokeWidth = MIN + (MAX - MIN) * relativePos`
+
+**4. Linha contínua em movimentos rápidos**
+- Substituiu `<circle>` por `<line>` SVG conectando pontos consecutivos
+- `stroke-linecap: round` e `stroke-linejoin: round` para suavidade
+- Sem pontos desconectados mesmo em movimentos rápidos
+
+**5. Espessura geral reduzida**
+- Espessura máxima de 5px (era 8–10px no cursor ativo)
+- Ponto de cursor ativo com raio `MAX_STROKE_WIDTH / 2 + 1 = 3.5px`
 
 ## Deviations from Plan
 
-### Auto-selected Technical Approach
+### Implementação inicial (Tasks 1–2)
 
 **1. [Rule 1 - Approach] Implementação local com SVG em vez de @excalidraw/laser-pointer**
 - **Found during:** Task 1 — avaliação da integrabilidade do pacote
-- **Issue:** `@excalidraw/laser-pointer` 1.3.2 funciona com canvas mas não é testável via jsdom de forma simples; os testes da fase 05-01 usam `data-testid="laser-trail-point"` e `querySelectorAll`, que pressupõem elementos DOM
-- **Decision:** Implementação local com SVG conforme plano estabelecia como fallback válido
-- **Benefit:** Testabilidade plena, sem nova dependência, mesmos comportamentos de rastro e dissipação
-- **Files modified:** `laser-pointer-overlay.tsx`
+- **Issue:** `@excalidraw/laser-pointer` 1.3.2 usa canvas e não é testável via jsdom com `data-testid`
+- **Fix:** Implementação local com SVG — testabilidade plena, sem nova dependência
 - **Commit:** `720311e`
+
+### Correções pós-validação (Task 3)
+
+**2. [Rule 1 - Bug] Rastro aparecia em hover sem click**
+- **Found during:** Validação manual no browser
+- **Issue:** `onMouseMove` registrava pontos independentemente de o botão estar pressionado
+- **Fix:** Migrado para `onPointerDown/Move/Up` com flag `isPressedRef`
+- **Commit:** `5927e02`
+
+**3. [Rule 2 - UX] Ícone ausente no header**
+- **Found during:** Validação manual no browser
+- **Issue:** Toggle do laser acessível apenas nos controles do presentation mode
+- **Fix:** Botão com ícone de caneta adicionado ao `ViewerHeader`; props `laserEnabled`/`onToggleLaser` propagadas pelo shell
+- **Commit:** `5927e02`
+
+**4. [Rule 1 - Bug] Pontos desconectados em movimentos rápidos**
+- **Found during:** Validação manual no browser
+- **Issue:** `<circle>` por ponto deixava lacunas em movimentos rápidos
+- **Fix:** Substituído por `<line>` SVG conectando pontos consecutivos
+- **Commit:** `5927e02`
+
+**5. [Rule 2 - UX] Sem variação de espessura (rastro plano)**
+- **Found during:** Validação manual no browser
+- **Issue:** Todos os pontos do rastro tinham a mesma espessura — sem efeito de profundidade
+- **Fix:** Espessura proporcional à posição relativa no rastro (cauda de cometa)
+- **Commit:** `5927e02`
+
+**6. [Rule 1 - Compat] setPointerCapture ausente no jsdom**
+- **Found during:** Execução dos testes após as correções
+- **Issue:** `setPointerCapture` não está implementado no jsdom → TypeError nos testes
+- **Fix:** Guarda opcional `if (typeof el.setPointerCapture === "function")`
+- **Commit:** `5927e02`
 
 ## Known Stubs
 
@@ -90,24 +147,24 @@ Nenhuma superfície nova além do escopo do plano.
 ```
 npx vitest run src/__tests__/laser-pointer-overlay.test.tsx src/__tests__/presentation-mode.test.tsx
 
- ✓ src/__tests__/laser-pointer-overlay.test.tsx (8 tests)
+ ✓ src/__tests__/laser-pointer-overlay.test.tsx (9 tests)
  ✓ src/__tests__/presentation-mode.test.tsx (8 tests)
 
  Test Files  2 passed (2)
- Tests  16 passed (16)
+       Tests  17 passed (17)
 ```
 
-TypeScript: sem novos erros (os 6 erros pré-existentes são de planos futuros: `viewer-theme.test.tsx` e `viewer-client-shell.test.tsx`).
-
-## Checkpoint Pending
-
-Task 3 (`checkpoint:human-verify`) aguarda validação manual do comportamento real do laser no browser: persistência curta, dissipação progressiva e ausência de linha dura ou cursor estático.
+TypeScript: sem novos erros. Os 5 erros pré-existentes são de planos futuros (`viewer-theme.test.tsx`, `viewer-client-shell.test.tsx`).
 
 ## Self-Check: PASSED
 
-- [x] `src/components/viewer/laser-pointer-overlay.tsx` — existe
-- [x] `src/components/viewer/viewer-client-shell.tsx` — modificado
+- [x] `src/components/viewer/laser-pointer-overlay.tsx` — existe e corrigido
+- [x] `src/components/viewer/viewer-client-shell.tsx` — modificado (laser no header)
 - [x] `src/components/viewer/presentation-overlay.tsx` — modificado
-- [x] Commit `720311e` — existe
-- [x] Commit `a8fcc31` — existe
-- [x] 16 testes passando
+- [x] `src/components/viewer/presentation-controls.tsx` — modificado (ícone de caneta)
+- [x] `src/components/viewer/viewer-header.tsx` — modificado (botão laser + ícone)
+- [x] `src/__tests__/laser-pointer-overlay.test.tsx` — atualizado (9 testes, click-drag)
+- [x] Commit `720311e` — existe (Task 1)
+- [x] Commit `a8fcc31` — existe (Task 2)
+- [x] Commit `5927e02` — existe (Task 3 — correções pós-validação)
+- [x] 17 testes passando
