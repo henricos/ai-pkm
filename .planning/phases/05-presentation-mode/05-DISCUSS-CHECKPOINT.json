@@ -1,0 +1,38 @@
+{
+  "phase": "5",
+  "phase_slug": "presentation-mode",
+  "status": "partial",
+  "saved_at": "2026-04-11",
+  "areas_total": 4,
+  "areas_completed": [
+    "superficie_de_apresentacao",
+    "controles_e_saida_do_modo"
+  ],
+  "areas_pending": [
+    "ponteiro_laser",
+    "temas_de_leitura_apresentacao"
+  ],
+  "decisions": {
+    "superficie_de_apresentacao": {
+      "modo": "palco_puro",
+      "info_panel": "indisponivel"
+    },
+    "controles_e_saida_do_modo": {
+      "discovery_model": "regiao_de_ativacao_no_canto_inferior_esquerdo",
+      "default_visibility": "invisiveis_por_padrao",
+      "visual_style": "discretos_semi_transparentes_auto_ocultaveis",
+      "exit_methods": [
+        "esc",
+        "botao_sair"
+      ],
+      "interaction_mode": "interacao_normal_quando_visiveis",
+      "reference": "experiencia_do_powerpoint",
+      "annotation_scope": "slot_previsto_sem_implementar"
+    }
+  },
+  "notes": [
+    "Retomar pela area ponteiro_laser.",
+    "Usuario quer checkpoints frequentes e sinalizacao clara de bons momentos para commit.",
+    "Checkpoint parcial criado antes de consolidar 05-CONTEXT.md."
+  ]
+}
