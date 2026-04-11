@@ -124,20 +124,24 @@ export function PresentationOverlay({
         </LaserPointerOverlay>
       </div>
 
-      {/* Hit area inferior esquerda — única zona que revela controles (D-06) */}
+      {/* Hit area inferior esquerda — única zona que revela controles (D-06)
+          z-index: 55 garante que fica acima do laser overlay (z-index: 40) */}
       <div
         data-testid="controls-hit-area"
         data-position="bottom-left"
         className="absolute bottom-0 left-0 w-24 h-16"
+        style={{ zIndex: 55 }}
         onMouseEnter={handleHitAreaEnter}
         onMouseLeave={handleHitAreaLeave}
         aria-hidden="true"
       />
 
-      {/* Cluster de controles — visível apenas quando controlsVisible=true */}
+      {/* Cluster de controles — visível apenas quando controlsVisible=true
+          z-index: 55 garante que fica acima do laser overlay (z-index: 40) */}
       {controlsVisible && (
         <div
           className="absolute bottom-4 left-4"
+          style={{ zIndex: 55 }}
           onMouseEnter={handleControlsEnter}
           onMouseLeave={handleControlsLeave}
         >

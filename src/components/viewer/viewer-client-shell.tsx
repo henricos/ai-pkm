@@ -96,9 +96,9 @@ export function ViewerClientShell({
   }, []);
 
   // Sair do presentation mode: restaura shell normal
+  // O estado do laser é preservado — entrar/sair do modo não interfere com laser ligado/desligado
   const exitPresentationMode = useCallback(() => {
     setIsPresentationMode(false);
-    setLaserEnabled(false);
   }, []);
 
   return (
