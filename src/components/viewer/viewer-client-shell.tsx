@@ -33,6 +33,7 @@ import { useState, useCallback } from "react";
 import { ViewerHeader } from "@/components/viewer/viewer-header";
 import { InfoPanel } from "@/components/viewer/info-panel";
 import { PresentationOverlay } from "@/components/viewer/presentation-overlay";
+import { LaserPointerOverlay } from "@/components/viewer/laser-pointer-overlay";
 import type { RawFrontmatter } from "@/lib/pkm/types";
 import type { ViewerThemePreset } from "@/components/viewer/viewer-header";
 
@@ -104,7 +105,12 @@ export function ViewerClientShell({
             presentationActive={isPresentationMode}
           />
           {/* Conteúdo por tipo — oculto visualmente no modo apresentação (T-05-07: não duplicar) */}
-          {!isPresentationMode && children}
+          {/* LaserPointerOverlay: camada transversal ao viewer fora do modo apresentação (PRS-05 / D-13) */}
+          {!isPresentationMode && (
+            <LaserPointerOverlay active={laserEnabled}>
+              {children}
+            </LaserPointerOverlay>
+          )}
         </div>
 
         {/* D-14: Painel push — ao lado do conteúdo, não overlay */}

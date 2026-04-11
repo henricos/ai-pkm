@@ -30,6 +30,7 @@
 
 import { useEffect, useCallback, useRef, useState } from "react";
 import { PresentationControls } from "@/components/viewer/presentation-controls";
+import { LaserPointerOverlay } from "@/components/viewer/laser-pointer-overlay";
 
 interface PresentationOverlayProps {
   onExit: () => void;
@@ -116,8 +117,11 @@ export function PresentationOverlay({
       // D-05: movimento global de mouse NÃO revela controles — sem onMouseMove aqui
     >
       {/* Conteúdo do palco — preserva o viewer atual sem duplicar */}
+      {/* LaserPointerOverlay: camada transversal dentro do modo apresentação (PRS-05 / D-13) */}
       <div className="w-full h-full overflow-auto">
-        {children}
+        <LaserPointerOverlay active={laserEnabled} presentationMode={true}>
+          {children}
+        </LaserPointerOverlay>
       </div>
 
       {/* Hit area inferior esquerda — única zona que revela controles (D-06) */}
