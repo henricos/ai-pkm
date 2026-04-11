@@ -1,23 +1,28 @@
 /**
- * ViewerHeader — Client Component (Phase 3, CTX-01 revisado, CTX-02)
+ * ViewerHeader — Client Component (Phase 3 + Phase 5)
  *
  * Header sticky do viewer:
  * - Esquerda: tópico › grupo (label-sm uppercase) + chip de estado
- * - Direita: [slot tema Phase 5] + [apresentação desabilitado] + [download] + [ℹ️ painel]
+ * - Direita: [seletor de tema Phase 5] + [apresentação] + [download] + [ℹ️ painel]
  *
  * Glassmorphism ao rolar (D-10): ouve scroll no elemento #viewer-scroll
  * (id fixo do container de scroll definido em ViewerPage — 03-05-PLAN.md)
  *
- * Decisões (03-CONTEXT.md):
+ * Decisões (03-CONTEXT.md + 05-CONTEXT.md):
  * - D-10: sticky + glassmorphism ao rolar
  * - D-11: tópico › grupo, não filename
- * - D-12: download raw, apresentação (disabled), toggle ℹ️
- * - D-13: div placeholder para tema (Phase 5)
+ * - D-12: download raw, apresentação (real Phase 5), toggle ℹ️
+ * - D-13: slot de tema vira controle real de preset (Phase 5)
+ * - D-19: troca de tema acontece fora do modo apresentação
+ * - D-02: InfoPanel bloqueado no modo apresentação (toggle desabilitado)
+ * - PRS-01: botão de apresentação habilita onEnterPresentation callback
  */
 
 "use client";
 
 import { useState, useEffect } from "react";
+
+export type ViewerThemePreset = "default" | "chatgpt" | "github" | "excalidraw";
 
 interface ViewerHeaderProps {
   topic: string;
@@ -26,7 +31,24 @@ interface ViewerHeaderProps {
   itemId: string;
   panelOpen: boolean;
   onTogglePanel: () => void;
+  /** PRS-01: callback para entrar no modo apresentação */
+  onEnterPresentation?: () => void;
+  /** PRS-06: preset de tema ativo (Phase 5) */
+  activeTheme?: ViewerThemePreset;
+  /** PRS-06: callback para trocar preset de tema (Phase 5) */
+  onChangeTheme?: (theme: ViewerThemePreset) => void;
+  /** PRS-07: modo apresentação ativo — bloqueia InfoPanel e oculta seletor de tema */
+  presentationActive?: boolean;
 }
+
+const THEME_LABELS: Record<ViewerThemePreset, string> = {
+  default: "Padrão",
+  chatgpt: "ChatGPT",
+  github: "GitHub",
+  excalidraw: "Excalidraw",
+};
+
+const THEMES: ViewerThemePreset[] = ["default", "chatgpt", "github", "excalidraw"];
 
 export function ViewerHeader({
   topic,
@@ -35,8 +57,13 @@ export function ViewerHeader({
   itemId,
   panelOpen,
   onTogglePanel,
+  onEnterPresentation,
+  activeTheme = "default",
+  onChangeTheme,
+  presentationActive = false,
 }: ViewerHeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [themeMenuOpen, setThemeMenuOpen] = useState(false);
 
   useEffect(() => {
     const el = document.getElementById("viewer-scroll");
@@ -91,17 +118,57 @@ export function ViewerHeader({
 
       {/* Direita: ações */}
       <div className="flex items-center gap-1 shrink-0">
-        {/* D-13: Slot reservado para tema — Phase 5 */}
-        <div className="w-8 h-8" aria-hidden="true" data-slot="theme-button-phase5" />
+        {/* D-13 / PRS-06: Seletor de tema — visível somente fora do modo apresentação */}
+        {!presentationActive && (
+          <div className="relative" data-testid="theme-selector">
+            <button
+              type="button"
+              onClick={() => setThemeMenuOpen((v) => !v)}
+              aria-label={`Tema: ${THEME_LABELS[activeTheme]}`}
+              title="Trocar tema de leitura"
+              className="flex items-center justify-center w-8 h-8 rounded-sm text-on-surface/50 hover:text-on-surface hover:bg-surface-container transition-colors"
+            >
+              {/* Ícone de paleta */}
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.5" />
+                <circle cx="5.5" cy="8" r="1" fill="currentColor" />
+                <circle cx="8" cy="5.5" r="1" fill="currentColor" />
+                <circle cx="10.5" cy="8" r="1" fill="currentColor" />
+              </svg>
+            </button>
+            {themeMenuOpen && onChangeTheme && (
+              <div className="absolute right-0 top-full mt-1 z-20 bg-surface-container-lowest shadow-ambient rounded-sm border border-outline-variant/15 py-1 min-w-[120px]">
+                {THEMES.map((theme) => (
+                  <button
+                    key={theme}
+                    type="button"
+                    onClick={() => {
+                      onChangeTheme(theme);
+                      setThemeMenuOpen(false);
+                    }}
+                    className={[
+                      "w-full text-left px-3 py-1.5 text-[0.75rem] transition-colors",
+                      theme === activeTheme
+                        ? "text-on-surface font-semibold"
+                        : "text-on-surface/60 hover:text-on-surface hover:bg-surface-container",
+                    ].join(" ")}
+                  >
+                    {THEME_LABELS[theme]}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
 
-        {/* D-12: Botão de apresentação — desabilitado (Phase 5 implementa) */}
+        {/* PRS-01: Botão de apresentação — real (Phase 5) */}
         <button
           type="button"
-          disabled
-          aria-disabled="true"
-          aria-label="Modo apresentação (disponível na Phase 5)"
-          title="Modo apresentação — disponível em breve"
-          className="flex items-center justify-center w-8 h-8 rounded-sm text-on-surface/25 cursor-not-allowed"
+          onClick={onEnterPresentation}
+          aria-label="Entrar em modo apresentação"
+          title="Modo apresentação"
+          data-testid="presentation-button"
+          className="flex items-center justify-center w-8 h-8 rounded-sm text-on-surface/50 hover:text-on-surface hover:bg-surface-container transition-colors"
         >
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
             <rect x="1" y="2" width="14" height="10" rx="1" stroke="currentColor" strokeWidth="1.5" />
@@ -125,16 +192,20 @@ export function ViewerHeader({
           </svg>
         </a>
 
-        {/* D-12: Toggle do painel de informações */}
+        {/* D-12 / PRS-07: Toggle do painel de informações — desabilitado no modo apresentação */}
         <button
           type="button"
-          onClick={onTogglePanel}
+          onClick={presentationActive ? undefined : onTogglePanel}
+          disabled={presentationActive}
           aria-pressed={panelOpen}
+          aria-disabled={presentationActive}
           aria-label={panelOpen ? "Fechar painel de informações" : "Abrir painel de informações"}
           title="Painel de informações"
           className={[
             "flex items-center justify-center w-8 h-8 rounded-sm transition-colors",
-            panelOpen
+            presentationActive
+              ? "text-on-surface/20 cursor-not-allowed"
+              : panelOpen
               ? "bg-primary-container text-on-primary-container"
               : "text-on-surface/50 hover:text-on-surface hover:bg-surface-container",
           ].join(" ")}
