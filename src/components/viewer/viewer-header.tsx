@@ -39,6 +39,10 @@ interface ViewerHeaderProps {
   onChangeTheme?: (theme: ViewerThemePreset) => void;
   /** PRS-07: modo apresentação ativo — bloqueia InfoPanel e oculta seletor de tema */
   presentationActive?: boolean;
+  /** PRS-05: laser ativo fora do modo apresentação */
+  laserEnabled?: boolean;
+  /** PRS-05: callback para ligar/desligar o laser */
+  onToggleLaser?: () => void;
 }
 
 const THEME_LABELS: Record<ViewerThemePreset, string> = {
@@ -61,6 +65,8 @@ export function ViewerHeader({
   activeTheme = "default",
   onChangeTheme,
   presentationActive = false,
+  laserEnabled = false,
+  onToggleLaser,
 }: ViewerHeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [themeMenuOpen, setThemeMenuOpen] = useState(false);
@@ -159,6 +165,41 @@ export function ViewerHeader({
               </div>
             )}
           </div>
+        )}
+
+        {/* PRS-05: Toggle do laser — acessível fora do modo apresentação */}
+        {!presentationActive && onToggleLaser && (
+          <button
+            type="button"
+            onClick={onToggleLaser}
+            aria-pressed={laserEnabled}
+            aria-label={laserEnabled ? "Desligar ponteiro laser" : "Ligar ponteiro laser"}
+            title={laserEnabled ? "Desligar laser" : "Ligar laser"}
+            data-testid="toggle-laser-button"
+            className={[
+              "flex items-center justify-center w-8 h-8 rounded-sm transition-colors",
+              laserEnabled
+                ? "bg-tertiary/20 text-tertiary"
+                : "text-on-surface/50 hover:text-on-surface hover:bg-surface-container",
+            ].join(" ")}
+          >
+            {/* Ícone de caneta — distinto do ícone de anotação futuro */}
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path
+                d="M11 2L14 5L5 14H2V11L11 2Z"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M9 4L12 7"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+              />
+            </svg>
+          </button>
         )}
 
         {/* PRS-01: Botão de apresentação — real (Phase 5) */}

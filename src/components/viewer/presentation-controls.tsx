@@ -49,13 +49,21 @@ export function PresentationControls({
             : "text-on-surface/50 hover:text-on-surface hover:bg-surface-container/50",
         ].join(" ")}
       >
-        {/* Ícone de ponteiro laser */}
+        {/* Ícone de caneta — ponteiro laser */}
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-          <circle cx="7" cy="7" r="2" fill="currentColor" />
-          <path d="M7 1V3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-          <path d="M7 11V13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-          <path d="M1 7H3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-          <path d="M11 7H13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+          <path
+            d="M9.5 1.5L12.5 4.5L4.5 12.5H1.5V9.5L9.5 1.5Z"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M7.5 3.5L10.5 6.5"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+          />
         </svg>
       </button>
 

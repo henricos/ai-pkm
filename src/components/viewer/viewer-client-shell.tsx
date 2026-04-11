@@ -103,6 +103,8 @@ export function ViewerClientShell({
             activeTheme={activeTheme}
             onChangeTheme={setActiveTheme}
             presentationActive={isPresentationMode}
+            laserEnabled={laserEnabled}
+            onToggleLaser={toggleLaser}
           />
           {/* Conteúdo por tipo — oculto visualmente no modo apresentação (T-05-07: não duplicar) */}
           {/* LaserPointerOverlay: camada transversal ao viewer fora do modo apresentação (PRS-05 / D-13) */}

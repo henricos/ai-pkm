@@ -2,20 +2,23 @@
  * LaserPointerOverlay — Ponteiro laser com rastro temporal (Phase 5)
  *
  * Overlay transversal ao viewer que implementa rastro temporal com
- * dissipação progressiva, sem integrar o editor Excalidraw inteiro.
+ * dissipação progressiva e efeito de cauda de cometa (espessura variável).
  *
- * Implementação local com SVG + requestAnimationFrame:
- * - Registra amostras de posição com timestamp via PointerEvents
- * - Descarta amostras antigas por idade (trailDurationMs)
- * - Loop RAF pausa quando documento oculto (T-05-08)
+ * Comportamento do rastro:
+ * - O rastro só é desenhado enquanto o botão do mouse está pressionado (pointerdown)
+ * - Ao soltar o mouse (pointerup), o rastro começa a dissipar normalmente
+ * - O cursor muda para crosshair quando o laser está ativo mas o mouse não está pressionado
+ *
+ * Efeito cauda de cometa:
+ * - Os pontos são conectados por segmentos de linha SVG para garantir continuidade
+ * - A espessura de cada segmento varia proporcionalmente à idade: ponto novo = grosso,
+ *   ponto antigo = fino (até zero)
+ * - Usa stroke-linecap e stroke-linejoin round para suavidade
+ *
+ * Proteções:
  * - pointer-events: none quando inativo (T-05-09)
  * - Trilha limpa ao desligar e ao desmontar (T-05-10)
- *
- * Contratos:
- * - active=true: overlay captura movimentos e desenha rastro
- * - active=false: pointer-events desabilitados, sem captura de eventos
- * - trailDurationMs: janela de dissipação em ms (padrão: 700ms)
- * - presentationMode: sem efeito direto aqui (laser é transversal)
+ * - Loop RAF pausa quando documento oculto (T-05-08)
  *
  * Requisitos: PRS-05 / D-13, D-15, T-05-03
  */
@@ -43,6 +46,11 @@ interface LaserPointerOverlayProps {
 
 let pointIdCounter = 0;
 
+/** Espessura máxima do traço no ponto mais recente (em px) */
+const MAX_STROKE_WIDTH = 5;
+/** Espessura mínima abaixo da qual o segmento fica transparente */
+const MIN_STROKE_WIDTH = 0.5;
+
 export function LaserPointerOverlay({
   active,
   trailDurationMs = 700,
@@ -53,6 +61,7 @@ export function LaserPointerOverlay({
   const rafRef = useRef<number | null>(null);
   const isHiddenRef = useRef(false);
   const activeRef = useRef(active);
+  const isPressedRef = useRef(false);
 
   // Sincronizar ref com prop (evita stale closure no RAF)
   useEffect(() => {
@@ -62,6 +71,7 @@ export function LaserPointerOverlay({
   // T-05-10: limpar trilha ao desligar
   useEffect(() => {
     if (!active) {
+      isPressedRef.current = false;
       trailRef.current = [];
       setTrail([]);
     }
@@ -109,14 +119,43 @@ export function LaserPointerOverlay({
     };
   }, []);
 
-  const handleMouseMove = useCallback(
-    (e: React.MouseEvent) => {
+  // Rastro apenas com mouse pressionado (pointerdown ativo)
+  const handlePointerDown = useCallback(
+    (e: React.PointerEvent) => {
       if (!active || isHiddenRef.current) return;
-      const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+      isPressedRef.current = true;
+      // setPointerCapture pode não estar disponível em ambientes de teste (jsdom)
+      const el = e.currentTarget as HTMLElement;
+      if (typeof el.setPointerCapture === "function") {
+        el.setPointerCapture(e.pointerId);
+      }
+      const rect = el.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      if (!isFinite(x) || !isFinite(y)) return;
       const point: TrailPoint = {
         id: ++pointIdCounter,
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top,
+        x,
+        y,
+        timestamp: performance.now(),
+      };
+      trailRef.current = [point];
+      setTrail([point]);
+    },
+    [active]
+  );
+
+  const handlePointerMove = useCallback(
+    (e: React.PointerEvent) => {
+      if (!active || !isPressedRef.current || isHiddenRef.current) return;
+      const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      if (!isFinite(x) || !isFinite(y)) return;
+      const point: TrailPoint = {
+        id: ++pointIdCounter,
+        x,
+        y,
         timestamp: performance.now(),
       };
       trailRef.current = [...trailRef.current, point];
@@ -124,6 +163,74 @@ export function LaserPointerOverlay({
     },
     [active]
   );
+
+  const handlePointerUp = useCallback(() => {
+    isPressedRef.current = false;
+  }, []);
+
+  /**
+   * Renderiza o rastro como uma série de segmentos de linha SVG,
+   * cada um com espessura proporcional à posição relativa no rastro
+   * (efeito cauda de cometa: grosso na ponta, fino na cauda).
+   */
+  const renderTrail = () => {
+    if (trail.length < 2) {
+      // Único ponto: renderizar como círculo
+      if (trail.length === 1) {
+        return (
+          <circle
+            key={trail[0].id}
+            data-testid="laser-trail-point"
+            cx={trail[0].x}
+            cy={trail[0].y}
+            r={MAX_STROKE_WIDTH / 2}
+            fill="#ef4444"
+            opacity={0.9}
+          />
+        );
+      }
+      return null;
+    }
+
+    const now = performance.now();
+    const segments: React.ReactNode[] = [];
+
+    for (let i = 1; i < trail.length; i++) {
+      const prev = trail[i - 1];
+      const curr = trail[i];
+
+      // Posição relativa no rastro: 0 = cauda mais antiga, 1 = ponta mais nova
+      const relativePos = i / (trail.length - 1);
+
+      // Espessura proporcional à posição: ponta = MAX, cauda = MIN
+      const strokeWidth =
+        MIN_STROKE_WIDTH + (MAX_STROKE_WIDTH - MIN_STROKE_WIDTH) * relativePos;
+
+      // Opacidade baseada na idade do ponto atual
+      const age = now - curr.timestamp;
+      const opacity = Math.max(0, 1 - age / trailDurationMs);
+
+      if (opacity < 0.01) continue;
+
+      segments.push(
+        <line
+          key={`seg-${prev.id}-${curr.id}`}
+          data-testid="laser-trail-point"
+          x1={prev.x}
+          y1={prev.y}
+          x2={curr.x}
+          y2={curr.y}
+          stroke="#ef4444"
+          strokeWidth={strokeWidth}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          opacity={opacity}
+        />
+      );
+    }
+
+    return segments;
+  };
 
   return (
     <div style={{ position: "relative", width: "100%", height: "100%" }}>
@@ -140,41 +247,29 @@ export function LaserPointerOverlay({
           pointerEvents: active ? "auto" : "none",
           zIndex: 40,
           overflow: "hidden",
+          cursor: active ? "crosshair" : "default",
         }}
-        onMouseMove={active ? handleMouseMove : undefined}
+        onPointerDown={active ? handlePointerDown : undefined}
+        onPointerMove={active ? handlePointerMove : undefined}
+        onPointerUp={active ? handlePointerUp : undefined}
+        onPointerLeave={active ? handlePointerUp : undefined}
       >
         <svg
           width="100%"
           height="100%"
           style={{ position: "absolute", inset: 0, overflow: "visible" }}
         >
-          {trail.map((point, index) => {
-            const age = performance.now() - point.timestamp;
-            const opacity = Math.max(0, 1 - age / trailDurationMs);
-            // Pontos mais recentes são maiores
-            const radius = 3 + (index / Math.max(trail.length - 1, 1)) * 3;
-            return (
-              <circle
-                key={point.id}
-                data-testid="laser-trail-point"
-                cx={point.x}
-                cy={point.y}
-                r={radius}
-                fill="#ef4444"
-                opacity={opacity}
-              />
-            );
-          })}
+          {renderTrail()}
 
-          {/* Ponto de cursor ativo */}
-          {active && trail.length > 0 && (
+          {/* Ponto de cursor ativo — visível apenas enquanto pressionado */}
+          {active && trail.length > 0 && isPressedRef.current && (
             <circle
               cx={trail[trail.length - 1].x}
               cy={trail[trail.length - 1].y}
-              r={6}
+              r={MAX_STROKE_WIDTH / 2 + 1}
               fill="#ef4444"
               opacity={0.95}
-              style={{ filter: "drop-shadow(0 0 4px #ef444488)" }}
+              style={{ filter: "drop-shadow(0 0 3px #ef444488)" }}
             />
           )}
         </svg>
