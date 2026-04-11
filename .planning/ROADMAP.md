@@ -15,7 +15,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 1: Secure Read Model Foundation** - Autenticacao single-user, runtime externo e modelo canonico read-only sobre o `pkm`.
 - [x] **Phase 2: Navigation Shell** - Shell persistente com arvore, inbox separada, filtro estrutural e URLs navegaveis.
 - [x] **Phase 3: Reading Viewer** - Viewer principal de Markdown com cabecalho contextual e composicao de leitura confiavel.
-- [ ] **Phase 4: Asset Viewer and Item Context** - Tratamento de imagem, PDF, sidecars e fallbacks no mesmo item logico.
+- [x] **Phase 4: Asset Viewer and Item Context** - Tratamento de imagem, PDF, sidecars e fallbacks no mesmo item logico. (completed 2026-04-11)
 - [ ] **Phase 5: Presentation Mode** - Modo de apresentacao interno com temas prontos e ponteiro laser temporario.
 
 ## Phase Details
@@ -117,5 +117,5 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 | 1. Secure Read Model Foundation | 4/4 | Completed | 2026-04-08 |
 | 2. Navigation Shell | 3/3 | Completed | 2026-04-08 |
 | 3. Reading Viewer | 6/6 | Completed | 2026-04-10 |
-| 4. Asset Viewer and Item Context | 0/TBD | Not started | - |
+| 4. Asset Viewer and Item Context | 3/3 | Complete    | 2026-04-11 |
 | 5. Presentation Mode | 0/TBD | Not started | - |

@@ -1,7 +1,7 @@
 ---
 phase: 04-asset-viewer-and-item-context
-verified: 2026-04-10T21:05:40Z
-status: human_needed
+verified: 2026-04-11T15:30:10Z
+status: passed
 score: 5/5 must-haves verified
 overrides_applied: 0
 human_verification:
@@ -22,9 +22,9 @@ human_verification:
 # Phase 4: Asset Viewer and Item Context — Relatorio de Verificacao
 
 **Objetivo da fase:** Usuario abre imagens e PDFs com comportamento previsivel, e binario + sidecar passam a aparecer como um unico item logico com contexto complementar acessivel.
-**Verificado em:** 2026-04-10T21:05:40Z
-**Status:** human_needed
-**Re-verificacao:** Nao — verificacao inicial
+**Verificado em:** 2026-04-11T15:30:10Z
+**Status:** passed
+**Re-verificacao:** Sim — UAT humana concluida em `04-UAT.md`
 
 ---
 
@@ -34,15 +34,15 @@ human_verification:
 
 | # | Verdade | Status | Evidencia |
 |---|---------|--------|-----------|
-| 1 | Imagens abrem como conteudo principal com enquadramento e zoom confortaveis | ? HUMAN | `ImageViewer` existe, implementado com `object-contain`, zoom in/out/reset via `useState(1)`, montado no branch `itemKind=image` do `ViewerPage`. Comportamento visual requer browser. |
-| 2 | PDFs contam com preview suficiente quando suportado; quando nao, interface deixa claro o fallback de download | ? HUMAN | `PdfViewer` usa `<object type="application/pdf">` apontando para `/api/pkm/preview`, com fallback interno com link de download. Suporte ao preview nativo varia por browser. |
+| 1 | Imagens abrem como conteudo principal com enquadramento e zoom confortaveis | VERIFIED | UAT humana em `04-UAT.md`, teste 1: 2-3 imagens reais aprovadas no browser com asset centralizado, `object-contain` e controles limitados a zoom in/out/reset. |
+| 2 | PDFs contam com preview suficiente quando suportado; quando nao, interface deixa claro o fallback de download | VERIFIED | UAT humana em `04-UAT.md`, teste 2: preview inline aprovado no Chrome. Observacao cosmetica registrada sobre chrome do viewer nativo, sem bloquear a aprovacao. |
 | 3 | Sidecars textuais deixam de poluir a navegacao e aparecem apenas como contexto do item binario principal | VERIFIED | `navigation-service.test.ts` testa "Sidecar NAO aparece como item independente na tree" — 22 testes passando. Sidecar e consumido exclusivamente via `getBinaryContext()` → `sidecarContent` → `InfoPanel`. |
 | 4 | Quando arquivo nao tem preview renderizavel, usuario recebe mensagem clara e consegue baixar | VERIFIED | `UnsupportedViewer` renderiza mensagem editorial ("Visualizacao nao disponivel para este formato") + CTA "Use o botao de download". `ViewerPage` roteia `binary` e `excalidraw` para este componente. |
 | 5 | Binarios com sidecar exibem texto complementar dentro do painel de informacoes do item principal | VERIFIED | `InfoPanel` aceita `sidecarContent?: string | null`; slot `sidecar-content-phase4` renderiza `SidecarMarkdown` quando presente; 13 testes de `info-panel.test.tsx` passando. |
 
-**Score automatizado:** 3/5 verificados programaticamente; 2/5 requerem validacao humana (comportamento visual de browser).
+**Score final:** 5/5 verdades verificadas. Tres por evidencias automatizadas e duas por UAT humana registrada em `04-UAT.md`.
 
-**Nota:** O SUMMARY do 04-03 registra que a validacao humana (Task 3) foi aprovada pelo executor no corpus real. Para fins de verificacao formal, os itens visuais permanecem como `human_needed` — a aprovacao informal no SUMMARY nao substitui validacao independente.
+**Nota:** A observacao cosmetica do Chrome para PDF nativo foi registrada como nao-bloqueante na UAT e nao invalida os criterios de sucesso da fase.
 
 ---
 
@@ -124,41 +124,24 @@ Sem blockers. Nenhum TODO/FIXME/PLACEHOLDER encontrado nos arquivos da fase 4.
 
 ### Verificacao Humana Necessaria
 
-#### 1. Enquadramento e Zoom de Imagem
+Nenhuma pendencia aberta. Os quatro checkpoints humanos foram aprovados em `04-UAT.md`:
 
-**Teste:** Abrir 2-3 imagens reais do corpus (ex: JPEG, PNG) no browser.
-**Esperado:** Asset ocupa a area principal da viewport, fica centralizado com `object-contain`, controles vistos sao exatamente zoom-in/zoom-out/reset (sem toolbar rica, sem pan livre).
-**Por que humano:** Layout visual, proporcoes e feel de interacao nao sao verificaveis por grep ou typecheck.
-
-#### 2. Preview Inline de PDF
-
-**Teste:** Abrir 2-3 PDFs reais em pelo menos um navegador alvo (Chrome, Firefox).
-**Esperado:** Preview inline aparece embutido via `<object type="application/pdf">`. Quando o browser nao suporta, fallback com mensagem clara e link de download fica visivel dentro da area do viewer (sem abrir nova aba).
-**Por que humano:** Suporte a PDF embutido e feature do browser, nao do codigo; o comportamento real so e observavel no ambiente do browser.
-
-#### 3. Sidecar no InfoPanel com Hierarquia Editorial
-
-**Teste:** Abrir um item binario que tenha sidecar `.md` adjacente e expandir o InfoPanel.
-**Esperado:** Texto do sidecar aparece ao final do painel com separador visual, label "Contexto" e tipografia menor que o conteudo principal. Sem YAML cru, sem frontmatter exposto, sem competir visualmente com o asset.
-**Por que humano:** Julgamento de hierarquia editorial e proporcao tipografica requer observacao no browser.
-
-#### 4. Fallback para .excalidraw
-
-**Teste:** Abrir um arquivo `.excalidraw` no viewer.
-**Esperado:** `UnsupportedViewer` exibido com mensagem clara ("Visualizacao nao disponivel para este formato") e orientacao para download. Shell nao quebra.
-**Por que humano:** Coerencia da copia editorial e ausencia de regressao visual exigem validacao no browser real.
+1. Enquadramento e zoom de imagem
+2. Preview inline de PDF
+3. Sidecar no InfoPanel com hierarquia editorial
+4. Fallback para `.excalidraw`
 
 ---
 
 ### Resumo de Gaps
 
-Nenhum gap de implementacao identificado. Todos os artefatos existem, sao substanciais, estao conectados e o fluxo de dados e real (nao estatico).
+Nenhum gap de implementacao identificado. Todos os artefatos existem, sao substanciais, estao conectados e o fluxo de dados e real.
 
-O status `human_needed` reflete que dois dos cinco success criteria do ROADMAP dependem de comportamento do browser (renderizacao de imagem e suporte nativo a PDF embutido) — nao ha como confirmar esses criterios por verificacao programatica.
+A validacao humana pendente foi encerrada por meio de `04-UAT.md`, com 4/4 checkpoints aprovados e nenhuma issue aberta.
 
-A nota no SUMMARY do 04-03 indica que o executor realizou a validacao humana (Task 3) e aprovou no corpus real. Para fechamento formal da fase, recomenda-se confirmar os quatro pontos acima ou registrar a aprovacao da Task 3 como aceita.
+Conclusao: a fase atende ao objetivo e fica formalmente verificada como `passed`.
 
 ---
 
-_Verificado: 2026-04-10T21:05:40Z_
+_Verificado: 2026-04-11T15:30:10Z_
 _Verificador: Claude (gsd-verifier)_

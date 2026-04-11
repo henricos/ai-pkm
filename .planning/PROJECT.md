@@ -16,14 +16,14 @@ Permitir operar o PKM com auxilio de IA, alternando entre uma experiencia visual
 - ✓ Manter o repositorio `pkm` como fonte primaria de verdade do conteudo — v1
 - ✓ Preservar um modelo file-first, sem depender de banco de dados para a operacao principal — v1
 - ✓ Permitir que a IA seja a escritora exclusiva da base, com o humano atuando por orientacao e aprovacao — v1
+- ✓ Renderizar Markdown com boa fidelidade visual, usando bibliotecas maduras para formulas, blocos de codigo e formatacao rica — Phase 3
+- ✓ Exibir imagens como item principal com boa experiencia de visualizacao, mantendo sidecars textuais ocultos da arvore e acessiveis no viewer — Phase 4
 
 ### Active
 
 - [ ] Entregar uma interface web para navegacao e exibicao do acervo PKM, sem capacidades de edicao manual
 - [ ] Exigir autenticacao single-user na interface web, inclusive em ambiente local/dev, com credenciais configuradas fora do repositorio
 - [ ] Exibir uma arvore navegavel com topicos, subtopicos, grupos, arquivos e inbox, com painel esquerdo retratil
-- ✓ Renderizar Markdown com boa fidelidade visual, usando bibliotecas maduras para formulas, blocos de codigo e formatacao rica — Validado na Phase 3
-- [ ] Exibir imagens como item principal com boa experiencia de visualizacao, mantendo sidecars textuais ocultos da arvore e acessiveis no viewer
 - [ ] Oferecer modo de apresentacao minimo com tela cheia do viewer, recolhimento do painel esquerdo, temas de leitura/apresentacao e ponteiro laser temporario
 - [ ] Implementar busca textual simples por nome de arquivo, conteudo Markdown e sidecars textuais, sem indexar frontmatter
 - [ ] Rodar com configuracao por variaveis de ambiente e acesso ao `pkm` por path/volume montado, preservando caminho limpo para empacotamento futuro
@@ -71,6 +71,7 @@ A interface desejada se inspira em ferramentas como Obsidian na estrutura de nav
 | Manter `v3` para migracao dos indices JSON para banco | Trata a persistencia derivada como evolucao posterior, sem contaminar a fase atual | ✓ Good |
 | Deixar execucao agentica web para `v4` | Preserva foco da versao ativa e evita misturar viewer com console/automacao cedo demais | ✓ Good |
 | Ocultar sidecars da arvore e exibi-los como informacao complementar do item principal | A unidade logica de navegacao deve ser o arquivo principal, nao seus artefatos auxiliares | ✓ Good |
+| Priorizar viewers leves para imagem e preview inline nativo para PDF na `v2` | Entrega uma experiencia focada no conteudo sem introduzir stacks pesadas cedo demais | ✓ Good |
 | Tratar design visual detalhado como fase interna da `v2`, possivelmente com apoio de ferramenta externa | Permite primeiro estabilizar a base funcional e depois implementar a interface fiel a uma spec visual melhor trabalhada | — Pending |
 | Exigir autenticacao single-user desde a `v2` | Mesmo sendo sistema de uma pessoa, a experiencia publicada e local precisa ter acesso protegido e coerente | ✓ Good |
 | Tratar `pkm` como dependencia montada e configurada externamente | Evita acoplamento com o ambiente de desenvolvimento atual e prepara o caminho para Docker/deploy futuro | ✓ Good |
@@ -93,4 +94,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-04-10 — Phase 3 complete (reading-viewer)*
+*Last updated: 2026-04-11 — Phase 4 complete (asset-viewer-and-item-context)*

@@ -29,10 +29,10 @@ Requirements para a `v2`, focada em navegacao e exibicao web do acervo PKM. A `v
 - [ ] **VIEW-01**: Area direita exibe o conteudo do item selecionado sem transicao para outra pagina perceptivel.
 - [ ] **VIEW-02**: Viewer de Markdown renderiza headings, listas, tabelas, blockquotes, blocos de codigo com highlight, task lists, links clicaveis e callouts/admonitions.
 - [ ] **VIEW-03**: Viewer de Markdown usa pipeline de renderizacao rica baseada em bibliotecas maduras, sem HTML cru como estrategia principal.
-- [ ] **VIEW-04**: Viewer de imagem exibe o binario principal com experiencia de visualizacao confortavel, incluindo zoom e enquadramento adequados.
-- [ ] **VIEW-05**: Arquivos PDF podem ser abertos no viewer com suporte de preview suficiente ou fallback claro de download quando preview nao for possivel.
-- [ ] **VIEW-06**: Sidecar textual nao aparece como item separado na navegacao; o sistema trata binario e sidecar como um unico item logico.
-- [ ] **VIEW-07**: Itens nao renderizaveis exibem mensagem clara de impossibilidade de preview e oferecem download direto do arquivo.
+- [x] **VIEW-04**: Viewer de imagem exibe o binario principal com experiencia de visualizacao confortavel, incluindo zoom e enquadramento adequados.
+- [x] **VIEW-05**: Arquivos PDF podem ser abertos no viewer com suporte de preview suficiente ou fallback claro de download quando preview nao for possivel.
+- [x] **VIEW-06**: Sidecar textual nao aparece como item separado na navegacao; o sistema trata binario e sidecar como um unico item logico.
+- [x] **VIEW-07**: Itens nao renderizaveis exibem mensagem clara de impossibilidade de preview e oferecem download direto do arquivo.
 - [ ] **VIEW-08**: Viewer respeita largura maxima e composicao visual apropriada para leitura, sem parecer explorador bruto de arquivos.
 
 ### Item Context
@@ -41,7 +41,7 @@ Requirements para a `v2`, focada em navegacao e exibicao web do acervo PKM. A `v
 - [ ] **CTX-02**: Cabecalho da area direita exibe acoes do item atual, incluindo entrada em modo apresentacao, download e acesso ao painel de informacoes.
 - [ ] **CTX-03**: Um unico icone de informacao abre painel lateral direito, dentro da area de conteudo, para exibir informacoes complementares do item atual.
 - [ ] **CTX-04**: Painel de informacoes apresenta metadados e texto complementar de maneira visualmente agradavel, sem despejar YAML cru ou visual de codigo-fonte.
-- [ ] **CTX-05**: Para binarios com sidecar, o painel de informacoes exibe o texto complementar associado ao item principal.
+- [x] **CTX-05**: Para binarios com sidecar, o painel de informacoes exibe o texto complementar associado ao item principal.
 
 ### Filtering
 
@@ -126,16 +126,16 @@ Preenchido durante a criacao do roadmap.
 | VIEW-01 | Phase 3 | Validated |
 | VIEW-02 | Phase 3 | Validated |
 | VIEW-03 | Phase 3 | Validated |
-| VIEW-04 | Phase 4 | Pending |
-| VIEW-05 | Phase 4 | Pending |
-| VIEW-06 | Phase 4 | Pending |
-| VIEW-07 | Phase 4 | Pending |
+| VIEW-04 | Phase 4 | Validated |
+| VIEW-05 | Phase 4 | Validated |
+| VIEW-06 | Phase 4 | Validated |
+| VIEW-07 | Phase 4 | Validated |
 | VIEW-08 | Phase 3 | Validated |
 | CTX-01 | Phase 3 | Validated |
 | CTX-02 | Phase 3 | Validated |
 | CTX-03 | Phase 3 | Validated |
 | CTX-04 | Phase 3 | Validated |
-| CTX-05 | Phase 4 | Pending |
+| CTX-05 | Phase 4 | Validated |
 | FIL-01 | Phase 2 | Validated |
 | FIL-02 | Phase 2 | Validated |
 | FIL-03 | Phase 2 | Validated |
@@ -173,4 +173,4 @@ Itens explicitamente registrados como backlog futuro:
 
 ---
 *Requirements defined: 2026-04-06*
-*Last updated: 2026-04-10 after phase 3 official closure*
+*Last updated: 2026-04-11 after phase 4 official closure*
