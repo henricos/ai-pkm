@@ -89,9 +89,9 @@ Plans:
   5. Binarios com sidecar exibem o texto complementar dentro do painel de informacoes do item principal.
 **Plans**: 3 plans
 Plans:
-- [ ] 04-01-PLAN.md — Wave 0 de testes para imagem, PDF, sidecar e rota de preview inline
-- [ ] 04-02-PLAN.md — Contrato de sidecar no ItemRepository + rota autenticada de preview inline
-- [ ] 04-03-PLAN.md — Viewers leves de imagem/PDF + sidecar no InfoPanel + fallback editorial
+- [x] 04-01-PLAN.md — Wave 0 de testes para imagem, PDF, sidecar e rota de preview inline
+- [x] 04-02-PLAN.md — Contrato de sidecar no ItemRepository + rota autenticada de preview inline
+- [x] 04-03-PLAN.md — Viewers leves de imagem/PDF + sidecar no InfoPanel + fallback editorial
 **UI hint**: yes
 
 ### Phase 5: Presentation Mode
