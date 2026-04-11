@@ -66,7 +66,13 @@ export async function ViewerPage({ item }: ViewerPageProps) {
 
   // Buscar contexto binário (sidecar) para todos os itens não-markdown (CTX-05)
   // Binários não têm frontmatter próprio — usar o sidecar como fonte de metadados
-  const binaryContext = repo.getBinaryContext(item.id);
+  // Guard contra erros de filesystem (EPERM, EACCES) que crashariam o Server Component (WR-04)
+  let binaryContext = null;
+  try {
+    binaryContext = repo.getBinaryContext(item.id);
+  } catch {
+    // Sidecar inacessível — degradar graciosamente sem sidecar
+  }
   const sidecarContent = binaryContext?.sidecarContent ?? null;
   // Sidecar tem estado/data_captura reais; fallback para dado da navegação
   const frontmatter: RawFrontmatter = binaryContext?.sidecarFrontmatter ?? { estado: item.estado };

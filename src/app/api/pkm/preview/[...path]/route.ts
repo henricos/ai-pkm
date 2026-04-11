@@ -58,7 +58,10 @@ export async function GET(
     }
 
     const ext = path.extname(itemId).toLowerCase();
-    const filename = path.basename(itemId);
+    // Sanitizar filename para Content-Disposition: remover aspas e caracteres de controle
+    // que permitem CRLF injection ou quebra do valor do header (CR-01)
+    const rawFilename = path.basename(itemId);
+    const filename = rawFilename.replace(/["\r\n\\]/g, "_");
     const contentType = CONTENT_TYPE_MAP[ext] ?? "application/octet-stream";
 
     // Ler como Buffer binário — sem encoding, sem gray-matter
