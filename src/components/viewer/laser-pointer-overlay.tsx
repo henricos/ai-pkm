@@ -13,7 +13,7 @@
  * - Os pontos são conectados por segmentos de linha SVG para garantir continuidade
  * - A espessura de cada segmento varia proporcionalmente à idade: ponto novo = grosso,
  *   ponto antigo = fino (até zero)
- * - Usa stroke-linecap e stroke-linejoin round para suavidade
+ * - Usa stroke-linecap round para suavidade nas pontas
  *
  * Proteções:
  * - pointer-events: none quando inativo (T-05-09)
@@ -50,6 +50,8 @@ let pointIdCounter = 0;
 const MAX_STROKE_WIDTH = 5;
 /** Espessura mínima abaixo da qual o segmento fica transparente */
 const MIN_STROKE_WIDTH = 0.5;
+/** Distância mínima entre pontos consecutivos (px) — evita segmentos sub-pixel com linecap:round */
+const MIN_POINT_DIST = 3;
 
 export function LaserPointerOverlay({
   active,
@@ -57,6 +59,7 @@ export function LaserPointerOverlay({
   children,
 }: LaserPointerOverlayProps) {
   const [trail, setTrail] = useState<TrailPoint[]>([]);
+  const [isPressed, setIsPressed] = useState(false);
   const trailRef = useRef<TrailPoint[]>([]);
   const rafRef = useRef<number | null>(null);
   const isHiddenRef = useRef(false);
@@ -72,6 +75,7 @@ export function LaserPointerOverlay({
   useEffect(() => {
     if (!active) {
       isPressedRef.current = false;
+      setIsPressed(false);
       trailRef.current = [];
       setTrail([]);
     }
@@ -119,16 +123,13 @@ export function LaserPointerOverlay({
     };
   }, []);
 
-  /** Distância mínima entre pontos consecutivos (px) — evita segmentos sub-pixel
-   *  que com stroke-linecap:round ficam como círculos isolados ("pontilhados") */
-  const MIN_POINT_DIST = 3;
-
   // Rastro apenas com mouse pressionado (pointerdown ativo)
   // Handlers apenas atualizam trailRef — RAF é o único escritor de setTrail
   const handlePointerDown = useCallback(
     (e: React.PointerEvent) => {
       if (!active || isHiddenRef.current) return;
       isPressedRef.current = true;
+      setIsPressed(true);
       const el = e.currentTarget as HTMLElement;
       if (typeof el.setPointerCapture === "function") {
         el.setPointerCapture(e.pointerId);
@@ -163,6 +164,7 @@ export function LaserPointerOverlay({
 
   const handlePointerUp = useCallback(() => {
     isPressedRef.current = false;
+    setIsPressed(false);
   }, []);
 
   /**
@@ -220,7 +222,6 @@ export function LaserPointerOverlay({
           stroke="#ef4444"
           strokeWidth={strokeWidth}
           strokeLinecap="round"
-          strokeLinejoin="round"
           opacity={opacity}
         />
       );
@@ -259,7 +260,7 @@ export function LaserPointerOverlay({
           {renderTrail()}
 
           {/* Ponto de cursor ativo — visível apenas enquanto pressionado */}
-          {active && trail.length > 0 && isPressedRef.current && (
+          {active && trail.length > 0 && isPressed && (
             <circle
               cx={trail[trail.length - 1].x}
               cy={trail[trail.length - 1].y}
