@@ -139,14 +139,11 @@ describe("viewer-theme — PRS-06: persistência local com fallback seguro", () 
    * localStorage não está disponível.
    */
   test("PRS-06: useViewerTheme não lança erro quando localStorage está indisponível", () => {
-    // Simular localStorage indisponível
-    const originalGetItem = window.localStorage.getItem.bind(window.localStorage);
-    const originalSetItem = window.localStorage.setItem.bind(window.localStorage);
-
-    vi.spyOn(window.localStorage, "getItem").mockImplementation(() => {
+    // Simular localStorage indisponível — salvar spies para restaurar depois
+    const getItemSpy = vi.spyOn(window.localStorage, "getItem").mockImplementation(() => {
       throw new Error("localStorage unavailable");
     });
-    vi.spyOn(window.localStorage, "setItem").mockImplementation(() => {
+    const setItemSpy = vi.spyOn(window.localStorage, "setItem").mockImplementation(() => {
       throw new Error("localStorage unavailable");
     });
 
@@ -179,9 +176,9 @@ describe("viewer-theme — PRS-06: persistência local com fallback seguro", () 
 
     expect(errorThrown).toBe(false);
 
-    // Restaurar
-    vi.mocked(window.localStorage.getItem).mockRestore();
-    vi.mocked(window.localStorage.setItem).mockRestore();
+    // Restaurar os spies usando as referências salvas
+    getItemSpy.mockRestore();
+    setItemSpy.mockRestore();
   });
 
   /**

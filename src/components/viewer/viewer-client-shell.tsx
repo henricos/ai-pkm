@@ -34,8 +34,37 @@ import { ViewerHeader } from "@/components/viewer/viewer-header";
 import { InfoPanel } from "@/components/viewer/info-panel";
 import { PresentationOverlay } from "@/components/viewer/presentation-overlay";
 import { LaserPointerOverlay } from "@/components/viewer/laser-pointer-overlay";
+import {
+  ViewerThemeRoot,
+  VIEWER_PRESETS,
+} from "@/components/viewer/viewer-theme";
 import type { RawFrontmatter } from "@/lib/pkm/types";
 import type { ViewerThemePreset } from "@/components/viewer/viewer-header";
+
+const STORAGE_KEY = "viewer-theme";
+
+/** Lê o preset salvo no localStorage de forma resiliente (T-05-12) */
+function readStoredTheme(): ViewerThemePreset {
+  try {
+    const stored =
+      typeof window !== "undefined" ? localStorage.getItem(STORAGE_KEY) : null;
+    if (stored && stored in VIEWER_PRESETS) return stored as ViewerThemePreset;
+  } catch {
+    // Fallback silencioso
+  }
+  return "default";
+}
+
+/** Persiste o preset no localStorage de forma resiliente (T-05-12) */
+function writeStoredTheme(preset: ViewerThemePreset): void {
+  try {
+    if (typeof window !== "undefined") {
+      localStorage.setItem(STORAGE_KEY, preset);
+    }
+  } catch {
+    // Falha silenciosa
+  }
+}
 
 interface ViewerClientShellProps {
   topic: string;
@@ -65,8 +94,10 @@ export function ViewerClientShell({
   // Phase 5: modo apresentação interno (PRS-01, PRS-02)
   const [isPresentationMode, setIsPresentationMode] = useState(false);
 
-  // Phase 5: preset de tema do viewer (PRS-06)
-  const [activeTheme, setActiveTheme] = useState<ViewerThemePreset>("default");
+  // Phase 5: preset de tema do viewer (PRS-06) — inicializa do localStorage
+  const [activeTheme, setActiveTheme] = useState<ViewerThemePreset>(
+    () => readStoredTheme()
+  );
 
   // Phase 5: toggle do ponteiro laser (PRS-05)
   const [laserEnabled, setLaserEnabled] = useState(false);
@@ -101,17 +132,23 @@ export function ViewerClientShell({
             onTogglePanel={togglePanel}
             onEnterPresentation={enterPresentationMode}
             activeTheme={activeTheme}
-            onChangeTheme={setActiveTheme}
+            onChangeTheme={(theme) => {
+              setActiveTheme(theme);
+              writeStoredTheme(theme);
+            }}
             presentationActive={isPresentationMode}
             laserEnabled={laserEnabled}
             onToggleLaser={toggleLaser}
           />
           {/* Conteúdo por tipo — oculto visualmente no modo apresentação (T-05-07: não duplicar) */}
+          {/* ViewerThemeRoot: aplica preset apenas ao viewer root, não na shell (D-17, T-05-11) */}
           {/* LaserPointerOverlay: camada transversal ao viewer fora do modo apresentação (PRS-05 / D-13) */}
           {!isPresentationMode && (
-            <LaserPointerOverlay active={laserEnabled}>
-              {children}
-            </LaserPointerOverlay>
+            <ViewerThemeRoot activeTheme={activeTheme}>
+              <LaserPointerOverlay active={laserEnabled}>
+                {children}
+              </LaserPointerOverlay>
+            </ViewerThemeRoot>
           )}
         </div>
 
@@ -128,13 +165,16 @@ export function ViewerClientShell({
       </div>
 
       {/* Modo apresentação: palco puro como camada fixa sobre tudo (T-05-07) */}
+      {/* ViewerThemeRoot: preset preservado no modo apresentação (D-17) */}
       {isPresentationMode && (
         <PresentationOverlay
           onExit={exitPresentationMode}
           laserEnabled={laserEnabled}
           onToggleLaser={toggleLaser}
         >
-          {children}
+          <ViewerThemeRoot activeTheme={activeTheme}>
+            {children}
+          </ViewerThemeRoot>
         </PresentationOverlay>
       )}
     </>
