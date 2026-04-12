@@ -17,6 +17,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 3: Reading Viewer** - Viewer principal de Markdown com cabecalho contextual e composicao de leitura confiavel.
 - [x] **Phase 4: Asset Viewer and Item Context** - Tratamento de imagem, PDF, sidecars e fallbacks no mesmo item logico. (completed 2026-04-11)
 - [x] **Phase 5: Presentation Mode** - Modo de apresentacao interno com temas prontos e ponteiro laser temporario. (completed 2026-04-12)
+- [ ] **Phase 6: Eliminar Flash de Tema no Viewer** - Hardening do carregamento de tema para evitar flash visual entre SSR, hidratacao e aplicacao do preset salvo.
 
 ## Phase Details
 
@@ -113,10 +114,24 @@ Plans:
 - [x] 05-05-PLAN.md — Fechamento dos gaps de UAT do laser: continuidade visual e dissipacao do rastro
 **UI hint**: yes
 
+### Phase 6: Eliminar Flash de Tema no Viewer
+**Goal**: Usuario recarrega a pagina e o viewer ja aparece no preset salvo sem flash perceptivel entre o tema padrao do SSR e o tema restaurado no cliente.
+**Depends on**: Phase 5
+**Requirements**: PRS-06, PRS-07 (hardening visual do carregamento dos presets)
+**Success Criteria** (what must be TRUE):
+  1. O preset salvo e aplicado antes do primeiro paint visivel do viewer, sem transicao perceptivel do tema padrao para o tema persistido.
+  2. A estrategia continua segura para SSR/hidratacao: servidor e cliente nao entram em mismatch de markup ou atributos.
+  3. O escopo do tema continua restrito ao viewer e nao vaza para a shell, login ou layout global da aplicacao.
+  4. O fallback para ausencia de `localStorage`, tema invalido ou execucao sem JS continua benigno e nao quebra a leitura.
+**Plans**: 1 plan
+Plans:
+- [ ] 06-01-PLAN.md — Bootstrap pre-paint do tema do viewer + hardening SSR/hidratacao + verificacao visual
+**UI hint**: yes
+
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
+Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
@@ -125,23 +140,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 | 3. Reading Viewer | 6/6 | Completed | 2026-04-10 |
 | 4. Asset Viewer and Item Context | 3/3 | Complete    | 2026-04-11 |
 | 5. Presentation Mode | 5/5 | Completed | 2026-04-12 |
+| 6. Eliminar Flash de Tema no Viewer | 0/1 | Planned | - |
 
 ## Backlog
-
-### Phase 999.1: Eliminar flash de tema no carregamento do viewer (BACKLOG)
-
-**Goal:** Remover o flash visual que ocorre quando o viewer carrega com o tema padrão e depois troca para o tema salvo. O usuário vê a mudança acontecer a olho nu a cada reload de página.
-
-**Context:** O tema do viewer é salvo no `localStorage` e restaurado via `useEffect` em `viewer-client-shell.tsx`. A sequência atual é: (1) servidor renderiza com `DEFAULT_THEME`, (2) cliente hidrata com `DEFAULT_THEME` (necessário para evitar mismatch de hidratação SSR), (3) `useEffect` pós-montagem lê o `localStorage` e dispara re-render com o tema salvo. O flash é a janela visual entre os passos 2 e 3.
-
-**Causa raiz:** O `localStorage` não está disponível no servidor, então o tema real só pode ser lido no cliente. O `useEffect` garante que servidor e cliente concordem no render inicial, mas cria um re-render extra visível.
-
-**Solução proposta:** Injetar um `<script>` inline no `<head>` (via `layout.tsx`) que lê o `localStorage` e aplica o `data-theme` no DOM *antes* do primeiro paint e *antes* da hidratação do React — técnica usada pelo `next-themes`. Isso exige decidir se o `data-theme` permanece no container interno do viewer ou sobe para `<html>` (com escopo CSS ajustado), pois o script inline só tem acesso ao DOM raiz no momento em que roda.
-
-**Impacto:** Puramente visual/UX — nenhuma funcionalidade afetada. Pode ser atacado de forma isolada sem risco de regressão nas features de tema já implementadas.
-
-**Requirements:** TBD
-**Plans:** 0 plans
-
-Plans:
-- [ ] TBD (promote with /gsd-review-backlog when ready)
+Nenhum item de backlog registrado no momento.

@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: executing
-stopped_at: Phase 5 concluida; backlog 999.1 atualizado para eliminar flash de tema no carregamento do viewer
-last_updated: "2026-04-12T16:30:00.000Z"
-last_activity: 2026-04-12 -- backlog 999.1 redefinido apos refinamento visual dos temas
+status: planning
+stopped_at: Phase 6 promovida do backlog; proximo passo e executar o plano 06-01 para eliminar o flash de tema do viewer
+last_updated: "2026-04-12T17:05:00.000Z"
+last_activity: 2026-04-12 -- Phase 06 planejada a partir do backlog 999.1
 progress:
   total_phases: 6
   completed_phases: 5
-  total_plans: 22
+  total_plans: 23
   completed_plans: 22
-  percent: 100
+  percent: 96
 ---
 
 # Project State
@@ -21,15 +21,15 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-12)
 
 **Core value:** Permitir operar o PKM com auxilio de IA, alternando entre uma experiencia visual na web e a operacao local via CLI, sem perder compatibilidade com o modelo file-first.
-**Current focus:** Backlog 999.1 — eliminar-flash-tema-viewer
+**Current focus:** Phase 06 — eliminar-flash-tema-viewer
 
 ## Current Position
 
-Phase: 05 (presentation-mode) — COMPLETED
-Plan: 5 of 5
-Next: Backlog 999.1 (eliminar-flash-tema-viewer)
-Status: Phase 5 encerrada; aguardando promote/planejamento do backlog
-Last activity: 2026-04-12 -- backlog 999.1 redefinido apos execucao inline do backlog anterior
+Phase: 06 (eliminar-flash-tema-viewer) — PLANNED
+Plan: 1 of 1
+Next: Phase 06 (eliminar-flash-tema-viewer)
+Status: Ready to execute
+Last activity: 2026-04-12 -- plano 06-01 criado
 
 Progress: [██████████] 100%
 
@@ -70,10 +70,11 @@ Recent decisions affecting current work:
 - [Phase 3]: Painel de informacoes usa push layout (flex ao lado), nao overlay — evita obscurecer o conteudo.
 - [Phase 5]: Modo apresentacao permanece ativo na `v2`, mas vem depois de navegacao e leitura confiaveis.
 - [Phase 5]: Presentation mode permanece interno a shell, sem nova rota, com temas restritos ao viewer root.
+- [Phase 6]: O hardening do tema deve eliminar o flash pre-paint sem mover o tema para a shell global.
 
 ### Pending Todos
 
-- [999.1]: Eliminar flash de tema no carregamento do viewer apos restauracao do preset salvo.
+- [06-01]: Bootstrap pre-paint do tema do viewer com compatibilidade SSR/hidratacao.
 
 ### Blockers/Concerns
 
@@ -82,6 +83,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-04-11
-Stopped at: Phase 5 concluida; backlog 999.1 atualizado para eliminar flash de tema no carregamento do viewer
-Resume file: .planning/ROADMAP.md
+Last session: 2026-04-12
+Stopped at: Phase 6 promovida do backlog; proximo passo e executar o plano 06-01 para eliminar o flash de tema do viewer
+Resume file: .planning/phases/06-eliminar-flash-tema-viewer/06-01-PLAN.md
