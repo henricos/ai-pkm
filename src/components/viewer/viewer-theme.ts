@@ -27,76 +27,39 @@ import React, {
   useCallback,
   type ReactNode,
 } from "react";
+import {
+  DEFAULT_THEME,
+  VIEWER_PRESETS,
+  VIEWER_THEMES,
+  VIEWER_THEME_BOOTSTRAP_ATTR,
+  VIEWER_THEME_LABELS,
+  VIEWER_THEME_SCOPE_ATTR,
+  applyBootstrapThemeAttribute,
+  buildViewerThemeBootstrapScript,
+  isValidTheme,
+  readSavedThemeFromStorage,
+  writeSavedThemeToStorage,
+  type ViewerPreset,
+  type ViewerTheme,
+} from "@/components/viewer/viewer-theme-contract";
 
-// ── Tipos e constantes ───────────────────────────────────────────────────────
-
-export type ViewerTheme = "default" | "chatgpt" | "github" | "excalidraw";
+export {
+  DEFAULT_THEME,
+  VIEWER_PRESETS,
+  VIEWER_THEMES,
+  VIEWER_THEME_BOOTSTRAP_ATTR,
+  VIEWER_THEME_LABELS,
+  VIEWER_THEME_SCOPE_ATTR,
+  applyBootstrapThemeAttribute,
+  buildViewerThemeBootstrapScript,
+  isValidTheme,
+  type ViewerPreset,
+  type ViewerTheme,
+};
 /** @deprecated Use ViewerTheme */
 export type ViewerThemePresetKey = ViewerTheme;
 
-export interface ViewerPreset {
-  /** Nome legível exibido no seletor de tema */
-  name: string;
-  /** Classe CSS aplicada ao root do viewer */
-  className: string;
-  /** Descrição breve da identidade visual */
-  description: string;
-}
-
-export const VIEWER_THEMES: ViewerTheme[] = [
-  "default",
-  "chatgpt",
-  "github",
-  "excalidraw",
-];
-
-export const VIEWER_THEME_LABELS: Record<ViewerTheme, string> = {
-  default: "Padrão",
-  chatgpt: "ChatGPT",
-  github: "GitHub",
-  excalidraw: "Excalidraw",
-};
-
-export const DEFAULT_THEME: ViewerTheme = "default";
-
-/**
- * Catálogo dos presets disponíveis.
- * Identidades visuais (D-18 — diferenças moderadas):
- * - default: composição atual do viewer, sem alteração visual extra
- * - chatgpt: leitura limpa e neutra — sans-serif, fundo quase-branco, coluna estreita
- * - github: documentação técnica — code blocks com bordas tênues
- * - excalidraw: atmosfera diagrama — fundo suave off-white, texto menos denso
- */
-export const VIEWER_PRESETS: Record<ViewerTheme, ViewerPreset> = {
-  default: {
-    name: "Padrão",
-    className: "viewer-theme-default",
-    description: "Composição padrão do viewer",
-  },
-  chatgpt: {
-    name: "ChatGPT",
-    className: "viewer-theme-chatgpt",
-    description: "Leitura limpa e neutra",
-  },
-  github: {
-    name: "GitHub",
-    className: "viewer-theme-github",
-    description: "Documentação técnica",
-  },
-  excalidraw: {
-    name: "Excalidraw",
-    className: "viewer-theme-excalidraw",
-    description: "Atmosfera diagrama leve",
-  },
-};
-
-const STORAGE_KEY = "viewer-theme";
-
 // ── Utilitários SSR-safe ─────────────────────────────────────────────────────
-
-export function isValidTheme(value: string): value is ViewerTheme {
-  return (VIEWER_THEMES as string[]).includes(value);
-}
 
 /**
  * Lê o tema salvo do localStorage.
@@ -104,21 +67,11 @@ export function isValidTheme(value: string): value is ViewerTheme {
  * NUNCA chamar durante render (SSR) — usar apenas em useEffect ou event handlers.
  */
 export function readSavedTheme(): ViewerTheme | null {
-  try {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved && isValidTheme(saved)) return saved;
-  } catch {
-    // T-05-12: localStorage pode não estar disponível
-  }
-  return null;
+  return readSavedThemeFromStorage(localStorage);
 }
 
 export function saveTheme(theme: ViewerTheme): void {
-  try {
-    localStorage.setItem(STORAGE_KEY, theme);
-  } catch {
-    // T-05-12: falha silenciosa
-  }
+  writeSavedThemeToStorage(localStorage, theme);
 }
 
 export function themeRootClass(theme: ViewerTheme): string {
@@ -237,6 +190,7 @@ export function ViewerThemeRoot({
     "div",
     {
       "data-testid": "viewer-theme-root",
+      [VIEWER_THEME_SCOPE_ATTR]: "",
       "data-theme": activeTheme,
       className: combinedClass || undefined,
     },

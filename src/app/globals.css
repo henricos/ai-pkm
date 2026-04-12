@@ -415,7 +415,9 @@ body {
  * Viewer theme presets — Phase 5 (PRS-06, PRS-07)
  * Refinamento de identidade visual — backlog 999.1
  *
- * Cada preset é escopo exclusivo ao root do viewer via [data-theme].
+ * Cada preset é escopo exclusivo ao root do viewer via [data-viewer-scope][data-theme].
+ * O bootstrap pre-paint usa html[data-viewer-theme-preload] apenas como pista
+ * visual temporária enquanto o viewer ainda renderiza com data-theme="default".
  * A shell inteira NÃO é afetada (D-17, T-05-11).
  * ============================================================================ */
 
@@ -423,11 +425,17 @@ body {
  * Interface de leitura do ChatGPT (modo claro): texto quase-preto #0d0d0d,
  * sans-serif de sistema, coluna de 42rem, code blocks em cinza-claro neutro.
  * --------------------------------------------------------------------------- */
-[data-theme="chatgpt"] {
+:is(
+  [data-viewer-scope][data-theme="chatgpt"],
+  [data-viewer-theme-preload="chatgpt"] [data-viewer-scope][data-theme="default"]
+) {
   background-color: #ffffff;
 }
 
-[data-theme="chatgpt"] .prose {
+:is(
+  [data-viewer-scope][data-theme="chatgpt"],
+  [data-viewer-theme-preload="chatgpt"] [data-viewer-scope][data-theme="default"]
+) .prose {
   --tw-prose-body: #0d0d0d;
   --tw-prose-headings: #0d0d0d;
   --tw-prose-links: #10a37f;
@@ -445,19 +453,28 @@ body {
   margin-right: auto;
 }
 
-[data-theme="chatgpt"] .prose :where(h1, h2, h3, h4):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+:is(
+  [data-viewer-scope][data-theme="chatgpt"],
+  [data-viewer-theme-preload="chatgpt"] [data-viewer-scope][data-theme="default"]
+) .prose :where(h1, h2, h3, h4):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   color: #0d0d0d;
   font-weight: 700;
 }
 
-[data-theme="chatgpt"] .prose :where(code):not(:where(pre code, [class~="not-prose"], [class~="not-prose"] *)) {
+:is(
+  [data-viewer-scope][data-theme="chatgpt"],
+  [data-viewer-theme-preload="chatgpt"] [data-viewer-scope][data-theme="default"]
+) .prose :where(code):not(:where(pre code, [class~="not-prose"], [class~="not-prose"] *)) {
   background: #f3f4f4;
   color: #0d0d0d;
   border: none;
   border-radius: 4px;
 }
 
-[data-theme="chatgpt"] .prose :where(pre):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+:is(
+  [data-viewer-scope][data-theme="chatgpt"],
+  [data-viewer-theme-preload="chatgpt"] [data-viewer-scope][data-theme="default"]
+) .prose :where(pre):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   background: #f7f7f8;
   border: 1px solid #e5e5e5;
   border-radius: 8px;
@@ -467,11 +484,17 @@ body {
  * GitHub Markdown rendering: tipografia do sistema GitHub, font-size 16px,
  * line-height 1.5, bordas em tabelas (horizontal + vertical), zebra nas linhas.
  * --------------------------------------------------------------------------- */
-[data-theme="github"] {
+:is(
+  [data-viewer-scope][data-theme="github"],
+  [data-viewer-theme-preload="github"] [data-viewer-scope][data-theme="default"]
+) {
   background-color: #ffffff;
 }
 
-[data-theme="github"] .prose {
+:is(
+  [data-viewer-scope][data-theme="github"],
+  [data-viewer-theme-preload="github"] [data-viewer-scope][data-theme="default"]
+) .prose {
   --tw-prose-body: #1f2328;
   --tw-prose-headings: #1f2328;
   --tw-prose-links: #0969da;
@@ -487,21 +510,30 @@ body {
   line-height: 1.5;
 }
 
-[data-theme="github"] .prose :where(h1):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+:is(
+  [data-viewer-scope][data-theme="github"],
+  [data-viewer-theme-preload="github"] [data-viewer-scope][data-theme="default"]
+) .prose :where(h1):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   font-size: 2em;
   font-weight: 600;
   padding-bottom: 0.3em;
   border-bottom: 1px solid #d8dee4;
 }
 
-[data-theme="github"] .prose :where(h2):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+:is(
+  [data-viewer-scope][data-theme="github"],
+  [data-viewer-theme-preload="github"] [data-viewer-scope][data-theme="default"]
+) .prose :where(h2):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   font-size: 1.5em;
   font-weight: 600;
   padding-bottom: 0.3em;
   border-bottom: 1px solid #d8dee4;
 }
 
-[data-theme="github"] .prose :where(code):not(:where(pre code, [class~="not-prose"], [class~="not-prose"] *)) {
+:is(
+  [data-viewer-scope][data-theme="github"],
+  [data-viewer-theme-preload="github"] [data-viewer-scope][data-theme="default"]
+) .prose :where(code):not(:where(pre code, [class~="not-prose"], [class~="not-prose"] *)) {
   background: rgba(175, 184, 193, 0.2);
   color: #1f2328;
   padding: 0.2em 0.4em;
@@ -509,13 +541,19 @@ body {
   font-size: 85%;
 }
 
-[data-theme="github"] .prose :where(pre):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+:is(
+  [data-viewer-scope][data-theme="github"],
+  [data-viewer-theme-preload="github"] [data-viewer-scope][data-theme="default"]
+) .prose :where(pre):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   background: #f6f8fa;
   border: 1px solid #d8dee4;
   border-radius: 6px;
 }
 
-[data-theme="github"] .prose :where(blockquote):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+:is(
+  [data-viewer-scope][data-theme="github"],
+  [data-viewer-theme-preload="github"] [data-viewer-scope][data-theme="default"]
+) .prose :where(blockquote):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   border-left: 4px solid #d0d7de;
   color: #656d76;
   padding-left: 1em;
@@ -523,24 +561,36 @@ body {
 }
 
 /* GitHub: tabela com bordas em todos os lados + zebra nas linhas ímpares */
-[data-theme="github"] .prose :where(table):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+:is(
+  [data-viewer-scope][data-theme="github"],
+  [data-viewer-theme-preload="github"] [data-viewer-scope][data-theme="default"]
+) .prose :where(table):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   display: block;
   overflow: auto;
   width: max-content;
   max-width: 100%;
 }
 
-[data-theme="github"] .prose :where(th, td):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+:is(
+  [data-viewer-scope][data-theme="github"],
+  [data-viewer-theme-preload="github"] [data-viewer-scope][data-theme="default"]
+) .prose :where(th, td):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   padding: 6px 13px;
   border: 1px solid #d8dee4;
 }
 
-[data-theme="github"] .prose :where(thead tr):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+:is(
+  [data-viewer-scope][data-theme="github"],
+  [data-viewer-theme-preload="github"] [data-viewer-scope][data-theme="default"]
+) .prose :where(thead tr):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   background-color: transparent;
   border-top: 1px solid #d8dee4;
 }
 
-[data-theme="github"] .prose :where(tbody tr:nth-child(2n)):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+:is(
+  [data-viewer-scope][data-theme="github"],
+  [data-viewer-theme-preload="github"] [data-viewer-scope][data-theme="default"]
+) .prose :where(tbody tr:nth-child(2n)):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   background-color: #f6f8fa;
 }
 
@@ -548,11 +598,17 @@ body {
  * Canvas do Excalidraw: Excalifont (fonte oficial, OFL-1.1), fundo branco,
  * corpo levemente maior (1.0625rem) e line-height arejado para a caligrafia.
  * --------------------------------------------------------------------------- */
-[data-theme="excalidraw"] {
+:is(
+  [data-viewer-scope][data-theme="excalidraw"],
+  [data-viewer-theme-preload="excalidraw"] [data-viewer-scope][data-theme="default"]
+) {
   background-color: #ffffff;
 }
 
-[data-theme="excalidraw"] .prose {
+:is(
+  [data-viewer-scope][data-theme="excalidraw"],
+  [data-viewer-theme-preload="excalidraw"] [data-viewer-scope][data-theme="default"]
+) .prose {
   --tw-prose-body: #1b1b1f;
   --tw-prose-headings: #1b1b1f;
   --tw-prose-links: #e67c00;
@@ -569,26 +625,38 @@ body {
   letter-spacing: 0.01em;
 }
 
-[data-theme="excalidraw"] .prose :where(h1, h2, h3):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+:is(
+  [data-viewer-scope][data-theme="excalidraw"],
+  [data-viewer-theme-preload="excalidraw"] [data-viewer-scope][data-theme="default"]
+) .prose :where(h1, h2, h3):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   color: #1b1b1f;
   font-weight: 700;
   letter-spacing: 0em;
 }
 
-[data-theme="excalidraw"] .prose :where(code):not(:where(pre code, [class~="not-prose"], [class~="not-prose"] *)) {
+:is(
+  [data-viewer-scope][data-theme="excalidraw"],
+  [data-viewer-theme-preload="excalidraw"] [data-viewer-scope][data-theme="default"]
+) .prose :where(code):not(:where(pre code, [class~="not-prose"], [class~="not-prose"] *)) {
   background: #f5f5f5;
   color: #1b1b1f;
   border: 1px solid #e0e0e0;
   border-radius: 4px;
 }
 
-[data-theme="excalidraw"] .prose :where(pre):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+:is(
+  [data-viewer-scope][data-theme="excalidraw"],
+  [data-viewer-theme-preload="excalidraw"] [data-viewer-scope][data-theme="default"]
+) .prose :where(pre):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   background: #f5f5f5;
   border: 1px solid #e0e0e0;
   border-radius: 6px;
 }
 
-[data-theme="excalidraw"] .prose :where(blockquote):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+:is(
+  [data-viewer-scope][data-theme="excalidraw"],
+  [data-viewer-theme-preload="excalidraw"] [data-viewer-scope][data-theme="default"]
+) .prose :where(blockquote):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   border-left: 3px solid #e67c00;
   color: #4a4a4a;
   background: rgba(230, 124, 0, 0.05);
@@ -601,22 +669,49 @@ body {
  * --------------------------------------------------------------------------- */
 
 /* ChatGPT: fundo puro */
-[data-theme="chatgpt"] .viewer-image-container,
-[data-theme="chatgpt"] .viewer-pdf-container,
-[data-theme="chatgpt"] .viewer-unsupported-container {
+:is(
+  [data-viewer-scope][data-theme="chatgpt"],
+  [data-viewer-theme-preload="chatgpt"] [data-viewer-scope][data-theme="default"]
+) .viewer-image-container,
+:is(
+  [data-viewer-scope][data-theme="chatgpt"],
+  [data-viewer-theme-preload="chatgpt"] [data-viewer-scope][data-theme="default"]
+) .viewer-pdf-container,
+:is(
+  [data-viewer-scope][data-theme="chatgpt"],
+  [data-viewer-theme-preload="chatgpt"] [data-viewer-scope][data-theme="default"]
+) .viewer-unsupported-container {
   background-color: #ffffff;
 }
 
 /* GitHub: fundo levemente cinza como o GitHub no modo arquivo */
-[data-theme="github"] .viewer-image-container,
-[data-theme="github"] .viewer-pdf-container,
-[data-theme="github"] .viewer-unsupported-container {
+:is(
+  [data-viewer-scope][data-theme="github"],
+  [data-viewer-theme-preload="github"] [data-viewer-scope][data-theme="default"]
+) .viewer-image-container,
+:is(
+  [data-viewer-scope][data-theme="github"],
+  [data-viewer-theme-preload="github"] [data-viewer-scope][data-theme="default"]
+) .viewer-pdf-container,
+:is(
+  [data-viewer-scope][data-theme="github"],
+  [data-viewer-theme-preload="github"] [data-viewer-scope][data-theme="default"]
+) .viewer-unsupported-container {
   background-color: #f6f8fa;
 }
 
 /* Excalidraw: fundo branco */
-[data-theme="excalidraw"] .viewer-image-container,
-[data-theme="excalidraw"] .viewer-pdf-container,
-[data-theme="excalidraw"] .viewer-unsupported-container {
+:is(
+  [data-viewer-scope][data-theme="excalidraw"],
+  [data-viewer-theme-preload="excalidraw"] [data-viewer-scope][data-theme="default"]
+) .viewer-image-container,
+:is(
+  [data-viewer-scope][data-theme="excalidraw"],
+  [data-viewer-theme-preload="excalidraw"] [data-viewer-scope][data-theme="default"]
+) .viewer-pdf-container,
+:is(
+  [data-viewer-scope][data-theme="excalidraw"],
+  [data-viewer-theme-preload="excalidraw"] [data-viewer-scope][data-theme="default"]
+) .viewer-unsupported-container {
   background-color: #ffffff;
 }

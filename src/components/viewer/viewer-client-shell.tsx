@@ -33,7 +33,7 @@
 
 "use client";
 
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { ViewerHeader } from "@/components/viewer/viewer-header";
 import { InfoPanel } from "@/components/viewer/info-panel";
 import { PresentationOverlay } from "@/components/viewer/presentation-overlay";
@@ -41,6 +41,7 @@ import { LaserPointerOverlay } from "@/components/viewer/laser-pointer-overlay";
 import { ViewerThemeRoot } from "@/components/viewer/viewer-theme";
 import {
   DEFAULT_THEME,
+  applyBootstrapThemeAttribute,
   readSavedTheme,
   saveTheme,
   type ViewerTheme,
@@ -79,11 +80,24 @@ export function ViewerClientShell({
   // SSR Safety: inicializa com DEFAULT_THEME — servidor e cliente concordam no render inicial.
   // Lê o localStorage apenas após a montagem (useEffect).
   const [activeTheme, setActiveTheme] = useState<ViewerTheme>(DEFAULT_THEME);
+  const hydratedThemeRef = useRef(false);
 
   useEffect(() => {
-    const saved = readSavedTheme();
-    if (saved) setActiveTheme(saved);
-  }, []);
+    if (!hydratedThemeRef.current) {
+      hydratedThemeRef.current = true;
+
+      const saved = readSavedTheme();
+      applyBootstrapThemeAttribute(document.documentElement, saved);
+
+      if (saved) {
+        setActiveTheme(saved);
+      }
+
+      return;
+    }
+
+    applyBootstrapThemeAttribute(document.documentElement, activeTheme);
+  }, [activeTheme]);
 
   // Phase 5: toggle do ponteiro laser (PRS-05)
   const [laserEnabled, setLaserEnabled] = useState(false);
@@ -108,7 +122,6 @@ export function ViewerClientShell({
         <div
           id="viewer-scroll"
           className="flex-1 min-w-0 overflow-y-auto bg-surface-container-lowest"
-          data-theme={activeTheme}
         >
           <ViewerHeader
             topic={topic}

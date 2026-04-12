@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { cn } from "@/lib/utils";
 import { appBrand } from "@/lib/app-brand";
+import { buildViewerThemeBootstrapScript } from "@/components/viewer/viewer-theme-contract";
 import "./globals.css";
 
 const inter = localFont({
@@ -57,7 +58,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR" className={cn("font-sans", inter.variable, excalifont.variable)}>
+    <html
+      lang="pt-BR"
+      className={cn("font-sans", inter.variable, excalifont.variable)}
+      suppressHydrationWarning
+    >
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: buildViewerThemeBootstrapScript(),
+          }}
+        />
+      </head>
       <body>{children}</body>
     </html>
   );

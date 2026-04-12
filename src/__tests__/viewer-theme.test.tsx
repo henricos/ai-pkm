@@ -25,8 +25,12 @@ vi.mock("@/lib/env", () => ({
 import {
   VIEWER_PRESETS,
   VIEWER_THEMES,
+  VIEWER_THEME_BOOTSTRAP_ATTR,
   VIEWER_THEME_LABELS,
+  VIEWER_THEME_SCOPE_ATTR,
   DEFAULT_THEME,
+  applyBootstrapThemeAttribute,
+  buildViewerThemeBootstrapScript,
   isValidTheme,
   readSavedTheme,
   saveTheme,
@@ -128,6 +132,37 @@ describe("readSavedTheme", () => {
   });
 });
 
+describe("buildViewerThemeBootstrapScript", () => {
+  beforeEach(() => {
+    localStorage.clear();
+    document.documentElement.removeAttribute(VIEWER_THEME_BOOTSTRAP_ATTR);
+  });
+
+  afterEach(() => {
+    localStorage.clear();
+    document.documentElement.removeAttribute(VIEWER_THEME_BOOTSTRAP_ATTR);
+  });
+
+  test("aplica atributo de bootstrap quando encontra preset persistido válido", () => {
+    localStorage.setItem("viewer-theme", "github");
+
+    new Function(buildViewerThemeBootstrapScript())();
+
+    expect(
+      document.documentElement.getAttribute(VIEWER_THEME_BOOTSTRAP_ATTR)
+    ).toBe("github");
+  });
+
+  test("ignora valor inválido no storage sem lançar erro", () => {
+    localStorage.setItem("viewer-theme", "tema-invalido");
+
+    expect(() => new Function(buildViewerThemeBootstrapScript())()).not.toThrow();
+    expect(
+      document.documentElement.getAttribute(VIEWER_THEME_BOOTSTRAP_ATTR)
+    ).toBeNull();
+  });
+});
+
 // ── Utilitários: saveTheme ───────────────────────────────────────────────────
 
 describe("saveTheme", () => {
@@ -145,6 +180,20 @@ describe("saveTheme", () => {
     });
     expect(() => saveTheme("chatgpt")).not.toThrow();
     spy.mockRestore();
+  });
+});
+
+describe("applyBootstrapThemeAttribute", () => {
+  test("aplica atributo no document root apenas para tema não-default", () => {
+    applyBootstrapThemeAttribute(document.documentElement, "chatgpt");
+    expect(
+      document.documentElement.getAttribute(VIEWER_THEME_BOOTSTRAP_ATTR)
+    ).toBe("chatgpt");
+
+    applyBootstrapThemeAttribute(document.documentElement, "default");
+    expect(
+      document.documentElement.getAttribute(VIEWER_THEME_BOOTSTRAP_ATTR)
+    ).toBeNull();
   });
 });
 
@@ -193,6 +242,7 @@ describe("ViewerThemeRoot — PRS-06 / D-17: escopo restrito ao viewer root", ()
       viewerRoot.className.includes("github") ||
       viewerRoot.className.includes(VIEWER_PRESETS.github.className);
     expect(hasTheme).toBe(true);
+    expect(viewerRoot.hasAttribute(VIEWER_THEME_SCOPE_ATTR)).toBe(true);
 
     expect(document.body.getAttribute("data-theme")).not.toBe("github");
     expect(document.documentElement.getAttribute("data-theme")).not.toBe("github");

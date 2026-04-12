@@ -11,6 +11,7 @@
 import { describe, test, expect, vi, beforeEach, afterEach } from "vitest";
 import { render, screen, fireEvent, act } from "@testing-library/react";
 import React from "react";
+import { VIEWER_THEME_BOOTSTRAP_ATTR } from "@/components/viewer/viewer-theme";
 
 vi.mock("@/lib/env", () => ({
   env: {
@@ -221,8 +222,15 @@ describe("ViewerClientShell — presentation mode por tipo de viewer", () => {
 // ── SSR Safety: tema inicializa com "default" ─────────────────────────────────
 
 describe("ViewerClientShell — tema SSR", () => {
-  beforeEach(() => { localStorage.clear(); });
-  afterEach(() => { localStorage.clear(); });
+  beforeEach(() => {
+    localStorage.clear();
+    document.documentElement.removeAttribute(VIEWER_THEME_BOOTSTRAP_ATTR);
+  });
+
+  afterEach(() => {
+    localStorage.clear();
+    document.documentElement.removeAttribute(VIEWER_THEME_BOOTSTRAP_ATTR);
+  });
 
   test("inicializa com tema 'default' (seguro para SSR)", () => {
     render(<ViewerClientShell {...defaultProps}><ChildContent /></ViewerClientShell>);
@@ -240,6 +248,9 @@ describe("ViewerClientShell — tema SSR", () => {
 
     const header = screen.getByTestId("viewer-header");
     expect(header.getAttribute("data-active-theme")).toBe("github");
+    expect(
+      document.documentElement.getAttribute(VIEWER_THEME_BOOTSTRAP_ATTR)
+    ).toBe("github");
   });
 
   test("ignora tema inválido no localStorage e mantém 'default'", async () => {
@@ -251,6 +262,9 @@ describe("ViewerClientShell — tema SSR", () => {
 
     const header = screen.getByTestId("viewer-header");
     expect(header.getAttribute("data-active-theme")).toBe("default");
+    expect(
+      document.documentElement.getAttribute(VIEWER_THEME_BOOTSTRAP_ATTR)
+    ).toBeNull();
   });
 
   test("onChangeTheme persiste no localStorage", async () => {
@@ -261,5 +275,8 @@ describe("ViewerClientShell — tema SSR", () => {
     });
 
     expect(localStorage.getItem("viewer-theme")).toBe("github");
+    expect(
+      document.documentElement.getAttribute(VIEWER_THEME_BOOTSTRAP_ATTR)
+    ).toBe("github");
   });
 });
