@@ -31,6 +31,18 @@ const inter = localFont({
   display: "swap",
 });
 
+const excalifont = localFont({
+  src: [
+    {
+      path: "./fonts/Excalifont-Regular.woff2",
+      weight: "400",
+      style: "normal",
+    },
+  ],
+  variable: "--font-excalidraw",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: {
     default: appBrand.appName,
@@ -45,7 +57,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR" className={cn("font-sans", inter.variable)}>
+    <html lang="pt-BR" className={cn("font-sans", inter.variable, excalifont.variable)}>
       <body>{children}</body>
     </html>
   );

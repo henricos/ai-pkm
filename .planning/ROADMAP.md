@@ -127,10 +127,18 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 
 ## Backlog
 
-### Phase 999.1: Refinar identidade visual dos temas do viewer (BACKLOG)
+### Phase 999.1: Eliminar flash de tema no carregamento do viewer (BACKLOG)
 
-**Goal:** Trabalhar os presets ChatGPT, GitHub e Excalidraw com fidelidade real às aplicações-referência — fonte, tamanho, espaçamento, alinhamento e paleta de cores. As variações atuais são funcionais mas discretas demais para representar a identidade de cada app.
-**Context:** Criado após validação da fase 5. Os presets existem e funcionam (persistência, escopo, coexistência com laser/presentation mode), mas a identidade visual precisa de sessão dedicada.
+**Goal:** Remover o flash visual que ocorre quando o viewer carrega com o tema padrão e depois troca para o tema salvo. O usuário vê a mudança acontecer a olho nu a cada reload de página.
+
+**Context:** O tema do viewer é salvo no `localStorage` e restaurado via `useEffect` em `viewer-client-shell.tsx`. A sequência atual é: (1) servidor renderiza com `DEFAULT_THEME`, (2) cliente hidrata com `DEFAULT_THEME` (necessário para evitar mismatch de hidratação SSR), (3) `useEffect` pós-montagem lê o `localStorage` e dispara re-render com o tema salvo. O flash é a janela visual entre os passos 2 e 3.
+
+**Causa raiz:** O `localStorage` não está disponível no servidor, então o tema real só pode ser lido no cliente. O `useEffect` garante que servidor e cliente concordem no render inicial, mas cria um re-render extra visível.
+
+**Solução proposta:** Injetar um `<script>` inline no `<head>` (via `layout.tsx`) que lê o `localStorage` e aplica o `data-theme` no DOM *antes* do primeiro paint e *antes* da hidratação do React — técnica usada pelo `next-themes`. Isso exige decidir se o `data-theme` permanece no container interno do viewer ou sobe para `<html>` (com escopo CSS ajustado), pois o script inline só tem acesso ao DOM raiz no momento em que roda.
+
+**Impacto:** Puramente visual/UX — nenhuma funcionalidade afetada. Pode ser atacado de forma isolada sem risco de regressão nas features de tema já implementadas.
+
 **Requirements:** TBD
 **Plans:** 0 plans
 
