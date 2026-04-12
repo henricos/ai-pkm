@@ -16,7 +16,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 2: Navigation Shell** - Shell persistente com arvore, inbox separada, filtro estrutural e URLs navegaveis.
 - [x] **Phase 3: Reading Viewer** - Viewer principal de Markdown com cabecalho contextual e composicao de leitura confiavel.
 - [x] **Phase 4: Asset Viewer and Item Context** - Tratamento de imagem, PDF, sidecars e fallbacks no mesmo item logico. (completed 2026-04-11)
-- [ ] **Phase 5: Presentation Mode** - Modo de apresentacao interno com temas prontos e ponteiro laser temporario.
+- [x] **Phase 5: Presentation Mode** - Modo de apresentacao interno com temas prontos e ponteiro laser temporario. (completed 2026-04-12)
 
 ## Phase Details
 
@@ -104,12 +104,13 @@ Plans:
   3. Controles discretos e auto-ocultaveis permitem sair do modo e ligar ou desligar ponteiro e anotacao quando esse recurso existir.
   4. O ponteiro laser temporario funciona sobre o conteudo e seu rastro desaparece progressivamente, inclusive fora do modo de apresentacao.
   5. Usuario pode alternar entre temas prontos de leitura/apresentacao, incluindo variantes inspiradas em ChatGPT, GitHub e Excalidraw.
-**Plans**: 4 plans
+**Plans**: 5 plans
 Plans:
 - [x] 05-01-PLAN.md — Wave 0 de testes para presentation mode, hit area, laser e presets do viewer
 - [x] 05-02-PLAN.md — Presentation shell interno + controles discretos + bloqueio do InfoPanel
 - [x] 05-03-PLAN.md — Laser pointer overlay com rastro temporal dentro e fora do modo apresentacao
 - [x] 05-04-PLAN.md — Presets ChatGPT/GitHub/Excalidraw no viewer + persistencia local + fechamento manual
+- [x] 05-05-PLAN.md — Fechamento dos gaps de UAT do laser: continuidade visual e dissipacao do rastro
 **UI hint**: yes
 
 ## Progress
@@ -123,7 +124,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 | 2. Navigation Shell | 3/3 | Completed | 2026-04-08 |
 | 3. Reading Viewer | 6/6 | Completed | 2026-04-10 |
 | 4. Asset Viewer and Item Context | 3/3 | Complete    | 2026-04-11 |
-| 5. Presentation Mode | 0/4 | Planned | - |
+| 5. Presentation Mode | 5/5 | Completed | 2026-04-12 |
 
 ## Backlog
 

@@ -139,13 +139,13 @@ Preenchido durante a criacao do roadmap.
 | FIL-01 | Phase 2 | Validated |
 | FIL-02 | Phase 2 | Validated |
 | FIL-03 | Phase 2 | Validated |
-| PRS-01 | Phase 5 | Pending |
-| PRS-02 | Phase 5 | Pending |
-| PRS-03 | Phase 5 | Pending |
-| PRS-04 | Phase 5 | Pending |
-| PRS-05 | Phase 5 | Pending |
-| PRS-06 | Phase 5 | Pending |
-| PRS-07 | Phase 5 | Pending |
+| PRS-01 | Phase 5 | Validated |
+| PRS-02 | Phase 5 | Validated |
+| PRS-03 | Phase 5 | Validated |
+| PRS-04 | Phase 5 | Validated |
+| PRS-05 | Phase 5 | Validated |
+| PRS-06 | Phase 5 | Validated |
+| PRS-07 | Phase 5 | Validated |
 | ARC-01 | Phase 1 | Validated |
 | ARC-02 | Phase 1 | Validated |
 | ARC-03 | Phase 1 | Validated |
@@ -173,4 +173,4 @@ Itens explicitamente registrados como backlog futuro:
 
 ---
 *Requirements defined: 2026-04-06*
-*Last updated: 2026-04-11 after phase 4 official closure*
+*Last updated: 2026-04-12 after phase 5 official closure*

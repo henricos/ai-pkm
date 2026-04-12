@@ -3,33 +3,33 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Phase 4 marcada como concluida; proximo passo e abrir discussao/planejamento da Phase 5
-last_updated: "2026-04-11T22:33:33.112Z"
-last_activity: 2026-04-11 -- Phase 05 execution started
+stopped_at: Phase 5 concluida; backlog 999.1 atualizado para eliminar flash de tema no carregamento do viewer
+last_updated: "2026-04-12T16:30:00.000Z"
+last_activity: 2026-04-12 -- backlog 999.1 redefinido apos refinamento visual dos temas
 progress:
   total_phases: 6
-  completed_phases: 4
-  total_plans: 21
-  completed_plans: 20
-  percent: 95
+  completed_phases: 5
+  total_plans: 22
+  completed_plans: 22
+  percent: 100
 ---
 
 # Project State
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-04-11)
+See: .planning/PROJECT.md (updated 2026-04-12)
 
 **Core value:** Permitir operar o PKM com auxilio de IA, alternando entre uma experiencia visual na web e a operacao local via CLI, sem perder compatibilidade com o modelo file-first.
-**Current focus:** Phase 05 — presentation-mode
+**Current focus:** Backlog 999.1 — eliminar-flash-tema-viewer
 
 ## Current Position
 
-Phase: 05 (presentation-mode) — EXECUTING
-Plan: 1 of 1
-Next: Phase 05 (presentation-mode)
-Status: Executing Phase 05
-Last activity: 2026-04-11 -- Phase 05 execution started
+Phase: 05 (presentation-mode) — COMPLETED
+Plan: 5 of 5
+Next: Backlog 999.1 (eliminar-flash-tema-viewer)
+Status: Phase 5 encerrada; aguardando promote/planejamento do backlog
+Last activity: 2026-04-12 -- backlog 999.1 redefinido apos execucao inline do backlog anterior
 
 Progress: [██████████] 100%
 
@@ -37,7 +37,7 @@ Progress: [██████████] 100%
 
 **Velocity:**
 
-- Total plans completed: 21
+- Total plans completed: 22
 - Average duration: ~14 min (estimado)
 - Total execution time: ~3.5 hours
 
@@ -49,10 +49,11 @@ Progress: [██████████] 100%
 | 02 | 3 | ~42 min | ~14 min |
 | 03 | 6 | - | - |
 | 04 | 3 | - | - |
+| 05 | 5 | - | - |
 
 **Recent Trend:**
 
-- Last 6 plans: 03-04, 03-05, 03-06, 04-01, 04-02, 04-03
+- Last 6 plans: 04-03, 05-01, 05-02, 05-03, 05-04, 05-05
 - Trend: Positive
 
 ## Accumulated Context
@@ -68,10 +69,11 @@ Recent decisions affecting current work:
 - [Phase 3]: MarkdownViewer e async Server Component com Shiki no servidor — zero JS de highlight no bundle cliente.
 - [Phase 3]: Painel de informacoes usa push layout (flex ao lado), nao overlay — evita obscurecer o conteudo.
 - [Phase 5]: Modo apresentacao permanece ativo na `v2`, mas vem depois de navegacao e leitura confiaveis.
+- [Phase 5]: Presentation mode permanece interno a shell, sem nova rota, com temas restritos ao viewer root.
 
 ### Pending Todos
 
-None yet.
+- [999.1]: Eliminar flash de tema no carregamento do viewer apos restauracao do preset salvo.
 
 ### Blockers/Concerns
 
@@ -81,5 +83,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-04-11
-Stopped at: Phase 4 marcada como concluida; proximo passo e abrir discussao/planejamento da Phase 5
-Resume file: .planning/phases/04-asset-viewer-and-item-context/04-VERIFICATION.md
+Stopped at: Phase 5 concluida; backlog 999.1 atualizado para eliminar flash de tema no carregamento do viewer
+Resume file: .planning/ROADMAP.md

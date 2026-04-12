@@ -18,13 +18,13 @@ Permitir operar o PKM com auxilio de IA, alternando entre uma experiencia visual
 - ✓ Permitir que a IA seja a escritora exclusiva da base, com o humano atuando por orientacao e aprovacao — v1
 - ✓ Renderizar Markdown com boa fidelidade visual, usando bibliotecas maduras para formulas, blocos de codigo e formatacao rica — Phase 3
 - ✓ Exibir imagens como item principal com boa experiencia de visualizacao, mantendo sidecars textuais ocultos da arvore e acessiveis no viewer — Phase 4
+- ✓ Oferecer modo de apresentacao minimo com tela dedicada ao viewer, recolhimento da shell, temas de leitura/apresentacao e ponteiro laser temporario — Phase 5
 
 ### Active
 
 - [ ] Entregar uma interface web para navegacao e exibicao do acervo PKM, sem capacidades de edicao manual
 - [ ] Exigir autenticacao single-user na interface web, inclusive em ambiente local/dev, com credenciais configuradas fora do repositorio
 - [ ] Exibir uma arvore navegavel com topicos, subtopicos, grupos, arquivos e inbox, com painel esquerdo retratil
-- [ ] Oferecer modo de apresentacao minimo com tela cheia do viewer, recolhimento do painel esquerdo, temas de leitura/apresentacao e ponteiro laser temporario
 - [ ] Implementar busca textual simples por nome de arquivo, conteudo Markdown e sidecars textuais, sem indexar frontmatter
 - [ ] Rodar com configuracao por variaveis de ambiente e acesso ao `pkm` por path/volume montado, preservando caminho limpo para empacotamento futuro
 
@@ -48,6 +48,8 @@ Dentro da `v2`, a prioridade e primeiro estruturar a aplicacao e entregar visual
 A `v2` tambem precisa nascer com restricoes operacionais minimas corretas: autenticacao single-user desde o inicio, configuracao por variaveis de ambiente, e acesso ao `pkm` sempre por montagem/path externo, tanto em dev quanto em runtime futuro empacotado. O objetivo nao e resolver deploy publicado agora, mas evitar um desenho acoplado ao ambiente local atual.
 
 A interface desejada se inspira em ferramentas como Obsidian na estrutura de navegacao, mas com visual mais clean e leve. A coluna esquerda concentra arvore, busca, configuracoes e area futura de status/chamada da console de IA; a area direita concentra o viewer do item selecionado e sua barra de acoes. Breadcrumbs nao sao necessarios porque a propria arvore ja cumpre esse papel.
+
+Com a Phase 5 concluida, a `v2` ja cobre navegacao, leitura rica, viewers de binarios e um modo de apresentacao funcional com presets de tema e ponteiro laser. O principal trabalho aberto dentro da experiencia atual saiu do nucleo funcional e entrou em backlog de refinamento visual, como o flash de tema durante o carregamento do viewer.
 
 ## Constraints
 
@@ -75,6 +77,7 @@ A interface desejada se inspira em ferramentas como Obsidian na estrutura de nav
 | Tratar design visual detalhado como fase interna da `v2`, possivelmente com apoio de ferramenta externa | Permite primeiro estabilizar a base funcional e depois implementar a interface fiel a uma spec visual melhor trabalhada | — Pending |
 | Exigir autenticacao single-user desde a `v2` | Mesmo sendo sistema de uma pessoa, a experiencia publicada e local precisa ter acesso protegido e coerente | ✓ Good |
 | Tratar `pkm` como dependencia montada e configurada externamente | Evita acoplamento com o ambiente de desenvolvimento atual e prepara o caminho para Docker/deploy futuro | ✓ Good |
+| Implementar presentation mode como estado interno da shell, sem nova rota nem fullscreen nativo obrigatorio | Preserva continuidade de leitura e evita bifurcar a arquitetura do viewer para uma capability secundariada `v2` | ✓ Good |
 
 ## Evolution
 
@@ -94,4 +97,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-04-11 — Phase 4 complete (asset-viewer-and-item-context)*
+*Last updated: 2026-04-12 — Phase 5 complete (presentation-mode)*
