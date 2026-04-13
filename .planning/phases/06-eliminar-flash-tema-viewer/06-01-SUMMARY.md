@@ -1,8 +1,8 @@
 ---
 phase: 06-eliminar-flash-tema-viewer
 plan: 06-01
-status: pending-manual-verification
-completed_at: 2026-04-12
+status: complete
+completed_at: 2026-04-13
 requirements_completed: [PRS-06, PRS-07]
 ---
 
@@ -32,12 +32,16 @@ O carregamento do preset salvo deixou de depender apenas do `useEffect` do viewe
 - `npm run typecheck` ✅
 - `npm run build` ✅
 
-## Pendências
+## Fechamento
 
-- Verificação visual manual em navegador real:
-  1. salvar `github` e recarregar Markdown, imagem e PDF
-  2. forçar valor inválido em `localStorage`
-  3. confirmar que shell/login não recebem o preset
+Nao ha pendencias abertas na fase.
+
+O checkpoint visual manual previsto no plano foi executado e aprovado pelo operador na aplicacao real. A fase fica encerrada com base em:
+
+- evidencias automatizadas verdes para bootstrap, hidratação e escopo local do viewer
+- validacao humana explicita do comportamento visual no browser
+- `typecheck` e `build` em 2026-04-13 sem regressões
+- verificação documental formalizada em `06-VALIDATION.md`, `06-SECURITY.md`, `06-UAT.md` e `06-VERIFICATION.md`
 
 ## Commit
 

@@ -9,69 +9,69 @@ Requirements para a `v2`, focada em navegacao e exibicao web do acervo PKM. A `v
 
 ### Access
 
-- [ ] **ACC-01**: Interface web exige autenticacao single-user em todos os ambientes, incluindo local/dev.
-- [ ] **ACC-02**: Login usa usuario e senha fixos configurados por variaveis de ambiente ou configuracao externa equivalente, sem credenciais commitadas no repositorio.
-- [ ] **ACC-03**: Usuario autenticado pode acessar a experiencia completa da `v2` sem modelo multiusuario ou papeis adicionais.
+- [x] **ACC-01**: Interface web exige autenticacao single-user em todos os ambientes, incluindo local/dev.
+- [x] **ACC-02**: Login usa usuario e senha fixos configurados por variaveis de ambiente ou configuracao externa equivalente, sem credenciais commitadas no repositorio.
+- [x] **ACC-03**: Usuario autenticado pode acessar a experiencia completa da `v2` sem modelo multiusuario ou papeis adicionais.
 
 ### Navigation
 
-- [ ] **NAV-01**: Usuario pode navegar a base estruturada do `pkm` por meio de uma coluna esquerda com arvore de topicos, subtopicos, grupos e arquivos.
-- [ ] **NAV-02**: Inbox aparece como secao propria acima da arvore principal, com destaque visual e lista propria, sem representacao em arvore.
-- [ ] **NAV-03**: Painel esquerdo pode ser recolhido e reaberto sem perder o item atualmente exibido.
-- [ ] **NAV-04**: Item atualmente selecionado fica visualmente destacado na navegacao.
-- [ ] **NAV-05**: Navegacao exibe icones distintos para os tipos de item `nota`, `url` e `binario`.
-- [ ] **NAV-06**: Navegacao exibe contagens de itens junto dos nos relevantes da estrutura e da inbox.
-- [ ] **NAV-07**: Navegacao usa indicadores visuais para diferenciar itens `rascunho/incompleto` de itens `finalizado`.
-- [ ] **NAV-08**: Ao selecionar um item, a interface mantem a sensacao de shell unica, mas atualiza uma URL propria e navegavel para esse item.
+- [x] **NAV-01**: Usuario pode navegar a base estruturada do `pkm` por meio de uma coluna esquerda com arvore de topicos, subtopicos, grupos e arquivos.
+- [x] **NAV-02**: Inbox aparece como secao propria acima da arvore principal, com destaque visual e lista propria, sem representacao em arvore.
+- [x] **NAV-03**: Painel esquerdo pode ser recolhido e reaberto sem perder o item atualmente exibido.
+- [x] **NAV-04**: Item atualmente selecionado fica visualmente destacado na navegacao.
+- [x] **NAV-05**: Navegacao exibe icones distintos para os tipos de item `nota`, `url` e `binario`.
+- [x] **NAV-06**: Navegacao exibe contagens de itens junto dos nos relevantes da estrutura e da inbox.
+- [x] **NAV-07**: Navegacao usa indicadores visuais para diferenciar itens `rascunho/incompleto` de itens `finalizado`.
+- [x] **NAV-08**: Ao selecionar um item, a interface mantem a sensacao de shell unica, mas atualiza uma URL propria e navegavel para esse item.
 
 ### Viewer
 
-- [ ] **VIEW-01**: Area direita exibe o conteudo do item selecionado sem transicao para outra pagina perceptivel.
-- [ ] **VIEW-02**: Viewer de Markdown renderiza headings, listas, tabelas, blockquotes, blocos de codigo com highlight, task lists, links clicaveis e callouts/admonitions.
-- [ ] **VIEW-03**: Viewer de Markdown usa pipeline de renderizacao rica baseada em bibliotecas maduras, sem HTML cru como estrategia principal.
+- [x] **VIEW-01**: Area direita exibe o conteudo do item selecionado sem transicao para outra pagina perceptivel.
+- [x] **VIEW-02**: Viewer de Markdown renderiza headings, listas, tabelas, blockquotes, blocos de codigo com highlight, task lists, links clicaveis e callouts/admonitions.
+- [x] **VIEW-03**: Viewer de Markdown usa pipeline de renderizacao rica baseada em bibliotecas maduras, sem HTML cru como estrategia principal.
 - [x] **VIEW-04**: Viewer de imagem exibe o binario principal com experiencia de visualizacao confortavel, incluindo zoom e enquadramento adequados.
 - [x] **VIEW-05**: Arquivos PDF podem ser abertos no viewer com suporte de preview suficiente ou fallback claro de download quando preview nao for possivel.
 - [x] **VIEW-06**: Sidecar textual nao aparece como item separado na navegacao; o sistema trata binario e sidecar como um unico item logico.
 - [x] **VIEW-07**: Itens nao renderizaveis exibem mensagem clara de impossibilidade de preview e oferecem download direto do arquivo.
-- [ ] **VIEW-08**: Viewer respeita largura maxima e composicao visual apropriada para leitura, sem parecer explorador bruto de arquivos.
+- [x] **VIEW-08**: Viewer respeita largura maxima e composicao visual apropriada para leitura, sem parecer explorador bruto de arquivos.
 
 ### Item Context
 
-- [ ] **CTX-01**: Cabecalho da area direita exibe o titulo do item atual.
-- [ ] **CTX-02**: Cabecalho da area direita exibe acoes do item atual, incluindo entrada em modo apresentacao, download e acesso ao painel de informacoes.
-- [ ] **CTX-03**: Um unico icone de informacao abre painel lateral direito, dentro da area de conteudo, para exibir informacoes complementares do item atual.
-- [ ] **CTX-04**: Painel de informacoes apresenta metadados e texto complementar de maneira visualmente agradavel, sem despejar YAML cru ou visual de codigo-fonte.
+- [x] **CTX-01**: Cabecalho da area direita exibe o titulo do item atual.
+- [x] **CTX-02**: Cabecalho da area direita exibe acoes do item atual, incluindo entrada em modo apresentacao, download e acesso ao painel de informacoes.
+- [x] **CTX-03**: Um unico icone de informacao abre painel lateral direito, dentro da area de conteudo, para exibir informacoes complementares do item atual.
+- [x] **CTX-04**: Painel de informacoes apresenta metadados e texto complementar de maneira visualmente agradavel, sem despejar YAML cru ou visual de codigo-fonte.
 - [x] **CTX-05**: Para binarios com sidecar, o painel de informacoes exibe o texto complementar associado ao item principal.
 
 ### Filtering
 
-- [ ] **FIL-01**: Topo da coluna esquerda oferece campo de filtro estrutural dedicado a restringir a arvore principal por nome, sem buscar em conteudo nem afetar a inbox.
-- [ ] **FIL-02**: Filtro estrutural e tolerante a diferencas de maiusculas/minusculas e acentos.
-- [ ] **FIL-03**: Interface diferencia visualmente filtro estrutural de busca textual avancada, por exemplo com iconografia distinta.
+- [x] **FIL-01**: Topo da coluna esquerda oferece campo de filtro estrutural dedicado a restringir a arvore principal por nome, sem buscar em conteudo nem afetar a inbox.
+- [x] **FIL-02**: Filtro estrutural e tolerante a diferencas de maiusculas/minusculas e acentos.
+- [x] **FIL-03**: Interface diferencia visualmente filtro estrutural de busca textual avancada, por exemplo com iconografia distinta.
 
 ### Presentation
 
-- [ ] **PRS-01**: Usuario pode acionar um modo de apresentacao interno da aplicacao, distinto do fullscreen nativo do navegador.
-- [ ] **PRS-02**: Modo de apresentacao oculta painel esquerdo, busca, configuracoes, status, cabecalho do viewer e outros elementos de manutencao, deixando apenas o conteudo principal.
-- [ ] **PRS-03**: Modo de apresentacao exibe controles discretos, translucidos e auto-ocultaveis no canto inferior esquerdo.
-- [ ] **PRS-04**: Controles minimos do modo de apresentacao incluem sair do modo, ligar/desligar ponteiro e ligar/desligar anotacao quando esse recurso existir.
-- [ ] **PRS-05**: Sistema oferece ponteiro laser temporario, com rastro que desaparece progressivamente, utilizavel tanto dentro quanto fora do modo de apresentacao.
-- [ ] **PRS-06**: Sistema oferece lista de temas prontos de leitura/apresentacao, sem capacidade de montar ou editar temas pela interface.
-- [ ] **PRS-07**: Conjunto inicial de temas inclui variacoes inspiradas em ChatGPT, GitHub e Excalidraw.
+- [x] **PRS-01**: Usuario pode acionar um modo de apresentacao interno da aplicacao, distinto do fullscreen nativo do navegador.
+- [x] **PRS-02**: Modo de apresentacao oculta painel esquerdo, busca, configuracoes, status, cabecalho do viewer e outros elementos de manutencao, deixando apenas o conteudo principal.
+- [x] **PRS-03**: Modo de apresentacao exibe controles discretos, translucidos e auto-ocultaveis no canto inferior esquerdo.
+- [x] **PRS-04**: Controles minimos do modo de apresentacao incluem sair do modo, ligar/desligar ponteiro e ligar/desligar anotacao quando esse recurso existir.
+- [x] **PRS-05**: Sistema oferece ponteiro laser temporario, com rastro que desaparece progressivamente, utilizavel tanto dentro quanto fora do modo de apresentacao.
+- [x] **PRS-06**: Sistema oferece lista de temas prontos de leitura/apresentacao, sem capacidade de montar ou editar temas pela interface.
+- [x] **PRS-07**: Conjunto inicial de temas inclui variacoes inspiradas em ChatGPT, GitHub e Excalidraw.
 
 ### Architecture and Read Model
 
-- [ ] **ARC-01**: Camada web consome o repositorio `pkm` por meio de um modelo de leitura read-only, sem transformar banco de dados em fonte primaria de verdade na `v2`.
-- [ ] **ARC-02**: Sistema define identidade estavel de item logico para uso consistente entre navegacao, viewer e busca.
-- [ ] **ARC-03**: Inbox, arvore, viewer e busca compartilham o mesmo modelo semantico de item, em vez de espelhar o filesystem cru diretamente na UI.
-- [ ] **ARC-04**: Busca e indexacao ficam atras de contratos internos preparados para futura troca de implementacao, preservando o caminho para `v3`.
+- [x] **ARC-01**: Camada web consome o repositorio `pkm` por meio de um modelo de leitura read-only, sem transformar banco de dados em fonte primaria de verdade na `v2`.
+- [x] **ARC-02**: Sistema define identidade estavel de item logico para uso consistente entre navegacao, viewer e busca.
+- [x] **ARC-03**: Inbox, arvore, viewer e busca compartilham o mesmo modelo semantico de item, em vez de espelhar o filesystem cru diretamente na UI.
+- [x] **ARC-04**: Busca e indexacao ficam atras de contratos internos preparados para futura troca de implementacao, preservando o caminho para `v3`.
 
 ### Runtime and Delivery
 
-- [ ] **RUN-01**: Aplicacao recebe configuracao operacional por variaveis de ambiente, incluindo credenciais de acesso e localizacao do `pkm`.
-- [ ] **RUN-02**: Aplicacao assume que o `pkm` esta disponivel por path ou volume montado externamente, sem embutir o acervo no proprio codigo da plataforma.
-- [ ] **RUN-03**: Projeto documenta como rodar a aplicacao em ambiente local/dev com as dependencias e configuracoes minimas necessarias.
-- [ ] **RUN-04**: Interface web e responsiva o suficiente para nao quebrar em uso mobile e nao inviabilizar empacotamento futuro em WebView.
+- [x] **RUN-01**: Aplicacao recebe configuracao operacional por variaveis de ambiente, incluindo credenciais de acesso e localizacao do `pkm`.
+- [x] **RUN-02**: Aplicacao assume que o `pkm` esta disponivel por path ou volume montado externamente, sem embutir o acervo no proprio codigo da plataforma.
+- [x] **RUN-03**: Projeto documenta como rodar a aplicacao em ambiente local/dev com as dependencias e configuracoes minimas necessarias.
+- [x] **RUN-04**: Interface web e responsiva o suficiente para nao quebrar em uso mobile e nao inviabilizar empacotamento futuro em WebView.
 
 ## v3 Requirements
 
@@ -173,4 +173,4 @@ Itens explicitamente registrados como backlog futuro:
 
 ---
 *Requirements defined: 2026-04-06*
-*Last updated: 2026-04-12 after phase 5 official closure*
+*Last updated: 2026-04-13 after phase 6 official closure*

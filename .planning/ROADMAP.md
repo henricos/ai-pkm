@@ -17,7 +17,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 3: Reading Viewer** - Viewer principal de Markdown com cabecalho contextual e composicao de leitura confiavel.
 - [x] **Phase 4: Asset Viewer and Item Context** - Tratamento de imagem, PDF, sidecars e fallbacks no mesmo item logico. (completed 2026-04-11)
 - [x] **Phase 5: Presentation Mode** - Modo de apresentacao interno com temas prontos e ponteiro laser temporario. (completed 2026-04-12)
-- [ ] **Phase 6: Eliminar Flash de Tema no Viewer** - Hardening do carregamento de tema para evitar flash visual entre SSR, hidratacao e aplicacao do preset salvo.
+- [x] **Phase 6: Eliminar Flash de Tema no Viewer** - Hardening do carregamento de tema para evitar flash visual entre SSR, hidratacao e aplicacao do preset salvo. (completed 2026-04-13)
 
 ## Phase Details
 
@@ -125,7 +125,7 @@ Plans:
   4. O fallback para ausencia de `localStorage`, tema invalido ou execucao sem JS continua benigno e nao quebra a leitura.
 **Plans**: 1 plan
 Plans:
-- [ ] 06-01-PLAN.md — Bootstrap pre-paint do tema do viewer + hardening SSR/hidratacao + verificacao visual
+- [x] 06-01-PLAN.md — Bootstrap pre-paint do tema do viewer + hardening SSR/hidratacao + verificacao visual
 **UI hint**: yes
 
 ## Progress
@@ -140,7 +140,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6
 | 3. Reading Viewer | 6/6 | Completed | 2026-04-10 |
 | 4. Asset Viewer and Item Context | 3/3 | Complete    | 2026-04-11 |
 | 5. Presentation Mode | 5/5 | Completed | 2026-04-12 |
-| 6. Eliminar Flash de Tema no Viewer | 0/1 | Planned | - |
+| 6. Eliminar Flash de Tema no Viewer | 1/1 | Completed | 2026-04-13 |
 
 ## Backlog
 Nenhum item de backlog registrado no momento.
