@@ -1,17 +1,17 @@
 ---
 gsd_state_version: 1.0
-milestone: v2.0
-milestone_name: milestone
-status: complete
-stopped_at: Milestone v2.0 arquivado; aguardando abertura formal do milestone v2.1
-last_updated: "2026-04-13T21:30:00.000Z"
-last_activity: 2026-04-13 -- milestone v2.0 arquivado em .planning/milestones e roadmap ativo colapsado
+milestone: v2.1
+milestone_name: release e publicacao operacional
+status: defining_requirements
+stopped_at: Milestone v2.1 aberto; pronto para iniciar discussao da Phase 7
+last_updated: "2026-04-13T22:15:00.000Z"
+last_activity: 2026-04-13 -- milestone v2.1 aberto com requisitos e roadmap de release operacional
 progress:
-  total_phases: 6
-  completed_phases: 6
-  total_plans: 22
-  completed_plans: 22
-  percent: 100
+  total_phases: 3
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # Project State
@@ -21,17 +21,17 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-13)
 
 **Core value:** Permitir operar o PKM com auxilio de IA, alternando entre uma experiencia visual na web e a operacao local via CLI, sem perder compatibilidade com o modelo file-first.
-**Current focus:** Milestone v2.0 arquivado; proximo passo natural e abrir o milestone v2.1
+**Current focus:** Milestone v2.1 aberto para fechar release, empacotamento e publicacao operacional da aplicacao
 
 ## Current Position
 
-Phase: none
-Plan: none
-Next: abrir v2.1 com `/gsd-new-milestone`
-Status: Milestone v2.0 arquivado; requirements ativos aguardam redefinicao no novo milestone
-Last activity: 2026-04-13 -- archive de roadmap/requirements concluido e estado pronto para novo ciclo
+Phase: Not started (definindo abordagem da Phase 7)
+Plan: -
+Next: iniciar `/gsd-discuss-phase 7`
+Status: Definindo requisitos e abordagem operacional do milestone v2.1
+Last activity: 2026-04-13 -- roadmap v2.1 criado com fases 7-9
 
-Progress: [██████████] 100%
+Progress: [----------] 0%
 
 ## Performance Metrics
 
@@ -83,6 +83,6 @@ Recent decisions affecting current work:
 
 ## Session Continuity
 
-Last session: 2026-04-12
-Stopped at: Milestone v2.0 arquivado; aguardar abertura formal de v2.1
+Last session: 2026-04-13
+Stopped at: Milestone v2.1 aberto; proximo passo e iniciar a discussao da Phase 7
 Resume file: .planning/PROJECT.md

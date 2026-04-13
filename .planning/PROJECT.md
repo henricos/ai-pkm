@@ -2,7 +2,7 @@
 
 ## What This Is
 
-O ai-pkm e a plataforma que apoia a operacao de um PKM file-first com auxilio de IA. Hoje, o sistema ja funciona de forma validada via CLI sobre o repositorio `pkm`; o proximo passo e adicionar uma experiencia web visual, limpa e leve para navegar e exibir esse acervo sem quebrar o modelo em que a IA e a unica escritora da base.
+O ai-pkm e a plataforma que apoia a operacao de um PKM file-first com auxilio de IA. Hoje, o sistema combina uma operacao validada via CLI sobre o repositorio `pkm` com uma interface web read-only para navegar e exibir esse acervo sem quebrar o modelo em que a IA e a unica escritora da base. O passo atual e fechar a camada operacional de release e publicacao dessa aplicacao web.
 
 ## Core Value
 
@@ -36,7 +36,10 @@ O terceiro numero (`PATCH`) fica reservado para hotfixes e releases pontuais do 
 
 ### Active
 
-- Nenhum requisito ativo restante para o milestone atual.
+- Empacotar a aplicacao web como imagem Docker distribuivel, sem embutir o `pkm` na imagem
+- Fechar versionamento SemVer do app Node/web com release operacional baseada em `npm version`
+- Publicar imagem publica no GHCR por pipeline automatizado no GitHub Actions
+- Atualizar a aplicacao no servidor atual por pull de imagem e redeploy no Portainer, preservando volume e configuracao externa
 
 ### Out of Scope
 
@@ -74,6 +77,21 @@ O `v2.0` foi entregue em `2026-04-13` como a primeira versao web funcional do pr
 O escopo shipped inclui autenticacao single-user, shell persistente de navegacao com inbox separada, viewer rico de Markdown, viewers leves de imagem/PDF, tratamento de sidecars no contexto do item principal, presentation mode e hardening visual do tema do viewer sem flash perceptivel no reload.
 
 Os artefatos historicos do milestone foram arquivados em `.planning/milestones/v2.0-ROADMAP.md` e `.planning/milestones/v2.0-REQUIREMENTS.md`.
+
+## Current Milestone: v2.1 release e publicacao operacional
+
+**Goal:** fechar um fluxo simples, rastreavel e reproduzivel para versionar, empacotar, publicar e atualizar a aplicacao web em Docker, sem embutir o `pkm` na imagem.
+
+**Target features:**
+
+- empacotar a aplicacao como imagem Docker distribuivel
+- manter o `pkm` em repositorio privado separado, montado por volume no runtime
+- adotar versionamento SemVer do app Node/web
+- fechar release via `npm version` com commit e tag Git
+- disparar build/publicacao por tag no GitHub Actions
+- publicar imagem publica no GHCR
+- versionar a imagem com `vX.Y.Z` e `latest`
+- atualizar o servidor por pull da nova imagem e redeploy no Portainer
 
 ## Next Milestone Goals
 
@@ -117,6 +135,8 @@ Metas preliminares para a `v2.1`:
 | Tratar `pkm` como dependencia montada e configurada externamente | Evita acoplamento com o ambiente de desenvolvimento atual e prepara o caminho para Docker/deploy futuro | ✓ Good |
 | Implementar presentation mode como estado interno da shell, sem nova rota nem fullscreen nativo obrigatorio | Preserva continuidade de leitura e evita bifurcar a arquitetura do viewer para uma capability secundariada `v2.0` | ✓ Good |
 | Resolver o flash de tema com bootstrap pre-paint local ao viewer | Fecha o ultimo gap visual da `v2.0` sem promover theming global nem introduzir mismatch de hidratacao | ✓ Good |
+| Distribuir a aplicacao por imagem Docker publicada, e nao por `git pull` dentro do runtime | Mantem deploy mais previsivel, rastreavel e portavel entre servidores | — Pending |
+| Usar GHCR publico com tags `vX.Y.Z` e `latest` como estrategia inicial de distribuicao | Simplifica operacao no servidor caseiro e preserva referencia exata de release por SemVer | — Pending |
 
 ## Evolution
 
@@ -136,4 +156,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-04-13 — v2.0 archived; ready to start v2.1 definition*
+*Last updated: 2026-04-13 — milestone v2.1 definido para requisitos e roadmap operacionais de release*
