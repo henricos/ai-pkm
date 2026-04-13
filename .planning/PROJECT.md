@@ -8,15 +8,24 @@ O ai-pkm e a plataforma que apoia a operacao de um PKM file-first com auxilio de
 
 Permitir operar o PKM com auxilio de IA, alternando entre uma experiencia visual na web e a operacao local via CLI, sem perder compatibilidade com o modelo file-first.
 
+## Versioning
+
+O projeto adota duas camadas complementares de versao:
+
+- **Milestones de planning/GSD** usam SemVer curto no formato `vMAJOR.MINOR` (ex: `v1.0`, `v1.1`, `v2.0`).
+- **Versao do aplicativo Node/web** usa SemVer completo no formato `MAJOR.MINOR.PATCH` (ex: `2.0.0`).
+
+O terceiro numero (`PATCH`) fica reservado para hotfixes e releases pontuais do aplicativo, mas nao nomeia milestones de planejamento.
+
 ## Requirements
 
 ### Validated
 
-- ✓ Operar o PKM via CLI usando as skills existentes sobre o repositorio `pkm` — v1
-- ✓ Manter o repositorio `pkm` como fonte primaria de verdade do conteudo — v1
-- ✓ Preservar um modelo file-first, sem depender de banco de dados para a operacao principal — v1
-- ✓ Permitir que a IA seja a escritora exclusiva da base, com o humano atuando por orientacao e aprovacao — v1
-- ✓ Entregar uma interface web para navegacao e exibicao do acervo PKM, sem capacidades de edicao manual — v2
+- ✓ Operar o PKM via CLI usando as skills existentes sobre o repositorio `pkm` — v1.0
+- ✓ Manter o repositorio `pkm` como fonte primaria de verdade do conteudo — v1.0
+- ✓ Preservar um modelo file-first, sem depender de banco de dados para a operacao principal — v1.0
+- ✓ Permitir que a IA seja a escritora exclusiva da base, com o humano atuando por orientacao e aprovacao — v1.0
+- ✓ Entregar uma interface web para navegacao e exibicao do acervo PKM, sem capacidades de edicao manual — v2.0
 - ✓ Exigir autenticacao single-user na interface web, inclusive em ambiente local/dev, com credenciais configuradas fora do repositorio — Phase 1
 - ✓ Exibir uma arvore navegavel com topicos, subtopicos, grupos, arquivos e inbox, com painel esquerdo retratil — Phase 2
 - ✓ Rodar com configuracao por variaveis de ambiente e acesso ao `pkm` por path/volume montado, preservando caminho limpo para empacotamento futuro — Phase 1
@@ -42,17 +51,21 @@ Permitir operar o PKM com auxilio de IA, alternando entre uma experiencia visual
 
 O projeto parte de uma base brownfield ja validada em CLI: as skills operacionais existem, o repositorio `pkm` e a fonte de verdade e a operacao sem banco ja provou o modelo central. A etapa atual nao e inventar um novo sistema de edicao, mas construir uma camada web de navegacao e exibicao que respeite esse modelo.
 
-O alvo de produto foi reorganizado em versoes. A `v1` corresponde ao que ja existe hoje: operacao somente por CLI, sem banco de dados, centrada em arquivos. A `v2` passa a ser a navegacao e exibicao web do acervo. A `v3` fica reservada para a migracao dos indices JSON para banco. A `v4` fica reservada para a integracao agentica via web com Agent SDK e execucao de fluxos no navegador.
+O alvo de produto foi reorganizado em versoes. A `v1.0` corresponde ao que ja existe hoje: operacao somente por CLI, sem banco de dados, centrada em arquivos. A `v2.0` passa a ser a navegacao e exibicao web do acervo. A `v2.1` fica reservada para empacotamento, pipeline de release e publicacao operacional da aplicacao. A `v3.0` passa a ser a refatoracao conceitual do dominio do PKM, consolidando `item` como unidade central e reorganizando as dimensoes de origem/autoria, assunto e tipo. A `v4.0` fica reservada para a migracao dos indices JSON para banco. A `v5.0` fica reservada para a integracao agentica via web com Agent SDK e execucao de fluxos no navegador.
 
-Dentro da `v2`, a prioridade e primeiro estruturar a aplicacao e entregar visualizacao confiavel do acervo, antes de aprofundar refinamentos visuais e capacidades mais avancadas de apresentacao. O modo apresentacao e desejavel na `v2`, mas e secundario em relacao ao objetivo principal de navegar e ler bem o conteudo.
+Dentro da `v2.0`, a prioridade e primeiro estruturar a aplicacao e entregar visualizacao confiavel do acervo, antes de aprofundar refinamentos visuais e capacidades mais avancadas de apresentacao. O modo apresentacao e desejavel na `v2.0`, mas e secundario em relacao ao objetivo principal de navegar e ler bem o conteudo.
 
-A `v2` tambem precisa nascer com restricoes operacionais minimas corretas: autenticacao single-user desde o inicio, configuracao por variaveis de ambiente, e acesso ao `pkm` sempre por montagem/path externo, tanto em dev quanto em runtime futuro empacotado. O objetivo nao e resolver deploy publicado agora, mas evitar um desenho acoplado ao ambiente local atual.
+A `v2.0` tambem precisa nascer com restricoes operacionais minimas corretas: autenticacao single-user desde o inicio, configuracao por variaveis de ambiente, e acesso ao `pkm` sempre por montagem/path externo, tanto em dev quanto em runtime futuro empacotado. O objetivo nao e resolver deploy publicado agora, mas evitar um desenho acoplado ao ambiente local atual.
+
+A `v2.1` tem foco estritamente operacional: fechar um fluxo reproduzivel de empacotamento e publicacao da aplicacao como container Docker, com versionamento SemVer do app Node, pipeline automatizado no GitHub Actions, publicacao de imagem no GHCR e redeploy simples no servidor atual via Portainer, sempre mantendo o `pkm` privado fora da imagem e montado por volume.
+
+A `v3.0` muda o proprio vocabulário central do projeto. Em vez de tratar o PKM principalmente como conjunto de arquivos heterogeneos, o sistema passa a assumir `item` como unidade conceitual principal, com tres dimensoes explicitas: origem/autoria, assunto e tipo. Essa mudanca reinterpreta termos que hoje aparecem em lugares diferentes do sistema e exige uma sequencia de migracao muito bem planejada, porque afeta simultaneamente taxonomia, modelos, contratos, indices, skills, aplicacao web e o proprio conteudo do PKM.
 
 A interface desejada se inspira em ferramentas como Obsidian na estrutura de navegacao, mas com visual mais clean e leve. A coluna esquerda concentra arvore, busca, configuracoes e area futura de status/chamada da console de IA; a area direita concentra o viewer do item selecionado e sua barra de acoes. Breadcrumbs nao sao necessarios porque a propria arvore ja cumpre esse papel.
 
-Com a Phase 5 concluida, a `v2` ja cobre navegacao, leitura rica, viewers de binarios e um modo de apresentacao funcional com presets de tema e ponteiro laser. O principal trabalho aberto dentro da experiencia atual saiu do nucleo funcional e entrou em backlog de refinamento visual, como o flash de tema durante o carregamento do viewer.
+Com a Phase 5 concluida, a `v2.0` ja cobre navegacao, leitura rica, viewers de binarios e um modo de apresentacao funcional com presets de tema e ponteiro laser. O principal trabalho aberto dentro da experiencia atual saiu do nucleo funcional e entrou em backlog de refinamento visual, como o flash de tema durante o carregamento do viewer.
 
-Com a Phase 6 concluida, a `v2` ativa fica fechada para o milestone atual. O hardening do preset eliminou o descompasso restante entre SSR, hidratacao e tema persistido no viewer, sem transformar o theming em concern global da aplicacao. O proximo passo deixa de ser implementacao corretiva dentro da `v2` e passa a ser definir o proximo milestone de produto.
+Com a Phase 6 concluida, a `v2.0` ativa fica fechada para o milestone atual. O hardening do preset eliminou o descompasso restante entre SSR, hidratacao e tema persistido no viewer, sem transformar o theming em concern global da aplicacao. O proximo passo deixa de ser implementacao corretiva dentro da `v2.0` e passa a ser definir entre `v2.1` e `v3.0` o proximo milestone de produto.
 
 ## Constraints
 
@@ -71,17 +84,19 @@ Com a Phase 6 concluida, a `v2` ativa fica fechada para o milestone atual. O har
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| Rebatizar o estado atual como `v1` | O sistema ja tem uma operacao validada em CLI e isso precisa aparecer como capacidade existente, nao como hipotese | ✓ Good |
-| Definir `v2` como navegacao e exibicao web | Separa claramente a camada visual da futura camada agentica, reduzindo escopo e risco | ✓ Good |
-| Manter `v3` para migracao dos indices JSON para banco | Trata a persistencia derivada como evolucao posterior, sem contaminar a fase atual | ✓ Good |
-| Deixar execucao agentica web para `v4` | Preserva foco da versao ativa e evita misturar viewer com console/automacao cedo demais | ✓ Good |
+| Rebatizar o estado atual como `v1.0` | O sistema ja tem uma operacao validada em CLI e isso precisa aparecer como capacidade existente, nao como hipotese | ✓ Good |
+| Definir `v2.0` como navegacao e exibicao web | Separa claramente a camada visual da futura camada agentica, reduzindo escopo e risco | ✓ Good |
+| Reservar `v2.1` para empacotamento e pipeline de release/publicacao | Fecha a operacao de distribuicao da aplicacao sem antecipar mudancas conceituais nem banco | ✓ Good |
+| Definir `v3.0` como refatoracao conceitual do dominio PKM | Resolve inconsistencias de naming e modelo mental antes de uma migracao estrutural maior | ✓ Good |
+| Empurrar a migracao de indices JSON para banco para `v4.0` | Evita cristalizar no banco uma taxonomia ainda inconsistente | ✓ Good |
+| Deixar execucao agentica web para `v5.0` | Preserva foco da versao ativa e evita misturar viewer com console/automacao cedo demais | ✓ Good |
 | Ocultar sidecars da arvore e exibi-los como informacao complementar do item principal | A unidade logica de navegacao deve ser o arquivo principal, nao seus artefatos auxiliares | ✓ Good |
-| Priorizar viewers leves para imagem e preview inline nativo para PDF na `v2` | Entrega uma experiencia focada no conteudo sem introduzir stacks pesadas cedo demais | ✓ Good |
-| Tratar design visual detalhado como fase interna da `v2`, possivelmente com apoio de ferramenta externa | Permite primeiro estabilizar a base funcional e depois implementar a interface fiel a uma spec visual melhor trabalhada | — Pending |
-| Exigir autenticacao single-user desde a `v2` | Mesmo sendo sistema de uma pessoa, a experiencia publicada e local precisa ter acesso protegido e coerente | ✓ Good |
+| Priorizar viewers leves para imagem e preview inline nativo para PDF na `v2.0` | Entrega uma experiencia focada no conteudo sem introduzir stacks pesadas cedo demais | ✓ Good |
+| Tratar design visual detalhado como fase interna da `v2.0`, possivelmente com apoio de ferramenta externa | Permite primeiro estabilizar a base funcional e depois implementar a interface fiel a uma spec visual melhor trabalhada | — Pending |
+| Exigir autenticacao single-user desde a `v2.0` | Mesmo sendo sistema de uma pessoa, a experiencia publicada e local precisa ter acesso protegido e coerente | ✓ Good |
 | Tratar `pkm` como dependencia montada e configurada externamente | Evita acoplamento com o ambiente de desenvolvimento atual e prepara o caminho para Docker/deploy futuro | ✓ Good |
-| Implementar presentation mode como estado interno da shell, sem nova rota nem fullscreen nativo obrigatorio | Preserva continuidade de leitura e evita bifurcar a arquitetura do viewer para uma capability secundariada `v2` | ✓ Good |
-| Resolver o flash de tema com bootstrap pre-paint local ao viewer | Fecha o ultimo gap visual da `v2` sem promover theming global nem introduzir mismatch de hidratacao | ✓ Good |
+| Implementar presentation mode como estado interno da shell, sem nova rota nem fullscreen nativo obrigatorio | Preserva continuidade de leitura e evita bifurcar a arquitetura do viewer para uma capability secundariada `v2.0` | ✓ Good |
+| Resolver o flash de tema com bootstrap pre-paint local ao viewer | Fecha o ultimo gap visual da `v2.0` sem promover theming global nem introduzir mismatch de hidratacao | ✓ Good |
 
 ## Evolution
 

@@ -15,7 +15,7 @@
 | Node.js | 20.9+ | runtime self-hosted unico | O proprio Next.js atual pede Node 20.9+ como requisito minimo. Tambem encaixa com leitura direta do repositório `pkm`, watchers e SQLite local sem introduzir outro processo. | HIGH |
 | TypeScript | 5.x | contratos da indexacao, viewer state e APIs internas | Nao e diferencial por si so, mas neste projeto reduz custo de evolucao do modelo derivado do `pkm` e evita drift entre viewer, indexador e route handlers. Patch exato nao foi verificado; manter na linha estavel mais recente do repo. | MEDIUM |
 | Tailwind CSS | 4.x | layout, tokens e superfícies de leitura | Em 2026, o caminho padrao com Next continua sendo Tailwind. Aqui ele deve controlar layout, densidade, tipografia e modos de leitura/apresentacao. E melhor do que depender do estilo default de uma library de componentes para um app cuja qualidade principal e leitura. A versao maior `4.x` e inferida a partir da documentacao atual; patch exato nao foi verificado. | MEDIUM |
-| Ant Design | 5.27.3 | shell de navegacao: Tree, Splitter, Drawer, Tabs, Input, Tooltip | Para esta v2, AntD continua sendo a escolha pragmatica. A arvore navegavel, paines retrateis e shell desktop-like importam mais do que liberdade total de design system. AntD reduz trabalho de infra de UI e ja esta alinhado com a arquitetura atual do projeto. Use Tailwind para a camada visual do reader; nao use tema default cru do AntD como linguagem do produto. | HIGH |
+| Ant Design | 5.27.3 | shell de navegacao: Tree, Splitter, Drawer, Tabs, Input, Tooltip | Para esta v2.0, AntD continua sendo a escolha pragmatica. A arvore navegavel, paines retrateis e shell desktop-like importam mais do que liberdade total de design system. AntD reduz trabalho de infra de UI e ja esta alinhado com a arquitetura atual do projeto. Use Tailwind para a camada visual do reader; nao use tema default cru do AntD como linguagem do produto. | HIGH |
 | better-sqlite3 + SQLite FTS5 | better-sqlite3 12.2.0 / FTS5 built-in | indice derivado, busca textual e snippets | Para um viewer single-user e file-first, FTS5 e o padrao certo: simples, local, reconstruivel e forte o suficiente para busca por nome, markdown e sidecars. `better-sqlite3` e a integracao Node mais pragmatica e performatica; FTS5 tem `MATCH`, `highlight()`, `snippet()` e ranking sem infraestrutura extra. | HIGH |
 
 ### Supporting Libraries
@@ -50,14 +50,14 @@
 | Vitest | testes unitarios do indexador e parser | Bom para pipeline de parse, logica sidecar/binario e ranking de busca. |
 | ESLint + TypeScript strict | disciplina de manutencao | Importante porque a aplicacao mistura filesystem, cache, indexacao e viewers client/server. |
 
-## Architecture Choice For v2
+## Architecture Choice For v2.0
 
 Use uma arquitetura de **processo unico Node.js + Next.js App Router + SQLite derivado + acesso direto ao filesystem do `pkm`**.
 
 Pontos prescritivos:
 
 - O `pkm` continua montado no filesystem e e a fonte primaria de verdade.
-- A aplicacao web le o repositorio diretamente; ela nao grava no `pkm` nesta v2.
+- A aplicacao web le o repositorio diretamente; ela nao grava no `pkm` nesta v2.0.
 - O indice SQLite e derivado e reconstruivel.
 - A shell principal deve ser server-rendered; viewers interativos ficam em client islands.
 - A busca principal roda no servidor sobre FTS5.
@@ -71,7 +71,7 @@ Pontos prescritivos:
 | Layer | Choice | Why |
 |------|--------|-----|
 | App shell | Next.js layouts + AntD `Layout`/`Splitter` + Tailwind | Resolve rapidamente painel esquerdo retratil, viewer e barra de acoes sem reinventar shell desktop-like. |
-| Tree navigation | AntD `Tree` primeiro; virtualizacao so se necessario | O componente ja cobre expand/collapse, selecao e estrutura hierarquica. Nao vale gastar a v2 construindo tree headless do zero. |
+| Tree navigation | AntD `Tree` primeiro; virtualizacao so se necessario | O componente ja cobre expand/collapse, selecao e estrutura hierarquica. Nao vale gastar a v2.0 construindo tree headless do zero. |
 | Search API | route handler em Next + SQL FTS5 | Mantem busca perto do indice e evita mandar corpus para o browser. |
 | Markdown viewer | `react-markdown` + `remark`/`rehype` pipeline | Seguro, extensivel e adequado para custom renderers de links, imagens, code blocks e sidecars. |
 | Image viewer | viewer client-only com `react-zoom-pan-pinch` | Entrega zoom, pan e fullscreen sem depender de bibliotecas abandonadas. |
@@ -124,11 +124,11 @@ npm install -D vitest playwright typescript eslint
 
 ## Stack Patterns by Variant
 
-**Se a v2 ficar estritamente local/single-user:**
+**Se a v2.0 ficar estritamente local/single-user:**
 - Use `better-sqlite3` diretamente e trate FTS5 como primeira classe.
 - Porque a simplicidade operacional e mais valiosa do que abstrair demais o banco.
 
-**Se a v2 precisar abrir milhares de nos e resultados:**
+**Se a v2.0 precisar abrir milhares de nos e resultados:**
 - Adicione `@tanstack/react-virtual` nas listas mais pesadas.
 - Porque virtualizacao precoce na arvore inteira aumenta complexidade; aplique onde profiling mostrar gargalo real.
 
@@ -152,7 +152,7 @@ npm install -D vitest playwright typescript eslint
 
 ## Recommendation Summary
 
-Para a `ai-pkm v2`, o stack mais correto nao e “web CMS”, nem “SPA de notas”, nem “MDX docs site”. E:
+Para a `ai-pkm v2.0`, o stack mais correto nao e “web CMS”, nem “SPA de notas”, nem “MDX docs site”. E:
 
 - **Next.js App Router self-hosted em Node**
 - **Ant Design para shell de explorador**
@@ -200,5 +200,5 @@ Isso respeita o modelo file-first, entrega viewer de alta qualidade sem banco co
 - screenfull npm: https://www.npmjs.com/package/screenfull
 
 ---
-*Stack research for: ai-pkm v2 viewer web*
+*Stack research for: ai-pkm v2.0 viewer web*
 *Researched: 2026-04-06*

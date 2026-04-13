@@ -41,7 +41,7 @@ export default async function LoginPage() {
         <footer className="mt-8 text-center">
           <div className="text-on-surface/30 text-[0.6875rem] font-semibold uppercase tracking-[0.1em]">
             <span>
-              v{process.env.npm_package_version ?? "0.1.0"}
+              v{process.env.npm_package_version ?? "2.0.0"}
               {process.env.NEXT_PUBLIC_GIT_HASH
                 ? ` · ${process.env.NEXT_PUBLIC_GIT_HASH}`
                 : ""}

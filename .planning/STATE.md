@@ -1,9 +1,9 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.0
+milestone: v2.0
 milestone_name: milestone
 status: complete
-stopped_at: Milestone v1.0 concluido; Phase 6 fechada e projeto pronto para discutir o proximo milestone
+stopped_at: Milestone v2.0 concluido; Phase 6 fechada e projeto pronto para discutir o proximo milestone
 last_updated: "2026-04-13T14:35:00.000Z"
 last_activity: 2026-04-13 -- phase 6 encerrada com validacao humana do operador e verificacao automatizada verde
 progress:
@@ -68,7 +68,7 @@ Recent decisions affecting current work:
 - [Phase 2]: AppShell usa usePathname() diretamente para derivar activeHref — sem wrapper intermediario.
 - [Phase 3]: MarkdownViewer e async Server Component com Shiki no servidor — zero JS de highlight no bundle cliente.
 - [Phase 3]: Painel de informacoes usa push layout (flex ao lado), nao overlay — evita obscurecer o conteudo.
-- [Phase 5]: Modo apresentacao permanece ativo na `v2`, mas vem depois de navegacao e leitura confiaveis.
+- [Phase 5]: Modo apresentacao permanece ativo na `v2.0`, mas vem depois de navegacao e leitura confiaveis.
 - [Phase 5]: Presentation mode permanece interno a shell, sem nova rota, com temas restritos ao viewer root.
 - [Phase 6]: O hardening do tema elimina o flash pre-paint sem mover o tema para a shell global.
 
@@ -78,11 +78,11 @@ Recent decisions affecting current work:
 
 ### Blockers/Concerns
 
-- A seam de busca deve nascer preparada para evolucao futura, mas a `v2` ativa nao inclui busca textual avancada em popup.
+- A seam de busca deve nascer preparada para evolucao futura, mas a `v2.0` ativa nao inclui busca textual avancada em popup.
 - Nenhum bloqueio ativo.
 
 ## Session Continuity
 
 Last session: 2026-04-12
-Stopped at: Milestone v1.0 concluido; aguardar definicao do proximo milestone
+Stopped at: Milestone v2.0 concluido; aguardar definicao do proximo milestone
 Resume file: .planning/ROADMAP.md

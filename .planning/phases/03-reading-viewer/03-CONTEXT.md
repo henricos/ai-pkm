@@ -131,7 +131,7 @@ Esta fase cobre apenas itens Markdown (nota, url). Imagens, PDFs, sidecars como 
 - **Troca de tema no header** — Phase 5 (PRS-06, PRS-07). O header desta fase reserva posição; a implementação do seletor de temas e o comportamento do viewer por tema acontecem em Phase 5.
 - **Callouts/admonitions visuais** — Nenhum tratamento especial por ora. Se o corpus real demonstrar uso expressivo de `> [!NOTE]` ou `:::note`, adicionar plugin (remark-callout ou remark-directive) em Phase 4 ou incrementalmente.
 - **Restore da URL solicitada pós-login** — Adiado desde Phase 2; continua fora do escopo desta fase.
-- **Busca textual avançada** — Continua fora do escopo de toda a v2 ativa.
+- **Busca textual avançada** — Continua fora do escopo de toda a v2.0 ativa.
 
 </deferred>
 

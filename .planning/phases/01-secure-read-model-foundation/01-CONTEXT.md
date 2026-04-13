@@ -25,7 +25,7 @@ Autenticação single-user + modelo canônico read-only sobre o `pkm` montado ex
 - **D-05:** Middleware de auth protege todas as rotas da aplicação, inclusive em local/dev — sem exceção para conveniência
 
 ### Read Model (ARC-01, ARC-02, ARC-03, ARC-04)
-- **D-06:** `ItemRepository` interface abstrai o acesso ao pkm — v2 implementa sobre filesystem + index JSONs; v3 troca a implementação sem alterar o contrato (ARC-04)
+- **D-06:** `ItemRepository` interface abstrai o acesso ao pkm — v2.0 implementa sobre filesystem + index JSONs; v4.0 troca a implementação sem alterar o contrato (ARC-04)
 - **D-07:** Fast path: lê `pkm/index/grupos.json` e `pkm/index/topicos.json` como índice estrutural; enriquece com frontmatter dos arquivos quando necessário para contexto adicional
 - **D-08:** Item ID = path relativo ao pkm root (ex: `topico/grupo/nome-arquivo.md`), URL-encoded para uso em rotas Next.js — estável enquanto o arquivo não for renomeado (aceitável para modelo read-only)
 
@@ -63,7 +63,7 @@ Autenticação single-user + modelo canônico read-only sobre o `pkm` montado ex
 
 ### Requirements
 - `.planning/REQUIREMENTS.md` §ACC-01, ACC-02, ACC-03 — autenticação single-user, credenciais externas
-- `.planning/REQUIREMENTS.md` §ARC-01, ARC-02, ARC-03, ARC-04 — modelo de leitura, identidade de item, seam para v3
+- `.planning/REQUIREMENTS.md` §ARC-01, ARC-02, ARC-03, ARC-04 — modelo de leitura, identidade de item, seam para v4.0
 - `.planning/REQUIREMENTS.md` §RUN-01, RUN-02, RUN-03 — runtime, configuração por env, acesso ao pkm por path
 
 ### PKM Domain
@@ -90,14 +90,14 @@ Autenticação single-user + modelo canônico read-only sobre o `pkm` montado ex
 ## Existing Code Insights
 
 ### Reusable Assets
-- Nenhum código web existe ainda — projeto greenfield para a camada web da v2
+- Nenhum código web existe ainda — projeto greenfield para a camada web da v2.0
 - `index/grupos.json` e `index/topicos.json`: estrutura de dados existente que o ItemRepository consumirá como fast path
 - `reference/schemas/`: contratos de frontmatter que guiam o parsing de itens no read model
 - `DESIGN.md`: sistema de design completo gerado pelo Google Stitch — tokens, tipografia, componentes, regras de elevação
 - `reference/ui/screens/01-login/`: HTML e screenshot da tela de login exportados pelo Stitch — referência de composição visual
 
 ### Established Patterns
-- Modelo file-first: pkm como fonte primária de verdade, nunca substituído por banco na v2
+- Modelo file-first: pkm como fonte primária de verdade, nunca substituído por banco na v2.0
 - IA como escritora exclusiva: a web é estritamente de navegação e exibição, sem operações de escrita
 - Frontmatter como metadata canônico: `reference/schemas/frontmatter-item.md` define o contrato
 - DESIGN.md + shadcn/ui: tokens customizados no tailwind.config.ts + primitivos Radix UI
@@ -114,7 +114,7 @@ Autenticação single-user + modelo canônico read-only sobre o `pkm` montado ex
 
 - **Fluxo Stitch → componentes**: HTML exportado é lido como referência de composição (não copiado). Tokens literais do HTML (ex: `slate-900`, `blue-600`) são substituídos pelos custom tokens do `tailwind.config.ts` derivados do `DESIGN.md` (ex: `on_surface`, `tertiary`). Shadcn/ui fornece os primitivos de formulário para a tela de login.
 - **DESIGN.md como âncora**: padrão lançado pelo Google Stitch com sistema de design completo (cores, tipografia, componentes, elevação, responsive, do's/don'ts). Conflito DESIGN.md vs HTML do Stitch → prevalece DESIGN.md.
-- **ItemRepository contract**: `listTopics(): Topic[]`, `listGroups(topic: string): Group[]`, `getItem(id: string): Item`, `searchByName(q: string): Item[]` — permite trocar implementação na v3 sem alterar navegação, viewer e busca.
+- **ItemRepository contract**: `listTopics(): Topic[]`, `listGroups(topic: string): Group[]`, `getItem(id: string): Item`, `searchByName(q: string): Item[]` — permite trocar implementação na v4.0 sem alterar navegação, viewer e busca.
 
 </specifics>
 
@@ -122,7 +122,7 @@ Autenticação single-user + modelo canônico read-only sobre o `pkm` montado ex
 ## Deferred Ideas
 
 - Integração MCP do Stitch para importação automática de componentes — explorar quando disponível; por ora a importação é manual (cópia direta para `reference/ui/screens/`)
-- Busca textual avançada com popup/lista de resultados — explicitamente fora da v2 ativa; ARC-04 prepara a seam mas não implementa
+- Busca textual avançada com popup/lista de resultados — explicitamente fora da v2.0 ativa; ARC-04 prepara a seam mas não implementa
 - Preview de `.excalidraw` somente leitura — backlog futuro
 
 </deferred>

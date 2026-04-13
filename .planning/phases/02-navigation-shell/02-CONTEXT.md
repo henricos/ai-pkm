@@ -6,7 +6,7 @@
 <domain>
 ## Phase Boundary
 
-Entregar a shell persistente de navegacao da `v2`: inbox separada acima da arvore principal, painel esquerdo retratil, filtro estrutural por nome e selecao compartilhavel por URL, mantendo a sensacao de uma superficie unica. Esta fase nao inclui busca textual avancada, viewer rico de conteudo, modo apresentacao ou tratamento completo de binarios/PDF.
+Entregar a shell persistente de navegacao da `v2.0`: inbox separada acima da arvore principal, painel esquerdo retratil, filtro estrutural por nome e selecao compartilhavel por URL, mantendo a sensacao de uma superficie unica. Esta fase nao inclui busca textual avancada, viewer rico de conteudo, modo apresentacao ou tratamento completo de binarios/PDF.
 
 </domain>
 
@@ -71,7 +71,7 @@ Entregar a shell persistente de navegacao da `v2`: inbox separada acima da arvor
 **Downstream agents MUST read these before planning or implementing.**
 
 ### Product and requirements
-- `.planning/PROJECT.md` — contexto da `v2`, shell tipo Obsidian com visual mais clean e leve, sidecars ocultos da navegacao
+- `.planning/PROJECT.md` — contexto da `v2.0`, shell tipo Obsidian com visual mais clean e leve, sidecars ocultos da navegacao
 - `.planning/REQUIREMENTS.md` §NAV-01, NAV-02, NAV-03, NAV-04, NAV-05, NAV-06, NAV-07, NAV-08 — contratos da shell, tree, inbox, destaque, icones, contagens e URL navegavel
 - `.planning/REQUIREMENTS.md` §FIL-01, FIL-02, FIL-03 — filtro estrutural por nome, tolerancia e diferenciacao visual em relacao a busca textual
 - `.planning/ROADMAP.md` §Phase 2: Navigation Shell — objetivo, dependencias e criterios de sucesso da fase

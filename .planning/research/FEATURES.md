@@ -29,7 +29,7 @@ These are the features that make ai-pkm feel purpose-built instead of “another
 |---------|-------------------|------------|-------|
 | Logical item model for binaries + hidden sidecars | Turns a messy filesystem convention into a clean reading experience by showing one primary item instead of multiple technical files | HIGH | Critical differentiator for file-first repos with images and text companions; viewer should expose sidecar content in tabs/drawer, never as sibling clutter |
 | Read-only, file-first workflow with safe web UI | Most tools are editor-first; ai-pkm can differentiate by being trustworthy as a viewer that never mutates the source of truth in the browser | MEDIUM | Emphasize predictability, Git compatibility, and parity with CLI workflows rather than trying to mimic Notion-like editing |
-| Presentation mode for repository content | Moves the product from private viewer to “knowledge stage”: full-screen reading, cleaner chrome, and presentation-friendly controls | MEDIUM | Better as a reading/presenting mode than a slide editor; laser pointer and keyboard stepping are enough for v2 |
+| Presentation mode for repository content | Moves the product from private viewer to “knowledge stage”: full-screen reading, cleaner chrome, and presentation-friendly controls | MEDIUM | Better as a reading/presenting mode than a slide editor; laser pointer and keyboard stepping are enough for v2.0 |
 | Purpose-built reading themes for different content types | Generic dark/light toggles are common; curated themes for article reading, reference lookup, and presentation make the viewer feel intentional | MEDIUM | Prefer a small set of opinionated presets over open-ended theming UI |
 | Inbox-first visual workflow | Distinguishes unprocessed material from curated knowledge, making the repository state legible at a glance | LOW | The inbox should feel like a separate operational lane, not just another tree folder |
 | Contextual related-content panel | Gives PKM value without requiring full graph complexity: backlinks, linked mentions, sibling items, or group context beside the main document | MEDIUM | This is a better near-term investment than a full graph view for a readability-first product |
@@ -37,16 +37,16 @@ These are the features that make ai-pkm feel purpose-built instead of “another
 
 ### Anti-Features (Commonly Requested, Often Problematic)
 
-These will create scope creep or break the product model if added in v2.
+These will create scope creep or break the product model if added in v2.0.
 
 | Feature | Why Requested | Why Problematic | Alternative |
 |---------|---------------|-----------------|-------------|
-| Inline web editing of notes/files | Users reflexively expect note apps to allow quick edits everywhere | Breaks the rule that the AI is the sole writer, introduces sync/conflict complexity, and drags the product toward full editor semantics | Keep the web experience read-only in v2 and route structural/content changes through CLI or future agent workflows |
+| Inline web editing of notes/files | Users reflexively expect note apps to allow quick edits everywhere | Breaks the rule that the AI is the sole writer, introduces sync/conflict complexity, and drags the product toward full editor semantics | Keep the web experience read-only in v2.0 and route structural/content changes through CLI or future agent workflows |
 | Drag-and-drop tree reorganization in the browser | Feels natural in file explorers and knowledge apps | Hides consequential filesystem mutations behind casual gestures and makes Git history harder to reason about | Show structure clearly, but keep reorganization outside the web viewer for now |
 | Showing every raw sidecar, index, or helper file in the tree | Feels “honest” to the filesystem and easier to implement | Makes the navigation noisy, exposes implementation details, and punishes readability | Build a canonical item layer that hides technical artifacts while preserving access from the viewer |
-| Full graph view early in v2 | PKM tools market graph heavily, so users ask for it | High implementation and UX cost for limited day-to-day reading value; easy to become novelty UI | Start with related-content/backlinks panels; revisit graph only if navigation patterns prove insufficient |
+| Full graph view early in v2.0 | PKM tools market graph heavily, so users ask for it | High implementation and UX cost for limited day-to-day reading value; easy to become novelty UI | Start with related-content/backlinks panels; revisit graph only if navigation patterns prove insufficient |
 | Semantic/RAG search in the first viewer release | AI-flavored search sounds modern and powerful | Adds indexing complexity and infrastructure before basic retrieval quality and viewer UX are proven | Ship precise lexical search first; defer semantic retrieval to a later milestone |
-| Web-based agent execution/console in this milestone | The broader product vision includes agent workflows, so it is tempting to bring them in early | Conflates viewer scope with orchestration scope and substantially increases state-management complexity | Keep v2 focused on navigation, readability, and repository presentation; reserve agent UX for a later version |
+| Web-based agent execution/console in this milestone | The broader product vision includes agent workflows, so it is tempting to bring them in early | Conflates viewer scope with orchestration scope and substantially increases state-management complexity | Keep v2.0 focused on navigation, readability, and repository presentation; reserve agent UX for a later version |
 | Extensive user-customizable layout builder | Seems flexible and “power-user friendly” | Produces design sprawl, more settings than value, and weaker defaults | Offer a small number of strong layout/theme presets tuned for reading and presentation |
 
 ## Feature Dependencies
@@ -89,7 +89,7 @@ Raw sidecar exposure in tree
 
 ## MVP Definition
 
-### Launch With (v2)
+### Launch With (v2.0)
 
 Minimum viable product for validating the web viewer.
 
@@ -109,7 +109,7 @@ Minimum viable product for validating the web viewer.
 - [ ] Contextual related-content panel — add after basic navigation/search behavior is validated
 - [ ] Sidecar-aware result snippets — add after search indexing and canonical item mapping are correct
 
-### Future Consideration (v3+)
+### Future Consideration (v3.0+)
 
 - [ ] Semantic search — only after lexical search proves insufficient in real usage
 - [ ] Web agent execution/console — later milestone, separate from viewer validation
@@ -160,5 +160,5 @@ Minimum viable product for validating the web viewer.
 - OpenAlternative comparison pages for ecosystem signal only: https://openalternative.co/compare/anytype/vs/logseq (secondary, LOW)
 
 ---
-*Feature research for: ai-pkm v2 web PKM/document viewer*
+*Feature research for: ai-pkm v2.0 web PKM/document viewer*
 *Researched: 2026-04-06*

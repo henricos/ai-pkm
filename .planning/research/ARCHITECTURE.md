@@ -60,7 +60,7 @@
 | Search service | abstrair busca textual para hoje em filesystem/indices e amanha em banco | interface unica com implementacoes trocaveis |
 | PKM adapter | encapsular leitura de `pkm/`, parsing de frontmatter, sidecars e regras de visibilidade | `fs/promises`, `gray-matter`, detectores de tipo |
 | Index reader | usar `index/topicos.json` e `index/grupos.json` como bootstrap de topologia | modulos somente leitura |
-| Future agent boundary | reservar endpoints, estado e slot visual para console futuro sem acoplar ao viewer | route group ou slot separado, sem motor agente na v2 |
+| Future agent boundary | reservar endpoints, estado e slot visual para console futuro sem acoplar ao viewer | route group ou slot separado, sem motor agente na v2.0 |
 
 ## Recommended Project Structure
 
@@ -98,7 +98,7 @@ src/
 │   ├── adapters/
 │   │   ├── pkm-fs/                    # leitura real do repositorio
 │   │   ├── json-index/                # leitura dos indices derivados atuais
-│   │   └── future-db/                 # placeholder so quando v3 chegar
+│   │   └── future-db/                 # placeholder so quando v4.0 chegar
 │   └── cache/                         # cache local por processo e invalidacao
 └── styles/                            # tokens e estilos globais
 ```
@@ -107,8 +107,8 @@ src/
 
 - **`app/`:** concentra somente roteamento, layouts e bordas HTTP. Regra de negocio nao fica aqui.
 - **`components/`:** UI reutilizavel e agnostica da origem dos dados.
-- **`server/content/`:** coracao da v2. Aqui mora a traducao entre filesystem real e modelos da interface.
-- **`server/adapters/`:** separa fonte de verdade atual (`pkm/` + JSON indices) do futuro indice em banco. Essa e a boundary mais importante para nao reescrever a app na v3.
+- **`server/content/`:** coracao da v2.0. Aqui mora a traducao entre filesystem real e modelos da interface.
+- **`server/adapters/`:** separa fonte de verdade atual (`pkm/` + JSON indices) do futuro indice em banco. Essa e a boundary mais importante para nao reescrever a app na v4.0.
 - **`lib/contracts/`:** evita drift entre Server Components, Route Handlers e clientes.
 
 ## Architectural Patterns
@@ -116,7 +116,7 @@ src/
 ### Pattern 1: URL-Driven Selection with Persistent Shell
 
 **What:** a selecao do item fica na URL; o shell principal fica num layout persistente. O painel esquerdo nao remonta a cada clique, e o viewer troca conforme a rota.
-**When to use:** exatamente no caso desta v2, onde a experiencia deve parecer SPA e a selecao precisa ser compartilhavel, restauravel e navegavel por back/forward.
+**When to use:** exatamente no caso desta v2.0, onde a experiencia deve parecer SPA e a selecao precisa ser compartilhavel, restauravel e navegavel por back/forward.
 **Trade-offs:** melhora navegacao e previsibilidade; exige pensar em encoding estavel de paths e em mapeamento entre URL e item logico.
 
 **Example:**
@@ -155,7 +155,7 @@ export class FsContentRepository implements ContentRepository {
 ### Pattern 3: Read-Optimized API Boundary
 
 **What:** Route Handlers pequenos e especificos para leitura: tree, item, search. Sem CRUD generico, sem endpoints especulativos de escrita.
-**When to use:** v2 e leitura pura; ainda nao existe motivo para surface area maior.
+**When to use:** v2.0 e leitura pura; ainda nao existe motivo para surface area maior.
 **Trade-offs:** menos flexivel para futuras mutacoes, mas muito mais simples e coerente agora.
 
 **Example:**
@@ -172,7 +172,7 @@ export async function GET(request: Request) {
 ### Pattern 4: Swap-Ready Search Backend
 
 **What:** busca textual atras de uma interface unica. Hoje pode ler arquivos e sidecars; depois pode apontar para SQLite sem mudar UI nem rotas.
-**When to use:** agora. Busca e o ponto com maior chance de mudar entre v2 e v3.
+**When to use:** agora. Busca e um dos pontos com maior chance de mudar entre v2.0, v3.0 e v4.0.
 **Trade-offs:** pequena abstracao a mais desde o inicio, mas paga rapido porque isola a futura indexacao.
 
 ## Data Flow
@@ -223,7 +223,7 @@ Recomendacao: nao introduzir store global para tudo. Use:
 3. **Busca textual:** UI envia query para `searchService`; o backend procura em nomes, Markdown e sidecars; o resultado devolve refs navegaveis, nao blobs completos.
 4. **Resolucao de item logico:** service transforma arquivo principal + sidecar em uma unidade unica de viewer. Sidecar nao aparece como node independente.
 5. **Inbox separada:** inbox e um namespace proprio, com listagem e contadores independentes da arvore principal. Nao misture `__inbox/` dentro da tree normal.
-6. **Futuro reindex:** quando v3 chegar, um indexador atualiza SQLite; `searchService` e partes de `contentService` podem ler do indice derivado, mantendo `pkm/` como verdade.
+6. **Futuro reindex:** quando v4.0 chegar, um indexador atualiza SQLite; `searchService` e partes de `contentService` podem ler do indice derivado, mantendo `pkm/` como verdade.
 
 ## Suggested Build Order
 
@@ -234,14 +234,14 @@ Recomendacao: nao introduzir store global para tudo. Use:
 
 2. **Read-only application services**
    - `getTree`, `getInbox`, `getViewerItem`, `search`.
-   - Aqui se estabiliza a boundary que a v3 vai preservar.
+   - Aqui se estabiliza a boundary que a v3.0 refina e a v4.0 precisa preservar.
 
 3. **App shell with URL-driven routes**
    - Layout persistente, painel retratil, rotas `library` e `inbox`, estado vazio.
    - Isso garante a experiencia SPA cedo e evita refatorar navegacao depois.
 
 4. **Viewer surface**
-   - Markdown primeiro, imagem em seguida, PDF se entrar na v2.
+   - Markdown primeiro, imagem em seguida, PDF se entrar na v2.0.
    - O viewer deve receber modelo pronto; nao conhecer filesystem.
 
 5. **Search**
@@ -285,7 +285,7 @@ Recomendacao: nao introduzir store global para tudo. Use:
 **Why it's wrong:** quebra refresh, deep link, back/forward e torna o shell mais fragil.
 **Do this instead:** URL como fonte da selecao; store apenas para UI efemera.
 
-### Anti-Pattern 4: Introduzir banco como dependencia obrigatoria da v2
+### Anti-Pattern 4: Introduzir banco como dependencia obrigatoria da v2.0
 
 **What people do:** antecipar SQLite em tudo, inclusive para abrir paginas basicas, porque "vai existir depois".
 **Why it's wrong:** adiciona migracoes, sincronizacao e invalidacao cedo demais, antes de a UI provar valor.
@@ -303,7 +303,7 @@ Recomendacao: nao introduzir store global para tudo. Use:
 
 | Service | Integration Pattern | Notes |
 |---------|---------------------|-------|
-| `pkm/` mounted volume | acesso direto via adapter de filesystem | fonte primaria de verdade; leitura somente na v2 |
+| `pkm/` mounted volume | acesso direto via adapter de filesystem | fonte primaria de verdade; leitura somente na v2.0 |
 | `index/*.json` | leitura como bootstrap de topologia | nao editar diretamente; apenas consumir |
 | futuro SQLite | adapter opcional da camada `search/content` | indice derivado, reconstruivel |
 
@@ -313,14 +313,14 @@ Recomendacao: nao introduzir store global para tudo. Use:
 |----------|---------------|-------|
 | `app/*` ↔ `server/content/*` | chamada direta no servidor | preferivel para Server Components |
 | client components ↔ `app/api/*` | HTTP/JSON | use quando a interacao for incremental no cliente |
-| `server/content` ↔ `server/adapters` | interfaces TypeScript | principal seam para v3 |
+| `server/content` ↔ `server/adapters` | interfaces TypeScript | principal seam para v4.0 |
 | future console ↔ viewer shell | slot/layout boundary | compartilha shell, nao compartilha regra de negocio |
 
 ## Recommendation
 
-Para a v2, o desenho tipico e correto e um **monolito modular em Next.js App Router**: shell persistente, selecao por URL, leitura centralizada do PKM por uma camada de servico, e endpoints enxutos de leitura para busca e atualizacoes incrementais. O que precisa ser bem desenhado agora nao e “infra”, e sim a **boundary entre interface e origem file-first**.
+Para a v2.0, o desenho tipico e correto e um **monolito modular em Next.js App Router**: shell persistente, selecao por URL, leitura centralizada do PKM por uma camada de servico, e endpoints enxutos de leitura para busca e atualizacoes incrementais. O que precisa ser bem desenhado agora nao e “infra”, e sim a **boundary entre interface e origem file-first**.
 
-O ponto de maior cuidado e evitar que a UI conheca detalhes do filesystem. Se `server/content` devolver modelos semanticos estaveis, voce consegue evoluir a busca e a indexacao na v3, e adicionar console agente na v4, sem refazer a navegacao principal. Se a v2 pular essa boundary, ela vira uma app acoplada ao disco e dificil de expandir.
+O ponto de maior cuidado e evitar que a UI conheca detalhes do filesystem. Se `server/content` devolver modelos semanticos estaveis, voce consegue atravessar a refatoracao conceitual da v3.0, evoluir a indexacao na v4.0 e adicionar console agente na v5.0 sem refazer a navegacao principal. Se a v2.0 pular essa boundary, ela vira uma app acoplada ao disco e dificil de expandir.
 
 ## Sources
 
@@ -338,5 +338,5 @@ O ponto de maior cuidado e evitar que a UI conheca detalhes do filesystem. Se `s
 - React, `useTransition`: https://react.dev/reference/react/useTransition — transicoes nao bloqueantes para interacoes locais mais suaves [HIGH]
 
 ---
-*Architecture research for: ai-pkm v2 viewer architecture*
+*Architecture research for: ai-pkm v2.0 viewer architecture*
 *Researched: 2026-04-06*

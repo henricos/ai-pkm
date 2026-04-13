@@ -16,7 +16,7 @@
 - **D-03:** NextAuth.js (Auth.js) com credentials provider — session management via cookies httpOnly
 - **D-04:** Credenciais (usuário + senha) fixas configuradas exclusivamente por variáveis de ambiente; nada sensível no repositório
 - **D-05:** Middleware de auth protege todas as rotas da aplicação, inclusive em local/dev — sem exceção para conveniência
-- **D-06:** `ItemRepository` interface abstrai o acesso ao pkm — v2 implementa sobre filesystem + index JSONs; v3 troca a implementação sem alterar o contrato
+- **D-06:** `ItemRepository` interface abstrai o acesso ao pkm — v2.0 implementa sobre filesystem + index JSONs; v4.0 troca a implementação sem alterar o contrato
 - **D-07:** Fast path: lê `pkm/index/grupos.json` e `pkm/index/topicos.json` como índice estrutural; enriquece com frontmatter dos arquivos quando necessário
 - **D-08:** Item ID = path relativo ao pkm root (ex: `topico/grupo/nome-arquivo.md`), URL-encoded para uso em rotas Next.js
 - **D-09:** Variáveis de ambiente obrigatórias: `PKM_PATH`, `AUTH_USERNAME`, `AUTH_PASSWORD`, `NEXTAUTH_SECRET`, `NEXTAUTH_URL`
@@ -250,7 +250,7 @@ export const config = {
 
 ### Pattern 3: ItemRepository Interface e Implementação Filesystem
 
-**O que é:** Contrato TypeScript que abstrai o acesso ao pkm. A implementação v2 usa `fs.readFileSync` + `gray-matter` para frontmatter + índices JSON como fast path. A v3 substitui a implementação sem alterar os consumers (ARC-04).
+**O que é:** Contrato TypeScript que abstrai o acesso ao pkm. A implementação v2.0 usa `fs.readFileSync` + `gray-matter` para frontmatter + índices JSON como fast path. A v4.0 substitui a implementação sem alterar os consumers (ARC-04).
 
 **Quando usar:** Toda vez que a aplicação precisar de dados do pkm — navegação, viewer, busca.
 

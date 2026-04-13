@@ -15,7 +15,7 @@ O viewer começa simples, mas vira uma mistura confusa de `react-markdown`, `reh
 Equipes tratam “renderizar Markdown” como detalhe de UI e não como contrato de compatibilidade. Também confundem Markdown com MDX por conveniência, mesmo quando o acervo é conteúdo file-first e não componentes executáveis.
 
 **How to avoid:**
-- Definir um dialeto-alvo explícito para v2: CommonMark + GFM + matemática + code fences, sem MDX.
+- Definir um dialeto-alvo explícito para v2.0: CommonMark + GFM + matemática + code fences, sem MDX.
 - Padronizar uma pipeline única de parsing/renderização para todo Markdown.
 - Só habilitar HTML cru se houver sanitização explícita e motivo real; por padrão, renderizar sem HTML arbitrário.
 - Congelar uma suíte de arquivos de referência do próprio PKM para regressão visual do renderer.
@@ -212,7 +212,7 @@ Fase dedicada de presentation mode, após viewer base estar estável.
 A busca textual v1 nasce acoplada à UI, sem modelo de documento pesquisável nem limites claros. Depois, adicionar SQLite FTS, embeddings ou facetas exige reescrever ingestão, resultados e ranking do zero.
 
 **Why it happens:**
-Como a v2 não precisa de busca semântica, equipes improvisam com `grep`, cache de cliente ou filtros sobre a árvore. Isso resolve o demo, mas não cria uma superfície evolutiva.
+Como a v2.0 não precisa de busca semântica, equipes improvisam com `grep`, cache de cliente ou filtros sobre a árvore. Isso resolve o demo, mas não cria uma superfície evolutiva.
 
 **How to avoid:**
 - Definir desde já um contrato de documento indexável: `logical_item_id`, `source_type`, `searchable_text`, `path`, `title`.
@@ -237,7 +237,7 @@ Fase de busca textual e modelagem do índice de leitura.
 Quando chegar a fase de agente web/DB mais rica, ações dependem de nós da árvore, estados transitórios do frontend ou caminhos de arquivo crus. Isso torna automação, aprovações e reconciliação muito mais frágeis.
 
 **Why it happens:**
-Como a v2 é “só leitura”, é comum ignorar contratos estáveis para seleção, contexto e operações. Depois a aplicação tenta reaproveitar componentes visuais como API operacional.
+Como a v2.0 é “só leitura”, é comum ignorar contratos estáveis para seleção, contexto e operações. Depois a aplicação tenta reaproveitar componentes visuais como API operacional.
 
 **How to avoid:**
 - Introduzir IDs estáveis de item, grupo e localização lógica desde a camada de leitura.

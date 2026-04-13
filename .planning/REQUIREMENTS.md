@@ -3,15 +3,15 @@
 **Defined:** 2026-04-06
 **Core Value:** Permitir operar o PKM com auxilio de IA, alternando entre uma experiencia visual na web e a operacao local via CLI, sem perder compatibilidade com o modelo file-first.
 
-## v2 Requirements
+## v2.0 Requirements
 
-Requirements para a `v2`, focada em navegacao e exibicao web do acervo PKM. A `v1` ja validada permanece CLI-only; a `v2` nao inclui edicao manual nem execucao agentica via web.
+Requirements para a `v2.0`, focada em navegacao e exibicao web do acervo PKM. A `v1.0` ja validada permanece CLI-only; a `v2.0` nao inclui edicao manual nem execucao agentica via web.
 
 ### Access
 
 - [x] **ACC-01**: Interface web exige autenticacao single-user em todos os ambientes, incluindo local/dev.
 - [x] **ACC-02**: Login usa usuario e senha fixos configurados por variaveis de ambiente ou configuracao externa equivalente, sem credenciais commitadas no repositorio.
-- [x] **ACC-03**: Usuario autenticado pode acessar a experiencia completa da `v2` sem modelo multiusuario ou papeis adicionais.
+- [x] **ACC-03**: Usuario autenticado pode acessar a experiencia completa da `v2.0` sem modelo multiusuario ou papeis adicionais.
 
 ### Navigation
 
@@ -61,10 +61,10 @@ Requirements para a `v2`, focada em navegacao e exibicao web do acervo PKM. A `v
 
 ### Architecture and Read Model
 
-- [x] **ARC-01**: Camada web consome o repositorio `pkm` por meio de um modelo de leitura read-only, sem transformar banco de dados em fonte primaria de verdade na `v2`.
+- [x] **ARC-01**: Camada web consome o repositorio `pkm` por meio de um modelo de leitura read-only, sem transformar banco de dados em fonte primaria de verdade na `v2.0`.
 - [x] **ARC-02**: Sistema define identidade estavel de item logico para uso consistente entre navegacao, viewer e busca.
 - [x] **ARC-03**: Inbox, arvore, viewer e busca compartilham o mesmo modelo semantico de item, em vez de espelhar o filesystem cru diretamente na UI.
-- [x] **ARC-04**: Busca e indexacao ficam atras de contratos internos preparados para futura troca de implementacao, preservando o caminho para `v3`.
+- [x] **ARC-04**: Busca e indexacao ficam atras de contratos internos preparados para futura troca de implementacao, preservando o caminho para `v4.0`.
 
 ### Runtime and Delivery
 
@@ -73,38 +73,58 @@ Requirements para a `v2`, focada em navegacao e exibicao web do acervo PKM. A `v
 - [x] **RUN-03**: Projeto documenta como rodar a aplicacao em ambiente local/dev com as dependencias e configuracoes minimas necessarias.
 - [x] **RUN-04**: Interface web e responsiva o suficiente para nao quebrar em uso mobile e nao inviabilizar empacotamento futuro em WebView.
 
-## v3 Requirements
+## v2.1 Requirements
+
+Requisitos preliminares de backlog para empacotamento, release e publicacao da aplicacao:
+
+- **V2.1-01**: Distribuir a aplicacao como imagem Docker, sem embutir o conteudo do `pkm` na imagem.
+- **V2.1-02**: Preservar o `pkm` como repositorio privado separado, montado na aplicacao por path/volume externo.
+- **V2.1-03**: Versionar o aplicativo Node/web com SemVer completo e fluxo de bump via `npm version`.
+- **V2.1-04**: Publicar imagem da aplicacao por pipeline automatizado no GitHub Actions para o GHCR com tags `vX.Y.Z` e `latest`.
+- **V2.1-05**: Permitir atualizacao operacional simples no servidor por pull da imagem publicada e redeploy/recreate no Portainer.
+
+## v3.0 Requirements
+
+Requisitos preliminares de backlog para a refatoracao conceitual do dominio do PKM:
+
+- **V3-01**: Consolidar `item` como unidade central do dominio, substituindo a leitura centrada em arquivos heterogeneos.
+- **V3-02**: Reorganizar o modelo conceitual do sistema em tres dimensoes explicitas para cada item: origem/autoria, assunto e tipo.
+- **V3-03**: Fazer `tipo` deixar de ocupar o papel semantico que hoje esta misturado com `modelo`, tornando modelos consequencia do tipo adotado.
+- **V3-04**: Planejar e executar a migracao de naming, contratos, indices, skills, aplicacao web e conteudo do PKM de forma consistente e sem refatoracao circular descontrolada.
+- **V3-05**: Estabilizar o dominio refatorado antes de qualquer migracao estrutural de indices para banco.
+
+## v4.0 Requirements
 
 Requisitos preliminares de backlog para futura migracao de indices JSON para banco:
 
-- **V3-01**: Substituir indices JSON reconstruiveis por indice derivado em banco sem alterar o `pkm` como fonte primaria de verdade.
-- **V3-02**: Preservar contratos de navegacao, viewer e busca ja estabelecidos na `v2`.
-- **V3-03**: Permitir reconstrucao deterministica do indice a partir do repositorio `pkm`.
+- **V4-01**: Substituir indices JSON reconstruiveis por indice derivado em banco sem alterar o `pkm` como fonte primaria de verdade.
+- **V4-02**: Preservar contratos de navegacao, viewer e busca ja estabelecidos na `v2.0` e refinados na `v3.0`.
+- **V4-03**: Permitir reconstrucao deterministica do indice a partir do repositorio `pkm`.
 
-## v4 Requirements
+## v5.0 Requirements
 
 Requisitos preliminares de backlog para futura execucao agentica via web:
 
-- **V4-01**: Permitir execucao de fluxos via web sem alterar o principio de que a IA e a unica escritora da base.
-- **V4-02**: Expor status, console e interacao de aprovacao no navegador preservando compatibilidade com operacao local via CLI.
-- **V4-03**: Reaproveitar boundaries internas da `v2` para evitar acoplamento entre viewer e camada agentica.
+- **V5-01**: Permitir execucao de fluxos via web sem alterar o principio de que a IA e a unica escritora da base.
+- **V5-02**: Expor status, console e interacao de aprovacao no navegador preservando compatibilidade com operacao local via CLI.
+- **V5-03**: Reaproveitar boundaries internas da `v2.0` e `v3.0` para evitar acoplamento entre viewer e camada agentica.
 
 ## Out of Scope
 
-Explicitamente fora de escopo da `v2` ativa.
+Explicitamente fora de escopo da `v2.0` ativa.
 
 | Feature | Reason |
 |---------|--------|
 | Edicao manual de arquivos na web | Contraria o principio de IA como escritora exclusiva da base |
-| Mover, renomear ou criar itens pela interface | A `v2` e estritamente de navegacao e exibicao |
-| Execucao de skills ou console agentica na web | Reservado para `v4` |
+| Mover, renomear ou criar itens pela interface | A `v2.0` e estritamente de navegacao e exibicao |
+| Execucao de skills ou console agentica na web | Reservado para `v5.0` |
 | Audio e video no viewer | Nao fazem parte do alvo real de uso desta versao |
 | Busca semantica / embeddings / RAG | Fica para backlog futuro, apos validacao da busca lexical |
-| Busca textual avancada com popup/lista de resultados | Fica para backlog pos-`v2`; a `v2` ativa fica apenas com filtro estrutural |
+| Busca textual avancada com popup/lista de resultados | Fica para backlog pos-`v2.0`; a `v2.0` ativa fica apenas com filtro estrutural |
 | Graph view | Alto custo e baixo valor para a fase atual |
 | Customizacao manual de temas pela interface | Direcao de produto rejeitada; apenas temas prontos liberados pelo sistema |
 | Integracao completa do editor Excalidraw | Escopo amplo demais e proximo demais de edicao manual |
-| Deploy publicado em Kubernetes/VPS e casca mobile dedicada | Direcao futura; a `v2` so precisa nascer preparada, nao entregar isso agora |
+| Deploy publicado em Kubernetes/VPS e casca mobile dedicada | Direcao futura; a `v2.0` so precisa nascer preparada, nao entregar isso agora |
 
 ## Traceability
 
@@ -156,7 +176,7 @@ Preenchido durante a criacao do roadmap.
 | RUN-04 | Phase 3 | Validated |
 
 **Coverage:**
-- v2 requirements: 42 total
+- v2.0 requirements: 42 total
 - Mapped to phases: 42
 - Unmapped: 0
 
@@ -169,7 +189,7 @@ Itens explicitamente registrados como backlog futuro:
 - Anotacao persistente efemera sobre o conteudo, com acao de limpar tudo e camada acompanhando scroll
 - Exportacao em PDF do item atual
 - Busca textual avancada em popup/lista de resultados
-- Requisitos preliminares de `v3` e `v4`
+- Requisitos preliminares de `v2.1`, `v3.0`, `v4.0` e `v5.0`
 
 ---
 *Requirements defined: 2026-04-06*

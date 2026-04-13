@@ -6,7 +6,7 @@
 <domain>
 ## Phase Boundary
 
-Entregar um modo de apresentacao interno da aplicacao que transforme o viewer atual em uma superficie minima de leitura/apresentacao, sem sacrificar a navegacao e a leitura normais como prioridade principal da `v2`.
+Entregar um modo de apresentacao interno da aplicacao que transforme o viewer atual em uma superficie minima de leitura/apresentacao, sem sacrificar a navegacao e a leitura normais como prioridade principal da `v2.0`.
 
 Esta fase cobre:
 - entrada e saida de um modo de apresentacao interno, distinto do fullscreen nativo do navegador

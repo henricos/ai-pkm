@@ -2,7 +2,7 @@
 
 ## Overview
 
-O caminho da `v2` e transformar o PKM ja validado em CLI numa experiencia web segura, read-only e fiel ao modelo file-first. A sequencia abaixo segue as dependencias reais do produto: primeiro garantir acesso/autenticacao e um modelo canonico de leitura sobre o `pkm` montado externamente; depois entregar shell de navegacao e filtro estrutural; em seguida elevar a qualidade de leitura no viewer; completar a experiencia para binarios, sidecars e fallbacks; e fechar com o modo de apresentacao, que e ativo na `v2` mas deliberadamente posterior ao nucleo de navegacao e leitura.
+O caminho da `v2.0` e transformar o PKM ja validado em CLI numa experiencia web segura, read-only e fiel ao modelo file-first. A sequencia abaixo segue as dependencias reais do produto: primeiro garantir acesso/autenticacao e um modelo canonico de leitura sobre o `pkm` montado externamente; depois entregar shell de navegacao e filtro estrutural; em seguida elevar a qualidade de leitura no viewer; completar a experiencia para binarios, sidecars e fallbacks; e fechar com o modo de apresentacao, que e ativo na `v2.0` mas deliberadamente posterior ao nucleo de navegacao e leitura.
 
 ## Phases
 
@@ -96,7 +96,7 @@ Plans:
 **UI hint**: yes
 
 ### Phase 5: Presentation Mode
-**Goal**: Usuario consegue transformar o viewer em uma superficie minima de leitura/apresentacao sem sacrificar a navegacao e leitura normais como prioridade principal da `v2`.
+**Goal**: Usuario consegue transformar o viewer em uma superficie minima de leitura/apresentacao sem sacrificar a navegacao e leitura normais como prioridade principal da `v2.0`.
 **Depends on**: Phase 4
 **Requirements**: PRS-01, PRS-02, PRS-03, PRS-04, PRS-05, PRS-06, PRS-07
 **Success Criteria** (what must be TRUE):

@@ -18,7 +18,7 @@
 
 | Área | Questão | Opções apresentadas |
 |------|---------|---------------------|
-| Framework | Stack para a v2 | Next.js App Router vs Vite+React+Express |
+| Framework | Stack para a v2.0 | Next.js App Router vs Vite+React+Express |
 | Autenticação | Mecanismo de login single-user | NextAuth.js credentials vs JWT custom |
 | Stitch timing | Quando executar sessão no Stitch | Antes da Fase 1 vs Antes da Fase 2 |
 | Read Model | Como ler o pkm montado | Index JSONs como fast path vs Filesystem direto |
@@ -29,7 +29,7 @@
 - **Framework:** Next.js App Router + React + Tailwind CSS — output nativo do Stitch 2 é React/Tailwind; Next.js simplifica full-stack com SSR, middleware de auth e file-based routing
 - **Autenticação:** NextAuth.js (Auth.js) com credentials provider — matura, session via cookies httpOnly, integração nativa com Next.js; credenciais via env
 - **Stitch timing:** Antes da Fase 1 — DESIGN.md commitado antes da implementação
-- **Read Model:** Index JSONs como fast path com interface `ItemRepository` — aproveita índices existentes, abstrai implementação para troca na v3
+- **Read Model:** Index JSONs como fast path com interface `ItemRepository` — aproveita índices existentes, abstrai implementação para troca na v4.0
 - **Item Identity:** Path relativo ao pkm root, URL-encoded — legível, determinístico; muda só com rename (aceitável em modelo read-only)
 
 ### Deferred (session 1)

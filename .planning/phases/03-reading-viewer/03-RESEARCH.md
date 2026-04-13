@@ -48,7 +48,7 @@
 - Troca de tema no header — Phase 5
 - Callouts/admonitions visuais — Phase 4 se necessário
 - Restore da URL solicitada pós-login — continua fora do escopo
-- Busca textual avançada — fora do escopo de toda v2 ativa
+- Busca textual avançada — fora do escopo de toda v2.0 ativa
 </user_constraints>
 
 ---

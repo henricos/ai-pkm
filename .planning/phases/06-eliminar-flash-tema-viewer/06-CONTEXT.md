@@ -57,7 +57,7 @@ Esta fase não cobre:
 
 ### Product and roadmap
 - `.planning/ROADMAP.md` — nova definição da Phase 6 e seus critérios de sucesso
-- `.planning/PROJECT.md` — estado atual da `v2` após o fechamento da Phase 5
+- `.planning/PROJECT.md` — estado atual da `v2.0` após o fechamento da Phase 5
 - `.planning/STATE.md` — posição corrente do projeto
 
 ### Prior phase artifacts

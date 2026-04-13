@@ -116,6 +116,10 @@ Isso se aplica a qualquer agente, incluindo fluxos GSD (`/gsd-discuss-phase`, `/
 
 Sem arquivos de log de IA; auditoria exclusivamente via mensagem de commit Git.
 
+### Versionamento
+
+Ao criar ou atualizar artefatos de planning, respeite a convencao de versionamento definida em `.planning/PROJECT.md`: milestones usam `vMAJOR.MINOR` e a versao do aplicativo usa SemVer completo `MAJOR.MINOR.PATCH`.
+
 ## Referência de UI (Stitch output)
 
 Antes de implementar qualquer tela, leia:

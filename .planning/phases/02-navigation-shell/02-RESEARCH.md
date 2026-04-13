@@ -92,7 +92,7 @@ O filtro estrutural deve nascer como **filtro local da árvore, não como busca 
 ## Project Constraints (from CLAUDE.md)
 
 - Ler `.planning/PROJECT.md`, `.planning/REQUIREMENTS.md` e `.planning/ROADMAP.md` antes de implementar ou planejar. [VERIFIED: AGENTS.md]
-- A interface web da `v2` e estritamente de navegacao e exibicao; nao pode introduzir edicao manual. [VERIFIED: AGENTS.md] [VERIFIED: .planning/PROJECT.md]
+- A interface web da `v2.0` e estritamente de navegacao e exibicao; nao pode introduzir edicao manual. [VERIFIED: AGENTS.md] [VERIFIED: .planning/PROJECT.md]
 - O `pkm` continua sendo fonte primaria de verdade e a web consome conteudo por path/volume montado externamente. [VERIFIED: AGENTS.md] [VERIFIED: .planning/PROJECT.md]
 - Sidecars nao devem vazar como itens principais de navegacao; a UI deve respeitar o item logico. [VERIFIED: AGENTS.md] [VERIFIED: .planning/PROJECT.md]
 - A implementacao visual deve seguir `DESIGN.md` e adaptar a referencia do Stitch sem copiar HTML bruto para `src/`. [VERIFIED: AGENTS.md] [VERIFIED: DESIGN.md]

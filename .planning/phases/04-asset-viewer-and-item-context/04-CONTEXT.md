@@ -6,7 +6,7 @@
 <domain>
 ## Phase Boundary
 
-Completar o viewer para itens nao-Markdown da `v2`: imagens e PDFs passam a abrir como conteudo principal com comportamento previsivel, binario + sidecar passam a ser tratados como um unico item logico, e formatos sem preview continuam com fallback claro de download. Esta fase nao adiciona edicao, busca textual, controles avancados de apresentacao nem UI pesada de media viewer.
+Completar o viewer para itens nao-Markdown da `v2.0`: imagens e PDFs passam a abrir como conteudo principal com comportamento previsivel, binario + sidecar passam a ser tratados como um unico item logico, e formatos sem preview continuam com fallback claro de download. Esta fase nao adiciona edicao, busca textual, controles avancados de apresentacao nem UI pesada de media viewer.
 
 </domain>
 

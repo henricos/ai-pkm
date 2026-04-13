@@ -7,17 +7,17 @@
 
 ## Executive Summary
 
-O `ai-pkm v2` não deve ser tratado como editor de notas nem como “mini CMS”. A pesquisa converge para um viewer web read-only, desktop-first, construído como monólito modular em Next.js App Router, com leitura direta do repositório `pkm`, navegação em árvore, inbox separada e renderização rica de Markdown/imagens. O valor do produto está em tornar o PKM file-first navegável e apresentável no navegador sem quebrar a regra central: a IA continua sendo a única escritora da base.
+O `ai-pkm v2.0` não deve ser tratado como editor de notas nem como “mini CMS”. A pesquisa converge para um viewer web read-only, desktop-first, construído como monólito modular em Next.js App Router, com leitura direta do repositório `pkm`, navegação em árvore, inbox separada e renderização rica de Markdown/imagens. O valor do produto está em tornar o PKM file-first navegável e apresentável no navegador sem quebrar a regra central: a IA continua sendo a única escritora da base.
 
-O caminho recomendado é pragmático: Next.js + React + Ant Design para o shell exploratório, Tailwind para a superfície de leitura, e uma camada de serviços que converte o filesystem bruto em itens lógicos estáveis. Busca textual deve nascer server-side e já preparada para migrar para SQLite FTS5 como índice derivado, mas sem tornar banco uma dependência estrutural da v2. O viewer precisa tratar binário + sidecar como uma única entidade, porque esse é o principal ganho de UX específico do domínio.
+O caminho recomendado é pragmático: Next.js + React + Ant Design para o shell exploratório, Tailwind para a superfície de leitura, e uma camada de serviços que converte o filesystem bruto em itens lógicos estáveis. Busca textual deve nascer server-side e já preparada para migrar para SQLite FTS5 como índice derivado, mas sem tornar banco uma dependência estrutural da v2.0. O viewer precisa tratar binário + sidecar como uma única entidade, porque esse é o principal ganho de UX específico do domínio.
 
-Os maiores riscos não são de framework, e sim de modelagem. Se a app espelhar o filesystem cru, misturar busca com filtro da árvore, improvisar o renderer Markdown ou confiar demais em watchers, a v2 ficará acoplada ao disco e cara de evoluir para `v3` e `v4`. A mitigação correta é definir cedo contratos estáveis de item lógico, busca e leitura, validar o renderer com corpus real do `pkm` e manter o índice derivado explicitamente reconstruível.
+Os maiores riscos não são de framework, e sim de modelagem. Se a app espelhar o filesystem cru, misturar busca com filtro da árvore, improvisar o renderer Markdown ou confiar demais em watchers, a v2.0 ficará acoplada ao disco e cara de evoluir para `v3.0`, `v4.0` e `v5.0`. A mitigação correta é definir cedo contratos estáveis de item lógico, busca e leitura, validar o renderer com corpus real do `pkm` e manter o índice derivado explicitamente reconstruível.
 
 ## Key Findings
 
 ### Recommended Stack
 
-A recomendação de stack é forte e coerente com o escopo atual: Next.js App Router self-hosted em Node para shell, BFF e leitura server-side; React 19 para separar shell pesada de ilhas interativas; Ant Design para tree, splitter e navegação; Tailwind para leitura e identidade visual; SQLite FTS5 como busca principal derivada quando a v2 precisar sair do backend simples para índice de produção. O padrão geral é evitar invenção de infraestrutura e concentrar esforço na boundary entre UI e `pkm`.
+A recomendação de stack é forte e coerente com o escopo atual: Next.js App Router self-hosted em Node para shell, BFF e leitura server-side; React 19 para separar shell pesada de ilhas interativas; Ant Design para tree, splitter e navegação; Tailwind para leitura e identidade visual; SQLite FTS5 como busca principal derivada quando a v4.0 precisar sair do backend simples para índice de produção. O padrão geral é evitar invenção de infraestrutura e concentrar esforço na boundary entre UI e `pkm`.
 
 O viewer deve usar pipeline AST de Markdown, não HTML cru nem MDX. Para isso, a combinação `react-markdown` + `remark`/`rehype` é a linha principal. Imagens pedem viewer client-only com pan/zoom; PDF entra como viewer separado, lazy e com fallback explícito, porque a pesquisa marca essa área como mais sujeita a degradação real.
 
@@ -34,7 +34,7 @@ O viewer deve usar pipeline AST de Markdown, não HTML cru nem MDX. Para isso, a
 
 As table stakes são claras: árvore recolhível com reveal do item ativo, inbox separada, busca textual rápida, Markdown de alta fidelidade, visualização de imagens de primeira classe, resolução estável de links internos e layout de duas colunas que degrade bem em telas menores. Sem isso, o produto parecerá incompleto mesmo respeitando o modelo file-first.
 
-Os diferenciais corretos para `ai-pkm` não são “mais IA” nem edição na web. São o modelo de item lógico para binários com sidecars ocultos, workflow read-only confiável, busca sidecar-aware, modo apresentação derivado do próprio viewer e uma distinção visual forte entre base consolidada e inbox. Em contrapartida, edição inline, drag-and-drop estrutural, graph view precoce, busca semântica e console agente web devem ficar fora da `v2`.
+Os diferenciais corretos para `ai-pkm` não são “mais IA” nem edição na web. São o modelo de item lógico para binários com sidecars ocultos, workflow read-only confiável, busca sidecar-aware, modo apresentação derivado do próprio viewer e uma distinção visual forte entre base consolidada e inbox. Em contrapartida, edição inline, drag-and-drop estrutural, graph view precoce, busca semântica e console agente web devem ficar fora da `v2.0`.
 
 **Must have (table stakes):**
 - Árvore navegável recolhível com auto-reveal do item ativo — navegação principal do acervo.
@@ -46,13 +46,13 @@ Os diferenciais corretos para `ai-pkm` não são “mais IA” nem edição na w
 - Ocultação de sidecars na árvore com acesso no viewer — polimento central do domínio.
 
 **Should have (competitive):**
-- Modelo de item lógico para binário + sidecar — principal diferenciador funcional da v2.
+- Modelo de item lógico para binário + sidecar — principal diferenciador funcional da v2.0.
 - Busca sidecar-aware com resultado apontando para o item principal — melhora recall sem poluir a navegação.
 - Modo apresentação minimalista — amplia o uso do acervo como superfície de leitura/apresentação.
 - Temas de leitura/apresentação curados — aumenta a sensação de produto intencional.
 - Painel contextual de conteúdo relacionado — opção melhor que graph view no curto prazo.
 
-**Defer (v2.x/v3+):**
+**Defer (v2.x/v3.0+):**
 - Console agentico web e execução de skills no navegador — reservado para versão posterior.
 - Busca semântica / embeddings — só depois de provar limites da busca lexical.
 - Graph view — alto custo e baixo valor inicial.
@@ -60,7 +60,7 @@ Os diferenciais corretos para `ai-pkm` não são “mais IA” nem edição na w
 
 ### Architecture Approach
 
-A direção arquitetural correta é um monólito modular em Next.js com shell persistente, seleção orientada por URL e leitura centralizada por uma camada de domínio que traduz o `pkm` em modelos semânticos de navegação, viewer e busca. A UI não deve conhecer o filesystem cru. `app/` fica com rotas e bordas HTTP; `server/content` concentra regras de item lógico, inbox, sidecars e parsing; `server/adapters` isola `pkm/` e índices JSON hoje, deixando a porta aberta para SQLite depois. A busca deve nascer atrás de uma interface única, porque é o ponto com maior chance de mudança entre `v2` e `v3`.
+A direção arquitetural correta é um monólito modular em Next.js com shell persistente, seleção orientada por URL e leitura centralizada por uma camada de domínio que traduz o `pkm` em modelos semânticos de navegação, viewer e busca. A UI não deve conhecer o filesystem cru. `app/` fica com rotas e bordas HTTP; `server/content` concentra regras de item lógico, inbox, sidecars e parsing; `server/adapters` isola `pkm/` e índices JSON hoje, deixando a porta aberta para SQLite depois. A busca deve nascer atrás de uma interface única, porque é um dos pontos com maior chance de mudança entre `v2.0`, `v3.0` e `v4.0`.
 
 **Major components:**
 1. Shell persistente da aplicação — mantém layout, painel esquerdo, viewer e seleção orientada por URL.
@@ -116,7 +116,7 @@ Based on research, suggested phase structure:
 - A ordem correta é modelagem de leitura -> shell -> viewer -> busca -> robustez/apresentação, porque sidecars, inbox e identidade lógica são dependências de quase todo o resto.
 - Busca deve vir depois do modelo canônico, mas antes de refinamentos como apresentação, já que é P1 e influencia contratos centrais do backend.
 - Presentation mode e related-content são melhores como extensões de um viewer estável do que como workstreams paralelos desde o início.
-- A v2 deve evitar dependência estrutural de banco; a seam para SQLite entra cedo, a implementação pesada pode entrar só quando a UX básica estiver validada.
+- A v2.0 deve evitar dependência estrutural de banco; a seam para SQLite entra cedo, a implementação pesada pode entrar só quando a UX básica estiver validada.
 
 ### Research Flags
 
@@ -135,7 +135,7 @@ Phases with standard patterns (skip research-phase):
 |------|------------|-------|
 | Stack | HIGH | Baseado majoritariamente em docs oficiais e recomendações estáveis do ecossistema. |
 | Features | MEDIUM | Boa convergência de mercado, mas parte do diferencial depende de validação com o uso real do operador. |
-| Architecture | MEDIUM | Direção é forte, porém ainda inferida para este codebase e precisa ser validada contra implementação real da v2. |
+| Architecture | MEDIUM | Direção é forte, porém ainda inferida para este codebase e precisa ser validada contra implementação real da v2.0. |
 | Pitfalls | MEDIUM | Riscos são plausíveis e bem fundamentados, mas vários dependem de como o corpus real e o ambiente de sync se comportam. |
 
 **Overall confidence:** MEDIUM
@@ -158,7 +158,7 @@ Phases with standard patterns (skip research-phase):
 - SQLite FTS5 official docs: https://sqlite.org/fts5.html
 
 ### Secondary (MEDIUM confidence)
-- [FEATURES.md](/home/henrico/github/henricos/ai-pkm/.planning/research/FEATURES.md) — table stakes, diferenciais e anti-features para `v2`.
+- [FEATURES.md](/home/henrico/github/henricos/ai-pkm/.planning/research/FEATURES.md) — table stakes, diferenciais e anti-features para `v2.0`.
 - [PITFALLS.md](/home/henrico/github/henricos/ai-pkm/.planning/research/PITFALLS.md) — riscos de renderer, item lógico, busca, preview e sync.
 - Obsidian help, Docusaurus e VitePress docs — sinais de expectativa de navegação, leitura e estrutura.
 

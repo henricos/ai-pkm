@@ -17,7 +17,7 @@ dependency_graph:
 tech_stack:
   added: []
   patterns:
-    - Interface + implementação filesystem com seam para v3 (ARC-04)
+    - Interface + implementação filesystem com seam para v4.0 (ARC-04)
     - Fast path via index/topicos.json e index/grupos.json (ARC-01)
     - Path traversal prevenido via path.resolve + startsWith (T-1-10)
     - gray-matter para parsing de frontmatter YAML de itens individuais
@@ -46,7 +46,7 @@ metrics:
 
 # Phase 1 Plan 03: Interface ItemRepository + FsItemRepository + Endpoint de Validação — Summary
 
-**One-liner:** Interface ItemRepository com seam para v3, implementação FsItemRepository com path traversal prevenido via path.resolve, e endpoint GET /api/pkm/topics protegido por auth — 11 testes passando.
+**One-liner:** Interface ItemRepository com seam para v4.0, implementação FsItemRepository com path traversal prevenido via path.resolve, e endpoint GET /api/pkm/topics protegido por auth — 11 testes passando.
 
 ---
 
