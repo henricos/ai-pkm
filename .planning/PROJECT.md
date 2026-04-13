@@ -67,6 +67,26 @@ Com a Phase 5 concluida, a `v2.0` ja cobre navegacao, leitura rica, viewers de b
 
 Com a Phase 6 concluida, a `v2.0` ativa fica fechada para o milestone atual. O hardening do preset eliminou o descompasso restante entre SSR, hidratacao e tema persistido no viewer, sem transformar o theming em concern global da aplicacao. O proximo passo deixa de ser implementacao corretiva dentro da `v2.0` e passa a ser definir entre `v2.1` e `v3.0` o proximo milestone de produto.
 
+## Current State
+
+O `v2.0` foi entregue em `2026-04-13` como a primeira versao web funcional do projeto. O sistema agora combina a operacao CLI ja validada com uma interface web read-only autenticada para navegar e ler o acervo PKM sem romper o modelo file-first.
+
+O escopo shipped inclui autenticacao single-user, shell persistente de navegacao com inbox separada, viewer rico de Markdown, viewers leves de imagem/PDF, tratamento de sidecars no contexto do item principal, presentation mode e hardening visual do tema do viewer sem flash perceptivel no reload.
+
+Os artefatos historicos do milestone foram arquivados em `.planning/milestones/v2.0-ROADMAP.md` e `.planning/milestones/v2.0-REQUIREMENTS.md`.
+
+## Next Milestone Goals
+
+O candidato natural para o proximo milestone e a `v2.1`, com foco operacional e nao conceitual. O objetivo esperado e fechar o caminho de empacotamento, versionamento e publicacao da aplicacao sem embutir o `pkm` na imagem.
+
+Metas preliminares para a `v2.1`:
+
+- empacotar a aplicacao como imagem Docker
+- manter o `pkm` privado montado externamente por path/volume
+- estabelecer versionamento SemVer do app Node/web
+- publicar imagem via GitHub Actions no GHCR com tags de release
+- permitir redeploy simples no servidor atual via Portainer
+
 ## Constraints
 
 - **Product model**: A web da fase atual e estritamente de navegacao e exibicao — a edicao continua fora do escopo para preservar o papel da IA como escritora exclusiva
@@ -116,4 +136,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-04-13 — Phase 6 complete; milestone current scope closed*
+*Last updated: 2026-04-13 — v2.0 archived; ready to start v2.1 definition*

@@ -3,9 +3,9 @@ gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: milestone
 status: complete
-stopped_at: Milestone v2.0 concluido; Phase 6 fechada e projeto pronto para discutir o proximo milestone
-last_updated: "2026-04-13T14:35:00.000Z"
-last_activity: 2026-04-13 -- phase 6 encerrada com validacao humana do operador e verificacao automatizada verde
+stopped_at: Milestone v2.0 arquivado; aguardando abertura formal do milestone v2.1
+last_updated: "2026-04-13T21:30:00.000Z"
+last_activity: 2026-04-13 -- milestone v2.0 arquivado em .planning/milestones e roadmap ativo colapsado
 progress:
   total_phases: 6
   completed_phases: 6
@@ -21,15 +21,15 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-13)
 
 **Core value:** Permitir operar o PKM com auxilio de IA, alternando entre uma experiencia visual na web e a operacao local via CLI, sem perder compatibilidade com o modelo file-first.
-**Current focus:** Milestone atual concluido; proximo passo natural e discutir o proximo milestone
+**Current focus:** Milestone v2.0 arquivado; proximo passo natural e abrir o milestone v2.1
 
 ## Current Position
 
 Phase: none
 Plan: none
-Next: proximo milestone
-Status: Phase 6 concluida; milestone encerrado
-Last activity: 2026-04-13 -- validacao humana da phase 6 registrada e fechamento documental concluido
+Next: abrir v2.1 com `/gsd-new-milestone`
+Status: Milestone v2.0 arquivado; requirements ativos aguardam redefinicao no novo milestone
+Last activity: 2026-04-13 -- archive de roadmap/requirements concluido e estado pronto para novo ciclo
 
 Progress: [██████████] 100%
 
@@ -84,5 +84,5 @@ Recent decisions affecting current work:
 ## Session Continuity
 
 Last session: 2026-04-12
-Stopped at: Milestone v2.0 concluido; aguardar definicao do proximo milestone
-Resume file: .planning/ROADMAP.md
+Stopped at: Milestone v2.0 arquivado; aguardar abertura formal de v2.1
+Resume file: .planning/PROJECT.md
