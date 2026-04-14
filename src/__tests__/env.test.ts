@@ -14,6 +14,7 @@ describe("env validation", () => {
       if (!(key in originalEnv)) delete process.env[key];
     });
     Object.assign(process.env, originalEnv);
+    vi.unstubAllEnvs();
     vi.resetModules();
   });
 
@@ -53,5 +54,40 @@ describe("env validation", () => {
       NEXTAUTH_SECRET: "12345678901234567890123456789012",
       NEXTAUTH_URL: "http://localhost:3000",
     });
+  });
+
+  test("PKG-02: INDEX_PATH passa a integrar o contrato quando configurado", async () => {
+    process.env.PKM_PATH = "/home/user/pkm";
+    process.env.INDEX_PATH = "/home/user/index";
+    process.env.AUTH_USERNAME = "testuser";
+    process.env.AUTH_PASSWORD = "testpassword123";
+    process.env.NEXTAUTH_SECRET = "12345678901234567890123456789012";
+    process.env.NEXTAUTH_URL = "http://localhost:3000";
+
+    const { env } = await import("../lib/env");
+
+    expect(env.INDEX_PATH).toBe("/home/user/index");
+  });
+
+  test("PKG-02: produção falha cedo quando INDEX_PATH está ausente", async () => {
+    vi.stubEnv("NODE_ENV", "production");
+    process.env.PKM_PATH = "/home/user/pkm";
+    delete process.env.INDEX_PATH;
+    process.env.AUTH_USERNAME = "testuser";
+    process.env.AUTH_PASSWORD = "testpassword123";
+    process.env.NEXTAUTH_SECRET = "12345678901234567890123456789012";
+    process.env.NEXTAUTH_URL = "http://localhost:3000";
+
+    const exitSpy = vi.spyOn(process, "exit").mockImplementation(() => {
+      throw new Error("process.exit called");
+    });
+    const errorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+
+    await expect(import("../lib/env")).rejects.toThrow("process.exit called");
+    expect(exitSpy).toHaveBeenCalledWith(1);
+    expect(errorSpy.mock.calls.join()).toContain("INDEX_PATH");
+
+    exitSpy.mockRestore();
+    errorSpy.mockRestore();
   });
 });

@@ -1,0 +1,26 @@
+services:
+  web:
+    image: ai-pkm:local
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      APP_ROOT_PATH: /app
+      PKM_PATH: /data/pkm
+      INDEX_PATH: /data/index
+      AUTH_USERNAME: ${AUTH_USERNAME}
+      AUTH_PASSWORD: ${AUTH_PASSWORD}
+      AUTH_TRUST_HOST: ${AUTH_TRUST_HOST:-true}
+      NEXTAUTH_SECRET: ${NEXTAUTH_SECRET}
+      NEXTAUTH_URL: ${NEXTAUTH_URL}
+    ports:
+      - "${WEB_HOST_PORT:-3000}:3000"
+    volumes:
+      - type: bind
+        source: ${PKM_HOST_PATH}
+        target: /data/pkm
+        read_only: true
+      - type: bind
+        source: ${INDEX_HOST_PATH}
+        target: /data/index
+        read_only: true

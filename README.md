@@ -40,15 +40,23 @@ Assumindo que `pkm` e `ai-pkm` estão em pastas irmãs:
 ln -s ../pkm pkm
 ```
 
-**Produção**
+Para subir a aplicação em modo de desenvolvimento, siga [docs/dev-setup.md](/home/henrico/github/henricos/ai-pkm/docs/dev-setup.md).
 
-Monte o diretório equivalente ao `pkm` via Docker volume:
+**Validação do artefato Docker**
 
-```
-docker run ... -v /caminho/para/pkm:/app/pkm ...
-```
+O fluxo oficial para validar a imagem distribuível da Phase 7 não usa mais um `docker run` ad hoc. Use [docs/docker-validation.md](/home/henrico/github/henricos/ai-pkm/docs/docker-validation.md) para:
 
-Em ambos os casos, a plataforma lê e escreve em `pkm/` sem precisar saber como a pasta chegou lá.
+- preparar um arquivo de env local com `PKM_HOST_PATH` e `INDEX_HOST_PATH`
+- validar o contrato do runtime com `docker compose config`
+- buildar a imagem com `docker compose build`
+- subir o stack com `docker compose up`
+- autenticar na aplicação e provar a leitura do acervo montado externamente
+
+**Runtime container**
+
+No contrato atual da fase, `pkm` e `index` são dados dinâmicos de runtime e devem entrar por bind mount externo. Já `models`, `reference`, `.agents/skills` e `AGENTS.md` seguem versionados na release da aplicação.
+
+Enquanto `index` continuar dinâmico, ele deve evoluir em conjunto com `pkm`. O primeiro refresh operacional desse acervo precisa acontecer fora da UI web e fora do processo principal do container.
 
 ## Licença
 

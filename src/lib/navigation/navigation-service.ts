@@ -22,7 +22,7 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
-import { env } from "@/lib/env";
+import { getRuntimePaths } from "@/lib/runtime-paths";
 import { itemToHref } from "./route-helpers";
 import type {
   NavigationSnapshot,
@@ -438,8 +438,9 @@ export async function getItemById(
  * — nenhum path absoluto aparece no resultado.
  */
 export async function getNavigationSnapshot(): Promise<NavigationSnapshot> {
-  const pkmRoot = path.resolve(env.PKM_PATH);
-  const indexDir = path.join(process.cwd(), "index");
+  const runtimePaths = getRuntimePaths();
+  const pkmRoot = runtimePaths.pkmRoot;
+  const indexDir = runtimePaths.indexRoot;
 
   // Ler índices estruturais
   const topicsRaw = fs.readFileSync(path.join(indexDir, "topicos.json"), "utf-8");

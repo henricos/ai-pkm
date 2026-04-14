@@ -6,6 +6,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   logger: {
     error: (error) => console.error(`[auth] ${error.name}: ${error.message}`),
   },
+  // O runtime empacotado roda atras de proxy/container e precisa aceitar o Host
+  // encaminhado para que sessao e callbacks funcionem em localhost e no deploy real.
+  trustHost: true,
   providers: [
     Credentials({
       async authorize(credentials) {

@@ -2,6 +2,8 @@
 
 Este documento descreve como subir a aplicação `ai-pkm` em ambiente local/dev a partir do zero.
 
+Se o objetivo for validar o artefato distribuível em container, use [docs/docker-validation.md](/home/henrico/github/henricos/ai-pkm/docs/docker-validation.md). Este guia cobre apenas o fluxo de desenvolvimento com `npm run dev`.
+
 ---
 
 ## Pré-requisitos
@@ -48,6 +50,21 @@ PKM_PATH=/home/user/pkm
 > apenas quando o `cwd` é a raiz do projeto, mas quebram em outros contextos.
 > Se o `pkm/` está montado na raiz do projeto, use `$(pwd)/pkm` para obter o
 > caminho absoluto, ou informe o path completo diretamente.
+
+#### `INDEX_PATH`
+
+Path absoluto para o diretório `index/` consumido pela aplicação.
+
+```env
+INDEX_PATH=/home/user/ai-pkm/index
+```
+
+Em **produção/container**, este path deve ser configurado explicitamente para o diretório
+externo que acompanha o refresh do `pkm`.
+
+Em **dev local**, a aplicação usa por padrão `index/` dentro da raiz versionada do projeto
+quando `INDEX_PATH` não é informado. Esse fallback existe apenas para ergonomia local e
+não substitui o contrato real de runtime.
 
 #### `AUTH_USERNAME`
 
@@ -110,6 +127,8 @@ NEXTAUTH_URL=http://localhost:3000
 
 ```env
 PKM_PATH=/home/user/pkm
+# Opcional em dev se você roda a app da raiz do ai-pkm
+INDEX_PATH=/home/user/ai-pkm/index
 AUTH_USERNAME=curator
 AUTH_PASSWORD=minha_senha_local_segura
 NEXTAUTH_SECRET=Xk3mP9rQ2vL7nT4wJ8eA1bC6dF0hI5jK
@@ -118,15 +137,20 @@ NEXTAUTH_URL=http://localhost:3000
 
 ---
 
-## 3. Estrutura dos índices
+## 3. Contrato de runtime paths
 
-A aplicação lê os arquivos `index/topicos.json` e `index/grupos.json` da **raiz do
-repositório `ai-pkm`** — não do `pkm/` montado. Esses índices são gerados e
-mantidos pelas skills do PKM.
+A aplicação resolve os paths de runtime por um contrato central:
 
-Se você rodar a aplicação de outro diretório, o `process.cwd()` precisa apontar
-para a raiz do `ai-pkm`. Em dev normal (`npm run dev` a partir da raiz), isso
-funciona automaticamente.
+- `PKM_PATH` aponta sempre para o repositório `pkm` montado externamente
+- `INDEX_PATH` aponta para o diretório `index/` externo quando configurado
+- `models/`, `reference/`, `.agents/skills/` e `AGENTS.md` continuam sendo artefatos
+  versionados da aplicação e são resolvidos a partir da raiz do app
+
+Em dev normal (`npm run dev` a partir da raiz do `ai-pkm`), `INDEX_PATH` pode ficar
+ausente e a aplicação usa `./index` como fallback previsível.
+
+Em produção, **`INDEX_PATH` é obrigatório**. O runtime falha cedo se essa variável
+não for definida.
 
 ---
 
@@ -137,6 +161,8 @@ npm run dev
 ```
 
 O servidor sobe em `http://localhost:3000`.
+
+Este fluxo existe para desenvolvimento local. Ele não substitui a validação do runtime empacotado via `docker compose`.
 
 ---
 
@@ -170,19 +196,30 @@ Esta aplicação foi projetada para uso **local/dev single-user**:
 ### `NEXTAUTH_SECRET é obrigatório` ao subir
 
 O arquivo `.env.local` não foi criado ou a variável `NEXTAUTH_SECRET` está ausente.
-Confirme que você copiou `.env.example` para `.env.local` e preencheu todas as 5 variáveis.
+Confirme que você copiou `.env.example` para `.env.local` e preencheu as variáveis obrigatórias.
 
-### Erro ao listar tópicos: `ENOENT index/topicos.json`
+### Erro ao listar tópicos: `ENOENT .../topicos.json`
 
-O arquivo `index/topicos.json` não existe na raiz do projeto. Rode a skill
-`/recriar-indices` para regenerar os índices a partir do repositório `pkm`.
-Confirme também que o `cwd` ao rodar `npm run dev` é a raiz do `ai-pkm`.
+Verifique primeiro qual contrato de path está em uso:
+
+- se `INDEX_PATH` estiver definido, confirme que ele aponta para um diretório válido
+- se `INDEX_PATH` estiver ausente em dev, confirme que `index/topicos.json` existe na
+  raiz versionada do `ai-pkm`
+
+Se os índices estiverem ausentes, rode a skill `/recriar-indices` para regenerá-los
+a partir do repositório `pkm`.
 
 ### `PKM_PATH inválido` ou tópicos não aparecem
 
 Verifique que `PKM_PATH` é um caminho absoluto válido e que o diretório existe.
 Caminhos relativos como `pkm` ou `./pkm` podem funcionar em dev mas quebram em
 outros contextos. Use sempre o path completo.
+
+### `INDEX_PATH é obrigatório em produção`
+
+Você subiu a aplicação com `NODE_ENV=production` sem informar o path externo dos
+índices. Configure `INDEX_PATH` explicitamente antes de iniciar o runtime empacotado
+e siga [docs/docker-validation.md](/home/henrico/github/henricos/ai-pkm/docs/docker-validation.md) para validar o contrato do container.
 
 ### Cookie de sessão não persiste
 

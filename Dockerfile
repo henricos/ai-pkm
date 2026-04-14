@@ -1,0 +1,45 @@
+FROM node:22-alpine AS base
+
+FROM base AS deps
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm ci
+
+FROM base AS builder
+WORKDIR /app
+ENV PKM_PATH=/tmp/build/pkm
+ENV INDEX_PATH=/tmp/build/index
+ENV AUTH_USERNAME=build-user
+ENV AUTH_PASSWORD=build-password
+ENV NEXTAUTH_SECRET=build-secret-build-secret-build-secret-1234
+ENV NEXTAUTH_URL=http://127.0.0.1:3000
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+RUN mkdir -p /tmp/build/pkm /tmp/build/index \
+  && npm run build
+
+FROM base AS runner
+WORKDIR /app
+
+ENV NODE_ENV=production
+ENV PORT=3000
+ENV HOSTNAME=0.0.0.0
+ENV APP_ROOT_PATH=/app
+
+RUN addgroup -S -g 1001 nodejs \
+  && adduser -S -u 1001 -G nodejs nextjs
+
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
+COPY --from=builder /app/models ./models
+COPY --from=builder /app/reference ./reference
+COPY --from=builder /app/.agents/skills ./.agents/skills
+COPY --from=builder /app/AGENTS.md ./AGENTS.md
+
+RUN chown -R nextjs:nodejs /app
+
+USER nextjs
+
+EXPOSE 3000
+
+CMD ["node", "server.js"]

@@ -3,7 +3,7 @@ import path from "path";
 import matter from "gray-matter";
 import type { ItemRepository } from "./item-repository";
 import type { Item, Topic, Group, ItemType, ItemEstado, RawFrontmatter, BinaryContext } from "./types";
-import { env } from "@/lib/env";
+import { getRuntimePaths } from "@/lib/runtime-paths";
 
 /**
  * Implementação filesystem do ItemRepository — v2 (ARC-01, ARC-04)
@@ -22,10 +22,9 @@ export class FsItemRepository implements ItemRepository {
   private readonly indexDir: string;
 
   constructor() {
-    // PKM_PATH deve ser sempre absoluto (RESEARCH.md Pitfall 4)
-    this.pkmRoot = path.resolve(env.PKM_PATH);
-    // Índices ficam na raiz do repositório ai-pkm (RESEARCH.md A2)
-    this.indexDir = path.join(process.cwd(), "index");
+    const runtimePaths = getRuntimePaths();
+    this.pkmRoot = runtimePaths.pkmRoot;
+    this.indexDir = runtimePaths.indexRoot;
   }
 
   listTopics(): Topic[] {
