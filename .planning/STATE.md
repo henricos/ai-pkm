@@ -3,9 +3,9 @@ gsd_state_version: 1.0
 milestone: v2.1
 milestone_name: "**Status:** Definido em 2026-04-13"
 status: executing
-stopped_at: Milestone v2.1 aberto; proximo passo e iniciar a discussao da Phase 7
-last_updated: "2026-04-14T17:41:40.306Z"
-last_activity: 2026-04-14 -- Phase 08 execution started
+stopped_at: Phase 08 implementada e release v2.0.1 enviada; falta validar workflow Release GHCR e pacote no GHCR em ambiente externo
+last_updated: "2026-04-14T21:31:00.000Z"
+last_activity: 2026-04-14 -- release v2.0.1 enviada para origin com tag
 progress:
   total_phases: 3
   completed_phases: 1
@@ -21,15 +21,15 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-13)
 
 **Core value:** Permitir operar o PKM com auxilio de IA, alternando entre uma experiencia visual na web e a operacao local via CLI, sem perder compatibilidade com o modelo file-first.
-**Current focus:** Phase 08 — semver-release-pipeline
+**Current focus:** Phase 08 — validar workflow Release GHCR e pacote v2.0.1 no GHCR
 
 ## Current Position
 
 Phase: 08 (semver-release-pipeline) — EXECUTING
-Plan: 1 of 3
-Next: iniciar `/gsd-discuss-phase 8`
-Status: Executing Phase 08
-Last activity: 2026-04-14 -- Phase 08 execution started
+Plan: 3 of 3 implementados localmente; checkpoints externos pendentes
+Next: confirmar no GitHub Actions a run da tag v2.0.1 e no GHCR o pacote publico vinculado ao repositorio
+Status: Waiting on external verification
+Last activity: 2026-04-14 -- release v2.0.1 enviada para origin com tag
 
 Progress: [###-------] 33%
 
@@ -79,10 +79,10 @@ Recent decisions affecting current work:
 ### Blockers/Concerns
 
 - A seam de busca deve nascer preparada para evolucao futura, mas a `v2.0` ativa nao inclui busca textual avancada em popup.
-- Nenhum bloqueio ativo.
+- A fase depende agora apenas de verificacao externa no GitHub Actions e no GHCR.
 
 ## Session Continuity
 
-Last session: 2026-04-13
-Stopped at: Milestone v2.1 aberto; proximo passo e iniciar a discussao da Phase 7
-Resume file: .planning/PROJECT.md
+Last session: 2026-04-14
+Stopped at: release v2.0.1 criada e enviada; falta conferir Actions/GHCR e entao fechar a fase
+Resume file: .planning/phases/08-semver-release-pipeline/.continue-here.md
