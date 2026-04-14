@@ -2,7 +2,7 @@
 
 ## What This Is
 
-O ai-pkm e a plataforma que apoia a operacao de um PKM file-first com auxilio de IA. Hoje, o sistema combina uma operacao validada via CLI sobre o repositorio `pkm` com uma interface web read-only para navegar e exibir esse acervo sem quebrar o modelo em que a IA e a unica escritora da base. O passo atual e fechar a camada operacional de release e publicacao dessa aplicacao web.
+O ai-pkm e a plataforma que apoia a operacao de um PKM file-first com auxilio de IA. Hoje, o sistema combina uma operacao validada via CLI sobre o repositorio `pkm` com uma interface web read-only para navegar e exibir esse acervo sem quebrar o modelo em que a IA e a unica escritora da base. O passo atual e fechar a camada operacional de deploy dessa aplicacao web sobre uma cadeia de release e publicacao ja validada.
 
 ## Core Value
 
@@ -33,12 +33,12 @@ O terceiro numero (`PATCH`) fica reservado para hotfixes e releases pontuais do 
 - ✓ Exibir imagens como item principal com boa experiencia de visualizacao, mantendo sidecars textuais ocultos da arvore e acessiveis no viewer — Phase 4
 - ✓ Oferecer modo de apresentacao minimo com tela dedicada ao viewer, recolhimento da shell, temas de leitura/apresentacao e ponteiro laser temporario — Phase 5
 - ✓ Eliminar o flash perceptivel do preset de tema do viewer entre SSR, hidratacao e tema persistido — Phase 6
+- ✓ Fechar versionamento SemVer do app Node/web com release operacional baseada em `npm version` — Phase 8
+- ✓ Publicar imagem publica no GHCR por pipeline automatizado no GitHub Actions — Phase 8
 
 ### Active
 
 - Empacotar a aplicacao web como imagem Docker distribuivel, sem embutir o `pkm` na imagem
-- Fechar versionamento SemVer do app Node/web com release operacional baseada em `npm version`
-- Publicar imagem publica no GHCR por pipeline automatizado no GitHub Actions
 - Atualizar a aplicacao no servidor atual por pull de imagem e redeploy no Portainer, preservando volume e configuracao externa
 
 ### Out of Scope
@@ -60,7 +60,7 @@ Dentro da `v2.0`, a prioridade e primeiro estruturar a aplicacao e entregar visu
 
 A `v2.0` tambem precisa nascer com restricoes operacionais minimas corretas: autenticacao single-user desde o inicio, configuracao por variaveis de ambiente, e acesso ao `pkm` sempre por montagem/path externo, tanto em dev quanto em runtime futuro empacotado. O objetivo nao e resolver deploy publicado agora, mas evitar um desenho acoplado ao ambiente local atual.
 
-A `v2.1` tem foco estritamente operacional: fechar um fluxo reproduzivel de empacotamento e publicacao da aplicacao como container Docker, com versionamento SemVer do app Node, pipeline automatizado no GitHub Actions, publicacao de imagem no GHCR e redeploy simples no servidor atual via Portainer, sempre mantendo o `pkm` privado fora da imagem e montado por volume.
+A `v2.1` tem foco estritamente operacional: fechar um fluxo reproduzivel de empacotamento, publicacao e deploy da aplicacao como container Docker, com versionamento SemVer do app Node, pipeline automatizado no GitHub Actions, publicacao de imagem no GHCR e redeploy simples no servidor atual via Portainer, sempre mantendo o `pkm` privado fora da imagem e montado por volume.
 
 A `v3.0` muda o proprio vocabulário central do projeto. Em vez de tratar o PKM principalmente como conjunto de arquivos heterogeneos, o sistema passa a assumir `item` como unidade conceitual principal, com tres dimensoes explicitas: origem/autoria, assunto e tipo. Essa mudanca reinterpreta termos que hoje aparecem em lugares diferentes do sistema e exige uma sequencia de migracao muito bem planejada, porque afeta simultaneamente taxonomia, modelos, contratos, indices, skills, aplicacao web e o proprio conteudo do PKM.
 
@@ -77,6 +77,8 @@ O `v2.0` foi entregue em `2026-04-13` como a primeira versao web funcional do pr
 O escopo shipped inclui autenticacao single-user, shell persistente de navegacao com inbox separada, viewer rico de Markdown, viewers leves de imagem/PDF, tratamento de sidecars no contexto do item principal, presentation mode e hardening visual do tema do viewer sem flash perceptivel no reload.
 
 Os artefatos historicos do milestone foram arquivados em `.planning/milestones/v2.0-ROADMAP.md` e `.planning/milestones/v2.0-REQUIREMENTS.md`.
+
+Dentro da `v2.1`, a Phase 08 foi fechada em `2026-04-14` com a release real `v2.0.2`. A cadeia ponta a ponta foi validada com commit/tag gerados por `npm version`, workflow `Release GHCR` disparado por push de tag, job `publish` concluido com sucesso e pacote publico `ghcr.io/henricos/ai-pkm` exibindo `latest` e `v2.0.2`. O fechamento tambem deixou uma skill dedicada de operacao (`/fechar-versao`) para repetir esse fluxo sem esconder o mecanismo canonico.
 
 ## Current Milestone: v2.1 release e publicacao operacional
 
@@ -135,8 +137,9 @@ Metas preliminares para a `v2.1`:
 | Tratar `pkm` como dependencia montada e configurada externamente | Evita acoplamento com o ambiente de desenvolvimento atual e prepara o caminho para Docker/deploy futuro | ✓ Good |
 | Implementar presentation mode como estado interno da shell, sem nova rota nem fullscreen nativo obrigatorio | Preserva continuidade de leitura e evita bifurcar a arquitetura do viewer para uma capability secundariada `v2.0` | ✓ Good |
 | Resolver o flash de tema com bootstrap pre-paint local ao viewer | Fecha o ultimo gap visual da `v2.0` sem promover theming global nem introduzir mismatch de hidratacao | ✓ Good |
-| Distribuir a aplicacao por imagem Docker publicada, e nao por `git pull` dentro do runtime | Mantem deploy mais previsivel, rastreavel e portavel entre servidores | — Pending |
-| Usar GHCR publico com tags `vX.Y.Z` e `latest` como estrategia inicial de distribuicao | Simplifica operacao no servidor caseiro e preserva referencia exata de release por SemVer | — Pending |
+| Distribuir a aplicacao por imagem Docker publicada, e nao por `git pull` dentro do runtime | Mantem deploy mais previsivel, rastreavel e portavel entre servidores | ✓ Good |
+| Usar GHCR publico com tags `vX.Y.Z` e `latest` como estrategia inicial de distribuicao | Simplifica operacao no servidor caseiro e preserva referencia exata de release por SemVer | ✓ Good |
+| Materializar o fluxo de fechamento de versao como skill operacional sem wrapper opaco | Reduz friccao para novas releases preservando `npm version` e o checklist real do projeto | ✓ Good |
 
 ## Evolution
 
@@ -156,4 +159,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-04-13 — milestone v2.1 definido para requisitos e roadmap operacionais de release*
+*Last updated: 2026-04-14 — Phase 08 validada com release real v2.0.2 e skill /fechar-versao criada*

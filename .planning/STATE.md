@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v2.1
 milestone_name: "**Status:** Definido em 2026-04-13"
 status: executing
-stopped_at: Phase 08 implementada e release v2.0.1 enviada; falta validar workflow Release GHCR e pacote no GHCR em ambiente externo
-last_updated: "2026-04-14T21:31:00.000Z"
-last_activity: 2026-04-14 -- release v2.0.1 enviada para origin com tag
+stopped_at: Phase 08 encerrada; proximo passo e iniciar a Phase 09 sobre deploy via Portainer consumindo a imagem publica validada
+last_updated: "2026-04-14T22:20:00.000Z"
+last_activity: 2026-04-14 -- Phase 08 fechada no planning com release v2.0.2 e skill /fechar-versao
 progress:
   total_phases: 3
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 6
-  completed_plans: 3
-  percent: 50
+  completed_plans: 6
+  percent: 83
 ---
 
 # Project State
@@ -21,17 +21,17 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-13)
 
 **Core value:** Permitir operar o PKM com auxilio de IA, alternando entre uma experiencia visual na web e a operacao local via CLI, sem perder compatibilidade com o modelo file-first.
-**Current focus:** Phase 08 — validar workflow Release GHCR e pacote v2.0.1 no GHCR
+**Current focus:** Phase 09 — documentar e fechar o fluxo operacional de redeploy no servidor atual via Docker + Portainer
 
 ## Current Position
 
-Phase: 08 (semver-release-pipeline) — EXECUTING
-Plan: 3 of 3 implementados localmente; checkpoints externos pendentes
-Next: confirmar no GitHub Actions a run da tag v2.0.1 e no GHCR o pacote publico vinculado ao repositorio
-Status: Waiting on external verification
-Last activity: 2026-04-14 -- release v2.0.1 enviada para origin com tag
+Phase: 09 (portainer-deployment-flow) — READY
+Plan: aguardando planejamento/execucao
+Next: definir e implementar o fluxo minimo de update no servidor atual usando a imagem publicada no GHCR
+Status: Phase 08 concluida; milestone segue para a etapa de deploy
+Last activity: 2026-04-14 -- planning atualizado apos validacao completa da release v2.0.2
 
-Progress: [###-------] 33%
+Progress: [########--] 83%
 
 ## Performance Metrics
 
@@ -79,10 +79,10 @@ Recent decisions affecting current work:
 ### Blockers/Concerns
 
 - A seam de busca deve nascer preparada para evolucao futura, mas a `v2.0` ativa nao inclui busca textual avancada em popup.
-- A fase depende agora apenas de verificacao externa no GitHub Actions e no GHCR.
+- A cadeia de release foi validada com `v2.0.2`; o risco principal remanescente do milestone agora migra para a operacao manual de deploy no Portainer.
 
 ## Session Continuity
 
 Last session: 2026-04-14
-Stopped at: release v2.0.1 criada e enviada; falta conferir Actions/GHCR e entao fechar a fase
+Stopped at: Phase 08 concluida; proximo passo e abrir/rodar a Phase 09
 Resume file: .planning/phases/08-semver-release-pipeline/.continue-here.md

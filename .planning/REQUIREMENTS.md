@@ -14,16 +14,16 @@
 
 ### Versioning
 
-- [ ] **VER-01**: Projeto expõe versao de aplicativo em SemVer completo no ecossistema Node/web.
-- [ ] **VER-02**: Operador consegue fechar uma release com `npm version patch|minor|major`, gerando o bump de versao do projeto, o commit de release e a tag Git correspondente.
-- [ ] **VER-03**: Cada release publicada permanece rastreavel entre versao do app, tag Git e tag imutavel da imagem.
+- [x] **VER-01**: Projeto expõe versao de aplicativo em SemVer completo no ecossistema Node/web.
+- [x] **VER-02**: Operador consegue fechar uma release com `npm version patch|minor|major`, gerando o bump de versao do projeto, o commit de release e a tag Git correspondente.
+- [x] **VER-03**: Cada release publicada permanece rastreavel entre versao do app, tag Git e tag imutavel da imagem.
 
 ### Publication
 
-- [ ] **PUB-01**: Push de tag Git de release dispara automaticamente um workflow de publicacao no GitHub Actions.
-- [ ] **PUB-02**: Workflow de publicacao executa o build da imagem Docker em GitHub-hosted runner Ubuntu.
-- [ ] **PUB-03**: Workflow publica a imagem da aplicacao no GitHub Container Registry como imagem publica.
-- [ ] **PUB-04**: Cada release publicada recebe pelo menos as tags de imagem `vX.Y.Z` e `latest`.
+- [x] **PUB-01**: Push de tag Git de release dispara automaticamente um workflow de publicacao no GitHub Actions.
+- [x] **PUB-02**: Workflow de publicacao executa o build da imagem Docker em GitHub-hosted runner Ubuntu.
+- [x] **PUB-03**: Workflow publica a imagem da aplicacao no GitHub Container Registry como imagem publica.
+- [x] **PUB-04**: Cada release publicada recebe pelo menos as tags de imagem `vX.Y.Z` e `latest`.
 
 ### Deployment
 
@@ -55,13 +55,13 @@
 | PKG-01 | Phase 7 | Pending |
 | PKG-02 | Phase 7 | Pending |
 | PKG-03 | Phase 7 | Pending |
-| VER-01 | Phase 8 | Pending |
-| VER-02 | Phase 8 | Pending |
-| VER-03 | Phase 8 | Pending |
-| PUB-01 | Phase 8 | Pending |
-| PUB-02 | Phase 8 | Pending |
-| PUB-03 | Phase 8 | Pending |
-| PUB-04 | Phase 8 | Pending |
+| VER-01 | Phase 8 | Validated |
+| VER-02 | Phase 8 | Validated |
+| VER-03 | Phase 8 | Validated |
+| PUB-01 | Phase 8 | Validated |
+| PUB-02 | Phase 8 | Validated |
+| PUB-03 | Phase 8 | Validated |
+| PUB-04 | Phase 8 | Validated |
 | DEP-01 | Phase 9 | Pending |
 | DEP-02 | Phase 9 | Pending |
 | DEP-03 | Phase 9 | Pending |
@@ -73,4 +73,4 @@
 
 ---
 *Requirements defined: 2026-04-13*
-*Last updated: 2026-04-13 after milestone v2.1 initialization*
+*Last updated: 2026-04-14 after Phase 08 validation with release v2.0.2*

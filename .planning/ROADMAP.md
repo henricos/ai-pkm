@@ -38,13 +38,14 @@ O milestone `v2.1` fecha o primeiro fluxo operacional completo de release da apl
 **Plans**: 3 plans (expected)
 
 Plans:
-- [ ] 08-01-PLAN.md — Fixar o contrato de rastreabilidade SemVer no build e na UI
-- [ ] 08-02-PLAN.md — Publicar a imagem canônica por tag Git no GitHub Actions e GHCR
-- [ ] 08-03-PLAN.md — Documentar o checklist operacional de release e validar a cadeia externa
+- [x] 08-01-PLAN.md — Fixar o contrato de rastreabilidade SemVer no build e na UI
+- [x] 08-02-PLAN.md — Publicar a imagem canônica por tag Git no GitHub Actions e GHCR
+- [x] 08-03-PLAN.md — Documentar o checklist operacional de release e validar a cadeia externa
 
 **Details:**
 
 - **Requirements**: VER-01, VER-02, VER-03, PUB-01, PUB-02, PUB-03, PUB-04
+- **Status**: concluida em 2026-04-14 com release real `v2.0.2`, workflow `Release GHCR` e pacote publico no GHCR
 - **Success Criteria**:
   1. O projeto passa a ter um fluxo de release coerente com SemVer completo do app Node/web.
   2. `npm version` produz o bump de versao esperado e gera os artefatos Git necessarios para a release.
@@ -86,3 +87,4 @@ Plans:
 
 - O projeto ainda usa `next-auth` beta na base atual; pipeline de release precisa preservar rastreabilidade suficiente para upgrades futuros.
 - O fluxo inicial de deploy depende de operacao manual no Portainer, o que simplifica agora mas limita automacao futura.
+- O recovery path de `npm version` em ambiente sandboxed continua sendo uma excecao operacional do agente, nao parte do fluxo canonico do operador.
