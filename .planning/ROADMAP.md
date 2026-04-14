@@ -59,6 +59,10 @@ Plans:
 **Depends on**: Phase 8
 **Plans**: 2 plans (expected)
 
+Plans:
+- [ ] 09-01-PLAN.md — Publicar o guia canônico de deploy/update por `docker compose` e simplificar o README
+- [ ] 09-02-PLAN.md — Reconciliar release, validação local e reaplicação do stack atual via Portainer
+
 **Details:**
 
 - **Requirements**: DEP-01, DEP-02, DEP-03
