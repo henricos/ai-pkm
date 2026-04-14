@@ -4,6 +4,9 @@ import { LoginForm } from "@/components/login-form";
 import { Suspense } from "react";
 import { appBrand } from "@/lib/app-brand";
 
+const appVersion = process.env.NEXT_PUBLIC_APP_VERSION ?? process.env.npm_package_version ?? "2.0.0";
+const gitHash = process.env.NEXT_PUBLIC_GIT_HASH;
+
 export default async function LoginPage() {
   // Se já autenticado, redirecionar para /
   const session = await auth();
@@ -41,10 +44,8 @@ export default async function LoginPage() {
         <footer className="mt-8 text-center">
           <div className="text-on-surface/30 text-[0.6875rem] font-semibold uppercase tracking-[0.1em]">
             <span>
-              v{process.env.npm_package_version ?? "2.0.0"}
-              {process.env.NEXT_PUBLIC_GIT_HASH
-                ? ` · ${process.env.NEXT_PUBLIC_GIT_HASH}`
-                : ""}
+              v{appVersion}
+              {gitHash ? ` · ${gitHash}` : ""}
             </span>
           </div>
         </footer>

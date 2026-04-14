@@ -4,8 +4,8 @@ milestone: v2.1
 milestone_name: "**Status:** Definido em 2026-04-13"
 status: executing
 stopped_at: Milestone v2.1 aberto; proximo passo e iniciar a discussao da Phase 7
-last_updated: "2026-04-14T17:25:59.414Z"
-last_activity: 2026-04-14 -- Phase 08 planning complete
+last_updated: "2026-04-14T17:41:40.306Z"
+last_activity: 2026-04-14 -- Phase 08 execution started
 progress:
   total_phases: 3
   completed_phases: 1
@@ -21,15 +21,15 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-13)
 
 **Core value:** Permitir operar o PKM com auxilio de IA, alternando entre uma experiencia visual na web e a operacao local via CLI, sem perder compatibilidade com o modelo file-first.
-**Current focus:** Phase 08 pronta para iniciar pipeline SemVer e publicacao no GHCR
+**Current focus:** Phase 08 — semver-release-pipeline
 
 ## Current Position
 
-Phase: 07 (container-packaging-foundation) — COMPLETE
-Plan: 3 of 3 complete
+Phase: 08 (semver-release-pipeline) — EXECUTING
+Plan: 1 of 3
 Next: iniciar `/gsd-discuss-phase 8`
-Status: Ready to execute
-Last activity: 2026-04-14 -- Phase 08 planning complete
+Status: Executing Phase 08
+Last activity: 2026-04-14 -- Phase 08 execution started
 
 Progress: [###-------] 33%
 

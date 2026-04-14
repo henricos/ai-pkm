@@ -52,6 +52,10 @@ O fluxo oficial para validar a imagem distribuível da Phase 7 não usa mais um 
 - subir o stack com `docker compose up`
 - autenticar na aplicação e provar a leitura do acervo montado externamente
 
+**Release SemVer e publicação no GHCR**
+
+O fluxo canônico da Phase 8 para fechar versão, gerar tag Git e publicar a imagem em `ghcr.io/henricos/ai-pkm` está em [docs/release-semver-ghcr.md](/home/henrico/github/henricos/ai-pkm/docs/release-semver-ghcr.md). O guia oficial usa `npm version patch|minor|major` e `git push origin main --follow-tags`, sem wrapper adicional.
+
 **Runtime container**
 
 No contrato atual da fase, `pkm` e `index` são dados dinâmicos de runtime e devem entrar por bind mount externo. Já `models`, `reference`, `.agents/skills` e `AGENTS.md` seguem versionados na release da aplicação.
