@@ -37,6 +37,11 @@ O milestone `v2.1` fecha o primeiro fluxo operacional completo de release da apl
 **Depends on**: Phase 7
 **Plans**: 3 plans (expected)
 
+Plans:
+- [ ] 08-01-PLAN.md — Fixar o contrato de rastreabilidade SemVer no build e na UI
+- [ ] 08-02-PLAN.md — Publicar a imagem canônica por tag Git no GitHub Actions e GHCR
+- [ ] 08-03-PLAN.md — Documentar o checklist operacional de release e validar a cadeia externa
+
 **Details:**
 
 - **Requirements**: VER-01, VER-02, VER-03, PUB-01, PUB-02, PUB-03, PUB-04
