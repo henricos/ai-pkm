@@ -49,19 +49,19 @@ completed: 2026-04-14
 
 ## Files Created/Modified
 
-- `README.md` - quickstart curto para runtime container com contexto do projeto, `compose.yaml`, `.env.compose` e uma seção única e breve para desenvolvimento e release.
+- `README.md` - quickstart curto para runtime container com contexto do projeto, `compose.yaml` inline e uma seção única e breve para desenvolvimento e release.
 - `.planning/phases/09-portainer-deployment-flow/09-01-SUMMARY.md` - registro desta execução.
 
 ## Verification
 
-- `rg -n 'ghcr.io/henricos/ai-pkm:latest|docker compose --env-file \\.env\\.compose pull|docker compose --env-file \\.env\\.compose up -d|PKM_HOST_PATH|INDEX_HOST_PATH|/data/pkm|/data/index|tela de login' README.md` ✅
+- `rg -n 'ghcr.io/henricos/ai-pkm:latest|docker compose pull|docker compose up -d|/data/pkm|/data/index|tela de login' README.md` ✅
 - `rg -n 'dev-setup\.md|release-semver-ghcr\.md|docker compose' README.md` ✅
 - `! rg -n 'Portainer' README.md` ✅
 - `! rg -n 'smoke test|rollback|banco de dados|migracao.*banco|futuro banco' README.md` ✅
 
 ## Decisions Made
 
-- Mantive `compose.yaml` e `.env.compose.example` apenas como referências existentes do repositório, sem transformá-los em alvos obrigatórios do operador.
+- O quickstart público do runtime deve ensinar um `compose.yaml` autocontido com valores reais, sem depender de `.env.compose`.
 - Não incluí Portainer, smoke test, rollback ou roadmap futuro no guia canônico para preservar o boundary do plano.
 
 ## Deviations from Plan
@@ -75,6 +75,12 @@ Nenhuma.
 ## Next Phase Readiness
 
 - A Wave 2 pode reconciliar a documentação permanente de desenvolvimento e release ao redor do README.
+
+## Post-Validation Amendment
+
+- Durante a validacao humana real da Phase 9, o fluxo com `.env.compose` se mostrou desnecessariamente indireto para o operador.
+- O `README.md` foi ajustado depois desta execucao para remover essa camada e assumir configuracao explicita direto no `compose.yaml`.
+- Este summary foi atualizado para refletir o quickstart vigente no repositorio.
 
 ## Self-Check: PASSED
 

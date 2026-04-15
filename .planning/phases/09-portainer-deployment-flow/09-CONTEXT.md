@@ -1,7 +1,7 @@
 # Phase 9: Portainer Deployment Flow - Context
 
 **Gathered:** 2026-04-14
-**Status:** Ready for planning
+**Status:** Amended after runtime validation feedback
 
 <domain>
 ## Phase Boundary
@@ -70,7 +70,6 @@ Fechar o fluxo operacional minimo de atualizacao da aplicacao no servidor atual 
 ### Current operational surface
 - `README.md` — ponto principal a simplificar e tornar mais direto para quem quer subir o container.
 - `compose.yaml` — contrato existente de runtime que servira de base para a documentacao publica.
-- `.env.compose.example` — conjunto minimo de variaveis que o operador precisa preencher.
 - `docs/docker-validation.md` — doc atual de container que pode precisar ser ajustado para remover linguagem especulativa e alinhar o foco operacional.
 - `docs/release-semver-ghcr.md` — fluxo de release anterior que a documentacao de deploy deve complementar sem repetir.
 - `docs/dev-setup.md` — separacao entre dev local e runtime empacotado.
@@ -82,7 +81,6 @@ Fechar o fluxo operacional minimo de atualizacao da aplicacao no servidor atual 
 
 ### Reusable Assets
 - `compose.yaml`: ja expressa `PKM_PATH=/data/pkm`, `INDEX_PATH=/data/index`, image/build e binds externos para `pkm` + `index`.
-- `.env.compose.example`: ja concentra as env vars que a documentacao de instalacao pode reaproveitar.
 - `Dockerfile`: ja produz o runtime distribuivel que sera consumido como imagem publicada.
 - `.github/workflows/release-ghcr.yml`: ja publica `ghcr.io/henricos/ai-pkm` com `latest` e `vX.Y.Z`.
 
@@ -93,8 +91,13 @@ Fechar o fluxo operacional minimo de atualizacao da aplicacao no servidor atual 
 
 ### Integration Points
 - A implementacao desta fase vai tocar principalmente `README.md` e docs operacionais ligados a container/deploy.
-- O exemplo publico de compose deve permanecer coerente com `compose.yaml` e `.env.compose.example`.
+- O exemplo publico de compose deve permanecer coerente com o contrato do `compose.yaml`, mas o quickstart do operador pode ser mais direto e autocontido que o compose versionado do repositorio.
 - A narrativa da documentacao precisa conectar imagem publicada no GHCR com a configuracao local do operador sem citar Portainer como interface principal.
+
+### Amendment After Real Validation
+- A validacao humana real do quickstart mostrou que um arquivo `.env.compose` obrigatorio nao melhora a operacao do servidor atual e adiciona indirecao desnecessaria.
+- O `README.md` foi ajustado para ensinar um `compose.yaml` autocontido com placeholders explicitos.
+- `.env.compose.example` deixou de ser parte da superficie ativa do repositorio e foi removido.
 
 </code_context>
 

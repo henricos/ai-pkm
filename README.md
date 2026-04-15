@@ -37,7 +37,7 @@ Pré-requisitos:
 - Um path absoluto no host para o diretório `index/` deste repositório
 - Credenciais reais para `AUTH_USERNAME`, `AUTH_PASSWORD`, `NEXTAUTH_SECRET` e `NEXTAUTH_URL`
 
-Crie um diretório de runtime com estes dois arquivos:
+Crie um diretório de runtime e salve nele um `compose.yaml` com os valores reais do seu ambiente:
 
 `compose.yaml`
 
@@ -49,48 +49,43 @@ services:
       APP_ROOT_PATH: /app
       PKM_PATH: /data/pkm
       INDEX_PATH: /data/index
-      AUTH_USERNAME: ${AUTH_USERNAME}
-      AUTH_PASSWORD: ${AUTH_PASSWORD}
-      AUTH_TRUST_HOST: ${AUTH_TRUST_HOST:-true}
-      NEXTAUTH_SECRET: ${NEXTAUTH_SECRET}
-      NEXTAUTH_URL: ${NEXTAUTH_URL}
+      AUTH_USERNAME: curator
+      AUTH_PASSWORD: uma-senha-segura
+      AUTH_TRUST_HOST: "true"
+      NEXTAUTH_SECRET: troque-por-uma-string-aleatoria-com-pelo-menos-32-caracteres
+      NEXTAUTH_URL: http://localhost:3000
     ports:
-      - "${WEB_HOST_PORT:-3000}:3000"
+      - "3000:3000"
     volumes:
       - type: bind
-        source: ${PKM_HOST_PATH}
+        source: /absolute/path/to/pkm
         target: /data/pkm
         read_only: true
       - type: bind
-        source: ${INDEX_HOST_PATH}
+        source: /absolute/path/to/ai-pkm/index
         target: /data/index
         read_only: true
 ```
 
-`.env.compose`
+Troque todos os placeholders antes de subir:
 
-```env
-PKM_HOST_PATH=/absolute/path/to/pkm
-INDEX_HOST_PATH=/absolute/path/to/ai-pkm/index
-WEB_HOST_PORT=3000
-AUTH_USERNAME=curator
-AUTH_PASSWORD=uma-senha-segura
-AUTH_TRUST_HOST=true
-NEXTAUTH_SECRET=string-aleatoria-com-pelo-menos-32-caracteres
-NEXTAUTH_URL=http://localhost:3000
-```
+- `AUTH_USERNAME` e `AUTH_PASSWORD`: credenciais reais de login
+- `NEXTAUTH_SECRET`: string aleatória com pelo menos 32 caracteres
+- `NEXTAUTH_URL`: URL pública real do runtime
+- `source` dos volumes: paths absolutos reais do `pkm` e do `index`
+- `3000:3000`: altere a porta à esquerda se quiser expor em outra porta do host
 
 Suba a aplicação:
 
 ```bash
-docker compose --env-file .env.compose up -d
+docker compose up -d
 ```
 
 Atualize para a imagem mais recente publicada:
 
 ```bash
-docker compose --env-file .env.compose pull
-docker compose --env-file .env.compose up -d
+docker compose pull
+docker compose up -d
 ```
 
 Depois, abra `http://localhost:3000` e confirme que a aplicação chega à tela de login.

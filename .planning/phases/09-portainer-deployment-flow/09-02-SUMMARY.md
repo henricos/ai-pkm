@@ -65,7 +65,7 @@ completed: 2026-04-15
 
 ## Decisions Made
 
-- Preservei `compose.yaml` e `.env.compose.example` intactos, porque a fase é documental e o runtime por compose já ficou coberto no README e no guia canônico.
+- Preservei `compose.yaml` intacto como contrato genérico do repositório; o quickstart público do runtime ficou concentrado no `README.md`.
 - Não transformei o `AGENTS.md` em guia operacional; incluí apenas um apontamento curto para o documento correto.
 
 ## Deviations from Plan
@@ -76,10 +76,16 @@ Nenhuma.
 
 - A primeira iteração da fase tinha deixado dois docs transitórios (`portainer-stack-update` e `docker-validation`) como entregas finais; removi ambos para alinhar o repositório ao modelo documental aprovado pelo operador.
 
+## Post-Validation Amendment
+
+- A validacao humana real posterior a execucao mostrou que `.env.compose.example` tambem atuava como artefato transitorio desnecessario para o quickstart publico.
+- O arquivo foi removido, e o `README.md` passou a assumir configuracao explicita no proprio `compose.yaml`.
+- Este summary foi ajustado para nao perpetuar a premissa antiga de que `.env.compose.example` permaneceria intacto.
+
 ## Next Phase Readiness
 
 - Os handoffs entre README, release e desenvolvimento local ficaram explícitos.
-- A fase está pronta para verificação final da documentação permanente do milestone.
+- A fase segue pronta para a passada final de validacao humana do quickstart atualizado.
 
 ## Self-Check: PASSED
 

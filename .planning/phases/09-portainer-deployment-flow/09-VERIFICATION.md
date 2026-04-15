@@ -1,22 +1,28 @@
 ---
 phase: 09-portainer-deployment-flow
-verified: 2026-04-15T04:05:00Z
-status: passed
-score: 3/3 success criteria verified
+verified: 2026-04-15T12:00:00Z
+status: in_progress
+score: 2/3 success criteria verified in repo; validacao humana real em andamento
 overrides_applied: 0
 human_verification:
   - test: "Leitura humana do quickstart e do guia canônico até a tela de login"
     expected: "Operador consegue seguir a narrativa sem conhecimento implícito do repo"
     why_human: "A fase é majoritariamente documental; clareza operacional depende de leitura humana"
-    disposition: "pendente para o operador no ambiente real"
+    disposition: "em andamento no ambiente real; a primeira passada encontrou ajustes necessarios no quickstart"
 ---
 
 # Phase 9: Portainer Deployment Flow — Relatório de Verificação
 
 **Objetivo da fase:** Fechar o fluxo operacional mínimo de update da aplicação por imagem publicada, com `docker compose` como superfície canônica e documentação permanente centrada no README.
-**Verificado em:** 2026-04-15T04:05:00Z
-**Status:** passed
-**Re-verificação:** Não aplicável
+**Verificado em:** 2026-04-15T12:00:00Z
+**Status:** in_progress
+**Re-verificação:** aberta após validação humana real em andamento
+
+## Estado Atual
+
+Durante a validacao humana real do quickstart, ficou claro que a variante baseada em `.env.compose` adicionava uma camada desnecessaria de indirecao para o operador. O `README.md` foi ajustado para ensinar um `compose.yaml` autocontido com valores reais no proprio arquivo, e o artefato `.env.compose.example` foi removido do repositorio.
+
+Com isso, a fase continua correta na direcao tecnica, mas nao deve ser considerada definitivamente encerrada ate o operador terminar novamente o fluxo atualizado no ambiente real.
 
 ## Conquista do Objetivo
 
@@ -24,18 +30,18 @@ human_verification:
 
 | # | Verdade | Status | Evidência |
 |---|---------|--------|-----------|
-| 1 | O repositório agora ensina instalação e update por imagem publicada, sem `git pull` no runtime | VERIFIED | `README.md` usa `ghcr.io/henricos/ai-pkm:latest`, `.env.compose` e `docker compose --env-file .env.compose ...` |
+| 1 | O repositorio agora ensina instalacao e update por imagem publicada, sem `git pull` no runtime | VERIFIED | `README.md` usa `ghcr.io/henricos/ai-pkm:latest`, `docker compose up -d` e `docker compose pull` sem `--env-file` |
 | 2 | O README passou a ser a superfície principal e permanente para runtime por compose | VERIFIED | `README.md` concentra o quickstart inline e delega apenas dev/release para docs separados |
-| 3 | Release e desenvolvimento local ficaram com fronteiras editoriais claras e sem docs transitórios de fase | VERIFIED | `docs/release-semver-ghcr.md`, `docs/dev-setup.md` e `AGENTS.md` cobrem os handoffs permanentes; `docs/portainer-stack-update.md` e `docs/docker-validation.md` foram removidos |
+| 3 | O fluxo atualizado foi confirmado por leitura e execucao humana ate a tela de login | IN PROGRESS | Validacao humana real em andamento; a primeira passada ja gerou correcao no quickstart |
 
-**Score final:** 3/3 critérios de sucesso verificados no repositório.
+**Score atual:** 2/3 criterios de sucesso verificados no repositorio; falta concluir a passada humana final no ambiente real.
 
 ## Artefatos Obrigatórios
 
 | Artefato | Esperado | Status | Detalhes |
 |----------|----------|--------|----------|
 | `README.md` | Quickstart curto do runtime container | VERIFIED | Expõe compose mínimo, update por pull da imagem e link para o guia canônico |
-| `README.md` | Documento principal com quickstart de runtime por compose | VERIFIED | Traz contexto do projeto, pré-requisitos, `compose.yaml`, `.env.compose`, start inicial, update e término na tela de login |
+| `README.md` | Documento principal com quickstart de runtime por compose | VERIFIED | Traz contexto do projeto, pre-requisitos, `compose.yaml`, start inicial, update e termino na tela de login |
 | `docs/release-semver-ghcr.md` | Guia separado de release com contexto explícito | VERIFIED | Explica quando usar, mantém o fluxo canônico e cita a skill `/fechar-versao` sem esconder os comandos |
 | `docs/dev-setup.md` | Guia separado de desenvolvimento local | VERIFIED | Mantém o fluxo `npm` e aponta o runtime empacotado de volta para o README |
 | `AGENTS.md` | Apontamento curto para a documentação de release | VERIFIED | Cita `docs/release-semver-ghcr.md` e a skill `/fechar-versao` sem expandir o texto operacional |
@@ -44,23 +50,26 @@ human_verification:
 
 | Comportamento | Comando | Resultado | Status |
 |---------------|---------|-----------|--------|
-| README contém imagem publicada, mounts externos e fluxo até login | `rg -n 'ghcr.io/henricos/ai-pkm:latest|docker compose --env-file \\.env\\.compose pull|docker compose --env-file \\.env\\.compose up -d|PKM_HOST_PATH|INDEX_HOST_PATH|/data/pkm|/data/index|tela de login' README.md` | Itens encontrados | PASS |
+| README contem imagem publicada, mounts externos e fluxo ate login | `rg -n 'ghcr.io/henricos/ai-pkm:latest|docker compose pull|docker compose up -d|/data/pkm|/data/index|tela de login' README.md` | Itens encontrados | PASS |
+| README nao depende mais de `.env.compose` nem `--env-file` | `! rg -n '\.env\.compose|env-file' README.md` | Nenhuma ocorrencia | PASS |
 | README concentra runtime e reduz dev/release a referências breves | `rg -n 'dev-setup\.md|release-semver-ghcr\.md|docker compose' README.md && ! rg -n 'Portainer' README.md` | Links e comandos presentes; Portainer ausente | PASS |
 | Guia de release ficou contextualizado e alinhado à skill | `rg -n 'README\.md|/fechar-versao|npm version patch\|minor\|major' docs/release-semver-ghcr.md` | Contexto, skill e fluxo canônico presentes | PASS |
-| Docs transitórios da fase não permanecem no repositório | `! test -e docs/portainer-stack-update.md && ! test -e docs/docker-validation.md` | Arquivos ausentes | PASS |
+| Artefatos transitorios do quickstart antigo nao permanecem no repositorio | `! test -e .env.compose.example && ! test -e docs/portainer-stack-update.md && ! test -e docs/docker-validation.md` | Arquivos ausentes | PASS |
 
 ## Cobertura de Requisitos
 
 | Requisito | Plano | Descrição | Status | Evidência |
 |-----------|-------|-----------|--------|-----------|
-| DEP-01 | 09-01 | Operador atualiza a aplicação consumindo imagem publicada, sem `git pull` no runtime | SATISFIED | README usa `latest` e o fluxo explícito com `docker compose --env-file .env.compose ...` |
+| DEP-01 | 09-01 | Operador atualiza a aplicacao consumindo imagem publicada, sem `git pull` no runtime | SATISFIED | README usa `latest` e o fluxo explicito com `docker compose pull` + `docker compose up -d` |
 | DEP-02 | 09-02 | Operação documentada permanece genérica por compose, sem acoplamento a uma interface específica | SATISFIED | README mantém o runtime por compose como superfície pública única |
-| DEP-03 | 09-01, 09-02 | Repositório documenta o fluxo mínimo de release e runtime de forma permanente e sem sobreposição | SATISFIED | Handoffs explícitos entre README, dev-setup, release guide e AGENTS |
+| DEP-03 | 09-01, 09-02 | Repositorio documenta o fluxo minimo de release e runtime de forma permanente e sem sobreposicao | IN PROGRESS | Os handoffs continuam corretos, mas a validacao humana final do quickstart revisado ainda esta em andamento |
 
 ## Verificação Humana
 
-Permanece fora deste ambiente, como previsto em `09-VALIDATION.md`, a leitura do fluxo por um operador até a tela de login.
+Como previsto em `09-VALIDATION.md`, o fechamento real da fase depende de uma passada humana do fluxo ate a tela de login.
 
-Esse checkpoint não bloqueia a conclusão da execução da fase porque o objetivo desta etapa era fechar a fonte de verdade documental.
+Essa passada foi iniciada e encontrou um problema concreto no design do quickstart: o uso de `.env.compose` como camada obrigatoria para alimentar o `docker compose`.
 
-Conclusão: a fase 9 foi executada com sucesso e entrega a superfície documental mínima para update por imagem publicada, centrada em compose genérico e em documentação permanente do repositório.
+Esse problema ja foi corrigido no `README.md` com um `compose.yaml` autocontido e placeholders explicitos, mas o operador ainda precisa terminar a nova execucao para que a fase seja considerada fechada de verdade.
+
+Conclusao: a fase 9 permanece tecnicamente bem direcionada e com documentacao reconciliada ao teste real, porem segue aberta ate a conclusao da validacao humana final do fluxo atualizado.
