@@ -120,6 +120,8 @@ Sem arquivos de log de IA; auditoria exclusivamente via mensagem de commit Git.
 
 Ao criar ou atualizar artefatos de planning, respeite a convencao de versionamento definida em `.planning/PROJECT.md`: milestones usam `vMAJOR.MINOR` e a versao do aplicativo usa SemVer completo `MAJOR.MINOR.PATCH`.
 
+O fluxo operacional de release do aplicativo esta documentado em `docs/release-semver-ghcr.md`. Ao tratar de fechamento de versao, consulte esse guia e a skill `/fechar-versao`.
+
 ## Referência de UI (Stitch output)
 
 Antes de implementar qualquer tela, leia:

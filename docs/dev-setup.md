@@ -1,8 +1,6 @@
 # Guia de Setup Local — ai-pkm
 
-Este documento descreve como subir a aplicação `ai-pkm` em ambiente local/dev a partir do zero.
-
-Se o objetivo for validar o artefato distribuível em container, use [docs/docker-validation.md](/home/henrico/github/henricos/ai-pkm/docs/docker-validation.md). Este guia cobre apenas o fluxo de desenvolvimento com `npm run dev`.
+Este documento descreve como subir a aplicação `ai-pkm` em ambiente local/dev a partir do zero. Este guia cobre apenas o fluxo de desenvolvimento com `npm run dev`.
 
 ---
 
@@ -162,7 +160,7 @@ npm run dev
 
 O servidor sobe em `http://localhost:3000`.
 
-Este fluxo existe para desenvolvimento local. Ele não substitui a validação do runtime empacotado via `docker compose`.
+Este fluxo existe para desenvolvimento local. Para runtime empacotado via `docker compose`, use o `README.md`.
 
 ---
 
@@ -219,7 +217,7 @@ outros contextos. Use sempre o path completo.
 
 Você subiu a aplicação com `NODE_ENV=production` sem informar o path externo dos
 índices. Configure `INDEX_PATH` explicitamente antes de iniciar o runtime empacotado
-e siga [docs/docker-validation.md](/home/henrico/github/henricos/ai-pkm/docs/docker-validation.md) para validar o contrato do container.
+e siga o fluxo de `docker compose` descrito no `README.md`.
 
 ### Cookie de sessão não persiste
 

@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v2.1
 milestone_name: "**Status:** Definido em 2026-04-13"
 status: executing
-stopped_at: Phase 08 encerrada; proximo passo e iniciar a Phase 09 sobre deploy via Portainer consumindo a imagem publica validada
-last_updated: "2026-04-14T22:20:00.000Z"
-last_activity: 2026-04-14 -- Phase 08 fechada no planning com release v2.0.2 e skill /fechar-versao
+stopped_at: Phase 09 executada; proximo passo e validar/encerrar o milestone v2.1
+last_updated: "2026-04-15T03:20:00.000Z"
+last_activity: 2026-04-15 -- Phase 09 executada com docs de deploy/update e verificação local registrada
 progress:
   total_phases: 3
   completed_phases: 2
-  total_plans: 6
-  completed_plans: 6
-  percent: 83
+  total_plans: 8
+  completed_plans: 8
+  percent: 100
 ---
 
 # Project State
@@ -21,17 +21,17 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-13)
 
 **Core value:** Permitir operar o PKM com auxilio de IA, alternando entre uma experiencia visual na web e a operacao local via CLI, sem perder compatibilidade com o modelo file-first.
-**Current focus:** Phase 09 — documentar e fechar o fluxo operacional de redeploy no servidor atual via Docker + Portainer
+**Current focus:** Phase 09 — portainer-deployment-flow concluida; aguardando validacao final do milestone
 
 ## Current Position
 
-Phase: 09 (portainer-deployment-flow) — READY
-Plan: aguardando planejamento/execucao
-Next: definir e implementar o fluxo minimo de update no servidor atual usando a imagem publicada no GHCR
-Status: Phase 08 concluida; milestone segue para a etapa de deploy
-Last activity: 2026-04-14 -- planning atualizado apos validacao completa da release v2.0.2
+Phase: 09 (portainer-deployment-flow) — EXECUTED
+Plan: 2 of 2
+Next: verificar a fase 09 no ambiente real e encerrar o milestone v2.1
+Status: Phase 09 executada; docs de deploy/update reconciliados
+Last activity: 2026-04-15 -- Phase 09 executada com verificação documental concluída
 
-Progress: [########--] 83%
+Progress: [##########] 100%
 
 ## Performance Metrics
 

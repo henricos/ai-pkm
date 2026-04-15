@@ -1,66 +1,103 @@
 # ai-pkm
 
-Plataforma de gestão de conhecimento pessoal operada por IA.
+Plataforma web file-first para navegar um PKM pessoal operado por IA.
 
 ## O que é
 
-O ai-pkm é uma plataforma web file-first para operar um PKM pessoal com IA. O acervo de conhecimento — notas, URLs processadas, conceitos, referências — vive num repositório Git separado e privado (`pkm`), acessado por volume de filesystem. Este repositório contém apenas a plataforma: aplicação web, agente de IA, skills operacionais e toda a lógica do sistema.
+O `ai-pkm` é uma plataforma web file-first para navegar um PKM pessoal operado por IA. O acervo vive em um repositório privado `pkm`, separado da aplicação e montado externamente no runtime.
 
-O modelo de colaboração é claro: o humano deposita material bruto, navega o acervo e aprova mudanças. A IA é a escritora exclusiva da base estruturada — toda movimentação, criação e edição de conteúdo acontece via skills. Nada é escrito manualmente na base.
+### Modelo de operação
 
-O sistema opera em dois modos em paralelo: pela interface web, que é o ambiente principal de uso, e via agentes CLI rodando diretamente sobre o repositório `pkm`. Os dois mundos se sincronizam por Git. O ciclo operacional — captura, triagem, processamento, criação e agrupamento de conhecimento — acontece inteiramente via skills acionadas pelo operador.
+- a IA atua como única editora de conteúdo da base
+- o humano orienta, aprova e navega o acervo
+- a aplicação web e a operação via CLI coexistem sobre a mesma fonte de verdade
 
-O projeto é guiado por SDD usando GSD. O contexto vivo do produto fica em `.planning/`; os contratos normativos do domínio PKM ficam em `reference/`; e as skills em `.agents/skills/` são a fonte de verdade operacional do comportamento do sistema.
+### O que este repositório contém
 
-## Por que construir isso
+Este repositório contém a aplicação, as skills operacionais, a documentação e os artefatos de apoio ao sistema. O conteúdo do conhecimento continua fora daqui, no repositório `pkm`.
 
-Em 2026, a receita mais popular para quem quer um "Second Brain com IA" é clara: Obsidian ou Notion, conectados ao Claude Code ou outro agente via MCP. Há cursos, tutoriais e comunidades inteiras em torno desses combos. Funcionam, e têm seu lugar.
+### Também é
 
-O problema é que são ferramentas genéricas coladas com integração. A IA entra como visitante — um plugin, um conector, uma camada sobre um produto que foi projetado para outra coisa. O Notion é SaaS: os dados não ficam com você. O Obsidian tem seu próprio modelo de vault, seus plugins, sua UX. Você se adapta à ferramenta.
+Além da aplicação em si, o projeto também serve como laboratório prático de desenvolvimento guiado por especificação com apoio de IA.
 
-O ai-pkm parte do princípio inverso: a IA foi projetada como escritora desde o início, não adicionada depois. O acervo é um repositório Git comum — você tem soberania total sobre os dados. A interface é sua, não do produto: web, CLI e mobile no seu fluxo de trabalho, com a navegação e a apresentação que fazem sentido para você, não para uma base de usuários genérica. É uma solução tailor-made, construída para atender exatamente um conjunto de necessidades — sem os 80% de features de uma ferramenta de mercado que você nunca vai usar.
+### Por que existe
 
-Outro ponto: o sistema não cria dependência de nenhum agente CLI específico. As regras operacionais vivem em `AGENTS.md` e as skills em `.agents/skills/` — convenções agnósticas que qualquer ferramenta compatível consegue ler. Claude Code, Cursor, Codex CLI ou qualquer outro agente pode operar o sistema sem reescrever instruções. Sem lock-in.
+Hoje, soluções populares para PKM com IA costumam seguir caminhos como Obsidian + Claude ou propostas mais recentes como a LLM Wiki de Andrej Karpathy. O `ai-pkm` segue outra direção. Em vez de depender de uma interface genérica, ele busca uma experiência feita sob medida, que pode ser refinada para servir exatamente ao fluxo desejado, sem carregar os excessos e as limitações típicas de ferramentas mais amplas.
 
-Com IA disponível como co-desenvolvedora, construir isso é acessível. Faz mais sentido ter exatamente o que você precisa do que se adaptar ao que existe.
+O outro diferencial é o papel intencional do humano no loop. Aqui, a IA escreve o conteúdo, mas a classificação, a organização e a validação continuam passando pelo humano. Isso não é um detalhe operacional; é parte do modelo. A ideia não é delegar toda a aprendizagem à máquina, nem reduzir a IA a um classificador auxiliar. O objetivo é usar a IA para fazer o trabalho pesado de escrita e estruturação, enquanto o humano continua exposto às fontes, decide o que entra, como se conecta e o que merece ser consolidado. Esse atrito é desejado, porque força absorção real de conhecimento em vez de transformar o sistema numa fábrica invisível de notas que o próprio autor nunca leu.
 
-## Também é
+## Quickstart do runtime container
 
-Um laboratório. O ai-pkm serve como espaço de experimentação para abordagens de desenvolvimento com IA: o projeto adota Spec-Driven Development (SDD) e usa GSD para estruturar o desenvolvimento guiado por especificação. É uma forma de explorar, na prática, como construir software real com IA como parceira de desenvolvimento — não só como assistente de código.
+Use este fluxo quando o objetivo for subir ou atualizar a aplicação pela imagem publicada em `ghcr.io/henricos/ai-pkm:latest`.
 
-## Configuração do ambiente
+Pré-requisitos:
 
-O repositório `pkm` (privado) não faz parte deste repo e precisa ser montado manualmente como pasta `pkm/` na raiz do projeto. Sem ela, nenhuma skill operacional funciona.
+- Docker Engine com `docker compose`
+- Um path absoluto no host para o repositório `pkm`
+- Um path absoluto no host para o diretório `index/` deste repositório
+- Credenciais reais para `AUTH_USERNAME`, `AUTH_PASSWORD`, `NEXTAUTH_SECRET` e `NEXTAUTH_URL`
 
-**Desenvolvimento local**
+Crie um diretório de runtime com estes dois arquivos:
 
-Assumindo que `pkm` e `ai-pkm` estão em pastas irmãs:
+`compose.yaml`
 
-```bash
-ln -s ../pkm pkm
+```yaml
+services:
+  web:
+    image: ghcr.io/henricos/ai-pkm:latest
+    environment:
+      APP_ROOT_PATH: /app
+      PKM_PATH: /data/pkm
+      INDEX_PATH: /data/index
+      AUTH_USERNAME: ${AUTH_USERNAME}
+      AUTH_PASSWORD: ${AUTH_PASSWORD}
+      AUTH_TRUST_HOST: ${AUTH_TRUST_HOST:-true}
+      NEXTAUTH_SECRET: ${NEXTAUTH_SECRET}
+      NEXTAUTH_URL: ${NEXTAUTH_URL}
+    ports:
+      - "${WEB_HOST_PORT:-3000}:3000"
+    volumes:
+      - type: bind
+        source: ${PKM_HOST_PATH}
+        target: /data/pkm
+        read_only: true
+      - type: bind
+        source: ${INDEX_HOST_PATH}
+        target: /data/index
+        read_only: true
 ```
 
-Para subir a aplicação em modo de desenvolvimento, siga [docs/dev-setup.md](/home/henrico/github/henricos/ai-pkm/docs/dev-setup.md).
+`.env.compose`
 
-**Validação do artefato Docker**
+```env
+PKM_HOST_PATH=/absolute/path/to/pkm
+INDEX_HOST_PATH=/absolute/path/to/ai-pkm/index
+WEB_HOST_PORT=3000
+AUTH_USERNAME=curator
+AUTH_PASSWORD=uma-senha-segura
+AUTH_TRUST_HOST=true
+NEXTAUTH_SECRET=string-aleatoria-com-pelo-menos-32-caracteres
+NEXTAUTH_URL=http://localhost:3000
+```
 
-O fluxo oficial para validar a imagem distribuível da Phase 7 não usa mais um `docker run` ad hoc. Use [docs/docker-validation.md](/home/henrico/github/henricos/ai-pkm/docs/docker-validation.md) para:
+Suba a aplicação:
 
-- preparar um arquivo de env local com `PKM_HOST_PATH` e `INDEX_HOST_PATH`
-- validar o contrato do runtime com `docker compose config`
-- buildar a imagem com `docker compose build`
-- subir o stack com `docker compose up`
-- autenticar na aplicação e provar a leitura do acervo montado externamente
+```bash
+docker compose --env-file .env.compose up -d
+```
 
-**Release SemVer e publicação no GHCR**
+Atualize para a imagem mais recente publicada:
 
-O fluxo canônico da Phase 8 para fechar versão, gerar tag Git e publicar a imagem em `ghcr.io/henricos/ai-pkm` está em [docs/release-semver-ghcr.md](/home/henrico/github/henricos/ai-pkm/docs/release-semver-ghcr.md). O guia oficial usa `npm version patch|minor|major` e `git push origin main --follow-tags`, sem wrapper adicional.
+```bash
+docker compose --env-file .env.compose pull
+docker compose --env-file .env.compose up -d
+```
 
-**Runtime container**
+Depois, abra `http://localhost:3000` e confirme que a aplicação chega à tela de login.
 
-No contrato atual da fase, `pkm` e `index` são dados dinâmicos de runtime e devem entrar por bind mount externo. Já `models`, `reference`, `.agents/skills` e `AGENTS.md` seguem versionados na release da aplicação.
+## Desenvolvimento
 
-Enquanto `index` continuar dinâmico, ele deve evoluir em conjunto com `pkm`. O primeiro refresh operacional desse acervo precisa acontecer fora da UI web e fora do processo principal do container.
+Para desenvolvimento local com `npm`, use [docs/dev-setup.md](/home/henrico/github/henricos/ai-pkm/docs/dev-setup.md). Para fechar e publicar uma release SemVer da imagem, use [docs/release-semver-ghcr.md](/home/henrico/github/henricos/ai-pkm/docs/release-semver-ghcr.md).
 
 ## Licença
 

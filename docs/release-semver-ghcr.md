@@ -1,8 +1,12 @@
 # Guia de Release SemVer para GHCR
 
-Este documento define o fluxo canônico de release da Phase 8. O objetivo é manter a release curta, auditável e baseada nos comandos nativos do Git e do npm, sem wrapper opaco.
+Este documento define o fluxo canônico de release do projeto para gerar uma nova versão da aplicação e publicar a imagem correspondente em `ghcr.io/henricos/ai-pkm`.
 
-Use este guia quando o objetivo for fechar uma release oficial da aplicação e publicar a imagem canônica em `ghcr.io/henricos/ai-pkm`.
+Use este guia quando o objetivo for fechar uma release oficial do app Node/web. O fluxo oficial continua baseado nos comandos nativos do Git e do npm, sem wrapper opaco.
+
+Se você quiser apenas subir a aplicação já publicada, não use este documento; siga o quickstart de runtime no `README.md`.
+
+O projeto também possui a skill `/fechar-versao`, mas ela existe para orquestrar este mesmo fluxo canônico, não para substituí-lo.
 
 ## Pré-condições obrigatórias
 
@@ -95,9 +99,12 @@ Verifique no pacote publicado:
 
 Se for o primeiro publish do pacote e ele nascer privado, ajuste a visibilidade para `public` uma única vez no GitHub Packages antes de considerar a cadeia validada.
 
-## Relação com a validação Docker local
+## Depois do publish
 
-- Para validar localmente o artefato empacotado antes da release, use [docs/docker-validation.md](/home/henrico/github/henricos/ai-pkm/docs/docker-validation.md).
+Quando a imagem nova já estiver publicada, o próximo passo é seguir o fluxo de runtime por `docker compose` descrito no `README.md`.
+
+## Relação com desenvolvimento local
+
 - Para setup de desenvolvimento, use [docs/dev-setup.md](/home/henrico/github/henricos/ai-pkm/docs/dev-setup.md).
 
 ## Automação guiada futura
