@@ -51,7 +51,6 @@ services:
       INDEX_PATH: /data/index
       AUTH_USERNAME: curator
       AUTH_PASSWORD: uma-senha-segura
-      AUTH_TRUST_HOST: "true"
       NEXTAUTH_SECRET: troque-por-uma-string-aleatoria-com-pelo-menos-32-caracteres
       NEXTAUTH_URL: http://localhost:3000
     ports:
