@@ -43,8 +43,9 @@ Crie um diretório de runtime e salve nele um `compose.yaml` com os valores reai
 
 ```yaml
 services:
-  web:
+  ai-pkm:
     image: ghcr.io/henricos/ai-pkm:latest
+    container_name: ai-pkm
     environment:
       APP_ROOT_PATH: /app
       PKM_PATH: /data/pkm
@@ -52,18 +53,13 @@ services:
       AUTH_USERNAME: curator
       AUTH_PASSWORD: uma-senha-segura
       NEXTAUTH_SECRET: troque-por-uma-string-aleatoria-com-pelo-menos-32-caracteres
-      NEXTAUTH_URL: http://localhost:3000
-    ports:
-      - "3000:3000"
+      NEXTAUTH_URL: http://SEU-HOST:3030
     volumes:
-      - type: bind
-        source: /absolute/path/to/pkm
-        target: /data/pkm
-        read_only: true
-      - type: bind
-        source: /absolute/path/to/ai-pkm/index
-        target: /data/index
-        read_only: true
+      - /absolute/path/to/pkm:/data/pkm:ro
+      - /absolute/path/to/ai-pkm/index:/data/index:ro
+    ports:
+      - "3030:3000"
+    restart: unless-stopped
 ```
 
 Troque todos os placeholders antes de subir:
@@ -71,8 +67,8 @@ Troque todos os placeholders antes de subir:
 - `AUTH_USERNAME` e `AUTH_PASSWORD`: credenciais reais de login
 - `NEXTAUTH_SECRET`: string aleatória com pelo menos 32 caracteres
 - `NEXTAUTH_URL`: URL pública real do runtime
-- `source` dos volumes: paths absolutos reais do `pkm` e do `index`
-- `3000:3000`: altere a porta à esquerda se quiser expor em outra porta do host
+- paths dos volumes: paths absolutos reais do `pkm` e do `index`
+- `3030:3000`: altere a porta à esquerda se quiser expor em outra porta do host
 
 Suba a aplicação:
 
@@ -87,7 +83,7 @@ docker compose pull
 docker compose up -d
 ```
 
-Depois, abra `http://localhost:3000` e confirme que a aplicação chega à tela de login.
+Depois, abra `http://SEU-HOST:3030` e confirme que a aplicação chega à tela de login.
 
 ## Desenvolvimento
 
