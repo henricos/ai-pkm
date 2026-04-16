@@ -3,19 +3,79 @@
 ## Milestones
 
 - [x] `v2.0` — Web viewer read-only do PKM entregue em 2026-04-13 com 6 fases e 22 planos. Arquivo completo: `.planning/milestones/v2.0-ROADMAP.md`
-- [ ] `v2.1` — Release e publicacao operacional da aplicacao via Docker, GitHub Actions, GHCR e Portainer. Fases 7-9.
+- [x] `v2.1` — Release e publicacao operacional da aplicacao via Docker, GitHub Actions, GHCR e Portainer. Fases 7-9. Encerrado em 2026-04-16. Arquivo: `.planning/milestones/v2.1-ROADMAP.md`
+- [ ] `v2.2` — Base path configurado com sincronia app/auth. Fases 10-12.
 
-## Current Milestone: v2.1
+## Current Milestone: v2.2
 
-**Status:** Definido em 2026-04-13
-**Phases:** 7-9
+**Status:** Definido em 2026-04-16
+**Phases:** 10-12
 **Total Requirements:** 13
 
 ## Overview
 
-O milestone `v2.1` fecha o primeiro fluxo operacional completo de release da aplicacao web. O foco sai da experiencia de leitura entregue na `v2.0` e passa a ser versionar o app, empacotar a web em container Docker, publicar a imagem no GHCR e tornar o redeploy no servidor atual previsivel e rastreavel, sempre mantendo o `pkm` privado fora da imagem.
+O milestone `v2.2` torna a aplicacao genuinamente consciente do prefixo de rota `/pkm`. O `basePath` do Next.js passa a ser configurado a partir de `APP_BASE_PATH`, baked no build via `--build-arg` no workflow do GitHub Actions. Um contrato de ambiente explicito garante que `APP_BASE_PATH` e `NEXTAUTH_URL` estejam presentes e sincronizados no startup, com falha cedo e mensagem clara. Todos os hardcodes de `/` no codigo da aplicacao sao substituidos pelo prefixo configurado. Testes cobrem o contrato de ambiente e o comportamento das rotas com prefixo. Documentacao operacional cobre os 3 lugares de configuracao sem depender de conhecimento implicito.
 
 ## Phases
+
+- [ ] **Phase 10: Environment Contract and Build Foundation** — Contrato de ambiente validado e `basePath` configurado no framework e no pipeline de build.
+- [ ] **Phase 11: Application Code Alignment** — Todos os pontos do codigo que referenciam rotas absolutas usam o prefixo configurado.
+- [ ] **Phase 12: Tests and Operational Documentation** — Testes cobrem o contrato de ambiente e as rotas com prefixo; documentacao cobre o setup completo.
+
+## Phase Details
+
+### Phase 10: Environment Contract and Build Foundation
+
+**Goal**: O contrato de ambiente esta validado, o `basePath` do Next.js e configurado a partir de `APP_BASE_PATH`, o valor e baked no build pelo workflow e existe um helper central para URLs absolutas server-side.
+**Depends on**: Phase 9
+**Requirements**: ENV-01, ENV-02, ENV-03, CFG-01, CFG-02, CFG-03
+**Success Criteria** (what must be TRUE):
+  1. A aplicacao recusa subir com mensagem clara se `APP_BASE_PATH` ou `NEXTAUTH_URL` estiverem ausentes ou sem sincronia de pathname.
+  2. O `next.config.ts` referencia `APP_BASE_PATH` como fonte do `basePath`, sem valor hardcoded no arquivo de config.
+  3. O step de `docker build` no `release.yml` passa `--build-arg APP_BASE_PATH=/pkm` de forma visivel no codigo do workflow.
+  4. Existe `withBasePath()` utilizavel para construcao de URLs absolutas e redirects server-side onde o Next.js nao aplica o prefixo automaticamente.
+**Plans**: TBD
+
+### Phase 11: Application Code Alignment
+
+**Goal**: Todos os redirects, hrefs e rotas absolutas hardcoded no codigo da aplicacao passam a usar o prefixo configurado via `withBasePath()` ou construcao relativa correta.
+**Depends on**: Phase 10
+**Requirements**: APP-01, APP-02, APP-03
+**Success Criteria** (what must be TRUE):
+  1. Acessar `localhost:3000/pkm` em dev exibe o shell autenticado corretamente; a raiz `localhost:3000/` retorna 404.
+  2. Tentativa de acesso nao autenticado redireciona para `/pkm/login`, nao para `/login`.
+  3. Apos login, o usuario e redirecionado para `/pkm`, nao para `/`.
+  4. Links de preview e download de arquivos no viewer funcionam com o prefixo correto.
+**Plans**: TBD
+
+### Phase 12: Tests and Operational Documentation
+
+**Goal**: Testes verificam o contrato de ambiente e o comportamento das rotas com prefixo; documentacao operacional cobre o contrato dos 3 lugares de configuracao sem depender de conhecimento implicito.
+**Depends on**: Phase 11
+**Requirements**: TST-01, TST-02, DOC-01, DOC-02
+**Success Criteria** (what must be TRUE):
+  1. A suite de testes falha explicitamente se `APP_BASE_PATH` ou `NEXTAUTH_URL` estiverem ausentes ou divergentes, e passa quando estao sincronizados.
+  2. Testes de rota cobrem os fluxos de acesso nao autenticado, login e navegacao autenticada com o prefixo `/pkm`.
+  3. `docs/dev-setup.md` explica como configurar `APP_BASE_PATH` no `.env` com exemplos concretos, incluindo nota de que a raiz retorna 404.
+  4. `README.md` documenta os 3 lugares de configuracao (`.env`, workflow, compose) com exemplos e nota de que mudar o path exige nova release.
+**Plans**: TBD
+
+## Progress Table
+
+| Phase | Plans Complete | Status | Completed |
+|-------|----------------|--------|-----------|
+| 10. Environment Contract and Build Foundation | 0/TBD | Not started | - |
+| 11. Application Code Alignment | 0/TBD | Not started | - |
+| 12. Tests and Operational Documentation | 0/TBD | Not started | - |
+
+---
+
+## Previous Milestone: v2.1
+
+**Status:** Encerrado em 2026-04-16
+**Phases:** 7-9
+**Total Requirements:** 13
+**Archive:** `.planning/milestones/v2.1-ROADMAP.md`
 
 ### Phase 7: Container Packaging Foundation
 
@@ -72,7 +132,7 @@ Plans:
   2. O redeploy feito no Portainer mantem o mesmo volume do `pkm` e a configuracao externa necessaria para a aplicacao.
   3. O repositorio documenta de forma objetiva como fechar versao, publicar imagem e executar o redeploy operacional no ambiente atual.
 
-## Milestone Summary
+### v2.1 Milestone Summary
 
 **Key Decisions:**
 

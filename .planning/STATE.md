@@ -1,60 +1,37 @@
 ---
 gsd_state_version: 1.0
-milestone: v2.1
-milestone_name: "**Status:** Definido em 2026-04-13"
-status: executing
-stopped_at: Phase 09 executada; proximo passo e validar/encerrar o milestone v2.1
-last_updated: "2026-04-15T03:20:00.000Z"
-last_activity: 2026-04-15 -- Phase 09 executada com docs de deploy/update e verificação local registrada
+milestone: v2.2
+milestone_name: "Base Path Configurado com Sincronia App/Auth"
+status: planning
+stopped_at: Roadmap v2.2 definido; pronto para planejar Phase 10
+last_updated: "2026-04-16T00:00:00.000Z"
+last_activity: 2026-04-16 -- Roadmap v2.2 criado com fases 10-12
 progress:
   total_phases: 3
-  completed_phases: 2
-  total_plans: 8
-  completed_plans: 8
-  percent: 100
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # Project State
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-04-13)
+See: .planning/PROJECT.md (updated 2026-04-16)
 
 **Core value:** Permitir operar o PKM com auxilio de IA, alternando entre uma experiencia visual na web e a operacao local via CLI, sem perder compatibilidade com o modelo file-first.
-**Current focus:** Phase 09 — portainer-deployment-flow concluida; aguardando validacao final do milestone
+**Current focus:** Milestone v2.2 — roadmap definido; proxima acao e planejar Phase 10
 
 ## Current Position
 
-Phase: 09 (portainer-deployment-flow) — EXECUTED
-Plan: 2 of 2
-Next: verificar a fase 09 no ambiente real e encerrar o milestone v2.1
-Status: Phase 09 executada; docs de deploy/update reconciliados
-Last activity: 2026-04-15 -- Phase 09 executada com verificação documental concluída
+Phase: Not started (roadmap defined)
+Plan: —
+Next: /gsd-plan-phase 10
+Status: Ready to plan
+Last activity: 2026-04-16 — Roadmap v2.2 criado (fases 10-12, 13 requisitos mapeados)
 
-Progress: [##########] 100%
-
-## Performance Metrics
-
-**Velocity:**
-
-- Total plans completed: 22
-- Average duration: ~14 min (estimado)
-- Total execution time: ~3.5 hours
-
-**By Phase:**
-
-| Phase | Plans | Total | Avg/Plan |
-|-------|-------|-------|----------|
-| 01 | 4 | 25 min | 6.25 min |
-| 02 | 3 | ~42 min | ~14 min |
-| 03 | 6 | - | - |
-| 04 | 3 | - | - |
-| 05 | 5 | - | - |
-
-**Recent Trend:**
-
-- Last 6 plans: 04-03, 05-01, 05-02, 05-03, 05-04, 05-05
-- Trend: Positive
+Progress: [----------] 0%
 
 ## Accumulated Context
 
@@ -63,14 +40,13 @@ Progress: [##########] 100%
 Decisions are logged in PROJECT.md Key Decisions table.
 Recent decisions affecting current work:
 
-- [Phase 1]: Autenticacao single-user e obrigatoria desde local/dev, sem excecao para conveniencia de desenvolvimento.
-- [Phase 1]: O `pkm` segue como dependencia externa montada por path/volume e a web trabalha sobre modelo read-only.
-- [Phase 2]: AppShell usa usePathname() diretamente para derivar activeHref — sem wrapper intermediario.
-- [Phase 3]: MarkdownViewer e async Server Component com Shiki no servidor — zero JS de highlight no bundle cliente.
-- [Phase 3]: Painel de informacoes usa push layout (flex ao lado), nao overlay — evita obscurecer o conteudo.
-- [Phase 5]: Modo apresentacao permanece ativo na `v2.0`, mas vem depois de navegacao e leitura confiaveis.
-- [Phase 5]: Presentation mode permanece interno a shell, sem nova rota, com temas restritos ao viewer root.
-- [Phase 6]: O hardening do tema elimina o flash pre-paint sem mover o tema para a shell global.
+- [v2.1 / Phase 8]: Cadeia de release validada com `v2.0.2`; workflow `Release GHCR` e skill `/fechar-versao` operacionais.
+- [v2.1 / Phase 9]: Runtime por compose documentado no README como superficie publica unica; `.env.compose` removido.
+- [v2.2 / Arquitetura]: `basePath` do Next.js e baked no build via `--build-arg` hardcoded no workflow (Opcao B). Mudar path exige nova release.
+- [v2.2 / Arquitetura]: Cloudflare Tunnel preserva o path → app precisa ser genuinamente consciente do prefixo `/pkm`.
+- [v2.2 / Arquitetura]: `APP_BASE_PATH` e `NEXTAUTH_URL` serao ambos obrigatorios e validados em sincronia no startup.
+- [v2.2 / Dev]: Em dev, `localhost:3000/pkm` e o acesso correto; raiz retorna 404.
+- [v2.2 / Roadmap]: Phase 10 cobre contrato de ambiente + next.config + helper + build arg (fundacao); Phase 11 cobre ajustes de codigo que consomem essa fundacao; Phase 12 cobre testes e documentacao operacional.
 
 ### Pending Todos
 
@@ -78,11 +54,4 @@ Recent decisions affecting current work:
 
 ### Blockers/Concerns
 
-- A seam de busca deve nascer preparada para evolucao futura, mas a `v2.0` ativa nao inclui busca textual avancada em popup.
-- A cadeia de release foi validada com `v2.0.2`; o risco principal remanescente do milestone agora migra para a operacao manual de deploy no Portainer.
-
-## Session Continuity
-
-Last session: 2026-04-14
-Stopped at: Phase 08 concluida; proximo passo e abrir/rodar a Phase 09
-Resume file: .planning/phases/08-semver-release-pipeline/.continue-here.md
+- A documentacao do contrato dos 3 lugares (`.env`, workflow CI, compose) e critica para operacao futura e deve ser tratada como requisito, nao como opcional.

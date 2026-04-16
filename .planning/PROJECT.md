@@ -38,8 +38,9 @@ O terceiro numero (`PATCH`) fica reservado para hotfixes e releases pontuais do 
 
 ### Active
 
-- Empacotar a aplicacao web como imagem Docker distribuivel, sem embutir o `pkm` na imagem
-- Atualizar a aplicacao no servidor atual por pull de imagem e redeploy no Portainer, preservando volume e configuracao externa
+- Configurar `APP_BASE_PATH` como fonte unica do `basePath` do Next.js, baked no build via Docker build arg
+- Validar sincronia obrigatoria entre `APP_BASE_PATH` e `NEXTAUTH_URL` em runtime, com falha cedo e mensagem clara
+- Documentar o contrato operacional dos 3 lugares de configuracao: `.env` (dev), workflow CI (build) e compose (runtime)
 
 ### Out of Scope
 
@@ -80,20 +81,26 @@ Os artefatos historicos do milestone foram arquivados em `.planning/milestones/v
 
 Dentro da `v2.1`, a Phase 08 foi fechada em `2026-04-14` com a release real `v2.0.2`. A cadeia ponta a ponta foi validada com commit/tag gerados por `npm version`, workflow `Release GHCR` disparado por push de tag, job `publish` concluido com sucesso e pacote publico `ghcr.io/henricos/ai-pkm` exibindo `latest` e `v2.0.2`. O fechamento tambem deixou uma skill dedicada de operacao (`/fechar-versao`) para repetir esse fluxo sem esconder o mecanismo canonico.
 
-## Current Milestone: v2.1 release e publicacao operacional
+## Current Milestone: v2.2 — Base Path Configurado com Sincronia App/Auth
 
-**Goal:** fechar um fluxo simples, rastreavel e reproduzivel para versionar, empacotar, publicar e atualizar a aplicacao web em Docker, sem embutir o `pkm` na imagem.
+**Goal:** A aplicacao passa a rodar em `/pkm` com `basePath` baked no build, contrato de configuracao explicito e documentacao operacional suficiente para reconstruir o setup sem conhecimento implicito.
 
 **Target features:**
 
-- empacotar a aplicacao como imagem Docker distribuivel
-- manter o `pkm` em repositorio privado separado, montado por volume no runtime
-- adotar versionamento SemVer do app Node/web
-- fechar release via `npm version` com commit e tag Git
-- disparar build/publicacao por tag no GitHub Actions
-- publicar imagem publica no GHCR
-- versionar a imagem com `vX.Y.Z` e `latest`
-- atualizar o servidor por pull da nova imagem e redeploy no Portainer
+- `APP_BASE_PATH` baked no build via `--build-arg` hardcoded no workflow do GitHub Actions
+- `next.config.ts` le `APP_BASE_PATH` e configura `basePath` do Next.js
+- Validacao em `env.ts`: `APP_BASE_PATH` obrigatorio, `NEXTAUTH_URL` obrigatorio, pathname de ambos deve coincidir — falha cedo com mensagem clara
+- Helper `withBasePath()` para construcao de URLs absolutas e redirects server-side
+- Ajuste dos hardcodes de `/` em layout, login, viewer e navegacao
+- Testes de env e de rotas com o prefixo configurado
+- Documentacao obrigatoria: `dev-setup.md` e `README` cobrem o contrato dos 3 lugares (`APP_BASE_PATH` no `.env`, no workflow e `NEXTAUTH_URL` no compose)
+
+**Key decisions:**
+
+- Cloudflare Tunnel preserva o path → app deve ser genuinamente consciente do prefixo, sem proxy strip local
+- Next.js `basePath` e build-time → mudar path exige nova release (aceito conscientemente)
+- Opcao B: valor hardcoded no `.github/workflows/release.yml`, nao em variavel GitHub Actions
+- Em dev: `localhost:3000/pkm` e o acesso correto; raiz retorna 404
 
 ## Next Milestone Goals
 
@@ -159,4 +166,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-04-14 — Phase 08 validada com release real v2.0.2 e skill /fechar-versao criada*
+*Last updated: 2026-04-16 — Milestone v2.1 encerrado (phases 7-9); milestone v2.2 iniciado com foco em base path configurado*

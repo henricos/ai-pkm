@@ -1,76 +1,76 @@
 # Requirements: ai-pkm
 
-**Defined:** 2026-04-13
-**Milestone:** `v2.1`
+**Defined:** 2026-04-16
+**Milestone:** `v2.2`
 **Core Value:** Permitir operar o PKM com auxilio de IA, alternando entre uma experiencia visual na web e a operacao local via CLI, sem perder compatibilidade com o modelo file-first.
 
-## v2.1 Requirements
+## v2.2 Requirements
 
-### Packaging
+### Contrato de Ambiente
 
-- [ ] **PKG-01**: Aplicacao pode ser empacotada como imagem Docker distribuivel contendo apenas a web app e seus artefatos de runtime.
-- [ ] **PKG-02**: Runtime em container recebe o `pkm` por path ou volume montado externamente, sem copiar o acervo para dentro da imagem.
-- [ ] **PKG-03**: Equipe consegue validar localmente o container da aplicacao com configuracao minima documentada antes de publicar uma release.
+- [ ] **ENV-01**: App falha no startup com mensagem clara se `APP_BASE_PATH` estiver ausente no ambiente.
+- [ ] **ENV-02**: App falha no startup com mensagem clara se `NEXTAUTH_URL` estiver ausente no ambiente.
+- [ ] **ENV-03**: App valida que o pathname de `NEXTAUTH_URL` coincide com `APP_BASE_PATH`; falha cedo com mensagem que mostra um exemplo correto (ex: `APP_BASE_PATH=/pkm` junto de `NEXTAUTH_URL=https://host/pkm`) se divergirem.
 
-### Versioning
+### Build e Configuracao Next.js
 
-- [x] **VER-01**: Projeto expõe versao de aplicativo em SemVer completo no ecossistema Node/web.
-- [x] **VER-02**: Operador consegue fechar uma release com `npm version patch|minor|major`, gerando o bump de versao do projeto, o commit de release e a tag Git correspondente.
-- [x] **VER-03**: Cada release publicada permanece rastreavel entre versao do app, tag Git e tag imutavel da imagem.
+- [ ] **CFG-01**: `next.config.ts` usa `APP_BASE_PATH` como fonte do `basePath` do Next.js, tornando o prefixo explicito na configuracao do framework.
+- [ ] **CFG-02**: `release.yml` passa `--build-arg APP_BASE_PATH=/pkm` no step de `docker build`, tornando o valor baked visivel no codigo do workflow.
+- [ ] **CFG-03**: Existe helper `withBasePath(path)` central para construcao de URLs absolutas e redirects server-side onde o Next.js nao aplica o prefixo automaticamente.
 
-### Publication
+### Ajustes de Codigo
 
-- [x] **PUB-01**: Push de tag Git de release dispara automaticamente um workflow de publicacao no GitHub Actions.
-- [x] **PUB-02**: Workflow de publicacao executa o build da imagem Docker em GitHub-hosted runner Ubuntu.
-- [x] **PUB-03**: Workflow publica a imagem da aplicacao no GitHub Container Registry como imagem publica.
-- [x] **PUB-04**: Cada release publicada recebe pelo menos as tags de imagem `vX.Y.Z` e `latest`.
+- [ ] **APP-01**: Redirects em `src/app/(shell)/layout.tsx` e `src/app/(auth)/login/page.tsx` usam o prefixo configurado em vez de strings absolutas cruas.
+- [ ] **APP-02**: Geracao de hrefs em `src/lib/navigation/route-helpers.ts` e callback fallback em `src/components/login-form.tsx` usam o prefixo configurado.
+- [ ] **APP-03**: Rotas de preview e download em `src/components/viewer/viewer-page.tsx` e `src/components/viewer/viewer-header.tsx` usam o prefixo configurado.
 
-### Deployment
+### Testes
 
-- [ ] **DEP-01**: Operador consegue atualizar a aplicacao no servidor atual consumindo a nova imagem publicada, sem `git pull` dentro do container.
-- [ ] **DEP-02**: Redeploy no Portainer preserva configuracao externa e o mesmo volume montado do `pkm`.
-- [ ] **DEP-03**: Repositorio documenta o fluxo operacional minimo de release e redeploy para o ambiente atual com Docker + Portainer.
+- [ ] **TST-01**: Testes de env cobrem: falha quando `APP_BASE_PATH` esta ausente; falha quando `NEXTAUTH_URL` esta ausente; falha quando `APP_BASE_PATH=/pkm` e `NEXTAUTH_URL` nao termina em `/pkm`; sucesso quando os dois estao sincronizados.
+- [ ] **TST-02**: Testes de rotas cobrem: acesso nao autenticado redireciona para `/pkm/login`; login retorna para `/pkm`; navegacao funciona em `/pkm/library`.
+
+### Documentacao Operacional
+
+- [ ] **DOC-01**: `docs/dev-setup.md` documenta como configurar `APP_BASE_PATH` no `.env` para desenvolvimento local, com exemplos concretos e nota explicita de que `localhost:3000/pkm` e o acesso correto (raiz retorna 404).
+- [ ] **DOC-02**: `README.md` documenta o contrato dos 3 lugares de configuracao — `.env` (dev), `.github/workflows/release.yml` (build), `compose.yaml` (runtime) — com exemplos concretos e explicacao de que mudar o path exige editar o workflow e abrir uma nova release.
 
 ## Future Requirements
 
-### Deployment Evolution
+### Configurabilidade Avancada
 
-- **FUT-01**: Pipeline pode acionar deploy remoto automatizado sem depender de operacao manual no Portainer.
-- **FUT-02**: Estrategia de release suporta canais adicionais alem de `latest`, como `stable`, `beta` ou imagens por ambiente.
-- **FUT-03**: Distribuicao pode ser portada para outro alvo operacional, como VPS dedicada ou Kubernetes, sem redesenhar o modelo de empacotamento.
+- **FUT-01**: `APP_BASE_PATH` pode ser alterado em runtime sem rebuild da imagem (requer adicao de reverse proxy local para prefix stripping).
+- **FUT-02**: App suporta multiplos paths de base para ambientes distintos (staging vs prod) sem recompilar uma imagem diferente.
 
 ## Out of Scope
 
 | Feature | Reason |
 |---------|--------|
-| Embutir o `pkm` na imagem Docker | Viola a separacao entre aplicacao publica e conteudo privado file-first |
-| Atualizacao da aplicacao por `git pull` dentro do container | Gera runtime menos rastreavel e foge do modelo baseado em imagem versionada |
-| Deploy remoto totalmente automatico a partir do GitHub Actions | Nao e necessario para fechar o primeiro fluxo operacional do servidor atual |
-| Multiplos ambientes de release com estrategia complexa de canais | Aumenta escopo operacional antes de provar o fluxo simples `vX.Y.Z` + `latest` |
+| Reverse proxy local para strip do prefixo | Decisao consciente de nao adicionar proxy agora; Opcao B (baked) foi escolhida |
+| `APP_BASE_PATH` como variavel de runtime no container | Next.js `basePath` e build-time; runtime configurability exige arquitetura diferente |
+| Suporte a app na raiz com auth em subrota ou vice-versa | Tratado como configuracao invalida; o sync check recusa essa combinacao |
 
 ## Traceability
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| PKG-01 | Phase 7 | Pending |
-| PKG-02 | Phase 7 | Pending |
-| PKG-03 | Phase 7 | Pending |
-| VER-01 | Phase 8 | Validated |
-| VER-02 | Phase 8 | Validated |
-| VER-03 | Phase 8 | Validated |
-| PUB-01 | Phase 8 | Validated |
-| PUB-02 | Phase 8 | Validated |
-| PUB-03 | Phase 8 | Validated |
-| PUB-04 | Phase 8 | Validated |
-| DEP-01 | Phase 9 | Pending |
-| DEP-02 | Phase 9 | Pending |
-| DEP-03 | Phase 9 | Pending |
+| ENV-01 | Phase 10 | Pending |
+| ENV-02 | Phase 10 | Pending |
+| ENV-03 | Phase 10 | Pending |
+| CFG-01 | Phase 10 | Pending |
+| CFG-02 | Phase 10 | Pending |
+| CFG-03 | Phase 10 | Pending |
+| APP-01 | Phase 11 | Pending |
+| APP-02 | Phase 11 | Pending |
+| APP-03 | Phase 11 | Pending |
+| TST-01 | Phase 12 | Pending |
+| TST-02 | Phase 12 | Pending |
+| DOC-01 | Phase 12 | Pending |
+| DOC-02 | Phase 12 | Pending |
 
 **Coverage:**
-- v2.1 requirements: 13 total
+- v2.2 requirements: 13 total
 - Mapped to phases: 13
 - Unmapped: 0
 
 ---
-*Requirements defined: 2026-04-13*
-*Last updated: 2026-04-14 after Phase 08 validation with release v2.0.2*
+*Requirements defined: 2026-04-16*
