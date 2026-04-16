@@ -60,12 +60,13 @@ Plans:
 **Plans**: 2 plans (expected)
 
 Plans:
-- [ ] 09-01-PLAN.md — Publicar o guia canônico de deploy/update por `docker compose` e simplificar o README
-- [ ] 09-02-PLAN.md — Reconciliar release, validação local e reaplicação do stack atual via Portainer
+- [x] 09-01-PLAN.md — Publicar o guia canônico de deploy/update por `docker compose` e simplificar o README
+- [x] 09-02-PLAN.md — Reconciliar release, validação local e reaplicação do stack atual via Portainer
 
 **Details:**
 
 - **Requirements**: DEP-01, DEP-02, DEP-03
+- **Status**: concluida em 2026-04-16 com quickstart revisado, guia canônico de runtime e validação humana confirmada no ambiente real
 - **Success Criteria**:
   1. O servidor atual consegue consumir a nova imagem publicada sem depender de `git pull` dentro do runtime.
   2. O redeploy feito no Portainer mantem o mesmo volume do `pkm` e a configuracao externa necessaria para a aplicacao.

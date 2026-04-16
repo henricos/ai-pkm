@@ -1,22 +1,22 @@
 ---
 phase: 09-portainer-deployment-flow
-verified: 2026-04-15T12:00:00Z
-status: in_progress
-score: 2/3 success criteria verified in repo; validacao humana real em andamento
+verified: 2026-04-16T00:00:00Z
+status: verified
+score: 3/3 success criteria verified; validacao humana confirmada pelo operador
 overrides_applied: 0
 human_verification:
   - test: "Leitura humana do quickstart e do guia canônico até a tela de login"
     expected: "Operador consegue seguir a narrativa sem conhecimento implícito do repo"
     why_human: "A fase é majoritariamente documental; clareza operacional depende de leitura humana"
-    disposition: "em andamento no ambiente real; a primeira passada encontrou ajustes necessarios no quickstart"
+    disposition: "concluida em 2026-04-16; operador confirmou que o fluxo revisado esta correto e a publicacao foi validada no ambiente real"
 ---
 
 # Phase 9: Portainer Deployment Flow — Relatório de Verificação
 
 **Objetivo da fase:** Fechar o fluxo operacional mínimo de update da aplicação por imagem publicada, com `docker compose` como superfície canônica e documentação permanente centrada no README.
-**Verificado em:** 2026-04-15T12:00:00Z
-**Status:** in_progress
-**Re-verificação:** aberta após validação humana real em andamento
+**Verificado em:** 2026-04-16T00:00:00Z
+**Status:** verified
+**Re-verificação:** encerrada — operador confirmou validação real em 2026-04-16
 
 ## Estado Atual
 
@@ -32,9 +32,9 @@ Com isso, a fase continua correta na direcao tecnica, mas nao deve ser considera
 |---|---------|--------|-----------|
 | 1 | O repositorio agora ensina instalacao e update por imagem publicada, sem `git pull` no runtime | VERIFIED | `README.md` usa `ghcr.io/henricos/ai-pkm:latest`, `docker compose up -d` e `docker compose pull` sem `--env-file` |
 | 2 | O README passou a ser a superfície principal e permanente para runtime por compose | VERIFIED | `README.md` concentra o quickstart inline e delega apenas dev/release para docs separados |
-| 3 | O fluxo atualizado foi confirmado por leitura e execucao humana ate a tela de login | IN PROGRESS | Validacao humana real em andamento; a primeira passada ja gerou correcao no quickstart |
+| 3 | O fluxo atualizado foi confirmado por leitura e execucao humana ate a tela de login | VERIFIED | Operador confirmou em 2026-04-16 que o fluxo revisado esta correto e a publicacao foi validada no ambiente real |
 
-**Score atual:** 2/3 criterios de sucesso verificados no repositorio; falta concluir a passada humana final no ambiente real.
+**Score final:** 3/3 criterios de sucesso verificados; validacao humana concluida pelo operador em 2026-04-16.
 
 ## Artefatos Obrigatórios
 
@@ -62,14 +62,12 @@ Com isso, a fase continua correta na direcao tecnica, mas nao deve ser considera
 |-----------|-------|-----------|--------|-----------|
 | DEP-01 | 09-01 | Operador atualiza a aplicacao consumindo imagem publicada, sem `git pull` no runtime | SATISFIED | README usa `latest` e o fluxo explicito com `docker compose pull` + `docker compose up -d` |
 | DEP-02 | 09-02 | Operação documentada permanece genérica por compose, sem acoplamento a uma interface específica | SATISFIED | README mantém o runtime por compose como superfície pública única |
-| DEP-03 | 09-01, 09-02 | Repositorio documenta o fluxo minimo de release e runtime de forma permanente e sem sobreposicao | IN PROGRESS | Os handoffs continuam corretos, mas a validacao humana final do quickstart revisado ainda esta em andamento |
+| DEP-03 | 09-01, 09-02 | Repositorio documenta o fluxo minimo de release e runtime de forma permanente e sem sobreposicao | SATISFIED | Validacao humana concluida em 2026-04-16; operador confirmou quickstart revisado correto no ambiente real |
 
 ## Verificação Humana
 
-Como previsto em `09-VALIDATION.md`, o fechamento real da fase depende de uma passada humana do fluxo ate a tela de login.
+Como previsto em `09-VALIDATION.md`, o fechamento real da fase dependia de uma passada humana do fluxo ate a tela de login.
 
-Essa passada foi iniciada e encontrou um problema concreto no design do quickstart: o uso de `.env.compose` como camada obrigatoria para alimentar o `docker compose`.
+Essa passada foi iniciada, encontrou um problema concreto no design do quickstart (uso de `.env.compose` como camada obrigatoria), que foi corrigido com um `compose.yaml` autocontido e placeholders explicitos. O operador executou a passada final com o quickstart revisado e confirmou em 2026-04-16 que o fluxo esta correto e a publicacao foi validada no ambiente real.
 
-Esse problema ja foi corrigido no `README.md` com um `compose.yaml` autocontido e placeholders explicitos, mas o operador ainda precisa terminar a nova execucao para que a fase seja considerada fechada de verdade.
-
-Conclusao: a fase 9 permanece tecnicamente bem direcionada e com documentacao reconciliada ao teste real, porem segue aberta ate a conclusao da validacao humana final do fluxo atualizado.
+Conclusao: phase 9 encerrada. Todos os criterios de sucesso satisfeitos e validacao humana concluida.
