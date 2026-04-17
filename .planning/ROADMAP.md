@@ -19,7 +19,7 @@ O milestone `v2.2` torna a aplicacao genuinamente consciente do prefixo de rota 
 ## Phases
 
 - [x] **Phase 10: Environment Contract and Build Foundation** — Contrato de ambiente validado e `basePath` configurado no framework e no pipeline de build. (completed 2026-04-17)
-- [ ] **Phase 11: Application Code Alignment** — Todos os pontos do codigo que referenciam rotas absolutas usam o prefixo configurado.
+- [x] **Phase 11: Application Code Alignment** — Todos os pontos do codigo que referenciam rotas absolutas usam o prefixo configurado. (completed 2026-04-17)
 - [ ] **Phase 12: Tests and Operational Documentation** — Testes cobrem o contrato de ambiente e as rotas com prefixo; documentacao cobre o setup completo.
 
 ## Phase Details
@@ -54,9 +54,9 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [ ] 11-01-PLAN.md — Corrigir redirects server-side em ShellLayout e LoginPage (APP-01)
-- [ ] 11-02-PLAN.md — Corrigir pages.signIn do NextAuth e fallback de callbackUrl no LoginForm (APP-02)
-- [ ] 11-03-PLAN.md — Corrigir URLs de preview e download no viewer (APP-03)
+- [x] 11-01-PLAN.md — Corrigir redirects server-side em ShellLayout e LoginPage (APP-01)
+- [x] 11-02-PLAN.md — Corrigir pages.signIn do NextAuth e fallback de callbackUrl no LoginForm (APP-02)
+- [x] 11-03-PLAN.md — Corrigir URLs de preview e download no viewer (APP-03)
 
 ### Phase 12: Tests and Operational Documentation
 
@@ -75,7 +75,7 @@ Plans:
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 10. Environment Contract and Build Foundation | 3/3 | Complete    | 2026-04-17 |
-| 11. Application Code Alignment | 0/3 | Not started | - |
+| 11. Application Code Alignment | 3/3 | Complete   | 2026-04-17 |
 | 12. Tests and Operational Documentation | 0/TBD | Not started | - |
 
 ---
