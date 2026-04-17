@@ -93,6 +93,7 @@ import { ViewerClientShell } from "@/components/viewer/viewer-client-shell";
 const defaultProps = {
   topic: "tecnologia",
   itemId: "tecnologia/nota.md",
+  downloadHref: "/pkm/api/pkm/raw/tecnologia%2Fnota.md",
   estado: "finalizado" as const,
   frontmatter: { estado: "finalizado" as const },
 };
