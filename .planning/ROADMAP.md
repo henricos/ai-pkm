@@ -34,7 +34,12 @@ O milestone `v2.2` torna a aplicacao genuinamente consciente do prefixo de rota 
   2. O `next.config.ts` referencia `APP_BASE_PATH` como fonte do `basePath`, sem valor hardcoded no arquivo de config.
   3. O step de `docker build` no `release.yml` passa `--build-arg APP_BASE_PATH=/pkm` de forma visivel no codigo do workflow.
   4. Existe `withBasePath()` utilizavel para construcao de URLs absolutas e redirects server-side onde o Next.js nao aplica o prefixo automaticamente.
-**Plans**: TBD
+**Plans**: 3 plans
+
+Plans:
+- [ ] 10-01-PLAN.md — Definir o módulo canônico de base path sem tocar nos consumers da aplicação
+- [ ] 10-02-PLAN.md — Fechar o contrato fail-fast de ambiente para `APP_BASE_PATH` e `NEXTAUTH_URL`
+- [ ] 10-03-PLAN.md — Propagar `APP_BASE_PATH` pela cadeia workflow → Dockerfile → Next.js build
 
 ### Phase 11: Application Code Alignment
 
@@ -64,7 +69,7 @@ O milestone `v2.2` torna a aplicacao genuinamente consciente do prefixo de rota 
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 10. Environment Contract and Build Foundation | 0/TBD | Not started | - |
+| 10. Environment Contract and Build Foundation | 0/3 | Not started | - |
 | 11. Application Code Alignment | 0/TBD | Not started | - |
 | 12. Tests and Operational Documentation | 0/TBD | Not started | - |
 
