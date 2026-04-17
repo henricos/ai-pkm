@@ -68,7 +68,11 @@ Plans:
   2. Testes de rota cobrem os fluxos de acesso nao autenticado, login e navegacao autenticada com o prefixo `/pkm`.
   3. `docs/dev-setup.md` explica como configurar `APP_BASE_PATH` no `.env` com exemplos concretos, incluindo nota de que a raiz retorna 404.
   4. `README.md` documenta os 3 lugares de configuracao (`.env`, workflow, compose) com exemplos e nota de que mudar o path exige nova release.
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+- [ ] 12-01-PLAN.md — Testes de contrato de env (TST-01) e rotas com prefixo (TST-02)
+- [ ] 12-02-PLAN.md — Documentação operacional: dev-setup.md (DOC-01) e README + compose.yaml (DOC-02)
 
 ## Progress Table
 
@@ -76,7 +80,7 @@ Plans:
 |-------|----------------|--------|-----------|
 | 10. Environment Contract and Build Foundation | 3/3 | Complete    | 2026-04-17 |
 | 11. Application Code Alignment | 3/3 | Complete    | 2026-04-17 |
-| 12. Tests and Operational Documentation | 0/TBD | Not started | - |
+| 12. Tests and Operational Documentation | 0/2 | Not started | - |
 
 ---
 
