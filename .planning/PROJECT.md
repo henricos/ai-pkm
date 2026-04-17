@@ -2,7 +2,7 @@
 
 ## What This Is
 
-O ai-pkm e a plataforma que apoia a operacao de um PKM file-first com auxilio de IA. Hoje, o sistema combina uma operacao validada via CLI sobre o repositorio `pkm` com uma interface web read-only para navegar e exibir esse acervo sem quebrar o modelo em que a IA e a unica escritora da base. O passo atual e fechar a camada operacional de deploy dessa aplicacao web sobre uma cadeia de release e publicacao ja validada.
+O ai-pkm e a plataforma que apoia a operacao de um PKM file-first com auxilio de IA. Hoje, o sistema combina uma operacao validada via CLI sobre o repositorio `pkm` com uma interface web read-only para navegar e exibir esse acervo sem quebrar o modelo em que a IA e a unica escritora da base. O passo atual e consolidar o milestone `v2.2`, tornando a aplicacao genuinamente consciente do prefixo `/pkm` desde o build ate os fluxos de navegacao.
 
 ## Core Value
 
@@ -35,11 +35,12 @@ O terceiro numero (`PATCH`) fica reservado para hotfixes e releases pontuais do 
 - ✓ Eliminar o flash perceptivel do preset de tema do viewer entre SSR, hidratacao e tema persistido — Phase 6
 - ✓ Fechar versionamento SemVer do app Node/web com release operacional baseada em `npm version` — Phase 8
 - ✓ Publicar imagem publica no GHCR por pipeline automatizado no GitHub Actions — Phase 8
+- ✓ Configurar `APP_BASE_PATH` como fonte unica do `basePath` do Next.js, baked no build via Docker build arg — Phase 10
+- ✓ Validar sincronia obrigatoria entre `APP_BASE_PATH` e `NEXTAUTH_URL` em runtime, com falha cedo e mensagem clara — Phase 10
 
 ### Active
 
-- Configurar `APP_BASE_PATH` como fonte unica do `basePath` do Next.js, baked no build via Docker build arg
-- Validar sincronia obrigatoria entre `APP_BASE_PATH` e `NEXTAUTH_URL` em runtime, com falha cedo e mensagem clara
+- Adotar `withBasePath()` e o prefixo configurado nos redirects, hrefs, callbacks e rotas absolutas da aplicacao — Phase 11
 - Documentar o contrato operacional dos 3 lugares de configuracao: `.env` (dev), workflow CI (build) e compose (runtime)
 
 ### Out of Scope
@@ -80,6 +81,8 @@ O escopo shipped inclui autenticacao single-user, shell persistente de navegacao
 Os artefatos historicos do milestone foram arquivados em `.planning/milestones/v2.0-ROADMAP.md` e `.planning/milestones/v2.0-REQUIREMENTS.md`.
 
 Dentro da `v2.1`, a Phase 08 foi fechada em `2026-04-14` com a release real `v2.0.2`. A cadeia ponta a ponta foi validada com commit/tag gerados por `npm version`, workflow `Release GHCR` disparado por push de tag, job `publish` concluido com sucesso e pacote publico `ghcr.io/henricos/ai-pkm` exibindo `latest` e `v2.0.2`. O fechamento tambem deixou uma skill dedicada de operacao (`/fechar-versao`) para repetir esse fluxo sem esconder o mecanismo canonico.
+
+Dentro da `v2.2`, a Phase 10 foi fechada em `2026-04-17` com a fundacao completa do prefixo de rota: helper central `withBasePath()`, contrato fail-fast entre `APP_BASE_PATH` e `NEXTAUTH_URL`, `basePath` do Next.js ligado a `APP_BASE_PATH` e workflow de release bakeando `APP_BASE_PATH=/pkm`. O proximo passo do milestone e alinhar os consumers da aplicacao a essa fundacao na Phase 11.
 
 ## Current Milestone: v2.2 — Base Path Configurado com Sincronia App/Auth
 
@@ -166,4 +169,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-04-16 — Milestone v2.1 encerrado (phases 7-9); milestone v2.2 iniciado com foco em base path configurado*
+*Last updated: 2026-04-17 — Phase 10 concluida no milestone v2.2; fundacao de base path e contrato app/auth entregues*

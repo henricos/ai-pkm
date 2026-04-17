@@ -66,6 +66,7 @@ jobs:
           build-args: |
             APP_VERSION=${{ env.RELEASE_VERSION }}
             NEXT_PUBLIC_GIT_HASH=${{ env.SHORT_SHA }}
+            APP_BASE_PATH=/pkm
           labels: |
             org.opencontainers.image.version=${{ env.RELEASE_VERSION }}
             org.opencontainers.image.revision=${{ github.sha }}

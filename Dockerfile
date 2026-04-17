@@ -9,14 +9,16 @@ FROM base AS builder
 WORKDIR /app
 ARG APP_VERSION
 ARG NEXT_PUBLIC_GIT_HASH
+ARG APP_BASE_PATH
 ENV APP_VERSION=${APP_VERSION}
 ENV NEXT_PUBLIC_GIT_HASH=${NEXT_PUBLIC_GIT_HASH}
+ENV APP_BASE_PATH=${APP_BASE_PATH}
 ENV PKM_PATH=/tmp/build/pkm
 ENV INDEX_PATH=/tmp/build/index
 ENV AUTH_USERNAME=build-user
 ENV AUTH_PASSWORD=build-password
 ENV NEXTAUTH_SECRET=build-secret-build-secret-build-secret-1234
-ENV NEXTAUTH_URL=http://127.0.0.1:3000
+ENV NEXTAUTH_URL=http://127.0.0.1:3000${APP_BASE_PATH}
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 RUN mkdir -p /tmp/build/pkm /tmp/build/index \

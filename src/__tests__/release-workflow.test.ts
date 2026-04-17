@@ -32,6 +32,7 @@ describe("release workflow contract", () => {
     expect(workflow).toContain("ghcr.io/henricos/ai-pkm:latest");
     expect(workflow).toContain("docker/login-action");
     expect(workflow).toContain("docker/build-push-action");
+    expect(workflow).toContain("APP_BASE_PATH=/pkm");
   });
 
   it("enforces main ancestry, package version parity, and OCI labels", () => {

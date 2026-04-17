@@ -1,5 +1,6 @@
 import path from "path";
 import { z } from "zod";
+import { normalizeBasePath } from "./base-path";
 
 // Zod 4: usa a função `error` para definir mensagens em pt-BR para campos ausentes (invalid_type)
 const envSchema = z.object({
@@ -17,6 +18,9 @@ const envSchema = z.object({
     .min(1, "APP_ROOT_PATH não pode ser vazio")
     .refine(path.isAbsolute, "APP_ROOT_PATH deve ser um caminho absoluto")
     .optional(),
+  APP_BASE_PATH: z
+    .string({ error: (iss) => (iss.input === undefined ? "APP_BASE_PATH é obrigatório" : undefined) })
+    .min(1, "APP_BASE_PATH é obrigatório"),
   AUTH_USERNAME: z
     .string({ error: (iss) => (iss.input === undefined ? "AUTH_USERNAME é obrigatório" : undefined) })
     .min(1, "AUTH_USERNAME é obrigatório"),
@@ -30,12 +34,54 @@ const envSchema = z.object({
     .string({ error: (iss) => (iss.input === undefined ? "NEXTAUTH_URL é obrigatório" : undefined) })
     .url("NEXTAUTH_URL deve ser uma URL válida"),
 }).superRefine((data, ctx) => {
+  let normalizedBasePath: string | null = null;
+
+  try {
+    normalizedBasePath = normalizeBasePath(data.APP_BASE_PATH);
+  } catch (error) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["APP_BASE_PATH"],
+      message: error instanceof Error ? error.message : "APP_BASE_PATH inválido",
+    });
+  }
+
   if (process.env.NODE_ENV === "production" && !data.INDEX_PATH) {
     ctx.addIssue({
       code: z.ZodIssueCode.custom,
       path: ["INDEX_PATH"],
       message: "INDEX_PATH é obrigatório em produção",
     });
+  }
+
+  if (!normalizedBasePath) {
+    return;
+  }
+
+  try {
+    const normalizedNextAuthPath = normalizeBasePath(new URL(data.NEXTAUTH_URL).pathname);
+
+    if (normalizedNextAuthPath !== normalizedBasePath) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["NEXTAUTH_URL"],
+        message:
+          `NEXTAUTH_URL deve usar o mesmo pathname de APP_BASE_PATH. ` +
+          `Exemplo correto: APP_BASE_PATH=/pkm com NEXTAUTH_URL=https://host/pkm.`,
+      });
+    }
+  } catch (error) {
+    if (error instanceof Error && error.message.startsWith("APP_BASE_PATH inválido:")) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["NEXTAUTH_URL"],
+        message:
+          `O pathname de NEXTAUTH_URL é inválido para o contrato do app: ${error.message.replace(
+            "APP_BASE_PATH inválido:",
+            "",
+          ).trim()}`,
+      });
+    }
   }
 });
 

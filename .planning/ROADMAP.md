@@ -18,7 +18,7 @@ O milestone `v2.2` torna a aplicacao genuinamente consciente do prefixo de rota 
 
 ## Phases
 
-- [ ] **Phase 10: Environment Contract and Build Foundation** — Contrato de ambiente validado e `basePath` configurado no framework e no pipeline de build.
+- [x] **Phase 10: Environment Contract and Build Foundation** — Contrato de ambiente validado e `basePath` configurado no framework e no pipeline de build. (completed 2026-04-17)
 - [ ] **Phase 11: Application Code Alignment** — Todos os pontos do codigo que referenciam rotas absolutas usam o prefixo configurado.
 - [ ] **Phase 12: Tests and Operational Documentation** — Testes cobrem o contrato de ambiente e as rotas com prefixo; documentacao cobre o setup completo.
 
@@ -37,9 +37,9 @@ O milestone `v2.2` torna a aplicacao genuinamente consciente do prefixo de rota 
 **Plans**: 3 plans
 
 Plans:
-- [ ] 10-01-PLAN.md — Definir o módulo canônico de base path sem tocar nos consumers da aplicação
-- [ ] 10-02-PLAN.md — Fechar o contrato fail-fast de ambiente para `APP_BASE_PATH` e `NEXTAUTH_URL`
-- [ ] 10-03-PLAN.md — Propagar `APP_BASE_PATH` pela cadeia workflow → Dockerfile → Next.js build
+- [x] 10-01-PLAN.md — Definir o módulo canônico de base path sem tocar nos consumers da aplicação
+- [x] 10-02-PLAN.md — Fechar o contrato fail-fast de ambiente para `APP_BASE_PATH` e `NEXTAUTH_URL`
+- [x] 10-03-PLAN.md — Propagar `APP_BASE_PATH` pela cadeia workflow → Dockerfile → Next.js build
 
 ### Phase 11: Application Code Alignment
 
@@ -69,7 +69,7 @@ Plans:
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 10. Environment Contract and Build Foundation | 0/3 | Not started | - |
+| 10. Environment Contract and Build Foundation | 3/3 | Complete    | 2026-04-17 |
 | 11. Application Code Alignment | 0/TBD | Not started | - |
 | 12. Tests and Operational Documentation | 0/TBD | Not started | - |
 

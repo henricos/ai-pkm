@@ -8,15 +8,15 @@
 
 ### Contrato de Ambiente
 
-- [ ] **ENV-01**: App falha no startup com mensagem clara se `APP_BASE_PATH` estiver ausente no ambiente.
-- [ ] **ENV-02**: App falha no startup com mensagem clara se `NEXTAUTH_URL` estiver ausente no ambiente.
-- [ ] **ENV-03**: App valida que o pathname de `NEXTAUTH_URL` coincide com `APP_BASE_PATH`; falha cedo com mensagem que mostra um exemplo correto (ex: `APP_BASE_PATH=/pkm` junto de `NEXTAUTH_URL=https://host/pkm`) se divergirem.
+- [x] **ENV-01**: App falha no startup com mensagem clara se `APP_BASE_PATH` estiver ausente no ambiente. Validado na Phase 10.
+- [x] **ENV-02**: App falha no startup com mensagem clara se `NEXTAUTH_URL` estiver ausente no ambiente. Validado na Phase 10.
+- [x] **ENV-03**: App valida que o pathname de `NEXTAUTH_URL` coincide com `APP_BASE_PATH`; falha cedo com mensagem que mostra um exemplo correto (ex: `APP_BASE_PATH=/pkm` junto de `NEXTAUTH_URL=https://host/pkm`) se divergirem. Validado na Phase 10.
 
 ### Build e Configuracao Next.js
 
-- [ ] **CFG-01**: `next.config.ts` usa `APP_BASE_PATH` como fonte do `basePath` do Next.js, tornando o prefixo explicito na configuracao do framework.
-- [ ] **CFG-02**: `release.yml` passa `--build-arg APP_BASE_PATH=/pkm` no step de `docker build`, tornando o valor baked visivel no codigo do workflow.
-- [ ] **CFG-03**: Existe helper `withBasePath(path)` central para construcao de URLs absolutas e redirects server-side onde o Next.js nao aplica o prefixo automaticamente.
+- [x] **CFG-01**: `next.config.ts` usa `APP_BASE_PATH` como fonte do `basePath` do Next.js, tornando o prefixo explicito na configuracao do framework. Validado na Phase 10.
+- [x] **CFG-02**: `release.yml` passa `--build-arg APP_BASE_PATH=/pkm` no step de `docker build`, tornando o valor baked visivel no codigo do workflow. Validado na Phase 10.
+- [x] **CFG-03**: Existe helper `withBasePath(path)` central para construcao de URLs absolutas e redirects server-side onde o Next.js nao aplica o prefixo automaticamente. Validado na Phase 10.
 
 ### Ajustes de Codigo
 
@@ -53,12 +53,12 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| ENV-01 | Phase 10 | Pending |
-| ENV-02 | Phase 10 | Pending |
-| ENV-03 | Phase 10 | Pending |
-| CFG-01 | Phase 10 | Pending |
-| CFG-02 | Phase 10 | Pending |
-| CFG-03 | Phase 10 | Pending |
+| ENV-01 | Phase 10 | Validated |
+| ENV-02 | Phase 10 | Validated |
+| ENV-03 | Phase 10 | Validated |
+| CFG-01 | Phase 10 | Validated |
+| CFG-02 | Phase 10 | Validated |
+| CFG-03 | Phase 10 | Validated |
 | APP-01 | Phase 11 | Pending |
 | APP-02 | Phase 11 | Pending |
 | APP-03 | Phase 11 | Pending |

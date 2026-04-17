@@ -2,11 +2,22 @@
  * Testes de validação de env vars — Phase 1
  * RUN-01: validação fail-fast de vars obrigatórias via Zod
  */
-import { describe, test, expect, beforeEach, afterEach, vi } from "vitest";
+import { describe, test, expect, afterEach, vi } from "vitest";
 
 describe("env validation", () => {
   // Salvar env original antes de cada teste
   const originalEnv = { ...process.env };
+
+  function setRequiredEnv(overrides: Partial<NodeJS.ProcessEnv> = {}) {
+    process.env.PKM_PATH = "/home/user/pkm";
+    process.env.APP_BASE_PATH = "/pkm";
+    process.env.AUTH_USERNAME = "testuser";
+    process.env.AUTH_PASSWORD = "testpassword123";
+    process.env.NEXTAUTH_SECRET = "12345678901234567890123456789012";
+    process.env.NEXTAUTH_URL = "https://host/pkm";
+
+    Object.assign(process.env, overrides);
+  }
 
   afterEach(() => {
     // Restaurar env original
@@ -19,11 +30,8 @@ describe("env validation", () => {
   });
 
   test("RUN-01: chama process.exit(1) com mensagem clara quando PKM_PATH está ausente", async () => {
+    setRequiredEnv();
     delete process.env.PKM_PATH;
-    process.env.AUTH_USERNAME = "testuser";
-    process.env.AUTH_PASSWORD = "testpassword123";
-    process.env.NEXTAUTH_SECRET = "12345678901234567890123456789012";
-    process.env.NEXTAUTH_URL = "http://localhost:3000";
 
     const exitSpy = vi.spyOn(process, "exit").mockImplementation(() => {
       throw new Error("process.exit called");
@@ -38,31 +46,24 @@ describe("env validation", () => {
     errorSpy.mockRestore();
   });
 
-  test("RUN-01: parse bem-sucedido quando todas as 5 vars obrigatórias estão presentes", async () => {
-    process.env.PKM_PATH = "/home/user/pkm";
-    process.env.AUTH_USERNAME = "testuser";
-    process.env.AUTH_PASSWORD = "testpassword123";
-    process.env.NEXTAUTH_SECRET = "12345678901234567890123456789012"; // 32 chars
-    process.env.NEXTAUTH_URL = "http://localhost:3000";
+  test("RUN-01: parse bem-sucedido quando todas as vars obrigatórias estão presentes e sincronizadas", async () => {
+    setRequiredEnv();
 
     const { env } = await import("../lib/env");
 
     expect(env).toMatchObject({
       PKM_PATH: "/home/user/pkm",
+      APP_BASE_PATH: "/pkm",
       AUTH_USERNAME: "testuser",
       AUTH_PASSWORD: "testpassword123",
       NEXTAUTH_SECRET: "12345678901234567890123456789012",
-      NEXTAUTH_URL: "http://localhost:3000",
+      NEXTAUTH_URL: "https://host/pkm",
     });
   });
 
   test("PKG-02: INDEX_PATH passa a integrar o contrato quando configurado", async () => {
-    process.env.PKM_PATH = "/home/user/pkm";
+    setRequiredEnv();
     process.env.INDEX_PATH = "/home/user/index";
-    process.env.AUTH_USERNAME = "testuser";
-    process.env.AUTH_PASSWORD = "testpassword123";
-    process.env.NEXTAUTH_SECRET = "12345678901234567890123456789012";
-    process.env.NEXTAUTH_URL = "http://localhost:3000";
 
     const { env } = await import("../lib/env");
 
@@ -71,12 +72,8 @@ describe("env validation", () => {
 
   test("PKG-02: produção falha cedo quando INDEX_PATH está ausente", async () => {
     vi.stubEnv("NODE_ENV", "production");
-    process.env.PKM_PATH = "/home/user/pkm";
+    setRequiredEnv();
     delete process.env.INDEX_PATH;
-    process.env.AUTH_USERNAME = "testuser";
-    process.env.AUTH_PASSWORD = "testpassword123";
-    process.env.NEXTAUTH_SECRET = "12345678901234567890123456789012";
-    process.env.NEXTAUTH_URL = "http://localhost:3000";
 
     const exitSpy = vi.spyOn(process, "exit").mockImplementation(() => {
       throw new Error("process.exit called");
@@ -86,6 +83,57 @@ describe("env validation", () => {
     await expect(import("../lib/env")).rejects.toThrow("process.exit called");
     expect(exitSpy).toHaveBeenCalledWith(1);
     expect(errorSpy.mock.calls.join()).toContain("INDEX_PATH");
+
+    exitSpy.mockRestore();
+    errorSpy.mockRestore();
+  });
+
+  test("ENV-01: falha cedo quando APP_BASE_PATH está ausente", async () => {
+    setRequiredEnv();
+    delete process.env.APP_BASE_PATH;
+
+    const exitSpy = vi.spyOn(process, "exit").mockImplementation(() => {
+      throw new Error("process.exit called");
+    });
+    const errorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+
+    await expect(import("../lib/env")).rejects.toThrow("process.exit called");
+    expect(exitSpy).toHaveBeenCalledWith(1);
+    expect(errorSpy.mock.calls.join()).toContain("APP_BASE_PATH");
+
+    exitSpy.mockRestore();
+    errorSpy.mockRestore();
+  });
+
+  test("ENV-02: falha cedo quando NEXTAUTH_URL está ausente", async () => {
+    setRequiredEnv();
+    delete process.env.NEXTAUTH_URL;
+
+    const exitSpy = vi.spyOn(process, "exit").mockImplementation(() => {
+      throw new Error("process.exit called");
+    });
+    const errorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+
+    await expect(import("../lib/env")).rejects.toThrow("process.exit called");
+    expect(exitSpy).toHaveBeenCalledWith(1);
+    expect(errorSpy.mock.calls.join()).toContain("NEXTAUTH_URL");
+
+    exitSpy.mockRestore();
+    errorSpy.mockRestore();
+  });
+
+  test("ENV-03: falha cedo quando NEXTAUTH_URL diverge do APP_BASE_PATH", async () => {
+    setRequiredEnv({ NEXTAUTH_URL: "https://host/outro-path" });
+
+    const exitSpy = vi.spyOn(process, "exit").mockImplementation(() => {
+      throw new Error("process.exit called");
+    });
+    const errorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+
+    await expect(import("../lib/env")).rejects.toThrow("process.exit called");
+    expect(exitSpy).toHaveBeenCalledWith(1);
+    expect(errorSpy.mock.calls.join()).toContain("APP_BASE_PATH=/pkm");
+    expect(errorSpy.mock.calls.join()).toContain("https://host/pkm");
 
     exitSpy.mockRestore();
     errorSpy.mockRestore();
