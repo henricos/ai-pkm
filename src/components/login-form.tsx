@@ -7,10 +7,21 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-export function LoginForm() {
+function isValidCallback(url: string, baseFallback: string): boolean {
+  // Rejeitar qualquer URL absoluta (contém "://") — previne open redirect (D-05, T-11-03)
+  if (url.includes("://")) return false;
+  // Aceitar apenas paths que começam com o basePath configurado
+  // baseFallback é withBasePath("/") = "/pkm", então startsWith garante prefixo correto
+  return url.startsWith(baseFallback);
+}
+
+export function LoginForm({ fallbackUrl }: { fallbackUrl: string }) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") ?? "/";
+  const rawCallback = searchParams.get("callbackUrl");
+  const callbackUrl = rawCallback && isValidCallback(rawCallback, fallbackUrl)
+    ? rawCallback
+    : fallbackUrl;
   const [isLoading, setIsLoading] = useState(false);
   const [authError, setAuthError] = useState<string | null>(null);
 

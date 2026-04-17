@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { LoginForm } from "@/components/login-form";
 import { Suspense } from "react";
 import { appBrand } from "@/lib/app-brand";
+import { withBasePath } from "@/lib/base-path";
 
 const appVersion = process.env.NEXT_PUBLIC_APP_VERSION ?? process.env.npm_package_version ?? "2.0.0";
 const gitHash = process.env.NEXT_PUBLIC_GIT_HASH;
@@ -11,6 +12,8 @@ export default async function LoginPage() {
   // Se já autenticado, redirecionar para /
   const session = await auth();
   if (session) redirect("/");
+
+  const fallbackUrl = withBasePath("/");
 
   return (
     <main className="min-h-screen bg-surface flex items-center justify-center">
@@ -36,7 +39,7 @@ export default async function LoginPage() {
 
           {/* Formulário — Suspense necessário para useSearchParams() no LoginForm */}
           <Suspense>
-            <LoginForm />
+            <LoginForm fallbackUrl={fallbackUrl} />
           </Suspense>
         </div>
 
