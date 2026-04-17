@@ -35,8 +35,6 @@ interface ViewerHeaderProps {
   group?: string;
   estado: "rascunho" | "finalizado";
   itemId: string;
-  /** URL de download calculada com withBasePath() em viewer-page.tsx (D-06, D-07) */
-  downloadHref: string;
   panelOpen: boolean;
   onTogglePanel: () => void;
   /** PRS-01: callback para entrar no modo apresentação */
@@ -58,7 +56,6 @@ export function ViewerHeader({
   group,
   estado,
   itemId,
-  downloadHref,
   panelOpen,
   onTogglePanel,
   onEnterPresentation,
@@ -220,7 +217,7 @@ export function ViewerHeader({
 
         {/* D-12: Download do arquivo raw — autenticado via /api/pkm/raw/ */}
         <a
-          href={downloadHref}
+          href={`/api/pkm/raw/${encodeURIComponent(itemId)}`}
           download
           aria-label="Baixar arquivo raw"
           title="Baixar arquivo raw"

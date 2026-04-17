@@ -1,6 +1,7 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { env } from "@/lib/env";
+import { withBasePath } from "@/lib/base-path";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   logger: {
@@ -30,7 +31,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     }),
   ],
   pages: {
-    signIn: "/login",
+    signIn: withBasePath("/login"),
   },
   session: { strategy: "jwt" },
 });

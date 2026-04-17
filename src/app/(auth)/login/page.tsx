@@ -1,6 +1,5 @@
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import { withBasePath } from "@/lib/base-path";
 import { LoginForm } from "@/components/login-form";
 import { Suspense } from "react";
 import { appBrand } from "@/lib/app-brand";
@@ -11,7 +10,7 @@ const gitHash = process.env.NEXT_PUBLIC_GIT_HASH;
 export default async function LoginPage() {
   // Se já autenticado, redirecionar para /
   const session = await auth();
-  if (session) redirect(withBasePath("/"));
+  if (session) redirect("/");
 
   return (
     <main className="min-h-screen bg-surface flex items-center justify-center">
