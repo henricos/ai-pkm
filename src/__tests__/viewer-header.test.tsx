@@ -40,6 +40,7 @@ describe("ViewerHeader — regressão Phase 3", () => {
         topic="tecnologia"
         group="superapp"
         itemId="tecnologia/superapp/nota.md"
+        downloadHref="/pkm/api/pkm/raw/tecnologia%2Fsuperapp%2Fnota.md"
         estado="finalizado"
         panelOpen={false}
         onTogglePanel={vi.fn()}
@@ -55,6 +56,7 @@ describe("ViewerHeader — regressão Phase 3", () => {
       <ViewerHeader
         topic="__inbox"
         itemId="__inbox/nota-inbox.md"
+        downloadHref="/pkm/api/pkm/raw/__inbox%2Fnota-inbox.md"
         estado="rascunho"
         panelOpen={false}
         onTogglePanel={vi.fn()}
@@ -69,6 +71,7 @@ describe("ViewerHeader — regressão Phase 3", () => {
       <ViewerHeader
         topic="tecnologia"
         itemId="tecnologia/nota.md"
+        downloadHref="/pkm/api/pkm/raw/tecnologia%2Fnota.md"
         estado="finalizado"
         panelOpen={false}
         onTogglePanel={vi.fn()}
@@ -78,6 +81,7 @@ describe("ViewerHeader — regressão Phase 3", () => {
     const downloadLink = screen.getByTestId("download-link");
     expect(downloadLink).toBeTruthy();
     const href = downloadLink.getAttribute("href") ?? "";
+    expect(href).toContain("/pkm");
     expect(href).toContain("/api/pkm/raw/");
     expect(href).toContain("tecnologia");
     expect(href).toContain("nota.md");
@@ -89,6 +93,7 @@ describe("ViewerHeader — regressão Phase 3", () => {
       <ViewerHeader
         topic="tecnologia"
         itemId="tecnologia/nota.md"
+        downloadHref="/pkm/api/pkm/raw/tecnologia%2Fnota.md"
         estado="finalizado"
         panelOpen={false}
         onTogglePanel={onTogglePanel}
@@ -108,6 +113,7 @@ describe("ViewerHeader — regressão Phase 3", () => {
       <ViewerHeader
         topic="tecnologia"
         itemId="tecnologia/nota.md"
+        downloadHref="/pkm/api/pkm/raw/tecnologia%2Fnota.md"
         estado="finalizado"
         panelOpen={true}
         onTogglePanel={vi.fn()}
@@ -125,6 +131,7 @@ describe("ViewerHeader — regressão Phase 3", () => {
       <ViewerHeader
         topic="tecnologia"
         itemId="tecnologia/nota.md"
+        downloadHref="/pkm/api/pkm/raw/tecnologia%2Fnota.md"
         estado="finalizado"
         panelOpen={false}
         onTogglePanel={vi.fn()}
@@ -151,6 +158,7 @@ describe("ViewerHeader — PRS-01: botão de apresentação real", () => {
       <ViewerHeader
         topic="tecnologia"
         itemId="tecnologia/nota.md"
+        downloadHref="/pkm/api/pkm/raw/tecnologia%2Fnota.md"
         estado="finalizado"
         panelOpen={false}
         onTogglePanel={vi.fn()}
@@ -178,6 +186,7 @@ describe("ViewerHeader — PRS-01: botão de apresentação real", () => {
       <ViewerHeader
         topic="tecnologia"
         itemId="tecnologia/nota.md"
+        downloadHref="/pkm/api/pkm/raw/tecnologia%2Fnota.md"
         estado="finalizado"
         panelOpen={false}
         onTogglePanel={vi.fn()}
@@ -202,6 +211,7 @@ describe("ViewerHeader — PRS-06: seletor de tema", () => {
       <ViewerHeader
         topic="tecnologia"
         itemId="tecnologia/nota.md"
+        downloadHref="/pkm/api/pkm/raw/tecnologia%2Fnota.md"
         estado="finalizado"
         panelOpen={false}
         onTogglePanel={vi.fn()}
@@ -226,6 +236,7 @@ describe("ViewerHeader — PRS-06: seletor de tema", () => {
       <ViewerHeader
         topic="tecnologia"
         itemId="tecnologia/nota.md"
+        downloadHref="/pkm/api/pkm/raw/tecnologia%2Fnota.md"
         estado="finalizado"
         panelOpen={false}
         onTogglePanel={vi.fn()}
@@ -263,6 +274,7 @@ describe("ViewerHeader — PRS-07: InfoPanel bloqueado no modo apresentação", 
       <ViewerHeader
         topic="tecnologia"
         itemId="tecnologia/nota.md"
+        downloadHref="/pkm/api/pkm/raw/tecnologia%2Fnota.md"
         estado="finalizado"
         panelOpen={false}
         onTogglePanel={vi.fn()}
@@ -292,6 +304,7 @@ describe("ViewerHeader — PRS-07: InfoPanel bloqueado no modo apresentação", 
       <ViewerHeader
         topic="tecnologia"
         itemId="tecnologia/nota.md"
+        downloadHref="/pkm/api/pkm/raw/tecnologia%2Fnota.md"
         estado="finalizado"
         panelOpen={false}
         onTogglePanel={onTogglePanel}
