@@ -51,7 +51,12 @@ Plans:
   2. Tentativa de acesso nao autenticado redireciona para `/pkm/login`, nao para `/login`.
   3. Apos login, o usuario e redirecionado para `/pkm`, nao para `/`.
   4. Links de preview e download de arquivos no viewer funcionam com o prefixo correto.
-**Plans**: TBD
+**Plans**: 3 plans
+
+Plans:
+- [ ] 11-01-PLAN.md — Corrigir redirects server-side em ShellLayout e LoginPage (APP-01)
+- [ ] 11-02-PLAN.md — Corrigir pages.signIn do NextAuth e fallback de callbackUrl no LoginForm (APP-02)
+- [ ] 11-03-PLAN.md — Corrigir URLs de preview e download no viewer (APP-03)
 
 ### Phase 12: Tests and Operational Documentation
 
@@ -70,7 +75,7 @@ Plans:
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 10. Environment Contract and Build Foundation | 3/3 | Complete    | 2026-04-17 |
-| 11. Application Code Alignment | 0/TBD | Not started | - |
+| 11. Application Code Alignment | 0/3 | Not started | - |
 | 12. Tests and Operational Documentation | 0/TBD | Not started | - |
 
 ---
