@@ -19,6 +19,7 @@ import { ImageViewer } from "@/components/viewer/image-viewer";
 import { PdfViewer } from "@/components/viewer/pdf-viewer";
 import { UnsupportedViewer } from "@/components/viewer/unsupported-viewer";
 import { ViewerClientShell } from "@/components/viewer/viewer-client-shell";
+import { withBasePath } from "@/lib/base-path";
 import type { RawFrontmatter } from "@/lib/pkm/types";
 import type { NavigationItemKind } from "@/lib/navigation/navigation-types";
 
@@ -44,6 +45,13 @@ export async function ViewerPage({ item }: ViewerPageProps) {
     : undefined;
   const group = groupSegment?.replace(/^_/, "") ?? undefined;
 
+  // Derivar URLs de preview inline e download attachment (VIEW-05, D-04, D-06b, D-07)
+  // Calculado antes de qualquer branch para que todos os tipos (markdown, image, pdf, binary)
+  // recebam downloadHref via prop — withBasePath() só é seguro em Server Components (D-07)
+  const encodedId = item.id;
+  const previewHref = withBasePath(`/api/pkm/preview/${encodedId}`);
+  const downloadHref = withBasePath(`/api/pkm/raw/${encodedId}`);
+
   // ── Branch por itemKind (T-04-06: ANTES de qualquer getItemContent) ─────────
 
   // Markdown — único branch que usa getItemContent() e frontmatter próprio
@@ -57,6 +65,7 @@ export async function ViewerPage({ item }: ViewerPageProps) {
         group={group}
         estado={item.estado}
         itemId={item.id}
+        downloadHref={downloadHref}
         frontmatter={frontmatter}
       >
         <MarkdownViewer content={content} />
@@ -77,11 +86,6 @@ export async function ViewerPage({ item }: ViewerPageProps) {
   // Sidecar tem estado/data_captura reais; fallback para dado da navegação
   const frontmatter: RawFrontmatter = binaryContext?.sidecarFrontmatter ?? { estado: item.estado };
 
-  // Derivar URLs de preview inline e download attachment (VIEW-05, D-04, D-06b)
-  const encodedId = item.id;
-  const previewHref = `/api/pkm/preview/${encodedId}`;
-  const downloadHref = `/api/pkm/raw/${encodedId}`;
-
   // Imagem — ImageViewer com controles mínimos de zoom (VIEW-04)
   if (item.itemKind === "image") {
     return (
@@ -90,6 +94,7 @@ export async function ViewerPage({ item }: ViewerPageProps) {
         group={group}
         estado={item.estado}
         itemId={item.id}
+        downloadHref={downloadHref}
         frontmatter={frontmatter}
         sidecarContent={sidecarContent}
       >
@@ -106,6 +111,7 @@ export async function ViewerPage({ item }: ViewerPageProps) {
         group={group}
         estado={item.estado}
         itemId={item.id}
+        downloadHref={downloadHref}
         frontmatter={frontmatter}
         sidecarContent={sidecarContent}
       >
@@ -121,6 +127,7 @@ export async function ViewerPage({ item }: ViewerPageProps) {
       group={group}
       estado={item.estado}
       itemId={item.id}
+      downloadHref={downloadHref}
       frontmatter={frontmatter}
       sidecarContent={sidecarContent}
     >

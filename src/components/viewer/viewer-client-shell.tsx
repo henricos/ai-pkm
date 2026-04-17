@@ -53,6 +53,8 @@ interface ViewerClientShellProps {
   group?: string;
   estado: "rascunho" | "finalizado";
   itemId: string;
+  /** URL de download calculada com withBasePath() em viewer-page.tsx (D-06, D-07) */
+  downloadHref: string;
   frontmatter: RawFrontmatter;
   children: React.ReactNode;
   /** Corpo Markdown do sidecar adjacente — Phase 4, CTX-05 */
@@ -64,6 +66,7 @@ export function ViewerClientShell({
   group,
   estado,
   itemId,
+  downloadHref,
   frontmatter,
   children,
   sidecarContent,
@@ -128,6 +131,7 @@ export function ViewerClientShell({
             group={group}
             estado={estado}
             itemId={itemId}
+            downloadHref={downloadHref}
             panelOpen={panelOpen}
             onTogglePanel={togglePanel}
             onEnterPresentation={enterPresentationMode}
