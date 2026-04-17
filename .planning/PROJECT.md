@@ -40,7 +40,7 @@ O terceiro numero (`PATCH`) fica reservado para hotfixes e releases pontuais do 
 
 ### Active
 
-- Adotar `withBasePath()` e o prefixo configurado nos redirects, hrefs, callbacks e rotas absolutas da aplicacao — Phase 11
+- ✓ Adotar `withBasePath()` e o prefixo configurado nos redirects, hrefs, callbacks e rotas absolutas da aplicacao — Phase 11
 - Documentar o contrato operacional dos 3 lugares de configuracao: `.env` (dev), workflow CI (build) e compose (runtime)
 
 ### Out of Scope
@@ -82,7 +82,7 @@ Os artefatos historicos do milestone foram arquivados em `.planning/milestones/v
 
 Dentro da `v2.1`, a Phase 08 foi fechada em `2026-04-14` com a release real `v2.0.2`. A cadeia ponta a ponta foi validada com commit/tag gerados por `npm version`, workflow `Release GHCR` disparado por push de tag, job `publish` concluido com sucesso e pacote publico `ghcr.io/henricos/ai-pkm` exibindo `latest` e `v2.0.2`. O fechamento tambem deixou uma skill dedicada de operacao (`/fechar-versao`) para repetir esse fluxo sem esconder o mecanismo canonico.
 
-Dentro da `v2.2`, a Phase 10 foi fechada em `2026-04-17` com a fundacao completa do prefixo de rota: helper central `withBasePath()`, contrato fail-fast entre `APP_BASE_PATH` e `NEXTAUTH_URL`, `basePath` do Next.js ligado a `APP_BASE_PATH` e workflow de release bakeando `APP_BASE_PATH=/pkm`. O proximo passo do milestone e alinhar os consumers da aplicacao a essa fundacao na Phase 11.
+Dentro da `v2.2`, a Phase 10 foi fechada em `2026-04-17` com a fundacao completa do prefixo de rota: helper central `withBasePath()`, contrato fail-fast entre `APP_BASE_PATH` e `NEXTAUTH_URL`, `basePath` do Next.js ligado a `APP_BASE_PATH` e workflow de release bakeando `APP_BASE_PATH=/pkm`. A Phase 11 foi fechada em `2026-04-17` alinhando todos os consumers da aplicacao: redirects server-side em `ShellLayout` e `LoginPage`, `pages.signIn` do NextAuth, fallback defensivo de `callbackUrl` no `LoginForm` com validacao de open redirect, e URLs de preview/download no viewer.
 
 ## Current Milestone: v2.2 — Base Path Configurado com Sincronia App/Auth
 
@@ -169,4 +169,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-04-17 — Phase 10 concluida no milestone v2.2; fundacao de base path e contrato app/auth entregues*
+*Last updated: 2026-04-17 — Phase 11 concluida no milestone v2.2; todos os consumers da aplicacao alinham o prefixo configurado*
