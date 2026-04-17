@@ -11,7 +11,7 @@ const gitHash = process.env.NEXT_PUBLIC_GIT_HASH;
 export default async function LoginPage() {
   // Se já autenticado, redirecionar para /
   const session = await auth();
-  if (session) redirect("/");
+  if (session) redirect(withBasePath("/"));
 
   const fallbackUrl = withBasePath("/");
 
