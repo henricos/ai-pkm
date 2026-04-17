@@ -1,5 +1,10 @@
 [
   {
+    "caminho": "pkm/tecnologia/_lyceum-x/",
+    "descricao": "Agrupador para notas, análises, arquitetura, problemas, decisões e referências relacionadas ao Lyceum X e à Plataforma X como base arquitetural derivada para servir de padrão a outras iniciativas.",
+    "topico": "tecnologia"
+  },
+  {
     "caminho": "pkm/tecnologia/_superapp/",
     "descricao": "Notas, referências e análises sobre superapps, incluindo arquitetura, estratégia de produto, ecossistemas e casos relevantes.",
     "topico": "tecnologia"
