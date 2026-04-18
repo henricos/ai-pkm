@@ -1,52 +1,31 @@
 "use client";
 
-import { useState } from "react";
-import { signIn } from "next-auth/react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useActionState } from "react";
+import { useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { authenticate } from "@/app/actions/auth";
 
 function isValidCallback(url: string, baseFallback: string): boolean {
   // Rejeitar qualquer URL absoluta (contém "://") — previne open redirect (D-05, T-11-03)
   if (url.includes("://")) return false;
-  // Aceitar apenas paths que começam com o basePath configurado
-  // baseFallback é withBasePath("/") = "/pkm", então startsWith garante prefixo correto
+  // Aceitar apenas paths relativos que comecem com o fallback — previne open redirect
   return url.startsWith(baseFallback);
 }
 
 export function LoginForm({ fallbackUrl }: { fallbackUrl: string }) {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const rawCallback = searchParams.get("callbackUrl");
   const callbackUrl = rawCallback && isValidCallback(rawCallback, fallbackUrl)
     ? rawCallback
     : fallbackUrl;
-  const [isLoading, setIsLoading] = useState(false);
-  const [authError, setAuthError] = useState<string | null>(null);
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    setIsLoading(true);
-    setAuthError(null);
-    const formData = new FormData(e.currentTarget);
-    const result = await signIn("credentials", {
-      username: formData.get("username") as string,
-      password: formData.get("password") as string,
-      redirect: false,
-      callbackUrl,
-    });
-    setIsLoading(false);
-    if (!result?.error) {
-      router.push(callbackUrl);
-      router.refresh();
-    } else {
-      setAuthError("Credenciais inválidas. Verifique usuário e senha.");
-    }
-  }
+  const [error, action, isPending] = useActionState(authenticate, null);
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form action={action} className="space-y-6">
+      <input type="hidden" name="callbackUrl" value={callbackUrl} />
       <div className="space-y-4">
         {/* Campo username */}
         <div className="space-y-1.5">
@@ -88,10 +67,10 @@ export function LoginForm({ fallbackUrl }: { fallbackUrl: string }) {
       </div>
 
       {/* Alerta de erro de autenticação — mensagem genérica sem revelar qual campo está errado (T-1-06) */}
-      {authError && (
+      {error && (
         <div className="flex items-center gap-3 p-3 bg-destructive/8 rounded-sm border border-destructive/25">
           <p className="text-[0.75rem] font-medium text-destructive">
-            Credenciais inválidas. Verifique usuário e senha.
+            {error}
           </p>
         </div>
       )}
@@ -99,10 +78,10 @@ export function LoginForm({ fallbackUrl }: { fallbackUrl: string }) {
       {/* Botão submit — gradient-cta conforme DESIGN.md §2 Signature Textures */}
       <Button
         type="submit"
-        disabled={isLoading}
+        disabled={isPending}
         className="w-full gradient-cta text-on-tertiary py-3 font-semibold text-[0.875rem] rounded-sm hover:opacity-90 active:scale-[0.98] transition-all"
       >
-        {isLoading ? "Aguarde..." : "Entrar"}
+        {isPending ? "Aguarde..." : "Entrar"}
       </Button>
     </form>
   );

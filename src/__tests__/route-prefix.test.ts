@@ -73,23 +73,27 @@ describe("rotas com prefixo /pkm", () => {
     Object.assign(process.env, originalEnv);
   });
 
-  test("TST-02-a: ShellLayout redireciona para /pkm/login quando não autenticado", async () => { // TST-02
+  test("TST-02-a: ShellLayout redireciona para /login quando não autenticado", async () => { // TST-02
     vi.mocked(auth as unknown as () => Promise<null>).mockResolvedValue(null);
 
     const { default: ShellLayout } = await import("@/app/(shell)/layout");
 
     await ShellLayout({ children: React.createElement("div") });
 
-    expect(redirect).toHaveBeenCalledWith("/pkm/login");
+    // redirect() do Next.js App Router aplica basePath automaticamente:
+    // redirect("/login") → browser recebe /pkm/login
+    expect(redirect).toHaveBeenCalledWith("/login");
   });
 
-  test("TST-02-b: LoginPage redireciona para /pkm quando já autenticado", async () => { // TST-02
+  test("TST-02-b: LoginPage redireciona para / quando já autenticado", async () => { // TST-02
     vi.mocked(auth as unknown as () => Promise<{ user: { name: string } }>).mockResolvedValue({ user: { name: "testuser" } });
 
     const { default: LoginPage } = await import("@/app/(auth)/login/page");
     await LoginPage();
 
-    expect(redirect).toHaveBeenCalledWith("/pkm");
+    // redirect() do Next.js App Router aplica basePath automaticamente:
+    // redirect("/") → browser recebe /pkm
+    expect(redirect).toHaveBeenCalledWith("/");
   });
 
   test("TST-02-c: fallbackUrl passado para LoginForm é /pkm quando APP_BASE_PATH=/pkm", async () => { // TST-02

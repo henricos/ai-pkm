@@ -1,5 +1,4 @@
 import { redirect } from "next/navigation";
-import { withBasePath } from "@/lib/base-path";
 import { auth } from "@/lib/auth";
 import { warmMarkdownPipeline } from "@/lib/markdown/shiki";
 import { getNavigationSnapshot } from "@/lib/navigation/navigation-service";
@@ -24,7 +23,7 @@ export default async function ShellLayout({
   // T-02-05: autenticação obrigatória — redireciona antes de qualquer snapshot
   const session = await auth();
   if (!session) {
-    redirect(withBasePath("/login"));
+    redirect("/login");
   }
 
   // Carrega snapshot server-side — nenhum path absoluto é exposto ao cliente
