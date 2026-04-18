@@ -1,6 +1,7 @@
 /**
- * Testes de validação de env vars — Phase 1
+ * Testes de validação de env vars — Phase 1 / Phase 12
  * RUN-01: validação fail-fast de vars obrigatórias via Zod
+ * TST-01: contrato de ambiente — 4 casos requeridos cobertos abaixo (ENV-01, ENV-02, ENV-03, RUN-01)
  */
 import { describe, test, expect, afterEach, vi } from "vitest";
 
@@ -46,7 +47,7 @@ describe("env validation", () => {
     errorSpy.mockRestore();
   });
 
-  test("RUN-01: parse bem-sucedido quando todas as vars obrigatórias estão presentes e sincronizadas", async () => {
+  test("RUN-01: parse bem-sucedido quando todas as vars obrigatórias estão presentes e sincronizadas", async () => { // TST-01
     setRequiredEnv();
 
     const { env } = await import("../lib/env");
@@ -88,7 +89,7 @@ describe("env validation", () => {
     errorSpy.mockRestore();
   });
 
-  test("ENV-01: falha cedo quando APP_BASE_PATH está ausente", async () => {
+  test("ENV-01: falha cedo quando APP_BASE_PATH está ausente", async () => { // TST-01
     setRequiredEnv();
     delete process.env.APP_BASE_PATH;
 
@@ -105,7 +106,7 @@ describe("env validation", () => {
     errorSpy.mockRestore();
   });
 
-  test("ENV-02: falha cedo quando NEXTAUTH_URL está ausente", async () => {
+  test("ENV-02: falha cedo quando NEXTAUTH_URL está ausente", async () => { // TST-01
     setRequiredEnv();
     delete process.env.NEXTAUTH_URL;
 
@@ -122,7 +123,7 @@ describe("env validation", () => {
     errorSpy.mockRestore();
   });
 
-  test("ENV-03: falha cedo quando NEXTAUTH_URL diverge do APP_BASE_PATH", async () => {
+  test("ENV-03: falha cedo quando NEXTAUTH_URL diverge do APP_BASE_PATH", async () => { // TST-01
     setRequiredEnv({ NEXTAUTH_URL: "https://host/outro-path" });
 
     const exitSpy = vi.spyOn(process, "exit").mockImplementation(() => {
