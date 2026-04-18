@@ -2,7 +2,7 @@
 
 ## What This Is
 
-O ai-pkm e a plataforma que apoia a operacao de um PKM file-first com auxilio de IA. Hoje, o sistema combina uma operacao validada via CLI sobre o repositorio `pkm` com uma interface web read-only para navegar e exibir esse acervo sem quebrar o modelo em que a IA e a unica escritora da base. O passo atual e consolidar o milestone `v2.2`, tornando a aplicacao genuinamente consciente do prefixo `/pkm` desde o build ate os fluxos de navegacao.
+O ai-pkm e a plataforma que apoia a operacao de um PKM file-first com auxilio de IA. O sistema combina uma operacao validada via CLI sobre o repositorio `pkm` com uma interface web read-only autenticada, publicada como imagem Docker no GHCR e servida em `/pkm` com `basePath` baked no build. A IA e a unica escritora da base; o humano navega via web ou opera via CLI.
 
 ## Core Value
 
@@ -37,11 +37,12 @@ O terceiro numero (`PATCH`) fica reservado para hotfixes e releases pontuais do 
 - ✓ Publicar imagem publica no GHCR por pipeline automatizado no GitHub Actions — Phase 8
 - ✓ Configurar `APP_BASE_PATH` como fonte unica do `basePath` do Next.js, baked no build via Docker build arg — Phase 10
 - ✓ Validar sincronia obrigatoria entre `APP_BASE_PATH` e `NEXTAUTH_URL` em runtime, com falha cedo e mensagem clara — Phase 10
+- ✓ Adotar `withBasePath()` e o prefixo configurado nos redirects, hrefs, callbacks e rotas absolutas da aplicacao — Phase 11
+- ✓ Documentar o contrato operacional dos 3 lugares de configuracao: `.env` (dev), workflow CI (build) e compose (runtime) — Phase 12
 
 ### Active
 
-- ✓ Adotar `withBasePath()` e o prefixo configurado nos redirects, hrefs, callbacks e rotas absolutas da aplicacao — Phase 11
-- ✓ Documentar o contrato operacional dos 3 lugares de configuracao: `.env` (dev), workflow CI (build) e compose (runtime) — Phase 12
+(nenhum requisito ativo — proximo milestone a definir via `/gsd-new-milestone`)
 
 ### Out of Scope
 
@@ -74,48 +75,20 @@ Com a Phase 6 concluida, a `v2.0` ativa fica fechada para o milestone atual. O h
 
 ## Current State
 
-O `v2.0` foi entregue em `2026-04-13` como a primeira versao web funcional do projeto. O sistema agora combina a operacao CLI ja validada com uma interface web read-only autenticada para navegar e ler o acervo PKM sem romper o modelo file-first.
+O `v2.2` foi entregue em `2026-04-18`, fechando o ciclo de infraestrutura web do projeto. A aplicacao agora roda em `/pkm` com `basePath` baked no build, contrato de ambiente explicito e documentacao operacional completa.
 
-O escopo shipped inclui autenticacao single-user, shell persistente de navegacao com inbox separada, viewer rico de Markdown, viewers leves de imagem/PDF, tratamento de sidecars no contexto do item principal, presentation mode e hardening visual do tema do viewer sem flash perceptivel no reload.
+**Historico de versoes:**
+- `v2.0` (2026-04-13): primeira versao web funcional — autenticacao, shell, viewer rico de Markdown, presentation mode, hardening de tema.
+- `v2.1` (2026-04-16): empacotamento Docker, pipeline de release SemVer no GHCR, deploy via Portainer.
+- `v2.2` (2026-04-18): `basePath=/pkm` baked no build, contrato fail-fast de ambiente, redirects e URLs com prefixo, 218 testes, documentacao dos 3 lugares de configuracao.
 
-Os artefatos historicos do milestone foram arquivados em `.planning/milestones/v2.0-ROADMAP.md` e `.planning/milestones/v2.0-REQUIREMENTS.md`.
-
-Dentro da `v2.1`, a Phase 08 foi fechada em `2026-04-14` com a release real `v2.0.2`. A cadeia ponta a ponta foi validada com commit/tag gerados por `npm version`, workflow `Release GHCR` disparado por push de tag, job `publish` concluido com sucesso e pacote publico `ghcr.io/henricos/ai-pkm` exibindo `latest` e `v2.0.2`. O fechamento tambem deixou uma skill dedicada de operacao (`/fechar-versao`) para repetir esse fluxo sem esconder o mecanismo canonico.
-
-Dentro da `v2.2`, a Phase 10 foi fechada em `2026-04-17` com a fundacao completa do prefixo de rota: helper central `withBasePath()`, contrato fail-fast entre `APP_BASE_PATH` e `NEXTAUTH_URL`, `basePath` do Next.js ligado a `APP_BASE_PATH` e workflow de release bakeando `APP_BASE_PATH=/pkm`. A Phase 11 foi fechada em `2026-04-17` alinhando todos os consumers da aplicacao: redirects server-side em `ShellLayout` e `LoginPage`, `pages.signIn` do NextAuth, fallback defensivo de `callbackUrl` no `LoginForm` com validacao de open redirect, e URLs de preview/download no viewer. A Phase 12 foi fechada em `2026-04-18` completando o milestone `v2.2`: suite de testes com 218 casos cobrindo TST-01 (contrato de env) e TST-02 (rotas com prefixo), documentacao operacional em `docs/dev-setup.md` e `README.md` cobrindo o contrato dos 3 lugares de configuracao, e `compose.yaml` corrigido com `APP_BASE_PATH`.
-
-## Current Milestone: v2.2 — Base Path Configurado com Sincronia App/Auth
-
-**Goal:** A aplicacao passa a rodar em `/pkm` com `basePath` baked no build, contrato de configuracao explicito e documentacao operacional suficiente para reconstruir o setup sem conhecimento implicito.
-
-**Target features:**
-
-- `APP_BASE_PATH` baked no build via `--build-arg` hardcoded no workflow do GitHub Actions
-- `next.config.ts` le `APP_BASE_PATH` e configura `basePath` do Next.js
-- Validacao em `env.ts`: `APP_BASE_PATH` obrigatorio, `NEXTAUTH_URL` obrigatorio, pathname de ambos deve coincidir — falha cedo com mensagem clara
-- Helper `withBasePath()` para construcao de URLs absolutas e redirects server-side
-- Ajuste dos hardcodes de `/` em layout, login, viewer e navegacao
-- Testes de env e de rotas com o prefixo configurado
-- Documentacao obrigatoria: `dev-setup.md` e `README` cobrem o contrato dos 3 lugares (`APP_BASE_PATH` no `.env`, no workflow e `NEXTAUTH_URL` no compose)
-
-**Key decisions:**
-
-- Cloudflare Tunnel preserva o path → app deve ser genuinamente consciente do prefixo, sem proxy strip local
-- Next.js `basePath` e build-time → mudar path exige nova release (aceito conscientemente)
-- Opcao B: valor hardcoded no `.github/workflows/release.yml`, nao em variavel GitHub Actions
-- Em dev: `localhost:3000/pkm` e o acesso correto; raiz retorna 404
+Os artefatos historicos estao arquivados em `.planning/milestones/`.
 
 ## Next Milestone Goals
 
-O candidato natural para o proximo milestone e a `v2.1`, com foco operacional e nao conceitual. O objetivo esperado e fechar o caminho de empacotamento, versionamento e publicacao da aplicacao sem embutir o `pkm` na imagem.
+O proximo candidato natural e `v3.0`, a refatoracao conceitual do dominio PKM: consolidar `item` como unidade central com tres dimensoes explicitas (origem/autoria, assunto, tipo). Essa mudanca afeta taxonomia, modelos, contratos, indices, skills e aplicacao web — exige planejamento cuidadoso antes de qualquer execucao.
 
-Metas preliminares para a `v2.1`:
-
-- empacotar a aplicacao como imagem Docker
-- manter o `pkm` privado montado externamente por path/volume
-- estabelecer versionamento SemVer do app Node/web
-- publicar imagem via GitHub Actions no GHCR com tags de release
-- permitir redeploy simples no servidor atual via Portainer
+Use `/gsd-new-milestone` para definir escopo, requisitos e roadmap do proximo milestone.
 
 ## Constraints
 
@@ -150,6 +123,10 @@ Metas preliminares para a `v2.1`:
 | Distribuir a aplicacao por imagem Docker publicada, e nao por `git pull` dentro do runtime | Mantem deploy mais previsivel, rastreavel e portavel entre servidores | ✓ Good |
 | Usar GHCR publico com tags `vX.Y.Z` e `latest` como estrategia inicial de distribuicao | Simplifica operacao no servidor caseiro e preserva referencia exata de release por SemVer | ✓ Good |
 | Materializar o fluxo de fechamento de versao como skill operacional sem wrapper opaco | Reduz friccao para novas releases preservando `npm version` e o checklist real do projeto | ✓ Good |
+| Baked `APP_BASE_PATH=/pkm` no workflow (Opcao B), sem variavel GitHub Actions | Cloudflare Tunnel preserva o path — app precisa ser consciente do prefixo; mudar path exige nova release (aceito) | ✓ Good |
+| `withBasePath()` usada apenas em fronteiras server-side; `next/link` prefixa via framework | Evita double-prefix e mantém semântica clara de onde o prefixo é aplicado | ✓ Good |
+| `isValidCallback()` bloqueando open redirect no LoginForm sem `process.env` no cliente | Client Components nao tem acesso a APP_BASE_PATH; calcular server-side e passar como prop e o padrao correto | ✓ Good |
+| `library/page.tsx` e `inbox/page.tsx` criados para garantir auth check em rotas indice | Next.js nao executa layout para rotas sem page.tsx; rotas indice retornavam 404 sem redirect para login | ✓ Good |
 
 ## Evolution
 
@@ -169,4 +146,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-04-18 — Phase 12 concluida; milestone v2.2 completo com testes automatizados e documentacao operacional do contrato de basePath*
+*Last updated: 2026-04-18 — milestone v2.2 encerrado; aplicacao serve em /pkm com basePath baked, 218 testes e documentacao operacional completa*
