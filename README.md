@@ -35,7 +35,7 @@ Pré-requisitos:
 - Docker Engine com `docker compose`
 - Um path absoluto no host para o repositório `pkm`
 - Um path absoluto no host para o diretório `index/` deste repositório
-- Credenciais reais para `AUTH_USERNAME`, `AUTH_PASSWORD`, `NEXTAUTH_SECRET` e `NEXTAUTH_URL`
+- Credenciais reais para `AUTH_USERNAME`, `AUTH_PASSWORD`, `NEXTAUTH_SECRET`, `NEXTAUTH_URL` e `APP_BASE_PATH`
 
 Crie um diretório de runtime e salve nele um `compose.yaml` com os valores reais do seu ambiente:
 
@@ -48,12 +48,13 @@ services:
     container_name: ai-pkm
     environment:
       APP_ROOT_PATH: /app
+      APP_BASE_PATH: /pkm
       PKM_PATH: /data/pkm
       INDEX_PATH: /data/index
       AUTH_USERNAME: curator
       AUTH_PASSWORD: uma-senha-segura
       NEXTAUTH_SECRET: troque-por-uma-string-aleatoria-com-pelo-menos-32-caracteres
-      NEXTAUTH_URL: http://SEU-HOST:3030
+      NEXTAUTH_URL: http://SEU-HOST:3030/pkm
     volumes:
       - /absolute/path/to/pkm:/data/pkm:ro
       - /absolute/path/to/ai-pkm/index:/data/index:ro
@@ -66,7 +67,8 @@ Troque todos os placeholders antes de subir:
 
 - `AUTH_USERNAME` e `AUTH_PASSWORD`: credenciais reais de login
 - `NEXTAUTH_SECRET`: string aleatória com pelo menos 32 caracteres
-- `NEXTAUTH_URL`: URL pública real do runtime
+- `APP_BASE_PATH`: prefixo de rota — use `/pkm` (padrão) ou outro prefixo, mas veja nota abaixo
+- `NEXTAUTH_URL`: URL pública real do runtime incluindo o prefixo (ex: `https://meuhost.com/pkm`)
 - paths dos volumes: paths absolutos reais do `pkm` e do `index`
 - `3030:3000`: altere a porta à esquerda se quiser expor em outra porta do host
 
@@ -83,7 +85,28 @@ docker compose pull
 docker compose up -d
 ```
 
-Depois, abra `http://SEU-HOST:3030` e confirme que a aplicação chega à tela de login.
+Depois, abra `http://SEU-HOST:3030/pkm` e confirme que a aplicação chega à tela de login. A raiz `http://SEU-HOST:3030/` retorna 404 — isso é esperado.
+
+## Contrato dos 3 lugares de configuração
+
+O `basePath` da aplicação (`APP_BASE_PATH`) é configurado em **3 lugares distintos**,
+cada um com papel diferente:
+
+| Lugar | Arquivo | Tipo | Valor padrão |
+|-------|---------|------|--------------|
+| Desenvolvimento local | `.env` / `.env.local` | Variável de ambiente runtime | `APP_BASE_PATH=/pkm` |
+| Build da imagem Docker | `.github/workflows/release-ghcr.yml` (build-arg) | Baked no build, hardcoded | `APP_BASE_PATH=/pkm` |
+| Runtime do container | `compose.yaml` (environment) | Variável de ambiente runtime | `APP_BASE_PATH=/pkm` |
+
+> **Importante:** O valor de `APP_BASE_PATH` no workflow (`release-ghcr.yml`) é
+> **hardcoded no build** — ele fica baked dentro da imagem Docker no momento do build.
+> Isso significa que **mudar o path exige editar o workflow e abrir uma nova release**.
+> Não é possível mudar o prefixo apenas trocando a variável no `compose.yaml` do runtime.
+
+> **Sincronia obrigatória:** O pathname de `NEXTAUTH_URL` deve terminar com o mesmo
+> valor de `APP_BASE_PATH`. Com `APP_BASE_PATH=/pkm`, use
+> `NEXTAUTH_URL=https://meuhost.com/pkm`. A aplicação recusa iniciar se esses valores
+> divergirem.
 
 ## Desenvolvimento
 

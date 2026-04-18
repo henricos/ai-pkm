@@ -109,15 +109,28 @@ NEXTAUTH_SECRET=<cole-o-valor-gerado-aqui>
 
 #### `NEXTAUTH_URL`
 
-URL base da aplicação. Para desenvolvimento local:
+URL base da aplicação, incluindo o prefixo de rota. Para desenvolvimento local:
 
 ```env
-NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_URL=http://localhost:3000/pkm
 ```
 
-> **Nota:** Esta aplicação usa NextAuth v5 (Auth.js). O nome `NEXTAUTH_URL` é
-> mantido por compatibilidade — Auth.js v5 também aceita `AUTH_URL`. Use
-> `NEXTAUTH_URL` conforme configurado neste projeto.
+> **Nota:** O pathname de `NEXTAUTH_URL` deve terminar com o mesmo valor de
+> `APP_BASE_PATH`. Com `APP_BASE_PATH=/pkm`, use `NEXTAUTH_URL=http://localhost:3000/pkm`.
+> Esta aplicação usa NextAuth v5 (Auth.js). O nome `NEXTAUTH_URL` é mantido por
+> compatibilidade — Auth.js v5 também aceita `AUTH_URL`.
+
+#### `APP_BASE_PATH`
+
+Prefixo de rota da aplicação. Em desenvolvimento local, deve ser `/pkm`.
+
+```env
+APP_BASE_PATH=/pkm
+```
+
+> **Importante:** `APP_BASE_PATH` e `NEXTAUTH_URL` devem estar sincronizados.
+> O pathname de `NEXTAUTH_URL` deve terminar com o mesmo valor de `APP_BASE_PATH`.
+> Se divergirem, a aplicação recusa iniciar com mensagem explicando o problema.
 
 ---
 
@@ -130,7 +143,8 @@ INDEX_PATH=/home/user/ai-pkm/index
 AUTH_USERNAME=curator
 AUTH_PASSWORD=minha_senha_local_segura
 NEXTAUTH_SECRET=Xk3mP9rQ2vL7nT4wJ8eA1bC6dF0hI5jK
-NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_URL=http://localhost:3000/pkm
+APP_BASE_PATH=/pkm
 ```
 
 ---
@@ -160,14 +174,18 @@ npm run dev
 
 O servidor sobe em `http://localhost:3000`.
 
+> **Atenção:** O acesso correto é `http://localhost:3000/pkm` (com o prefixo).
+> A raiz `http://localhost:3000/` retorna 404 — isso é comportamento esperado com
+> `APP_BASE_PATH=/pkm`.
+
 Este fluxo existe para desenvolvimento local. Para runtime empacotado via `docker compose`, use o `README.md`.
 
 ---
 
 ## 5. Verificação do fluxo
 
-1. Abra `http://localhost:3000` no navegador
-2. Sem sessão ativa, deve redirecionar automaticamente para `/login`
+1. Abra `http://localhost:3000/pkm` no navegador
+2. Sem sessão ativa, deve redirecionar automaticamente para `/pkm/login`
 3. Na tela de login, insira as credenciais configuradas no `.env.local`
 4. Após login bem-sucedido, você verá a home autenticada com a lista de tópicos do PKM
 
@@ -195,6 +213,22 @@ Esta aplicação foi projetada para uso **local/dev single-user**:
 
 O arquivo `.env.local` não foi criado ou a variável `NEXTAUTH_SECRET` está ausente.
 Confirme que você copiou `.env.example` para `.env.local` e preencheu as variáveis obrigatórias.
+
+### Erro de sincronia: `APP_BASE_PATH=/pkm` mas `NEXTAUTH_URL` não termina em `/pkm`
+
+A aplicação valida que o pathname de `NEXTAUTH_URL` coincide com `APP_BASE_PATH`.
+Se você ver uma mensagem como `NEXTAUTH_URL deve terminar com APP_BASE_PATH`, corrija
+o `.env.local` para garantir sincronia:
+
+```env
+# CORRETO — pathname de NEXTAUTH_URL deve terminar em /pkm
+APP_BASE_PATH=/pkm
+NEXTAUTH_URL=http://localhost:3000/pkm
+
+# ERRADO — vai causar falha no startup
+APP_BASE_PATH=/pkm
+NEXTAUTH_URL=http://localhost:3000
+```
 
 ### Erro ao listar tópicos: `ENOENT .../topicos.json`
 
@@ -226,4 +260,4 @@ podem causar falhas silenciosas na assinatura do JWT.
 
 ---
 
-*Última atualização: Phase 1 — Secure Read Model Foundation*
+*Última atualização: Phase 12 — Tests and Operational Documentation (v2.2)*

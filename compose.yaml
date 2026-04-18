@@ -6,6 +6,7 @@ services:
       dockerfile: Dockerfile
     environment:
       APP_ROOT_PATH: /app
+      APP_BASE_PATH: /pkm
       PKM_PATH: /data/pkm
       INDEX_PATH: /data/index
       AUTH_USERNAME: ${AUTH_USERNAME}
