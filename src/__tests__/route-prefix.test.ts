@@ -62,7 +62,7 @@ describe("rotas com prefixo /pkm", () => {
   beforeEach(() => {
     // base-path.ts lê process.env.APP_BASE_PATH diretamente — precisa estar setado
     process.env.APP_BASE_PATH = "/pkm";
-    vi.mocked(redirect as ReturnType<typeof vi.fn>).mockClear();
+    vi.mocked(redirect as unknown as () => void).mockClear();
     vi.resetModules();
   });
 
@@ -74,7 +74,7 @@ describe("rotas com prefixo /pkm", () => {
   });
 
   test("TST-02-a: ShellLayout redireciona para /pkm/login quando não autenticado", async () => { // TST-02
-    vi.mocked(auth).mockResolvedValue(null);
+    vi.mocked(auth as unknown as () => Promise<null>).mockResolvedValue(null);
 
     const { default: ShellLayout } = await import("@/app/(shell)/layout");
 
@@ -84,7 +84,7 @@ describe("rotas com prefixo /pkm", () => {
   });
 
   test("TST-02-b: LoginPage redireciona para /pkm quando já autenticado", async () => { // TST-02
-    vi.mocked(auth).mockResolvedValue({ user: { name: "testuser" } } as Awaited<ReturnType<typeof auth>>);
+    vi.mocked(auth as unknown as () => Promise<{ user: { name: string } }>).mockResolvedValue({ user: { name: "testuser" } });
 
     const { default: LoginPage } = await import("@/app/(auth)/login/page");
     await LoginPage();
