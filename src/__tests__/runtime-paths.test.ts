@@ -22,10 +22,11 @@ describe("runtime paths", () => {
   test("PKG-02: usa INDEX_PATH explícito quando configurado", async () => {
     process.env.PKM_PATH = "/data/pkm";
     process.env.INDEX_PATH = "/data/index";
+    process.env.APP_BASE_PATH = "/pkm";
     process.env.AUTH_USERNAME = "testuser";
     process.env.AUTH_PASSWORD = "testpassword123";
     process.env.NEXTAUTH_SECRET = "12345678901234567890123456789012";
-    process.env.NEXTAUTH_URL = "http://localhost:3000";
+    process.env.NEXTAUTH_URL = "https://host/pkm";
 
     const { getRuntimePaths } = await import("../lib/runtime-paths");
     const runtimePaths = getRuntimePaths();
@@ -37,10 +38,11 @@ describe("runtime paths", () => {
   test("PKG-01: em dev usa fallback previsível para index dentro da raiz versionada", async () => {
     vi.stubEnv("NODE_ENV", "development");
     process.env.PKM_PATH = "/data/pkm";
+    process.env.APP_BASE_PATH = "/pkm";
     process.env.AUTH_USERNAME = "testuser";
     process.env.AUTH_PASSWORD = "testpassword123";
     process.env.NEXTAUTH_SECRET = "12345678901234567890123456789012";
-    process.env.NEXTAUTH_URL = "http://localhost:3000";
+    process.env.NEXTAUTH_URL = "https://host/pkm";
 
     const { getRuntimePaths } = await import("../lib/runtime-paths");
     const runtimePaths = getRuntimePaths();
