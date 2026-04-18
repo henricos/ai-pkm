@@ -20,7 +20,7 @@ O milestone `v2.2` torna a aplicacao genuinamente consciente do prefixo de rota 
 
 - [x] **Phase 10: Environment Contract and Build Foundation** — Contrato de ambiente validado e `basePath` configurado no framework e no pipeline de build. (completed 2026-04-17)
 - [x] **Phase 11: Application Code Alignment** — Todos os pontos do codigo que referenciam rotas absolutas usam o prefixo configurado. (completed 2026-04-17)
-- [ ] **Phase 12: Tests and Operational Documentation** — Testes cobrem o contrato de ambiente e as rotas com prefixo; documentacao cobre o setup completo.
+- [x] **Phase 12: Tests and Operational Documentation** — Testes cobrem o contrato de ambiente e as rotas com prefixo; documentacao cobre o setup completo. (completed 2026-04-18)
 
 ## Phase Details
 
@@ -71,8 +71,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 12-01-PLAN.md — Testes de contrato de env (TST-01) e rotas com prefixo (TST-02)
-- [ ] 12-02-PLAN.md — Documentação operacional: dev-setup.md (DOC-01) e README + compose.yaml (DOC-02)
+- [x] 12-01-PLAN.md — Testes de contrato de env (TST-01) e rotas com prefixo (TST-02)
+- [x] 12-02-PLAN.md — Documentação operacional: dev-setup.md (DOC-01) e README + compose.yaml (DOC-02)
 
 ## Progress Table
 
@@ -80,7 +80,7 @@ Plans:
 |-------|----------------|--------|-----------|
 | 10. Environment Contract and Build Foundation | 3/3 | Complete    | 2026-04-17 |
 | 11. Application Code Alignment | 3/3 | Complete    | 2026-04-17 |
-| 12. Tests and Operational Documentation | 0/2 | Not started | - |
+| 12. Tests and Operational Documentation | 2/2 | Complete    | 2026-04-18 |
 
 ---
 
