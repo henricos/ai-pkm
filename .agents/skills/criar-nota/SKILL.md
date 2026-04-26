@@ -124,12 +124,7 @@ Aguarde direção do usuário: continuar, aprofundar, mudar de direção ou ence
 
 **3.5 Renomeação (se aprovada)** — execute a renomeação do arquivo após confirmação explícita do novo nome.
 
-**3.6 Transição de estado** — ao encerrar a sessão, pergunte:
-
-> *"A nota está finalizada? Posso marcar como `estado: finalizado`."*
-
-- Se sim: edite o frontmatter, trocando `estado: rascunho` por `estado: finalizado`
-- Se não: encerre sem alterar
+**3.6 Transição de estado** — a marcação como `finalizado` é o comportamento padrão ao gravar. Na mesma confirmação de gravação da nota, informe que também será marcada como `estado: finalizado`. Só omita a transição se o usuário explicitamente pedir para não marcar.
 
 ---
 
