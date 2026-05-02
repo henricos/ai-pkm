@@ -2,13 +2,9 @@
 
 Regras obrigatórias para qualquer IA (IDEs como Cursor ou Antigravity, CLIs como Claude Code ou Codex CLI, ou qualquer orquestrador) operando neste repositório. Siga sem exceção.
 
-## Leitura obrigatória de contexto
+## Contexto de planejamento
 
-Antes de executar qualquer tarefa, leia estes arquivos:
-
-1. **`.planning/PROJECT.md`** — visão atual e contexto do produto.
-2. **`.planning/REQUIREMENTS.md`** — requisitos ativos.
-3. **`.planning/ROADMAP.md`** — direção atual de execução.
+O projeto usa o framework **GSD** para planejamento e desenvolvimento guiado por especificação. Quando a tarefa envolver produto, roadmap, requisitos, arquitetura, planejamento ou implementação de features, consulte `.planning/` como fonte de contexto vivo do projeto.
 
 Referências normativas adicionais:
 - `reference/pkm/` — contratos e convenções estáveis do domínio PKM.
@@ -19,10 +15,10 @@ Referências normativas adicionais:
 
 Este repositório adota uma política de idioma híbrida:
 
-- **Estrutura do projeto** (nomes de pastas, arquivos de código, configs, nomes de documentos técnicos): **inglês**.
-- **Conteúdo escrito** (textos, commits, mensagens ao usuário, frontmatter do pkm, nomes de skills, nomes de fluxos, comunicação no chat): **português do Brasil (`pt-BR`)**.
+- **Estrutura e código do projeto** (nomes de pastas, arquivos de código, configs, nomes de documentos técnicos, variáveis, comentários dentro de arquivos de código e comentários operacionais dentro de arquivos de configuração): **inglês**.
+- **Conteúdo escrito para humanos** (documentação narrativa, commits, mensagens ao usuário, comunicação no chat, exemplos explicativos e comentários em blocos de documentação): **português do Brasil (`pt-BR`)**.
 
-A única exceção admissível são jargões tecnológicos globais enraizados que soem puramente artificiais em português, como `frontmatter`, `inbox`, `pipeline` ou trechos de código exatos. Referências externas podem ser capturadas no idioma original; metadados, títulos criados pela IA e textos autorais do sistema continuam em `pt-BR`.
+A única exceção admissível são jargões tecnológicos globais enraizados que soem puramente artificiais em português, como `build`, `frontend`, `runtime`, `pipeline`, `deploy`, `compose`, `container`, `entrypoint`, `workflow`, `frontmatter`, `inbox`, `pkm`, `sidecar`, `viewer`, `prompt`, `LLM`, `RAG` ou trechos de código exatos. Referências externas podem ser capturadas no idioma original; metadados, títulos criados pela IA e textos autorais do sistema continuam em `pt-BR`.
 
 ## Repositório pkm
 
@@ -108,9 +104,14 @@ Para checagem não mutante de coerência, use a skill `/validar-estrutura`.
 
 ### Commits
 
-**Nunca faça commits automáticos.** Antes de qualquer commit, avise o operador e aguarde aprovação explícita. Use sempre a skill `/commit-push` para criar commits neste repositório — ela aplica o estilo, o idioma e o processo corretos definidos pelo projeto.
-
-Isso se aplica a qualquer agente, incluindo fluxos GSD (`/gsd-discuss-phase`, `/gsd-plan-phase`, `/gsd-execute-phase` e similares): mesmo que o workflow instrua a fazer commit de artefatos de planejamento, o agente deve propor o commit e aguardar aprovação, usando `/commit-push`.
+- Mensagens sempre em **pt-BR**.
+- Formato **Conventional Commits**: `tipo: assunto conciso` (assunto até ~72 caracteres).
+- Tipos válidos: `feat`, `fix`, `docs`, `refactor`, `chore`.
+- A mensagem inteira deve usar **presente do indicativo na terceira pessoa do singular**, descrevendo o que o commit faz: `adiciona`, `corrige`, `atualiza`, `remove`, `refatora`, `documenta`.
+- Não use imperativo na mensagem: evite `adicione`, `corrija`, `atualize`, `remova`, `refatore`, `documente`.
+- Corpo obrigatório, com um parágrafo curto resumindo o objetivo da mudança e uma lista de bullets descrevendo as mudanças realizadas.
+- Antes de executar `commit` ou `commit + push`, apresente a mensagem proposta e aguarde aprovação explícita do operador.
+- Use arquivos explícitos no `git add`; não use staging amplo como `git add .`.
 
 ### Rastreabilidade
 
