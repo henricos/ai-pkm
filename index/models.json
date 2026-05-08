@@ -16,6 +16,10 @@
     "assuntos_aplicaveis": "guias práticos, passo a passos, how-tos"
   },
   {
+    "arquivo": "models/nota-personalidade.md",
+    "assuntos_aplicaveis": "pessoas notáveis: programadores, empreendedores, pensadores, ativistas e outras personalidades relevantes"
+  },
+  {
     "arquivo": "models/nota-livre.md",
     "assuntos_aplicaveis": "notas que não se encaixam em nenhum modelo estruturado"
   },
