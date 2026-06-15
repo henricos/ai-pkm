@@ -22,6 +22,30 @@
       {
         "id": "conceito",
         "descricao": "Conceitos, padrões, metodologias e frameworks do universo tecnológico — termos e ideias sem vínculo direto a uma empresa ou ferramenta específica."
+      },
+      {
+        "id": "agentes-codigo",
+        "descricao": "Ferramentas de codificação assistida por IA: editores agenticos, CLIs, coding agents, skills avulsas e extensões que aumentam o desenvolvedor no repositório."
+      },
+      {
+        "id": "agentes-ia",
+        "descricao": "Plataformas, SDKs, frameworks e ferramentas de agentes de IA de propósito amplo: automação, bots, agentes conversacionais, orquestradores e agentes pessoais."
+      },
+      {
+        "id": "workflows-ia",
+        "descricao": "Metodologias, frameworks e ferramentas de workflow para desenvolvimento guiado por IA: spec-driven development, harnesses e ecossistemas de processo."
+      },
+      {
+        "id": "design-frontend",
+        "descricao": "Bibliotecas de componentes, design systems, ferramentas de design-to-code, animação, geração de vídeo e apresentações para desenvolvedores."
+      },
+      {
+        "id": "rag",
+        "descricao": "Ferramentas e APIs de busca semântica, web scraping, parsing de documentos e pipelines de RAG para uso em sistemas de IA."
+      },
+      {
+        "id": "personalidades",
+        "descricao": "Notas sobre figuras históricas ou influentes da tecnologia: pensadores, engenheiros, autores e empreendedores que moldaram o campo."
       }
     ]
   },
