@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/conceito/graph-rag.md",
+  "modelo": "nota-conceito",
+  "tags": ["graph-rag", "knowledge-graph", "rag", "llm", "tecnologia"],
+  "resumo": "Explica Graph RAG como abordagem de recuperação que usa grafos de entidades e relações para responder perguntas que dependem de conexões, caminhos multi-hop e visão global de corpus."
+}

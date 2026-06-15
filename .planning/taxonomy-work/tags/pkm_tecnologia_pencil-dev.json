@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/pencil-dev.md",
+  "modelo": "nota-ferramenta",
+  "tags": ["pencil-dev", "design-no-codigo", "mcp", "agente-de-ia", "tecnologia"],
+  "resumo": "Pencil é uma ferramenta de design vetorial integrada à IDE que permite criar interfaces diretamente no editor de código, com suporte a agentes de IA via MCP e versionamento Git de arquivos .pen."
+}

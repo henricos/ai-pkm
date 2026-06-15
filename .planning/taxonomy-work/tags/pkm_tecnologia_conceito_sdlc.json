@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/conceito/sdlc.md",
+  "modelo": "nota-conceito",
+  "tags": ["sdlc", "ciclo-de-vida-de-software", "metodologia-de-desenvolvimento", "engenharia-de-software", "tecnologia"],
+  "resumo": "Explica o SDLC como framework genérico de ciclo de vida de software, detalhando suas fases, a diferença entre modelos (Waterfall, Agile, DevOps) e metodologias, e desmistificando confusões comuns sobre o conceito."
+}

@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/gstack.md",
+  "modelo": "nota-ferramenta",
+  "tags": ["gstack", "claude-code", "coding-agent", "engenharia-de-software", "tecnologia"],
+  "resumo": "Conjunto de slash commands e skills open source para Claude Code criado por Garry Tan (YC) que transforma o agente em um time virtual de engenharia com papéis especializados, fluxo estruturado e paralelismo via Conductor."
+}

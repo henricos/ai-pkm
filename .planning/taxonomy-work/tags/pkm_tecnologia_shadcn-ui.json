@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/shadcn-ui.md",
+  "modelo": "nota-ferramenta",
+  "tags": ["shadcn-ui", "componentes-ui", "design-system", "frontend", "tecnologia"],
+  "resumo": "shadcn/ui é uma plataforma de distribuição de componentes como código-fonte, construída sobre Radix UI e Tailwind CSS, que entrega componentes diretamente no projeto via CLI para controle total sem dependência de pacote externo."
+}

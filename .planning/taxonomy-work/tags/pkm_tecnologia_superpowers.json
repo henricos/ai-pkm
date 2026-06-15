@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/superpowers.md",
+  "modelo": "nota-ferramenta",
+  "tags": ["superpowers", "coding-agent", "skills-agênticas", "ia-para-desenvolvimento", "tecnologia"],
+  "resumo": "Superpowers é um framework open source de skills agênticas que impõe disciplina estrutural a agentes de codificação como Claude Code e Cursor, forçando-os a seguir fases ordenadas de brainstorming, planejamento, TDD e revisão."
+}

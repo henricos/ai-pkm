@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/ant-design.md",
+  "modelo": "nota-ferramenta",
+  "tags": ["ant-design", "biblioteca-componentes", "design-system", "frontend", "tecnologia"],
+  "resumo": "Biblioteca de componentes React enterprise criada pelo Ant Group para sistemas internos corporativos com alta densidade de informação."
+}

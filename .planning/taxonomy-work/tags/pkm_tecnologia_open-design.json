@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/open-design.md",
+  "modelo": "nota-ferramenta",
+  "tags": ["open-design", "design-assistido-por-ia", "local-first", "ferramentas-ia", "tecnologia"],
+  "resumo": "Open Design é uma alternativa open-source e local-first ao Claude Design — um workspace de design assistido por IA que roda localmente, é agnóstico de agente e modelo, e integra com 22+ CLIs de codificação como Claude Code, Cursor e Codex."
+}

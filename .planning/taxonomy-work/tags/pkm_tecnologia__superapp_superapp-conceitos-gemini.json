@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/_superapp/superapp-conceitos-gemini.md",
+  "modelo": "nota-livre",
+  "tags": ["superapp", "mini-apps", "arquitetura-de-plataforma", "aplicativos-moveis", "tecnologia"],
+  "resumo": "Investigação técnica e histórica sobre a gênese e estruturação dos Super Apps, cobrindo arquitetura de mini apps, exemplos pioneiros como WeChat e Alipay, e critérios que diferenciam Super Apps de aplicativos tradicionais."
+}

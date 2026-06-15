@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/_superapp/superapp-conceitos-manus.md",
+  "modelo": "nota-livre",
+  "tags": ["superapp", "mini-apps", "ecossistema-digital", "arquitetura-mobile", "tecnologia"],
+  "resumo": "Relatório de pesquisa sobre o conceito e a evolução dos Super Apps, cobrindo origem do termo, critérios técnicos (host app, mini-apps, SSO, pagamento nativo) e exemplos pioneiros como WeChat, Alipay, Gojek e Grab."
+}

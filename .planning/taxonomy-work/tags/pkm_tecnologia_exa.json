@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/exa.md",
+  "modelo": "nota-ferramenta",
+  "tags": ["exa", "busca-semantica", "api-busca", "agente-ia", "tecnologia"],
+  "resumo": "Exa é uma API de busca web baseada em embeddings neurais, construída para agentes de IA e pipelines RAG, que entrega conteúdo pré-extraído e semanticamente ranqueado em vez de listas de links."
+}

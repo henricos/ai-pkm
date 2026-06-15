@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/conceito/bmad.md",
+  "modelo": "nota-conceito",
+  "tags": ["bmad", "desenvolvimento-orientado-a-agentes", "framework-agentes", "engenharia-de-software", "tecnologia"],
+  "resumo": "BMAD Method é um framework open source que organiza o desenvolvimento com IA em fases explícitas e agentes com papéis especializados, como analista, PM, arquiteto e QA."
+}

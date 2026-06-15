@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/conceito/agentic-rag.md",
+  "modelo": "nota-conceito",
+  "tags": ["agentic-rag", "rag", "agente", "llm", "tecnologia"],
+  "resumo": "Arquitetura que incorpora agentes autônomos no pipeline de RAG para planejar, controlar e adaptar iterativamente a recuperação de informação em tarefas complexas."
+}

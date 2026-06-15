@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/url_rajasekaran-harness-design-long-running-apps.md",
+  "modelo": "url-extrato",
+  "tags": ["harness", "agente-gerador-avaliador", "coding-agent", "arquitetura-multi-agente", "tecnologia"],
+  "resumo": "Artigo da Anthropic descrevendo técnicas de design de harness para agentes autônomos de longa duração, incluindo a arquitetura gerador-avaliador inspirada em GANs aplicada a frontend e desenvolvimento full-stack com Claude."
+}

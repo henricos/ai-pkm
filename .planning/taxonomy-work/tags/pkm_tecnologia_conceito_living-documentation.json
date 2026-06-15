@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/conceito/living-documentation.md",
+  "modelo": "nota-conceito",
+  "tags": ["living-documentation", "documentacao-tecnica", "bdd", "engenharia-de-software", "tecnologia"],
+  "resumo": "Conceito de documentação que vive no repositório e permanece sincronizada com o código por meio de mecanismos automatizados ou processuais, evitando a obsolescência comum da documentação convencional."
+}

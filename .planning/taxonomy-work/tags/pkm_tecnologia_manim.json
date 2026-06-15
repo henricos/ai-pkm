@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/manim.md",
+  "modelo": "nota-ferramenta",
+  "tags": ["manim", "animacao-matematica", "visualizacao-educacional", "biblioteca-python", "tecnologia"],
+  "resumo": "Manim é uma biblioteca Python open-source para criação de animações matemáticas programáticas, popular entre educadores e criadores de conteúdo técnico no estilo 3Blue1Brown."
+}

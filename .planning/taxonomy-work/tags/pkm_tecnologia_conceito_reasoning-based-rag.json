@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/conceito/reasoning-based-rag.md",
+  "modelo": "nota-conceito",
+  "tags": ["reasoning-based-rag", "rag", "recuperacao-de-informacao", "llm", "tecnologia"],
+  "resumo": "Abordagem de RAG que substitui busca por similaridade vetorial por um processo de raciocínio iterativo sobre estruturas navegáveis de documentos, permitindo recuperação auditável e orientada por suficiência de evidência."
+}

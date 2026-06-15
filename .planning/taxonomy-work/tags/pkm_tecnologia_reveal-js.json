@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/reveal-js.md",
+  "modelo": "nota-ferramenta",
+  "tags": ["reveal-js", "apresentacao-html", "framework-frontend", "ferramentas-de-apresentacao", "tecnologia"],
+  "resumo": "reveal.js é um framework open-source em HTML para criação de apresentações no navegador, com suporte a Markdown, animações automáticas, syntax highlighting e exportação para PDF."
+}

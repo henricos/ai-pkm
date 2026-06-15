@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/conceito/tdd.md",
+  "modelo": "nota-conceito",
+  "tags": ["tdd", "testes-automatizados", "design-de-software", "engenharia-de-software", "tecnologia"],
+  "resumo": "Explica o TDD como técnica de design incremental de software, descrevendo o ciclo Red-Green-Refactor, a prática de escrever testes antes do código e como isso influencia a arquitetura e a qualidade do sistema."
+}

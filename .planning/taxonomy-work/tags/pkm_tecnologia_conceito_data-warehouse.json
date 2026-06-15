@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/conceito/data-warehouse.md",
+  "modelo": "nota-conceito",
+  "tags": ["data-warehouse", "arquitetura-analitica", "engenharia-de-dados", "banco-de-dados", "tecnologia"],
+  "resumo": "Conceito arquitetural de ambiente integrado e histórico de dados para apoio à decisão gerencial, abrangendo fundamentos, abordagens Inmon e Kimball, processos ETL/ELT e evolução para arquiteturas modernas em nuvem."
+}

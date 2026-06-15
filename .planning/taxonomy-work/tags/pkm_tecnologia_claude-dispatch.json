@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/claude-dispatch.md",
+  "modelo": "nota-ferramenta",
+  "tags": ["claude-dispatch", "claude-code", "orquestração-agentes", "ferramentas-ia", "tecnologia"],
+  "resumo": "Nota sobre o Claude Dispatch em dois projetos distintos: a feature nativa da Anthropic que integra Claude Mobile com Claude Code Desktop para execução remota de tarefas, e a skill open-source de terceiros que transforma sessões em orquestradores leves com workers em background."
+}

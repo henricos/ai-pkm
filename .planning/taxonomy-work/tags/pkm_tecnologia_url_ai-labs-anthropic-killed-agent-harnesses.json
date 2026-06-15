@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/url_ai-labs-anthropic-killed-agent-harnesses.md",
+  "modelo": "url-resumo",
+  "tags": ["harness", "agente-ia", "avaliacao-graduada", "engenharia-de-prompt", "tecnologia"],
+  "resumo": "Análise dos experimentos de ablation da Anthropic sobre componentes de harness de agentes, mostrando que a maioria dos frameworks tornou-se obsoleta com o Opus 4.6 e propondo uma arquitetura mínima de três agentes com avaliação graduada."
+}

@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/zod.md",
+  "modelo": "nota-ferramenta",
+  "tags": ["zod", "validacao-de-schema", "typescript", "bibliotecas-javascript", "tecnologia"],
+  "resumo": "Biblioteca TypeScript-first para declaração e validação de schemas em runtime, eliminando duplicação entre tipos estáticos e validação dinâmica de dados externos."
+}

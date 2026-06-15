@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/codex.md",
+  "modelo": "nota-ferramenta",
+  "tags": ["codex-cli", "coding-agent", "openai", "automacao-desenvolvimento", "tecnologia"],
+  "resumo": "Nota sobre o Codex CLI da OpenAI, um agente de codificação para terminal que lê arquivos, propõe e aplica edições e executa comandos com diferentes modos de aprovação e autonomia controlada."
+}

@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/claude-code.md",
+  "modelo": "nota-ferramenta",
+  "tags": ["claude-code", "coding-agent", "agente-de-ia", "ferramentas-de-desenvolvimento", "tecnologia"],
+  "resumo": "Ferramenta agentic de programação da Anthropic que opera no terminal, permitindo ao desenvolvedor descrever tarefas em linguagem natural e deixar o agente inspecionar código, editar arquivos e executar verificações no ambiente local."
+}

@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/url_ai-coding-daily-spec-driven-dev-agentes-ia.md",
+  "modelo": "url-resumo",
+  "tags": ["spec-driven-development", "coding-agent", "fluxo-de-trabalho-ia", "engenharia-de-software", "tecnologia"],
+  "resumo": "Comparação entre ferramentas de spec-driven development para agentes de IA (OpenSpec, SpecKit, AgentOS, BMAD), com a conclusão de que a disciplina de especificar bem importa mais do que as ferramentas, e que os IDEs tendem a absorver essas funcionalidades."
+}

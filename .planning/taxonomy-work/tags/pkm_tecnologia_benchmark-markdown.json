@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/benchmark-markdown.md",
+  "modelo": "nota-livre",
+  "tags": ["renderizacao-markdown", "tipografia", "viewer", "documentacao-tecnica", "tecnologia"],
+  "resumo": "Arquivo de benchmark para calibrar tipografia, ritmo vertical e comportamento de renderers Markdown em diferentes ferramentas como ai-pkm, GitHub e Obsidian."
+}

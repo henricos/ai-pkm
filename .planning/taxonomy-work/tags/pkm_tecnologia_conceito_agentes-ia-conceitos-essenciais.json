@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/conceito/agentes-ia-conceitos-essenciais.md",
+  "modelo": "nota-conceito",
+  "tags": ["agentes-ia", "llm", "react-loop", "automacao-inteligente", "tecnologia"],
+  "resumo": "Conceitos essenciais de agentes de IA: definição formal, componentes centrais (modelo, ferramentas, memória, loop de raciocínio, harness), tipos arquiteturais, categorias funcionais e estado atual do campo em produção."
+}

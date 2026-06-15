@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/antigravity.md",
+  "modelo": "nota-ferramenta",
+  "tags": ["antigravity", "coding-agent", "plataforma-agentica", "desenvolvimento-assistido-por-ia", "tecnologia"],
+  "resumo": "Plataforma de desenvolvimento agent-first do Google que coordena agentes com acesso a editor, terminal e navegador, oferecendo duas visões (Editor e Manager) e artefatos verificáveis como evidência de execução."
+}

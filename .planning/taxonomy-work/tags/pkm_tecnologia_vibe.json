@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/vibe.md",
+  "modelo": "nota-ferramenta",
+  "tags": ["vibe", "transcricao-audio", "whisper", "processamento-local", "tecnologia"],
+  "resumo": "Vibe é um aplicativo desktop open-source para transcrição local de áudio e vídeo usando o modelo Whisper, sem envio de dados para servidores externos."
+}

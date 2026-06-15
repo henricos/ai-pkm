@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/cuda.md",
+  "modelo": "nota-ferramenta",
+  "tags": ["cuda", "gpu", "computacao-paralela", "computacao-de-alto-desempenho", "tecnologia"],
+  "resumo": "Plataforma de computação paralela da NVIDIA para programar e acelerar workloads em GPU, amplamente usada em IA, HPC e ciência de dados."
+}

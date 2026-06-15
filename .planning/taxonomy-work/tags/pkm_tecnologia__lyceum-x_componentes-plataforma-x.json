@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/_lyceum-x/componentes-plataforma-x.md",
+  "modelo": "nota-livre",
+  "tags": ["plataforma-x", "arquitetura-saas", "multi-tenancy", "infraestrutura", "tecnologia"],
+  "resumo": "Cataloga os componentes compartilhados da infraestrutura comum da Plataforma X, incluindo console administrativa, identity provider, API gateway, design system, monitoramento, CI/CD e mensageria."
+}

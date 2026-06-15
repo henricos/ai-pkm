@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/claude-code-telegram-bot.md",
+  "modelo": "nota-ferramenta",
+  "tags": ["claude-code-telegram", "coding-agent", "bot-telegram", "automacao-desenvolvimento", "tecnologia"],
+  "resumo": "Projeto open-source que expõe o Claude Code como bot do Telegram, permitindo interação com projetos de código via linguagem natural pelo celular, com suporte a webhooks do GitHub, cron jobs e persistência de sessão em SQLite."
+}

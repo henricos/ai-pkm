@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/agente-browser-dev.md",
+  "modelo": "nota-ferramenta",
+  "tags": ["agent-browser", "automacao-browser", "agente-ia", "llm", "tecnologia"],
+  "resumo": "Agent Browser é uma CLI open-source da Vercel Labs, escrita em Rust, que permite a agentes de IA controlar instâncias do Chrome de forma eficiente usando snapshots de acessibilidade compactos em vez de HTML completo, reduzindo consumo de tokens."
+}

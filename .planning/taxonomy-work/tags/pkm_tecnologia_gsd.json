@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/gsd.md",
+  "modelo": "nota-ferramenta",
+  "tags": ["gsd", "context-engineering", "coding-agent", "desenvolvimento-com-ia", "tecnologia"],
+  "resumo": "GSD (Get Shit Done) é um sistema de meta-prompting e spec-driven development para ferramentas de codificação por IA, que resolve o problema de context rot organizando o trabalho em fases atômicas executadas por subagentes com contexto isolado."
+}

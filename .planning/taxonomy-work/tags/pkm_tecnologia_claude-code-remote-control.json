@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/claude-code-remote-control.md",
+  "modelo": "nota-ferramenta",
+  "tags": ["claude-code", "controle-remoto", "coding-agent", "ferramentas-de-ia", "tecnologia"],
+  "resumo": "Feature nativa do Claude Code que permite controlar sessões de desenvolvimento rodando localmente a partir de qualquer dispositivo via interface web ou app mobile da Anthropic."
+}

@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/playwright.md",
+  "modelo": "nota-ferramenta",
+  "tags": ["playwright", "testes-e2e", "automacao-browser", "testing", "tecnologia"],
+  "resumo": "Framework open source da Microsoft para automação de browser e testes web end-to-end, com suporte a Chromium, Firefox e WebKit, e integração com agentes de IA via Playwright MCP."
+}

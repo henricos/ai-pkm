@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/openclaw.md",
+  "modelo": "nota-ferramenta",
+  "tags": ["openclaw", "agente-self-hosted", "automacao-mensageria", "llm", "tecnologia"],
+  "resumo": "OpenClaw é um agente de IA pessoal self-hosted e open-source que executa tarefas autônomas e se integra a mais de 10 plataformas de mensageria, com sistema de skills extensível e suporte a múltiplos modelos de IA."
+}

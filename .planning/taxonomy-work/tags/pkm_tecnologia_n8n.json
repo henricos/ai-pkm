@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/n8n.md",
+  "modelo": "nota-ferramenta",
+  "tags": ["n8n", "automacao-de-workflows", "agente", "integracao-de-sistemas", "tecnologia"],
+  "resumo": "Plataforma de automação de workflows orientada a desenvolvedores, com suporte a self-hosting, código personalizado nos nós e agentes de IA nativos via LangChain."
+}

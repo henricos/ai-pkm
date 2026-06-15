@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/chezmoi.md",
+  "modelo": "nota-ferramenta",
+  "tags": ["chezmoi", "dotfiles", "gerenciamento-de-configuracao", "ambiente-de-desenvolvimento", "tecnologia"],
+  "resumo": "Ferramenta open source para gerenciar dotfiles e configurações pessoais em múltiplas máquinas com suporte a templating, criptografia e integração com gerenciadores de senha."
+}

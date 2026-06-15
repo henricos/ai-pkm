@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/chatgpt-telegram-bot.md",
+  "modelo": "nota-ferramenta",
+  "tags": ["telegram-bot", "openai", "chatgpt", "llm", "tecnologia"],
+  "resumo": "Bot open-source em Python que integra o Telegram às APIs da OpenAI (ChatGPT, DALL·E e Whisper), permitindo interação com IA diretamente no aplicativo de mensagens via Docker."
+}

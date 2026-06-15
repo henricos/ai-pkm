@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/conceito/rag-hierarquico.md",
+  "modelo": "nota-conceito",
+  "tags": ["rag-hierarquico", "rag", "recuperacao-de-informacao", "llm", "tecnologia"],
+  "resumo": "Explica o conceito de RAG hierárquico, que organiza a recuperação em múltiplos níveis de granularidade e abstração usando estrutura em árvore, incluindo o método RAPTOR como exemplo representativo."
+}

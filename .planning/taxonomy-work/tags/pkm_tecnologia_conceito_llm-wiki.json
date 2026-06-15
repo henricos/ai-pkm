@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/conceito/llm-wiki.md",
+  "modelo": "nota-conceito",
+  "tags": ["llm-wiki", "base-de-conhecimento-pessoal", "agente", "rag", "tecnologia"],
+  "resumo": "Padrão proposto por Andrej Karpathy em que um LLM atua como mantenedor de uma wiki persistente em Markdown, acumulando sínteses a partir de fontes brutas e disciplinado por um schema operacional."
+}

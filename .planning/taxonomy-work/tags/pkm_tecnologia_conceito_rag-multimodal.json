@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/conceito/rag-multimodal.md",
+  "modelo": "nota-conceito",
+  "tags": ["rag-multimodal", "recuperacao-cross-modal", "modelos-multimodais", "rag", "tecnologia"],
+  "resumo": "Conceito que amplia o RAG para recuperar e usar evidências em múltiplas modalidades como texto, imagem, áudio, vídeo, tabelas e documentos visuais, permitindo raciocínio entre diferentes tipos de dado."
+}

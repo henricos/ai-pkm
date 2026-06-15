@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/handanim.md",
+  "modelo": "nota-ferramenta",
+  "tags": ["handanim", "animacao-programatica", "visualizacao", "python", "tecnologia"],
+  "resumo": "Biblioteca Python open-source para criar animações com estética de desenho à mão, exportando para MP4 ou SVG via API de cenas e primitivas gráficas."
+}

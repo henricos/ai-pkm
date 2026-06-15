@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/conceito/padrao-agents-md.md",
+  "modelo": "nota-conceito",
+  "tags": ["agents-md", "instrucoes-agente", "coding-agent", "desenvolvimento-de-software", "tecnologia"],
+  "resumo": "Padrão aberto AGENTS.md para instrução de agentes de IA em repositórios, agnóstico de ferramenta, que centraliza convenções operacionais de forma legível por qualquer ferramenta sem lock-in de vendor."
+}

@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/comfy-ui.md",
+  "modelo": "nota-ferramenta",
+  "tags": ["comfyui", "difusao-estavel", "geracao-de-imagens", "ia-generativa", "tecnologia"],
+  "resumo": "Interface gráfica open source baseada em nós e grafos para executar modelos de difusão localmente, com suporte a geração de imagem, vídeo e áudio via workflows visuais reutilizáveis."
+}

@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/_lyceum-x/pilares-projeto-lyceum-x.md",
+  "modelo": "nota-livre",
+  "tags": ["lyceum-x", "micro-servicos", "multi-tenancy", "arquitetura-saas", "tecnologia"],
+  "resumo": "Descreve os cinco pilares fundamentais do Lyceum X (reescrita como plataforma SaaS de micro serviços): automação, otimização de recursos via multi-tenancy, qualidade, escalabilidade e modernização da stack tecnológica."
+}

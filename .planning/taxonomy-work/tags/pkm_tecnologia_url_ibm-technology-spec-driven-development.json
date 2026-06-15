@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/url_ibm-technology-spec-driven-development.md",
+  "modelo": "url-resumo",
+  "tags": ["spec-driven-development", "coding-agent", "llm", "engenharia-de-software", "tecnologia"],
+  "resumo": "Vídeo da IBM Technology explicando como o spec-driven development usa especificações de comportamento como artefato primário para guiar agentes de IA no desenvolvimento, contrastando com vibe coding e aproximando o ciclo de IA do SDLC tradicional."
+}

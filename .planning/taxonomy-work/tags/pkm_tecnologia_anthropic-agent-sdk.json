@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/anthropic-agent-sdk.md",
+  "modelo": "nota-ferramenta",
+  "tags": ["claude-agent-sdk", "agente-autonomo", "sdk-ia", "llm", "tecnologia"],
+  "resumo": "Biblioteca oficial da Anthropic para Python e TypeScript que expõe a infraestrutura de loop de agente do Claude Code, permitindo construir agentes de IA autônomos em produção com ferramentas embutidas, sessões, hooks e suporte a subagentes."
+}

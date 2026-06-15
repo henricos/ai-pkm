@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/conceito/research-plan-implement.md",
+  "modelo": "nota-conceito",
+  "tags": ["rpi", "context-engineering", "coding-agent", "engenharia-de-software", "tecnologia"],
+  "resumo": "Framework RPI (Research, Plan, Implement) para estruturar trabalho com agentes de IA em codebases, separando explicitamente as fases de pesquisa, planejamento e execução para evitar degradação de contexto e propagação de erros."
+}

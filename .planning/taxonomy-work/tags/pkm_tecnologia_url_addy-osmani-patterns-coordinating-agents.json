@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/url_addy-osmani-patterns-coordinating-agents.md",
+  "modelo": "url-resumo",
+  "tags": ["orquestração-de-agentes", "multi-agente", "coding-agent", "llm", "tecnologia"],
+  "resumo": "Padrões práticos de Addy Osmani para coordenar múltiplos agentes de IA em workflows reais de desenvolvimento de software, cobrindo subagentes hierárquicos, listas de tarefas compartilhadas e dashboards de orquestração."
+}

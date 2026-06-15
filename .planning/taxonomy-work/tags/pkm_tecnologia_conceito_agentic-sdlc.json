@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/conceito/agentic-sdlc.md",
+  "modelo": "nota-conceito",
+  "tags": ["agentic-sdlc", "coding-agent", "desenvolvimento-de-software", "llm", "tecnologia"],
+  "resumo": "Conceito que descreve o ciclo de vida de desenvolvimento de software onde agentes de IA executam etapas de forma autônoma, desde planejamento e codificação até testes, revisão e deploy, com supervisão humana pontual."
+}

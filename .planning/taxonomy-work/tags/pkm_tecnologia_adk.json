@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/adk.md",
+  "modelo": "nota-ferramenta",
+  "tags": ["adk", "sistema-multi-agente", "framework-agentes", "llm", "tecnologia"],
+  "resumo": "Agent Development Kit (ADK) é um framework open source do Google para construir, avaliar e implantar agentes de IA e sistemas multi-agentes, com suporte a múltiplas linguagens e modelos."
+}

@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/firecrawl.md",
+  "modelo": "nota-ferramenta",
+  "tags": ["firecrawl", "web-scraping", "pipeline-rag", "infraestrutura-ia", "tecnologia"],
+  "resumo": "Firecrawl é uma API de contexto web que transforma páginas e sites inteiros em dados estruturados e limpos prontos para consumo por LLMs, abstraindo renderização JavaScript, bypass de bloqueios e parsing de documentos."
+}

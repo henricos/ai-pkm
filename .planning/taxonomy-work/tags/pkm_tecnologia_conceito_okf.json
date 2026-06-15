@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/conceito/okf.md",
+  "modelo": "nota-conceito",
+  "tags": ["okf", "formato-de-conhecimento", "agente-de-ia", "interoperabilidade", "tecnologia"],
+  "resumo": "Especificação aberta do Google para representar conhecimento organizacional como arquivos Markdown consumíveis por agentes de IA, definindo um formato mínimo de bundles com frontmatter YAML e links para interoperabilidade entre produtores e consumidores."
+}

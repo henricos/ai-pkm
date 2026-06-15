@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/url_better-stack-claude-code-superpowers.md",
+  "modelo": "url-resumo",
+  "tags": ["superpowers", "claude-code", "coding-agent", "desenvolvimento-orientado-a-testes", "tecnologia"],
+  "resumo": "Análise comparativa do framework Superpowers para Claude Code, que estrutura o desenvolvimento com brainstorming, planejamento em dois estágios e TDD, mostrando benefícios para projetos complexos e overhead desnecessário para features simples."
+}

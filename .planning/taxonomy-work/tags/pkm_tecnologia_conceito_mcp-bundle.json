@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/conceito/mcp-bundle.md",
+  "modelo": "nota-conceito",
+  "tags": ["mcp-bundle", "model-context-protocol", "distribuicao-de-extensoes", "llm", "tecnologia"],
+  "resumo": "Formato padronizado de distribuição para servidores MCP locais, usando arquivos .mcpb que permitem instalação com um clique sem configuração manual."
+}

@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/url_ibm-technology-rag-vs-long-context.md",
+  "modelo": "url-resumo",
+  "tags": ["rag", "long-context", "contexto-llm", "llm", "tecnologia"],
+  "resumo": "Comparação entre RAG e long context como estratégias de injeção de contexto em LLMs, com critérios práticos para escolher entre as abordagens conforme o tamanho e dinâmica do corpus."
+}

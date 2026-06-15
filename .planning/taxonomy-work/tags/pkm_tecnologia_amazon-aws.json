@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/amazon-aws.md",
+  "modelo": "nota-ferramenta",
+  "tags": ["amazon-aws", "computacao-em-nuvem", "infraestrutura", "plataforma-cloud", "tecnologia"],
+  "resumo": "Visão geral da AWS, plataforma líder de computação em nuvem da Amazon, cobrindo seus principais serviços (EC2, S3, Lambda, RDS, Bedrock), histórico, modelo de preços e público-alvo."
+}

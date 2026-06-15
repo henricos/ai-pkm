@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/conceito/acp.md",
+  "modelo": "nota-conceito",
+  "tags": ["agent-client-protocol", "agente-headless", "protocolo-comunicacao", "coding-agent", "tecnologia"],
+  "resumo": "Protocolo aberto baseado em JSON-RPC que padroniza a comunicação entre editores, aplicações e orquestradores com agentes de IA de codificação, análogo ao LSP para servidores de linguagem."
+}

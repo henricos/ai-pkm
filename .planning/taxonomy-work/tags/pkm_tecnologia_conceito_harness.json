@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/conceito/harness.md",
+  "modelo": "nota-conceito",
+  "tags": ["harness", "agente-ia", "loop-react", "llm", "tecnologia"],
+  "resumo": "Explica o conceito de harness como a camada de infraestrutura que envolve um modelo de linguagem e o transforma em agente, cobrindo gerenciamento de contexto, controle de segurança e a distinção entre guides e sensors."
+}

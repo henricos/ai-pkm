@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/_lyceum-x/licoes-aprendidas-lyceum-x.md",
+  "modelo": "nota-livre",
+  "tags": ["lyceum-x", "microservicos", "arquitetura-de-software", "desenvolvimento-de-produto", "tecnologia"],
+  "resumo": "Lições aprendidas no projeto Lyceum X entre 2021 e 2024 sobre arquitetura de microsserviços, DDD, débito técnico e boas práticas de desenvolvimento de produto."
+}

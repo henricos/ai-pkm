@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/agentic-search-benchmark.md",
+  "modelo": "nota-ferramenta",
+  "tags": ["busca-agentica", "benchmark-api", "agente-ia", "rag", "tecnologia"],
+  "resumo": "Estudo comparativo da AIMultiple que avalia 8 APIs de busca web para uso em agentes de IA, com metodologia baseada em juiz LLM e 100 queries reais do domínio de IA/LLMs."
+}

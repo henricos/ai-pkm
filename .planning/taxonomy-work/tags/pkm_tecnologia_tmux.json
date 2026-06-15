@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/tmux.md",
+  "modelo": "nota-ferramenta",
+  "tags": ["tmux", "multiplexador-de-terminal", "sessoes-persistentes", "linha-de-comando", "tecnologia"],
+  "resumo": "Nota sobre o tmux, multiplexador de terminal open-source que permite criar sessões persistentes, dividir janelas em painéis e manter processos ativos mesmo após desconexão SSH."
+}

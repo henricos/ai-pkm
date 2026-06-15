@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/_lyceum-x/stack-tecnologico-lyceum-x.md",
+  "modelo": "nota-livre",
+  "tags": ["lyceum-x", "arquitetura-microsservicos", "stack-tecnologico", "devops", "tecnologia"],
+  "resumo": "Consolida as decisões tecnológicas do projeto Lyceum X, incluindo backend (Spring Boot), frontend (React), gateway (Kraken D), autenticação (Keycloak/OAuth2), infraestrutura (AWS/Kubernetes) e os princípios que guiaram as escolhas e substituições ao longo do projeto."
+}

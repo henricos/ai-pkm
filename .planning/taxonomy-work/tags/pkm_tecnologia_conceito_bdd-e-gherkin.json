@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/conceito/bdd-e-gherkin.md",
+  "modelo": "nota-conceito",
+  "tags": ["gherkin", "bdd", "testes-automatizados", "qualidade-de-software", "tecnologia"],
+  "resumo": "Explica o Behavior-Driven Development (BDD) e a linguagem Gherkin como abordagem para alinhar negócio e tecnologia por meio de especificações executáveis escritas em linguagem natural estruturada."
+}

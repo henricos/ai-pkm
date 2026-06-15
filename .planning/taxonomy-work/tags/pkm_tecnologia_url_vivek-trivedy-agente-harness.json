@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/url_vivek-trivedy-agente-harness.md",
+  "modelo": "url-resumo",
+  "tags": ["harness", "agente-autonomo", "orquestracao-de-agentes", "llm", "tecnologia"],
+  "resumo": "Artigo de Vivek Trivedy que define a anatomia de um agent harness, separando o que é responsabilidade do modelo e do sistema ao redor, e derivando os componentes essenciais (filesystem, bash, sandbox, memória, gerenciamento de contexto) a partir dos comportamentos desejados em agentes autônomos."
+}

@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/threejs.md",
+  "modelo": "nota-ferramenta",
+  "tags": ["threejs", "graficos-3d", "webgl", "biblioteca-javascript", "tecnologia"],
+  "resumo": "Nota sobre o Three.js, biblioteca JavaScript open-source para criação de gráficos 3D no navegador via WebGL/WebGPU, cobrindo origem, funcionamento, público-alvo e histórico de versões."
+}

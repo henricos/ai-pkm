@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/url_better-stack-claude-code-mcp-context-mode.md",
+  "modelo": "url-resumo",
+  "tags": ["context-mode", "mcp", "claude-code", "gerenciamento-de-contexto", "tecnologia"],
+  "resumo": "Apresenta o Context Mode, servidor MCP que virtualiza saídas de ferramentas no Claude Code usando SQLite com FTS5, reduzindo consumo de contexto em até 99% e estendendo sessões produtivas de 30 minutos para 3 horas."
+}

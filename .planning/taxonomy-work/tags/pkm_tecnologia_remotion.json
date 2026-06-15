@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/remotion.md",
+  "modelo": "nota-ferramenta",
+  "tags": ["remotion", "geracao-de-video", "react", "frontend", "tecnologia"],
+  "resumo": "Framework para criar vídeos programaticamente com React, tratando vídeo como código versionável e parametrizável com renderização via Node.js e FFmpeg."
+}

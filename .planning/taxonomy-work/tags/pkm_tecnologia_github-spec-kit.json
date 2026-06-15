@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/github-spec-kit.md",
+  "modelo": "nota-ferramenta",
+  "tags": ["spec-kit", "spec-driven-development", "coding-agent", "desenvolvimento-de-software", "tecnologia"],
+  "resumo": "Toolkit open source do GitHub que implementa Spec-Driven Development via slash commands, estruturando o uso de agentes de IA com artefatos progressivos (constitution, spec, plan, tasks) para garantir resultados previsíveis e rastreáveis."
+}

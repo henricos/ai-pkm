@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/handy.md",
+  "modelo": "nota-ferramenta",
+  "tags": ["handy", "fala-para-texto", "ia-local", "privacidade", "tecnologia"],
+  "resumo": "Aplicativo desktop open source e multiplataforma para transcrição de fala para texto completamente offline, usando modelos como Whisper, Parakeet e Moonshine, sem envio de áudio para servidores externos."
+}

@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/conceito/agent-skills.md",
+  "modelo": "nota-conceito",
+  "tags": ["skill-md", "agente-ia", "progressive-disclosure", "desenvolvimento-de-software", "tecnologia"],
+  "resumo": "Padrão aberto SKILL.md que encapsula comportamentos de agentes de IA em arquivos modulares e portáveis, carregados sob demanda via progressive disclosure para economizar contexto"
+}

@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/claudebox.md",
+  "modelo": "nota-ferramenta",
+  "tags": ["claudebox", "claude-code", "containerizacao", "ambiente-desenvolvimento", "tecnologia"],
+  "resumo": "ClaudeBox é um ambiente Docker containerizado para executar o Claude Code em espaço isolado por projeto, com perfis de desenvolvimento, firewall de rede e suporte a acesso remoto via tmux, Remote Control e Channels."
+}

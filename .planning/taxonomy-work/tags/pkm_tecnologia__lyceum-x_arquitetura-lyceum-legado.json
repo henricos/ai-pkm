@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/_lyceum-x/arquitetura-lyceum-legado.md",
+  "modelo": "nota-livre",
+  "tags": ["lyceum", "arquitetura-legado", "gestao-educacional", "sistemas-legados", "tecnologia"],
+  "resumo": "Documentação da arquitetura do sistema Lyceum legado, descrevendo sua evolução histórica em gerações tecnológicas, módulos, stack técnica (Java, SQL Server, Angular), APIs e mecanismos de customização em um sistema ERP educacional com 30 anos de mercado."
+}

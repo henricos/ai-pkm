@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/mui-material-ui.md",
+  "modelo": "nota-ferramenta",
+  "tags": ["material-ui", "biblioteca-componentes", "react", "design-system", "tecnologia"],
+  "resumo": "MUI (Material UI) é a principal biblioteca de componentes React que implementa o Material Design do Google, com ecossistema que inclui componentes base, design system próprio e componentes avançados via MUI X."
+}

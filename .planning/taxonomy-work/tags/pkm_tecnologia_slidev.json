@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/slidev.md",
+  "modelo": "nota-ferramenta",
+  "tags": ["slidev", "apresentacao-markdown", "ferramentas-para-desenvolvedores", "ecossistema-vue", "tecnologia"],
+  "resumo": "Slidev é uma ferramenta open source para criação de slides a partir de Markdown, projetada para desenvolvedores com suporte nativo a syntax highlighting, componentes Vue e exportação web."
+}

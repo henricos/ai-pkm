@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/agent-sdk-anthropic.md",
+  "modelo": "nota-ferramenta",
+  "tags": ["claude-agent-sdk", "agente", "anthropic", "llm", "tecnologia"],
+  "resumo": "SDK open source da Anthropic para construir agentes de IA autônomos em Python e TypeScript, abstraindo o loop de execução de ferramentas do Claude."
+}

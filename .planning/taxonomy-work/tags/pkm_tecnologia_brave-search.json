@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/brave-search.md",
+  "modelo": "nota-ferramenta",
+  "tags": ["brave-search", "busca-web", "rag", "agente-ia", "tecnologia"],
+  "resumo": "Brave Search API é uma API de busca web com índice próprio, voltada para agentes de IA e pipelines RAG, com endpoints especializados para consumo por LLMs e integração via MCP."
+}

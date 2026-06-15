@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/paper-design.md",
+  "modelo": "nota-ferramenta",
+  "tags": ["paper-design", "design-to-code", "mcp", "frontend", "tecnologia"],
+  "resumo": "Paper é uma ferramenta de design visual onde o canvas é HTML e CSS reais, com suporte nativo a MCP Server para integração com agentes de IA e exportação direta como componentes React com Tailwind CSS."
+}

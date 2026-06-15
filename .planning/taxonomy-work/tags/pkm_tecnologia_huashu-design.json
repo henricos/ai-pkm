@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/huashu-design.md",
+  "modelo": "nota-ferramenta",
+  "tags": ["huashu-design", "claude-code", "prototipacao", "design-assistido-por-ia", "tecnologia"],
+  "resumo": "Skill HTML-native para Claude Code que gera protótipos interativos, apresentações e vídeos animados a partir de prompts em linguagem natural, sem sair do terminal"
+}

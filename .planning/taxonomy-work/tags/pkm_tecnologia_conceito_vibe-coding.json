@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/conceito/vibe-coding.md",
+  "modelo": "nota-conceito",
+  "tags": ["vibe-coding", "agentic-engineering", "desenvolvimento-com-ia", "engenharia-de-software", "tecnologia"],
+  "resumo": "Prática de desenvolvimento que delega a escrita de código integralmente ao agente de IA sem revisão linha a linha, cunhada por Andrej Karpathy em 2025 e suas limitações para sistemas em produção."
+}

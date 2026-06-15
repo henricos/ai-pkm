@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/conceito/padrao-design-md.md",
+  "modelo": "nota-conceito",
+  "tags": ["design-md", "design-system", "agente-de-ia", "desenvolvimento-frontend", "tecnologia"],
+  "resumo": "Padrão de arquivo Markdown que especifica regras visuais de um projeto para consumo por agentes de IA, garantindo consistência de design system na geração de interfaces."
+}

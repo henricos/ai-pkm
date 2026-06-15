@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/mdx-slide-frameworks.md",
+  "modelo": "nota-conceito",
+  "tags": ["mdx-deck", "apresentacao-web", "mdx", "frontend", "tecnologia"],
+  "resumo": "Comparativo de frameworks baseados em MDX para criação de apresentações com Markdown e componentes React, cobrindo MDX-Deck, MDXP e next-mdx-deck."
+}

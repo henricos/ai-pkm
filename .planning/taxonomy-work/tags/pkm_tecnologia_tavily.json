@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/tavily.md",
+  "modelo": "nota-ferramenta",
+  "tags": ["tavily", "busca-agêntica", "rag", "agente-ia", "tecnologia"],
+  "resumo": "Plataforma de busca e extração web otimizada para agentes de IA e pipelines RAG, que estrutura resultados prontos para consumo por LLMs sem pré-processamento manual."
+}

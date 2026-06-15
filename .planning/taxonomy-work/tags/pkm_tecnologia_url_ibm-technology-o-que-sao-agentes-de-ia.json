@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/url_ibm-technology-o-que-sao-agentes-de-ia.md",
+  "modelo": "url-resumo",
+  "tags": ["agente-de-ia", "react-framework", "sistemas-compostos", "llm", "tecnologia"],
+  "resumo": "Explica o que são agentes de IA, distinguindo lógica de controle programática de lógica agêntica, e apresenta o framework ReACT como arquitetura para sistemas que raciocinam e agem iterativamente."
+}

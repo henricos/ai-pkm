@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/vercel-labs-skills.md",
+  "modelo": "nota-ferramenta",
+  "tags": ["vercel-labs-skills", "gerenciador-de-skills", "agente-de-codificacao", "ferramentas-de-ia", "tecnologia"],
+  "resumo": "CLI open source da Vercel Labs que funciona como gerenciador de pacotes para skills de agentes de IA, permitindo instalar, versionar e compartilhar instruções de agente entre múltiplas ferramentas como Claude Code, Cursor e GitHub Copilot."
+}

@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/cursor.md",
+  "modelo": "nota-ferramenta",
+  "tags": ["cursor", "coding-agent", "editor-de-codigo", "desenvolvimento-assistido-por-ia", "tecnologia"],
+  "resumo": "Cursor é um editor de código com IA integrada da Anysphere que evoluiu de autocomplete contextual para plataforma de desenvolvimento agentic, com suporte a agentes autônomos, rules persistentes, MCP e automações."
+}

@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/conceito/rag-corretivo.md",
+  "modelo": "nota-conceito",
+  "tags": ["rag-corretivo", "rag", "avaliacao-de-recuperacao", "llm", "tecnologia"],
+  "resumo": "Explica RAG corretivo como família de técnicas que avalia e corrige evidências recuperadas antes da geração, cobrindo métodos como CRAG e Self-RAG."
+}

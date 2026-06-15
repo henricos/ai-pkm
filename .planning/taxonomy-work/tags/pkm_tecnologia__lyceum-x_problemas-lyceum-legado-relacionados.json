@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/_lyceum-x/problemas-lyceum-legado-relacionados.md",
+  "modelo": "nota-livre",
+  "tags": ["lyceum", "divida-tecnica", "arquitetura-legado", "erp-educacional", "tecnologia"],
+  "resumo": "Catálogo de 49 pontos de dor do Lyceum Legado com análise causal — classifica cada problema como Causa ou Efeito, identifica origens e calcula nível de profundidade na cadeia causal."
+}

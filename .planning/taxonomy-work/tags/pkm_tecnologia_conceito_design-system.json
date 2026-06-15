@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/conceito/design-system.md",
+  "modelo": "nota-conceito",
+  "tags": ["design-system", "design-tokens", "componentes-ui", "frontend", "tecnologia"],
+  "resumo": "Explica o que é um Design System, sua origem histórica, fundamentos técnicos (tokens, componentes, diretrizes) e diferenças em relação a style guides e bibliotecas de componentes."
+}

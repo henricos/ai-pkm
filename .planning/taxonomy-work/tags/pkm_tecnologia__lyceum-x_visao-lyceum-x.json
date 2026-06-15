@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/_lyceum-x/visao-lyceum-x.md",
+  "modelo": "nota-livre",
+  "tags": ["lyceum-x", "migracao-legado", "microservicos", "arquitetura-software", "tecnologia"],
+  "resumo": "Visão e estratégia do projeto Lyceum X: reescrita incremental de monolito legado para arquitetura de microserviços multitenant com deploy automatizado e migração gradual"
+}

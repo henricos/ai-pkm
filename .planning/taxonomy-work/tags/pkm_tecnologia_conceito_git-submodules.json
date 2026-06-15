@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/conceito/git-submodules.md",
+  "modelo": "nota-conceito",
+  "tags": ["git-submodules", "controle-de-versao", "composicao-de-repositorios", "git", "tecnologia"],
+  "resumo": "Explica o mecanismo de git submodules para incorporar repositórios externos com controle preciso de versão, cobrindo fundamentos, fluxos de trabalho e comparação com alternativas como git subtree e monorepo."
+}

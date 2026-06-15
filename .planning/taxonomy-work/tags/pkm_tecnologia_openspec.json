@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/openspec.md",
+  "modelo": "nota-ferramenta",
+  "tags": ["openspec", "spec-driven-development", "coding-agent", "desenvolvimento-de-software", "tecnologia"],
+  "resumo": "OpenSpec é um framework leve de spec-driven development instalável via npm que mantém specs versionadas no repositório para alinhar humanos e agentes de IA antes de qualquer implementação."
+}

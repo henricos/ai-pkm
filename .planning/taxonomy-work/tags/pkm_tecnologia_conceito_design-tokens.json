@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/conceito/design-tokens.md",
+  "modelo": "nota-conceito",
+  "tags": ["design-tokens", "design-system", "frontend", "ui-engineering", "tecnologia"],
+  "resumo": "Conceito de design tokens como variáveis que traduzem decisões de design em dados portáveis e agnósticos à plataforma, cobrindo origem, as três camadas (global, semântico e componente), ferramentas de transformação e estado atual da especificação W3C."
+}

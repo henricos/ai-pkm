@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/conceito/rag.md",
+  "modelo": "nota-conceito",
+  "tags": ["rag", "arquitetura-llm", "busca-vetorial", "inteligencia-artificial", "tecnologia"],
+  "resumo": "Explica RAG (Retrieval-Augmented Generation) como arquitetura que conecta LLMs a fontes externas de conhecimento via recuperação explícita, cobrindo fundamentos, variações e limitações."
+}

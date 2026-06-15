@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/nanoclaw-agente-ia-pessoal.md",
+  "modelo": "nota-ferramenta",
+  "tags": ["nanoclaw", "agente-ia-pessoal", "isolamento-container", "llm", "tecnologia"],
+  "resumo": "NanoClaw é um agente de IA pessoal open-source minimalista que roda em contêineres isolados, usa o Claude Agent SDK da Anthropic e se conecta a aplicativos de mensagens como WhatsApp, Telegram e Slack."
+}

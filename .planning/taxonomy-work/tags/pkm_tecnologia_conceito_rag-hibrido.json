@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/conceito/rag-hibrido.md",
+  "modelo": "nota-conceito",
+  "tags": ["rag-hibrido", "recuperacao-de-informacao", "rag", "llm", "tecnologia"],
+  "resumo": "Explica RAG híbrido como arquitetura que combina busca vetorial e busca lexical (BM25) para ampliar cobertura e precisão na etapa de recuperação de sistemas RAG."
+}

@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/_lyceum-x/problemas-lyceum-legado-agrupados.md",
+  "modelo": "nota-livre",
+  "tags": ["lyceum", "divida-tecnica", "arquitetura-software", "saas", "tecnologia"],
+  "resumo": "Catálogo de 49 pontos de dor do Lyceum legado organizados em três grupos causais — Arquitetura, Práticas e SysOps — com análise de tipo, origem e nível de cada problema."
+}

@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/vibe-kanban.md",
+  "modelo": "nota-ferramenta",
+  "tags": ["vibe-kanban", "orquestração-de-agentes", "coding-agent", "desenvolvimento-de-software", "tecnologia"],
+  "resumo": "Vibe Kanban é uma plataforma open-source de orquestração de agentes de IA para desenvolvimento de software, com interface kanban que permite planejar, executar e revisar código gerado por múltiplos agentes em paralelo."
+}

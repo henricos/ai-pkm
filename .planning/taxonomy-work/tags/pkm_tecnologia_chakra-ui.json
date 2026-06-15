@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/chakra-ui.md",
+  "modelo": "nota-ferramenta",
+  "tags": ["chakra-ui", "biblioteca-de-componentes", "acessibilidade", "frontend", "tecnologia"],
+  "resumo": "Biblioteca de componentes React com foco em acessibilidade, composabilidade e DX, usando prop-based styling e design tokens semânticos."
+}

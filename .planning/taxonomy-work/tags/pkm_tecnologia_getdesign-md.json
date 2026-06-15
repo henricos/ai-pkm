@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/getdesign-md.md",
+  "modelo": "nota-ferramenta",
+  "tags": ["design-md", "design-system-textual", "agente-de-codigo", "desenvolvimento-frontend", "tecnologia"],
+  "resumo": "getdesign.md é um diretório de arquivos DESIGN.md inspirados em marcas conhecidas, formatados como referências visuais consumíveis por agentes de IA para geração de interfaces com direção visual consistente."
+}

@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/gsap.md",
+  "modelo": "nota-ferramenta",
+  "tags": ["gsap", "animacao-web", "biblioteca-javascript", "frontend", "tecnologia"],
+  "resumo": "GSAP (GreenSock Animation Platform) é uma biblioteca JavaScript profissional para animações web baseada em tweening, com suporte a timelines, plugins como ScrollTrigger e SplitText, e gratuita desde abril de 2025 após aquisição pela Webflow."
+}

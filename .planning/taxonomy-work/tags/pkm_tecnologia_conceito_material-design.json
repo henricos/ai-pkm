@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/conceito/material-design.md",
+  "modelo": "nota-conceito",
+  "tags": ["material-design", "design-system", "ui-components", "frontend", "tecnologia"],
+  "resumo": "Sistema de design do Google que unifica linguagem visual, componentes e comportamentos de interação em torno de uma metáfora de materiais físicos, com três versões evolutivas desde 2014."
+}

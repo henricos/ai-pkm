@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/connectbot.md",
+  "modelo": "nota-ferramenta",
+  "tags": ["connectbot", "cliente-ssh", "acesso-remoto", "android", "tecnologia"],
+  "resumo": "ConnectBot é um cliente SSH open-source para Android que permite conexões seguras com servidores remotos, suportando tunelamento de portas, múltiplas sessões e autenticação por chaves."
+}

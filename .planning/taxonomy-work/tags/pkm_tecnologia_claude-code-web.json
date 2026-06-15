@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/claude-code-web.md",
+  "modelo": "nota-ferramenta",
+  "tags": ["claude-code-web", "coding-agent", "interface-web", "ferramentas-dev", "tecnologia"],
+  "resumo": "Projeto open-source que empacota o Claude Code CLI numa interface web acessível pelo browser, com suporte a múltiplas sessões, streaming em tempo real e terminal emulado via xterm.js"
+}

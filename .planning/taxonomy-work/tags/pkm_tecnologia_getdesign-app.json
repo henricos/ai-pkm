@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/getdesign-app.md",
+  "modelo": "nota-ferramenta",
+  "tags": ["getdesign-app", "design-system", "agente-de-codigo", "desenvolvimento-assistido-por-ia", "tecnologia"],
+  "resumo": "Ferramenta que extrai sistemas de design de qualquer site via URL e gera um arquivo design.md estruturado, legível por agentes de código como Claude Code, Cursor e Codex."
+}

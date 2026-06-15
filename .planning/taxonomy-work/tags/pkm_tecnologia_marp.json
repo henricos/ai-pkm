@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/marp.md",
+  "modelo": "nota-ferramenta",
+  "tags": ["marp", "apresentacao-markdown", "slides-como-codigo", "ferramentas-desenvolvedor", "tecnologia"],
+  "resumo": "Marp é um ecossistema open-source que converte documentos Markdown em slides de apresentação exportáveis para HTML, PDF ou PowerPoint, permitindo tratar apresentações como artefatos de texto versionáveis em Git."
+}

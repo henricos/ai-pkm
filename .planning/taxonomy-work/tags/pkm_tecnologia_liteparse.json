@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/liteparse.md",
+  "modelo": "nota-ferramenta",
+  "tags": ["liteparse", "parsing-de-documentos", "pipeline-agentic", "llm", "tecnologia"],
+  "resumo": "LiteParse é uma ferramenta open source da LlamaIndex para parsing local de PDFs e documentos Office com preservação de layout espacial, projetada para pipelines de agentes de IA sem dependência de nuvem ou GPU."
+}

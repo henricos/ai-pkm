@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/conceito/operational-data-store.md",
+  "modelo": "nota-conceito",
+  "tags": ["operational-data-store", "arquitetura-de-dados", "integracao-de-dados", "data-warehouse", "tecnologia"],
+  "resumo": "Explica o conceito de Operational Data Store (ODS) como camada arquitetural que integra dados operacionais de múltiplas fontes para consultas de baixa latência, diferenciando-o de data warehouse, staging area e sistemas transacionais."
+}

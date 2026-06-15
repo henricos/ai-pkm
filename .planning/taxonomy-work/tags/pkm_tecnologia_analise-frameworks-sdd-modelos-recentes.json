@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/analise-frameworks-sdd-modelos-recentes.md",
+  "modelo": "nota-livre",
+  "tags": ["harness", "frameworks-sdd", "agente-de-ia", "desenvolvimento-guiado-por-especificacao", "tecnologia"],
+  "resumo": "Análise comparativa de quatro frameworks SDD (OpenSpec, GStack, Superpowers, GSD) à luz dos experimentos de ablation da Anthropic com Opus 4.6, avaliando quais componentes de harness ainda agregam valor para Sonnet e quais viraram burocracia com modelos recentes."
+}

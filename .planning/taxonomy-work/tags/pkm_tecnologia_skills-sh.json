@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/skills-sh.md",
+  "modelo": "nota-ferramenta",
+  "tags": ["skills-sh", "agent-skills", "coding-agent", "ecossistema-ia", "tecnologia"],
+  "resumo": "skills.sh é um ecossistema aberto da Vercel Labs composto por CLI e diretório web para instalar e gerenciar Agent Skills — capacidades reutilizáveis encapsuladas em arquivos SKILL.md que agentes de IA carregam sob demanda para executar workflows especializados."
+}

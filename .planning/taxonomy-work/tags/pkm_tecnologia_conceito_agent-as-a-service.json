@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/conceito/agent-as-a-service.md",
+  "modelo": "nota-conceito",
+  "tags": ["aaas", "agente-autonomo", "modelo-de-negocio-ia", "saas", "tecnologia"],
+  "resumo": "Modelo de entrega de software onde agentes autônomos de IA executam tarefas e entregam resultados em nome do usuário, substituindo a lógica de ferramenta pela lógica de trabalhador, com precificação por uso ou resultado."
+}

@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/claude-code-channels.md",
+  "modelo": "nota-ferramenta",
+  "tags": ["claude-code", "agente-autonomo", "integracao-mensageria", "mcp", "tecnologia"],
+  "resumo": "Feature nativa do Claude Code CLI que conecta sessões ativas a plataformas de mensageria como Telegram e Discord via servidor MCP, permitindo monitorar e direcionar sessões longas fora do terminal."
+}

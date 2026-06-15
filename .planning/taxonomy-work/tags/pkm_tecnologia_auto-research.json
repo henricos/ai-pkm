@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/auto-research.md",
+  "modelo": "nota-ferramenta",
+  "tags": ["autoresearch", "pesquisa-autonoma-ml", "coding-agent", "machine-learning", "tecnologia"],
+  "resumo": "AutoResearch é uma ferramenta open-source de Andrej Karpathy que usa agentes de IA para automatizar ciclos de experimentação em Machine Learning, rodando dezenas de experimentos por noite sem intervenção humana."
+}

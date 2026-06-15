@@ -1,0 +1,6 @@
+{
+  "arquivo": "pkm/tecnologia/conceito/dotfiles.md",
+  "modelo": "nota-conceito",
+  "tags": ["dotfiles", "configuracao-ambiente", "versionamento-git", "ambiente-desenvolvimento", "tecnologia"],
+  "resumo": "Prática de gerenciar arquivos de configuração Unix como código: versionados com Git, sincronizados entre máquinas via symlinks ou cópias, com ferramentas como chezmoi, GNU Stow, yadm e bare git repo."
+}
