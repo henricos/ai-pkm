@@ -62,10 +62,12 @@ Aplicado em qualquer ponto do documento onde um link for necessário:
 ```
 # [Nome do Conceito]
 ## [subtítulo]
+[URL do site oficial de padronização — somente se existir; seguir regra de URL das regras gerais]
 ```
 
 - H1: nome do conceito
 - H2 imediatamente abaixo: subtítulo sóbrio que descreve o que é o conceito — sem gancho, estilo próximo ao acadêmico; resume o conceito, não tenta seduzir o leitor
+- **Link de cabeçalho (opcional):** incluir somente quando o conceito possui um **site oficial mantido pela organização responsável pela especificação ou padronização** (ex: `agentclientprotocol.com`, `json-schema.org`, `openapis.org`). Não qualificam: repositório GitHub (mesmo que oficial), Wikipedia, artigos, blogs, documentação de empresa que adota o padrão, ou qualquer site de terceiro que não seja a fonte canônica do próprio padrão. Na dúvida, omitir.
 
 ---
 
